@@ -4,7 +4,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Searchbar from './Searchbar';
 
 const Navbar = () => {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  // const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   return (
     <Box boxShadow="md" bg="gray.100" p={4}>
       <Flex alignItems="center">
