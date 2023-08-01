@@ -1,12 +1,14 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { Box, Flex, Image, IconButton } from '@chakra-ui/react';
+import { Box, Flex, Image, IconButton} from '@chakra-ui/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import Flashsale from '../components/Flashsale';
+import BestExperience from '../components/Bestexperience';
 
 const images = [
     " https://icms-image.slatic.net/images/ims-web/6e743cde-460d-430a-b4e3-0e5b42361e0a.jpg_1200x1200.jpg",
@@ -35,7 +37,8 @@ const Home = () => {
 
   return (<>
     <Navbar/>
-    <Flex position="relative" width="75%" height="500px" ml="200px" overflow="hidden">
+    <Flex  flexDirection="column"width="90vw">
+    <Flex position="relative" width="75%" height="500px" ml="200px" mt="20px" mb="20px"overflow="hidden">
       <AnimatePresence initial={false} custom={currentImage}>
         {images.map((imageUrl, index) => (
           index === currentImage && (
@@ -68,6 +71,9 @@ const Home = () => {
           onClick={nextImage}
         />
       </Box>
+    </Flex>
+    <Flashsale/>
+    <BestExperience/>
     </Flex>
     <Footer/>
     </>

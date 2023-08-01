@@ -4,6 +4,7 @@ import {  Facebook, Instagram, Twitter, YouTube } from '@mui/icons-material';
 
 const Footer = () => {
   return (
+    
     <Box mt={5} width="100vw" backgroundColor="rgba(244, 244, 244, 0.8)" >
       <Container maxW='1200px'display='flex' py={10} justifyContent='space-between' flexDirection={{base:'column',sm:'row'}}  >
             <Box textAlign={{base:'center',sm:'start'}} py={5} >
@@ -32,6 +33,7 @@ const Footer = () => {
             </Box>
       </Container>
     </Box>
+
   )
 }
 
