@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Flex, Spacer, Link, Menu, MenuButton, MenuList, MenuItem, IconButton } from '@chakra-ui/react';
-import { Menu as MenuIcon, ShoppingCart } from '@mui/icons-material';
+import { Menu as MenuIcon, ShoppingCart ,Star as StarIcon} from '@mui/icons-material';
 import Searchbar from './Searchbar';
 
 const Navbar = () => {
@@ -21,7 +21,7 @@ const Navbar = () => {
         <Searchbar />
         <Spacer />
         <Box display={{ base: 'none', md: 'flex' }} alignItems='center'>
-          <NavLink href="/favorites" mr={4}>Favorites</NavLink>
+        <NavLink href="/favorites" mr={4}><StarIcon /></NavLink> 
           <NavLink href="/cart" mr={4}><ShoppingCart /></NavLink>
           <Menu>
             <MenuButton as={IconButton} icon={<MenuIcon />} variant="outline" />

@@ -1,97 +1,49 @@
-import React from 'react'
+import React from 'react';
+import { Box, Button, Flex, Image, Heading, IconButton } from '@chakra-ui/react';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const Category = () => {
-    const Dummy = [
+  const categories = [
+    { name: 'Western', imageUrl: 'https://www.pinkvilla.com/images/2022-09/western_dresss_2.jpg' },
+    { name: 'Traditional', imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_28UUGZNtLiKQxXvAuOBWtlIhZDIQY6GPCQ&usqp=CAU'},
+    {name: 'Western', imageUrl: 'https://www.pinkvilla.com/images/2022-09/western_dresss_2.jpg' },
+    { name: 'Traditional', imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_28UUGZNtLiKQxXvAuOBWtlIhZDIQY6GPCQ&usqp=CAU'},
+  ];
 
-        {
-          id: 1,
-          name: 'T-Shirt',
-          img: 'https://www.byrdie.com/thmb/1mtEzOLSXxFH4AQygcf4W-ZXcL0=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/greenjumpsuit-c700f1b32e5c4bd3ad561339dc9a25f2.jpg',
-          price: 80,
-          discount: 20,
-        },
-        {
-          id: 1,
-          name: 'T-Shirt',
-          img: 'https://www.byrdie.com/thmb/1mtEzOLSXxFH4AQygcf4W-ZXcL0=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/greenjumpsuit-c700f1b32e5c4bd3ad561339dc9a25f2.jpg',
-          price: 80,
-          discount: 20,
-        },
-        {
-          id: 1,
-          name: 'T-Shirt',
-          img: 'https://toyszoom.net/cdn/shop/products/Girls-Wedding-Dress-Kids-Princess-Dress-Little-Girl-Ball-Gown-Clothes-Baby-Floor-Satin-Dresses-Age_large.jpg?v=1537720572',
-          price: 80,
-          discount: 20,
-        },
-        {
-          id: 1,
-          name: 'T-Shirt',
-          img: 'https://www.byrdie.com/thmb/1mtEzOLSXxFH4AQygcf4W-ZXcL0=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/greenjumpsuit-c700f1b32e5c4bd3ad561339dc9a25f2.jpg',
-          price: 80,
-          discount: 20,
-        },
-        {
-          id: 1,
-          name: 'T-Shirt',
-          img: 'https://www.byrdie.com/thmb/1mtEzOLSXxFH4AQygcf4W-ZXcL0=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/greenjumpsuit-c700f1b32e5c4bd3ad561339dc9a25f2.jpg',
-          price: 80,
-          discount: 20,
-        },
-        
-       
-      ];
-      
   return (
-    <>
-     <Heading as="h1" size="xl" mb={8} >
-        We Provide the Best Experience
-      </Heading>
-    <Flex justify="center" align="center" direction="row" flexWrap="wrap" gap={8} >
-              {Dummy.map((item) => (
-                <Box
-                  key={item.id}
-                  borderRadius="lg"
-                  bg="white"
-                  width="250px"
-                  height="375px"
-                  cursor="pointer"
-                  boxShadow="2xl"
-                  position="relative"
-                  transition="transform 0.2s ease-in-out"
-                  _hover={{ transform: 'scale(1.05)' }}
-                >
-                  <Box
-                    width="250px"
-                    height="250px"
-                    overflow="hidden"
-                    position="relative"
-                    mb={4}
-                  >
-                    <Image
-                      src={item.img}
-                      width="250px"
-                      height="250px"
-                      objectFit="center"
-                    />
-                    <Box
-                      position="absolute"
-                      top={2}
-                      right={2}
-                      bg="white"
-                      p={1}
-                      borderRadius="10px"
-                      color="#0077B5"
-                    >
-                      <ShoppingCart />
-                    </Box>
-                  </Box>
-                </Box>
-              ))}
-            </Flex>
-    
-    </>
-  )
-}
+    <Box p={4}  >
+         <Heading size="lg" fontWeight="bold">Category</Heading>
+      <Flex flexWrap="wrap" justifyContent="center" alignItems="center" mt={10}>
+        {categories.map((category) => (
+          <Box key={category.name} p={2} textAlign="center" position="relative" >
+            <Box mb={2} border="1px solid #ccc" borderRadius="10px" overflow="hidden" boxShadow="2xl" >
+              <Image src={category.imageUrl} alt={category.name} borderRadius="md" boxSize="300px" />
+            </Box>
+            <Button
+              position="absolute"
+              bottom={20}
+              left={20}
+              right={0}
+              width="50%"
+              colorScheme="blackAlpha"
+              variant="solid"
+              py={1}
+              px={1}
+            >
+              {category.name}
+              <IconButton
+                icon={<ArrowForwardIcon />}
+                ml={2}
+                aria-label="Category Arrow"
+                size="sm"
+                variant="ghost"
+              />
+            </Button>
+          </Box>
+        ))}
+      </Flex>
+    </Box>
+  );
+};
 
-export default Category
+export default Category;
