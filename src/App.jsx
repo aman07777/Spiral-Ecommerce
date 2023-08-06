@@ -10,6 +10,8 @@ import AdminOrder from "./pages/Admin/AdminOrder";
 import AdminCustomer from "./pages/Admin/AdminCustomer";
 import AdminAffiliator from "./pages/Admin/AdminAffliator";
 import AdminSettings from "./pages/Admin/AdminSetting";
+// import Cart from "./pages/Cart";
+import CartPage from "./pages/CartPage";
 
 
 function App() {
@@ -28,9 +30,8 @@ function App() {
         <Route path="/adminCustomer" element={<AdminCustomer/>}/>
         <Route path="/adminAffliator" element={<AdminAffiliator/>}/>
         <Route path="/adminSetting" element={<AdminSettings/>}/>
+        <Route path="/cart" element={<CartPage/>}/>
 
-
-        
 
 
       </Routes>
