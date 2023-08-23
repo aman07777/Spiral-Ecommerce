@@ -1,10 +1,10 @@
 .wrapper {
-    display: flex;
-    flex-direction: column;
-    margin-left: 200px; /* Adjust this value to match the width of your navbar */
-  }
-  
-  .content {
-    margin: 0 auto;
-    width: 90vw;
-  }
+  display: flex;
+  flex-direction: column;
+  margin-left: 200px; /* Adjust this value to match the width of your navbar */
+}
+
+.content {
+  margin: 0 auto;
+  width: 90vw;
+}

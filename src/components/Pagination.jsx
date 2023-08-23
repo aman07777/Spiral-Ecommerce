@@ -1,33 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Button, Flex, Text } from '@chakra-ui/react';
 
 function Pagination({ currentPage, totalPages, onPageChange }) {
   const [pageButtons, setPageButtons] = useState([]);
 
-  // Generate an array of page numbers to display as buttons
-  // Only show up to 5 page buttons at a time
-  const generatePageButtons = () => {
-    const buttons = [];
-    const maxButtons = 5;
-    const startPage = Math.max(1, currentPage - Math.floor(maxButtons / 2));
-    const endPage = Math.min(totalPages, startPage + maxButtons - 1);
+  useEffect(() => {
+    const generatePageButtons = () => {
+      const buttons = [];
+      const maxButtons = 5;
+      const startPage = Math.max(1, currentPage - Math.floor(maxButtons / 2));
+      const endPage = Math.min(totalPages, startPage + maxButtons - 1);
 
-    for (let i = startPage; i <= endPage; i++) {
-      buttons.push(i);
-    }
+      for (let i = startPage; i <= endPage; i++) {
+        buttons.push(i);
+      }
 
-    setPageButtons(buttons);
-  };
+      setPageButtons(buttons);
+    };
 
-  // Handle clicking on a page button
-  const handlePageClick = (page) => {
-    onPageChange(page);
-  };
-
-  // Generate the page buttons when the component mounts or when the currentPage changes
-  React.useEffect(() => {
     generatePageButtons();
-  }, [currentPage]);
+  }, [currentPage, totalPages, onPageChange]);
+
+  const handlePageClick = (page) => {
+    const newPage = Math.max(1, Math.min(page, totalPages)); // Ensure page is within valid range
+    onPageChange(newPage);
+  };
 
   return (
     <Flex direction="row" justifyContent="center" alignItems="center" mt={4}>
@@ -52,13 +49,12 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
       <Button
         disabled={currentPage === totalPages}
         onClick={() => handlePageClick(currentPage + 1)}
-        ml={2}
         colorScheme="blue"
       >
         Next
       </Button>
       <Box ml={4}>
-        <Text fontSize="sm">
+        <Text fontSize="lg">
           Page {currentPage} of {totalPages}
         </Text>
       </Box>

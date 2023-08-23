@@ -1,159 +1,301 @@
-import { Box, Flex, Image, Text } from '@chakra-ui/react';
-import { useState } from 'react';
-import ZoomInIcon from '@mui/icons-material/ZoomIn';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
-function ProductDetails() {
-  const product = {
-    name: 'Dummy Product',
-    price: 100,
-    discount: 80,
-    description: 'This is a dummy product description.',
-    brand: 'Dummy Brand',
-    category: 'Dummy Category',
-    sku: '123456',
-    availability: 'In Stock',
-    img: "https://www.thespruce.com/thmb/I-Q7vHSennsvdAHWbpjxOR5DYEU=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/get-a-flawless-paint-job-with-tack-cloth-1822686-06-81df672f15de4dc98b085e01dcf8bc06.jpg"
+import {
+  Box,
+  Container,
+  Text,
+  Image,
+  Flex,
+  Button,
+  Heading,
+  Stack,
+  List,
+  ListItem,
+  useToast,
+} from "@chakra-ui/react";
+
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import ReactImageMagnify from "react-image-magnify";
+
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import Loader from "../components/Loader";
+
+import { postCart } from "../services/CartServices";
+import { useUserContext } from "../contexts/UserContext";
+
+export default function ProductDetails() {
+  const { state } = useLocation();
+  const { product } = state;
+
+  const [images, setImages] = useState([]);
+  const [selectedImage, setSelectedImage] = useState();
+  const [selectedQuantity, setSelectedQuantity] = useState(+product.quantity);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const { currentUser } = useUserContext();
+  const navigate = useNavigate();
+  const toast = useToast();
+
+  useEffect(() => {
+    setSelectedQuantity(+product.quantity);
+    setImages(product.images);
+    setIsLoading(false);
+  }, [product.quantity, product.images]);
+
+  const handleQuantityChange = (e) => {
+    setSelectedQuantity(+e.target.value);
   };
 
-  const [zoomLevel, setZoomLevel] = useState(1);
-  const [showZoomedIn, setShowZoomedIn] = useState(false);
-  const [zoomedInPosition, setZoomedInPosition] = useState({ x: 0, y: 0 });
-
-  // Handle zoom in and zoom out buttons
-  const handleZoomIn = () => {
-    setZoomLevel(zoomLevel + 0.1);
+  const handleIncreaseQuantity = (e) => {
+    if (selectedQuantity < product.quantity)
+      setSelectedQuantity(selectedQuantity + 1);
   };
 
-  // Handle mouse move event on the image
-  const handleMouseMove = (event) => {
-    const { left, top, width, height } = event.target.getBoundingClientRect();
-    const x = ((event.clientX - left) / width) * 100;
-    const y = ((event.clientY - top) / height) * 100;
-    setZoomedInPosition({ x, y });
+  const handleDecreaseQuantity = (e) => {
+    if (selectedQuantity > 1) setSelectedQuantity(selectedQuantity - 1);
   };
 
-  // Handle mouse enter event on the image
-  const handleMouseEnter = () => {
-    setShowZoomedIn(true);
-  };
+  const handleAddtoCart = async () => {
+    if (currentUser) {
+      try {
+        const response = await postCart(
+          currentUser,
+          product._id,
+          selectedQuantity
+        );
+        if (response.status === 201) {
+          toast({
+            title: "Success",
+            description: "Product added to cart.",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+          });
 
-  // Handle mouse leave event on the image
-  const handleMouseLeave = () => {
-    setShowZoomedIn(false);
+          navigate("/cart");
+        }
+      } catch (error) {
+        const errorMessage =
+          error.response?.data?.message || "An error occurred.";
+        toast({
+          title: "Error",
+          description: errorMessage,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+    } else {
+      navigate("/login");
+    }
   };
 
   return (
     <>
       <Navbar />
-      <Flex direction={['column', 'column', 'row']} alignItems={['center', 'center', 'flex-start']} mt={8}>
-        <Box width={['100%', '100%', '50%']} mr={[0, 0, 8]}>
-          <Box
-            width="100%"
-            height="500px"
-            position="relative"
-            overflow="hidden"
-            borderRadius="lg"
-            boxShadow="2xl"
-            mb={4}
-            onMouseMove={handleMouseMove}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            <Box
-              as={Image}
-              src={product.img}
-              width="100%"
-              height="100%"
-              objectFit="contain"
-              transform={`scale(${zoomLevel})`}
-              transition="transform 0.2s ease-in-out"
-              _hover={{ transform: 'scale(1.2)', cursor: 'zoom-in' }}
-              onClick={handleZoomIn}
-            />
-            {showZoomedIn && (
+      {!isLoading ? (
+        <Container maxW={"7xl"} py={12} display="flex" justifyContent="center">
+          <Box display="flex" flexDirection="row">
+            <Box display="flex" flexDirection="column">
               <Box
-                position="absolute"
-                top="0"
-                left="100%"
-                width="300px"
-                height="300px"
-                borderRadius="lg"
-                overflow="hidden"
-                boxShadow="2xl"
-                zIndex="999"
+                display="flex"
+                justifyContent="center"
+                flexDirection="column"
+                flex="1"
               >
-                <Box
-                  as={Image}
-                  src={product.img}
-                  width="100%"
-                  height="100%"
-                  objectFit="contain"
-                  transform={`scale(${zoomLevel + 0.5})`}
-                  transformOrigin={`${zoomedInPosition.x}% ${zoomedInPosition.y}%`}
+                <ReactImageMagnify
+                  imageAlt="Product image" // removed curly braces
+                  dragToMove={false}
+                  mouseActivation="hover"
+                  cursorStyle="crosshair"
+                  onError={() => console.log("Error loading image")}
+                  className="product-image" // removed curly braces
+                  style={{ zIndex: 1 }}
+                  enlargedImageContainerDimensions={{
+                    width: "80%",
+                    height: "80%",
+                  }}
+                  {...{
+                    largeImage: {
+                      src: selectedImage
+                        ? `http://localhost:8080/${selectedImage}`
+                        : `http://localhost:8080/${images[0]}`,
+                      width: 2200,
+                      height: 1800,
+                    },
+                    smallImage: {
+                      alt: "image",
+                      src: selectedImage
+                        ? `http://localhost:8080/${selectedImage}`
+                        : `http://localhost:8080/${images[0]}`,
+                      width: 600,
+                      height: 600,
+                    },
+                  }}
                 />
               </Box>
-            )}
-            <Box
-              position="absolute"
-              bottom={2}
-              right={2}
-              bg="white"
-              p={1}
-              borderRadius="10px"
-              color="#0077B5"
-              cursor="zoom-in"
-              onClick={handleZoomIn}
-              _hover={{ bg: 'gray.100' }}
-            >
-              <ZoomInIcon />
-            </Box>
-          </Box>
-          <Flex direction={['column', 'column', 'row']} alignItems={['center', 'center', 'flex-start']}>
-            <Box>
-              <Text fontWeight="bold" fontSize="2xl" mb={2}>
-                {product.name}
-              </Text>
-              <Text fontSize="lg" color="grey.100" fontWeight="bold" mb={2}>
-                ${product.price}
-              </Text>
-              <Text fontSize="lg" color="#0077B5" textDecoration="line-through" mb={2}>
-                ${product.discount}
-              </Text>
-              <Text fontSize="lg" mb={4}>
+              <Box flex="1">
+                <Flex gap={2} pt="1rem">
+                  {images.map((image, index) => (
+                    <Image
+                      key={index}
+                      src={`http://localhost:8080/${image}`}
+                      boxSize="50px"
+                      objectFit="cover"
+                      mb={2}
+                      borderRadius="1rem"
+                      onClick={() => setSelectedImage(image)}
+                    />
+                  ))}
+                </Flex>
+              </Box>
+
+              {/* <VStack spacing={{ base: 4, sm: 6 }} textAlign="center"> */}
+              <Text fontSize={"2xl"} fontWeight={"300"} maxWidth={"3xl"}>
                 {product.description}
               </Text>
+              {/* </VStack> */}
             </Box>
-          </Flex>
-        </Box>
-        <Box width={['100%', '100%', '50%']}>
-          <Text fontWeight="bold" fontSize="xl" mb={2}>
-            Product Details
-          </Text>
-          <Box mb={4}>
-            <Text fontWeight="bold" mb={2}>
-              Brand:
-            </Text>
-            <Text>{product.brand}</Text>
           </Box>
-          <Box mb={4}>
-            <Text fontWeight="bold" mb={2}>
-              Category:
-            </Text>
-            <Text>{product.category}</Text>
+          {/* </Box> */}
+          <Box display="flex" flexDirection="initial" mr="100px">
+            <Stack spacing={{ base: 6, md: 10 }}>
+              <Box as={"header"}>
+                <Heading
+                  lineHeight={1.1}
+                  fontWeight={600}
+                  fontSize={{ base: "2xl", sm: "4xl", lg: "5xl" }}
+                >
+                  {product.name}
+                </Heading>
+                <Text fontWeight={300} fontSize={"2xl"}>
+                  ${product.price} NPR
+                </Text>
+              </Box>
+
+              <Text
+                fontSize={{ base: "16px", lg: "18px" }}
+                fontWeight={"500"}
+                textTransform={"uppercase"}
+                mb={"1"}
+              >
+                Product Details
+              </Text>
+
+              <List>
+                <ListItem>
+                  <Text as={"span"} fontWeight={"bold"}>
+                    Brand:
+                  </Text>{" "}
+                  {product.brand}
+                </ListItem>
+                <ListItem>
+                  <Text as={"span"} fontWeight={"bold"}>
+                    Category:
+                  </Text>{" "}
+                  {product.category}
+                </ListItem>
+                <ListItem>
+                  <Text as={"span"} fontWeight={"bold"}>
+                    Colors:
+                  </Text>{" "}
+                  {product.colors.map((color, index) => (
+                    <Box
+                      key={index}
+                      display="inline-block"
+                      w="20px"
+                      h="20px"
+                      borderRadius="50%"
+                      bg={color}
+                      mx="2px"
+                    ></Box>
+                  ))}
+                </ListItem>
+              </List>
+              <Flex direction="column">
+                <Text
+                  fontSize={{ base: "16px", lg: "18px" }}
+                  fontWeight={"500"}
+                >
+                  Quantity:
+                </Text>
+                <Flex alignItems="center" mt={{ base: 2, md: 4 }}>
+                  <Button
+                    size="sm"
+                    rounded="full"
+                    onClick={handleDecreaseQuantity}
+                    _hover={{
+                      transform: "translateY(2px)",
+                      boxShadow: "lg",
+                    }}
+                  >
+                    -
+                  </Button>
+                  <input
+                    type="number"
+                    min="1"
+                    max={`"${product.quantity}"`}
+                    value={selectedQuantity}
+                    onChange={handleQuantityChange}
+                    style={{
+                      width: "50px",
+                      textAlign: "center",
+                      borderRadius: "0.5rem",
+                      appearance: "textfield",
+                      MozAppearance: "textfield",
+                      WebkitAppearance: "textfield",
+                      mx: "2", // Add some horizontal spacing between the input and buttons
+                      py: "2", // Add some vertical padding for better alignment
+                    }}
+                  />
+                  <Button
+                    size="sm"
+                    rounded="full"
+                    onClick={handleIncreaseQuantity}
+                    _hover={{
+                      transform: "translateY(2px)",
+                      boxShadow: "lg",
+                    }}
+                  >
+                    +
+                  </Button>
+                </Flex>
+              </Flex>
+
+              <Stack direction="row">
+                <LocalShippingIcon />
+                <Text>2-3 business days delivery</Text>
+              </Stack>
+
+              <Flex gap={5} mt={4}>
+                <Button
+                  size="lg"
+                  py={7}
+                  textTransform="uppercase"
+                  colorScheme="linkedin"
+                  onClick={handleAddtoCart}
+                >
+                  Add to cart
+                </Button>
+
+                <Button
+                  size="lg"
+                  py={7}
+                  textTransform="uppercase"
+                  colorScheme="linkedin"
+                >
+                  Buy now
+                </Button>
+              </Flex>
+            </Stack>
           </Box>
-          <Box mb={4}>
-            <Text fontWeight="bold" mb={2}>
-              Availability:
-            </Text>
-            <Text>{product.availability}</Text>
-          </Box>
-        </Box>
-      </Flex>
+        </Container>
+      ) : (
+        <Loader />
+      )}
       <Footer />
     </>
   );
 }
-
-export default ProductDetails;

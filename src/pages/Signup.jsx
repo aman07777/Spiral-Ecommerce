@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { Box, Input, Text, FormControl, FormLabel, InputGroup, InputRightElement, Button, Checkbox } from '@chakra-ui/react';
+import { Box, Input, Text, FormControl, FormLabel, InputGroup, InputRightElement, Button, Checkbox, useToast } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import EmailVerification from './EmailVerification';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import { signup } from '../services/AuthServices';
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -11,6 +14,8 @@ const Signup = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [isTermsAccepted, setIsTermsAccepted] = useState(false);
+  const toast = useToast();
 
   const handleFirstNameChange = (e) => {
     setFirstName(e.target.value);
@@ -32,14 +37,49 @@ const Signup = () => {
     setConfirmPassword(e.target.value);
   };
 
-  const handleFormSubmit = (e) => {
+  const handleTermsAccepted = (e) => {
+    setIsTermsAccepted(e.target.checked);
+  };
+
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    setIsFormSubmitted(true);
- 
+    if (isTermsAccepted) {
+      try {
+        const response = await signup(firstName, lastName, email, password, confirmPassword);
+        console.log(response.data);
+        toast({
+          title: 'Verfication Code Sent Successfully',
+          description: 'Please check your email for the verification code.',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        });
+
+        setIsFormSubmitted(true);
+      } catch (error) {
+        const errorMessage = error.response?.data?.message || 'An error occurred.';
+        toast({
+          title: 'Error',
+          description: errorMessage,
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+    } else {
+      toast({
+        title: 'Error',
+        description: 'Please accept terms and conditions.',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
+    }
   };
 
   return (
     <>
+      <Navbar />
       {!isFormSubmitted ? (
         <Box display="flex" justifyContent="center" alignItems="center" width="100vw" mt={5}>
           <Box width={{ base: '100vw', sm: '500px' }} p={2}>
@@ -62,12 +102,13 @@ const Signup = () => {
             </FormControl>
             <FormControl>
               <FormLabel fontSize={20}>Password</FormLabel>
-              <Input name="password" maxLength={11} placeholder="Enter password" onChange={handlePasswordChange} value={password}/>
+              <Input name="password" type='password' maxLength={11} placeholder="Enter password" onChange={handlePasswordChange} value={password} />
             </FormControl>
             <FormControl mt={3}>
               <FormLabel fontSize={20}>Confirm Password</FormLabel>
               <InputGroup size="md">
                 <Input
+                  type='password'
                   name="confirm-password"
                   pr="4.5rem"
                   placeholder="Enter Confirm password"
@@ -79,7 +120,7 @@ const Signup = () => {
                 </InputRightElement>
               </InputGroup>
             </FormControl>
-            <Checkbox name="terms" mt={5}>
+            <Checkbox name="terms" mt={5} onChange={handleTermsAccepted}>
               I agree to the <strong>Terms of Service</strong> and <strong>Privacy Policy</strong>.
             </Checkbox>
             <Button mt={5} width="100%" variant="solid" colorScheme="linkedin" onClick={handleFormSubmit}>
@@ -89,7 +130,7 @@ const Signup = () => {
             <Text my={3} width="100%" textAlign="center">
               or
             </Text>
-            <Button width="100%" variant="outline" colorScheme="linkedin" onClick={() => navigate('/')}>
+            <Button width="100%" variant="outline" colorScheme="linkedin" onClick={() => navigate('/login')}>
               Login
             </Button>
           </Box>
@@ -97,6 +138,7 @@ const Signup = () => {
       ) : (
         <EmailVerification email={email} />
       )}
+      <Footer />
     </>
   );
 };
