@@ -32,44 +32,52 @@ function HeroBanner() {
     };
 
 
-    return (
-        <Flex flexDirection="column">
-            <Flex position="relative" width="75%" height="500px" ml="200px" mt="20px" mb="20px" overflow="hidden">
-                <AnimatePresence initial={false} custom={currentImage}>
-                    {images.map((imageUrl, index) => (
-                        index === currentImage && (
-                            <motion.div
-                                key={index}
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                transition={{ duration: 2 }}
-                                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-                            >
-                                <Image src={imageUrl} alt={`Image ${index}`} width="100%" height="100%" objectFit="cover" />
-                            </motion.div>
-                        )
-                    ))}
-                </AnimatePresence>
+  return (
+  <Flex flexDirection="column">
+    <Flex
+      position="relative"
+      width={{ base: '100%', md: '75%' }}
+      height={{ base: '300px', md: '500px' }}
+      ml={{ base: '0', md: '200px' }}
+      mt="20px"
+      mb="20px"
+      overflow="hidden"
+    >
+      <AnimatePresence initial={false} custom={currentImage}>
+        {images.map((imageUrl, index) => (
+          index === currentImage && (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 2 }}
+              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+            >
+              <Image src={imageUrl} alt={`Image ${index}`} width="100%" height="100%" objectFit="cover" />
+            </motion.div>
+          )
+        ))}
+      </AnimatePresence>
 
-                <Box position="absolute" top="50%" left="10px" transform="translateY(-50%)">
-                    <IconButton
-                        aria-label="Previous Image"
-                        icon={<ChevronLeftIcon />}
-                        onClick={prevImage}
-                    />
-                </Box>
+      <Box position="absolute" top="50%" left="10px" transform="translateY(-50%)">
+        <IconButton
+          aria-label="Previous Image"
+          icon={<ChevronLeftIcon />}
+          onClick={prevImage}
+        />
+      </Box>
 
-                <Box position="absolute" top="50%" right="10px" transform="translateY(-50%)">
-                    <IconButton
-                        aria-label="Next Image"
-                        icon={<ChevronRightIcon />}
-                        onClick={nextImage}
-                    />
-                </Box>
-            </Flex>
-        </Flex>
-    )
-}
+      <Box position="absolute" top="50%" right="10px" transform="translateY(-50%)">
+        <IconButton
+          aria-label="Next Image"
+          icon={<ChevronRightIcon />}
+          onClick={nextImage}
+        />
+      </Box>
+    </Flex>
+  </Flex>
+)
+};
 
 export default HeroBanner

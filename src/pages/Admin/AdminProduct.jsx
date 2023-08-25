@@ -226,10 +226,11 @@ function AdminProduct() {
   return (
     <>
       <Dashboard />
-      <Flex direction="row" p={4}>
-        <Flex direction="column" width="40%" mr={4}>
-          <Box borderWidth="1px" borderRadius="lg" overflow="hidden" mb={4} height="90vh" mt={0}>
+      <Flex direction={{base:"column",md:"row"}} p={4}>
+        <Flex direction="column" width={{base:"100%",md:"40%"}} mr={4}>
+          <Box borderWidth="1px" borderRadius="lg" overflow="hidden" mb={4} height="90vh" mt={0} padding={{base: 2, md: 6}}>
             <Box p="6" mt={0}>
+              
               <form onSubmit={handleSubmit}>
                 <FormControl id="name" isRequired mb={2}>
                   <FormLabel>Product Name</FormLabel>
@@ -342,10 +343,11 @@ function AdminProduct() {
                   Add Product
                 </Button>
               </form>
+           
             </Box>
           </Box>
         </Flex>
-        <Flex direction="column" width="100%">
+        <Flex direction="column"width={{base:"40%",md:"100%"}}>
           <ProductList
             products={products}
             onEdit={handleEdit}

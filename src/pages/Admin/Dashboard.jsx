@@ -35,9 +35,6 @@ const Sidebar = () => {
             aria-label="Open sidebar"
           />
         </Box>
-        <Text fontSize="xl" fontWeight="bold" color="white">
-          Admin Dashboard
-        </Text>
         <Spacer />
       <Searchbar/>
         <Spacer />
@@ -88,6 +85,7 @@ const Sidebar = () => {
             <Icon as={Settings} mr={2} />
             <Text>Settings</Text>
           </Box>
+          
               </VStack>
             </DrawerBody>
           </DrawerContent>

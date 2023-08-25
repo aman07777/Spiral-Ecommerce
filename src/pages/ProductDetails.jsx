@@ -33,6 +33,8 @@ export default function ProductDetails() {
   const [selectedImage, setSelectedImage] = useState();
   const [selectedQuantity, setSelectedQuantity] = useState(+product.quantity);
   const [isLoading, setIsLoading] = useState(true);
+  const [isMobile] = useMediaQuery("(max-width: 767px)");
+
 
   const { currentUser } = useUserContext();
   const navigate = useNavigate();
@@ -96,9 +98,9 @@ export default function ProductDetails() {
     <>
       <Navbar />
       {!isLoading ? (
-        <Container maxW={"7xl"} py={12} display="flex" justifyContent="center">
-          <Box display="flex" flexDirection="row">
-            <Box display="flex" flexDirection="column">
+        <Container maxW={"7xl"} py={12} display="flex" flexDirection={{base: "column", md: "row"}}  justifyContent="center">
+          <Box display="flex" flexDirection={{base: "column", md: "row"}}>
+            <Box display="flex" flexDirection="column" mb={{base: "2rem", md: 0}}>
               <Box
                 display="flex"
                 justifyContent="center"
@@ -130,20 +132,19 @@ export default function ProductDetails() {
                       src: selectedImage
                         ? `http://localhost:8080/${selectedImage}`
                         : `http://localhost:8080/${images[0]}`,
-                      width: 600,
-                      height: 600,
+                        width: isMobile ? 305 : 600,
+                        height: isMobile ? 300 : 600,
                     },
                   }}
                 />
               </Box>
               <Box flex="1">
-                <Flex gap={2} pt="1rem">
+                <Flex gap={2} pt="1rem" overflowX="scroll">
                   {images.map((image, index) => (
                     <Image
                       key={index}
                       src={`http://localhost:8080/${image}`}
-                      boxSize="50px"
-                      objectFit="cover"
+                      boxSize={{base: "40px", md: "50px"}}                      objectFit="cover"
                       mb={2}
                       borderRadius="1rem"
                       onClick={() => setSelectedImage(image)}
@@ -160,8 +161,7 @@ export default function ProductDetails() {
             </Box>
           </Box>
           {/* </Box> */}
-          <Box display="flex" flexDirection="initial" mr="100px">
-            <Stack spacing={{ base: 6, md: 10 }}>
+          <Box display="flex" flexDirection="column" justifyContent="space-between" ml={{base: 0, md: "2rem"}}>
               <Box as={"header"}>
                 <Heading
                   lineHeight={1.1}
@@ -214,14 +214,14 @@ export default function ProductDetails() {
                   ))}
                 </ListItem>
               </List>
-              <Flex direction="column">
+              <Flex alignItems="center" mt={{ base: 2, md: 4 }}>
                 <Text
                   fontSize={{ base: "16px", lg: "18px" }}
                   fontWeight={"500"}
                 >
                   Quantity:
                 </Text>
-                <Flex alignItems="center" mt={{ base: 2, md: 4 }}>
+                <Flex alignItems="center" ml={{base: "1rem", md: "2rem"}}>
                   <Button
                     size="sm"
                     rounded="full"
@@ -289,7 +289,6 @@ export default function ProductDetails() {
                   Buy now
                 </Button>
               </Flex>
-            </Stack>
           </Box>
         </Container>
       ) : (

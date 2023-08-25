@@ -11,19 +11,18 @@ const Category = () => {
   ];
 
   return (
-    <Box p={4}  >
-         <Heading size="lg" fontWeight="bold">Category</Heading>
+    <Box p={4}>
+      <Heading size="lg" fontWeight="bold">Category</Heading>
       <Flex flexWrap="wrap" justifyContent="center" alignItems="center" mt={10}>
         {categories.map((category) => (
-          <Box key={category.name} p={2} textAlign="center" position="relative" >
-            <Box mb={2} border="1px solid #ccc" borderRadius="10px" overflow="hidden" boxShadow="2xl" >
-              <Image src={category.imageUrl} alt={category.name} borderRadius="md" boxSize="300px" />
+          <Box key={category.name} p={2} textAlign="center" position="relative" width={{ base: '50%', md: 'auto' }}>
+            <Box mb={2} border="1px solid #ccc" borderRadius="10px" overflow="hidden" boxShadow="2xl">
+              <Image src={category.imageUrl} alt={category.name} borderRadius="md" boxSize={{ base: '200px', md: '300px' }} />
             </Box>
             <Button
               position="absolute"
               bottom={20}
-              left={20}
-              right={0}
+              left={{ base: '30%', md: '20%' }}
               width="50%"
               colorScheme="blackAlpha"
               variant="solid"

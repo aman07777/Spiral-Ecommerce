@@ -40,9 +40,9 @@ const Saletime = () => {
   }
 
   return (
-    <Box fontSize="lg"  textAlign="center">
+    <Box display={{base:'flex',md:'flex',sm:'flex'}}fontSize="lg"  textAlign="center">
       Sale Ends in:
-      <Box display="inline-block" mx={1} borderRadius="5px" p={1}  backgroundColor="#0077B5">
+      <Box  mx={1} borderRadius="5px" p={{ base: '0.5rem', md: '0.5rem', sm: '0.5rem' }} backgroundColor="#0077B5">
         <Text as="span" color="white">
           {timeLeft.hours}
         </Text>
@@ -50,7 +50,7 @@ const Saletime = () => {
       <Text as="span" color="gray.500" mx={1}>
         :
       </Text>
-      <Box display="inline-block" mx={1} borderRadius="5px" p={1}backgroundColor="#0077B5">
+      <Box  mx={1} borderRadius="5px" p={{ base: '0.5rem', md: '0.5rem', sm: '0.5rem' }}backgroundColor="#0077B5">
         <Text as="span" color="white">
           {timeLeft.minutes}
         </Text>
@@ -58,7 +58,7 @@ const Saletime = () => {
       <Text as="span" color="gray.500" mx={1}>
         :
       </Text>
-      <Box display="inline-block" mx={1}  borderRadius="5px" p={1} backgroundColor="#0077B5">
+      <Box  mx={1}  borderRadius="5px" p={{ base: '0.5rem', md: '0.5rem', sm: '0.5rem' }} backgroundColor="#0077B5">
         <Text as="span" color="white">
           {timeLeft.seconds}
         </Text>

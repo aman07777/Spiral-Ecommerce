@@ -10,20 +10,32 @@ import {
 const BestExperiencePage = () => {
   return (
     <Box p={4}>
-      <Heading as="h1" size="xl" mb={8} >
+      <Heading as="h1" size="xl" mb={8}>
         We Provide the Best Experience
       </Heading>
-      <Grid templateColumns="repeat(auto-fit, minmax(240px, 1fr))" gap={15}>
-        <FeatureCard icon={<OriginalProductsIcon fontSize="large" />} title="Original Products">
-          We believe in quality and authenticity. All our products are sourced directly from reputable manufacturers and suppliers.
+      <Grid templateColumns={{base:"repeat(2, 165px)",md:"repeat(auto-fit, minmax(300px, 1fr))"}} gap={{base:'5', md:'15'}}>
+        <FeatureCard
+          icon={<OriginalProductsIcon fontSize="large" />}
+          title="Original Products"
+        >
+          We believe in quality and authenticity. 
         </FeatureCard>
-        <FeatureCard icon={<FastShippingIcon fontSize="large" />} title="Fast and Free Shipping">
-          No more waiting! We offer lightning-fast shipping and it's absolutely free on all orders.
+        <FeatureCard
+          icon={<FastShippingIcon fontSize="large" />}
+          title="Fast and Free Shipping"
+        >
+          No more waiting! We offer light
         </FeatureCard>
-        <FeatureCard icon={<NewArrivalIcon fontSize="large" />} title="New Arrival">
-          Stay ahead of the trends with our New Arrival section. Discover the latest and hottest products from top brands.
+        <FeatureCard
+          icon={<NewArrivalIcon fontSize="large" />}
+          title="New Arrival"
+        >
+          Stay ahead of the trends with our New Arrival section.
         </FeatureCard>
-        <FeatureCard icon={<BrandsIcon fontSize="large" />} title="Brands">
+        <FeatureCard
+          icon={<BrandsIcon fontSize="large" />}
+          title="Brands"
+        >
           We only offer products from renowned brands known for their quality and reliability.
         </FeatureCard>
       </Grid>
@@ -33,10 +45,16 @@ const BestExperiencePage = () => {
 
 const FeatureCard = ({ icon, title, children }) => {
   return (
-    <Box p={4} borderRadius="lg" boxShadow='2xl' cursor="pointer" transition="transform 0.2s ease-in-out" _hover={{ transform: 'scale(1.05)' }}  >
-        <Box >
-      {icon}
-      </Box>
+    <Box
+      p={{base:'1', md:'5'}}
+      borderRadius="lg"
+      boxShadow="2xl"
+      cursor="pointer"
+      transition="transform 0.2s ease-in-out"
+      _hover={{ transform: 'scale(1.05)' }}
+      maxWidth={{ base: '100%', md: 'none' }}
+    >
+      <Box>{icon}</Box>
       <Heading as="h3" size="md" mt={4} mb={2}>
         {title}
       </Heading>

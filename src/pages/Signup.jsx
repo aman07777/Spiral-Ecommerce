@@ -81,6 +81,7 @@ const Signup = () => {
     <>
       <Navbar />
       {!isFormSubmitted ? (
+        
         <Box display="flex" justifyContent="center" alignItems="center" width="100vw" mt={5}>
           <Box width={{ base: '100vw', sm: '500px' }} p={2}>
             <Text textAlign="center" color={'linkedin.500'} fontSize={32} fontWeight={600} mb={10}>
