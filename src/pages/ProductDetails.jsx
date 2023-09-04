@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import {
   Box,
@@ -23,29 +23,55 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Loader from "../components/Loader";
 
+import { getProduct } from "../services/ProductServices";
 import { postCart } from "../services/CartServices";
 import { useUserContext } from "../contexts/UserContext";
 
 export default function ProductDetails() {
-  const { state } = useLocation();
-  const { product } = state;
 
+  const [product, setProduct] = useState({});
   const [images, setImages] = useState([]);
   const [selectedImage, setSelectedImage] = useState();
-  const [selectedQuantity, setSelectedQuantity] = useState(+product.quantity);
+  const [selectedQuantity, setSelectedQuantity] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isMobile] = useMediaQuery("(max-width: 767px)");
 
 
+  const { id: productId } = useParams();
   const { currentUser } = useUserContext();
   const navigate = useNavigate();
   const toast = useToast();
 
   useEffect(() => {
-    setSelectedQuantity(+product.quantity);
-    setImages(product.images);
-    setIsLoading(false);
-  }, [product.quantity, product.images]);
+    getProduct(productId).then((result) => {
+      if (!result.product) {
+        toast({
+          title: "No products found",
+          description: "Please try again with different keywords.",
+          status: "warning",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+      setProduct(result.product);
+      setSelectedQuantity(+result.product.quantity);
+      setImages(result.product.images);
+      setIsLoading(false);
+
+    }).catch((error) => {
+      const errorMessage =
+        error.response?.data?.message || "An error occurred.";
+      toast({
+        title: "Error",
+        description: errorMessage,
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    });
+
+  }
+    , [productId, toast]);
 
   const handleQuantityChange = (e) => {
     setSelectedQuantity(+e.target.value);
@@ -99,9 +125,9 @@ export default function ProductDetails() {
     <>
       <Navbar />
       {!isLoading ? (
-        <Container maxW={"7xl"} py={12} display="flex" flexDirection={{base: "column", md: "row"}}  justifyContent="center">
-          <Box display="flex" flexDirection={{base: "column", md: "row"}}>
-            <Box display="flex" flexDirection="column" mb={{base: "2rem", md: 0}}>
+        <Container maxW={"7xl"} py={12} display="flex" flexDirection={{ base: "column", md: "row" }} justifyContent="center">
+          <Box display="flex" flexDirection={{ base: "column", md: "row" }}>
+            <Box display="flex" flexDirection="column" mb={{ base: "2rem", md: 0 }}>
               <Box
                 display="flex"
                 justifyContent="center"
@@ -133,8 +159,8 @@ export default function ProductDetails() {
                       src: selectedImage
                         ? `http://localhost:8080/${selectedImage}`
                         : `http://localhost:8080/${images[0]}`,
-                        width: isMobile ? 305 : 600,
-                        height: isMobile ? 300 : 600,
+                      width: isMobile ? 305 : 600,
+                      height: isMobile ? 300 : 600,
                     },
                   }}
                 />
@@ -145,7 +171,7 @@ export default function ProductDetails() {
                     <Image
                       key={index}
                       src={`http://localhost:8080/${image}`}
-                      boxSize={{base: "40px", md: "50px"}}                      objectFit="cover"
+                      boxSize={{ base: "40px", md: "50px" }} objectFit="cover"
                       mb={2}
                       borderRadius="1rem"
                       onClick={() => setSelectedImage(image)}
@@ -162,134 +188,134 @@ export default function ProductDetails() {
             </Box>
           </Box>
           {/* </Box> */}
-          <Box display="flex" flexDirection="column" justifyContent="space-between" ml={{base: 0, md: "2rem"}}>
-              <Box as={"header"}>
-                <Heading
-                  lineHeight={1.1}
-                  fontWeight={600}
-                  fontSize={{ base: "2xl", sm: "4xl", lg: "5xl" }}
-                >
-                  {product.name}
-                </Heading>
-                <Text fontWeight={300} fontSize={"2xl"}>
-                  ${product.price} NPR
-                </Text>
-              </Box>
+          <Box display="flex" flexDirection="column" justifyContent="space-between" ml={{ base: 0, md: "2rem" }}>
+            <Box as={"header"}>
+              <Heading
+                lineHeight={1.1}
+                fontWeight={600}
+                fontSize={{ base: "2xl", sm: "4xl", lg: "5xl" }}
+              >
+                {product.name}
+              </Heading>
+              <Text fontWeight={300} fontSize={"2xl"}>
+                ${product.price} NPR
+              </Text>
+            </Box>
 
+            <Text
+              fontSize={{ base: "16px", lg: "18px" }}
+              fontWeight={"500"}
+              textTransform={"uppercase"}
+              mb={"1"}
+            >
+              Product Details
+            </Text>
+
+            <List>
+              <ListItem>
+                <Text as={"span"} fontWeight={"bold"}>
+                  Brand:
+                </Text>{" "}
+                {product.brand}
+              </ListItem>
+              <ListItem>
+                <Text as={"span"} fontWeight={"bold"}>
+                  Category:
+                </Text>{" "}
+                {product.category}
+              </ListItem>
+              <ListItem>
+                <Text as={"span"} fontWeight={"bold"}>
+                  Colors:
+                </Text>{" "}
+                {product.colors.map((color, index) => (
+                  <Box
+                    key={index}
+                    display="inline-block"
+                    w="20px"
+                    h="20px"
+                    borderRadius="50%"
+                    bg={color}
+                    mx="2px"
+                  ></Box>
+                ))}
+              </ListItem>
+            </List>
+            <Flex alignItems="center" mt={{ base: 2, md: 4 }}>
               <Text
                 fontSize={{ base: "16px", lg: "18px" }}
                 fontWeight={"500"}
-                textTransform={"uppercase"}
-                mb={"1"}
               >
-                Product Details
+                Quantity:
               </Text>
-
-              <List>
-                <ListItem>
-                  <Text as={"span"} fontWeight={"bold"}>
-                    Brand:
-                  </Text>{" "}
-                  {product.brand}
-                </ListItem>
-                <ListItem>
-                  <Text as={"span"} fontWeight={"bold"}>
-                    Category:
-                  </Text>{" "}
-                  {product.category}
-                </ListItem>
-                <ListItem>
-                  <Text as={"span"} fontWeight={"bold"}>
-                    Colors:
-                  </Text>{" "}
-                  {product.colors.map((color, index) => (
-                    <Box
-                      key={index}
-                      display="inline-block"
-                      w="20px"
-                      h="20px"
-                      borderRadius="50%"
-                      bg={color}
-                      mx="2px"
-                    ></Box>
-                  ))}
-                </ListItem>
-              </List>
-              <Flex alignItems="center" mt={{ base: 2, md: 4 }}>
-                <Text
-                  fontSize={{ base: "16px", lg: "18px" }}
-                  fontWeight={"500"}
-                >
-                  Quantity:
-                </Text>
-                <Flex alignItems="center" ml={{base: "1rem", md: "2rem"}}>
-                  <Button
-                    size="sm"
-                    rounded="full"
-                    onClick={handleDecreaseQuantity}
-                    _hover={{
-                      transform: "translateY(2px)",
-                      boxShadow: "lg",
-                    }}
-                  >
-                    -
-                  </Button>
-                  <input
-                    type="number"
-                    min="1"
-                    max={`"${product.quantity}"`}
-                    value={selectedQuantity}
-                    onChange={handleQuantityChange}
-                    style={{
-                      width: "50px",
-                      textAlign: "center",
-                      borderRadius: "0.5rem",
-                      appearance: "textfield",
-                      MozAppearance: "textfield",
-                      WebkitAppearance: "textfield",
-                      mx: "2", // Add some horizontal spacing between the input and buttons
-                      py: "2", // Add some vertical padding for better alignment
-                    }}
-                  />
-                  <Button
-                    size="sm"
-                    rounded="full"
-                    onClick={handleIncreaseQuantity}
-                    _hover={{
-                      transform: "translateY(2px)",
-                      boxShadow: "lg",
-                    }}
-                  >
-                    +
-                  </Button>
-                </Flex>
-              </Flex>
-
-              <Stack direction="row">
-                <LocalShippingIcon />
-                <Text>2-3 business days delivery</Text>
-              </Stack>
-
-              <Flex gap={5} mt={4}>
+              <Flex alignItems="center" ml={{ base: "1rem", md: "2rem" }}>
                 <Button
-                  size="lg"
-                  py={7}
-                  textTransform="uppercase"
-                  colorScheme="linkedin"
-                  onClick={handleAddtoCart}
+                  size="sm"
+                  rounded="full"
+                  onClick={handleDecreaseQuantity}
+                  _hover={{
+                    transform: "translateY(2px)",
+                    boxShadow: "lg",
+                  }}
                 >
-                  Add to cart
+                  -
                 </Button>
-
+                <input
+                  type="number"
+                  min="1"
+                  max={`"${product.quantity}"`}
+                  value={selectedQuantity}
+                  onChange={handleQuantityChange}
+                  style={{
+                    width: "50px",
+                    textAlign: "center",
+                    borderRadius: "0.5rem",
+                    appearance: "textfield",
+                    MozAppearance: "textfield",
+                    WebkitAppearance: "textfield",
+                    mx: "2", // Add some horizontal spacing between the input and buttons
+                    py: "2", // Add some vertical padding for better alignment
+                  }}
+                />
                 <Button
-                  size="lg"
-                  py={7}
-                  textTransform="uppercase"
-                  colorScheme="linkedin"
+                  size="sm"
+                  rounded="full"
+                  onClick={handleIncreaseQuantity}
+                  _hover={{
+                    transform: "translateY(2px)",
+                    boxShadow: "lg",
+                  }}
                 >
-                  Buy now
+                  +
                 </Button>
               </Flex>
+            </Flex>
+
+            <Stack direction="row">
+              <LocalShippingIcon />
+              <Text>2-3 business days delivery</Text>
+            </Stack>
+
+            <Flex gap={5} mt={4}>
+              <Button
+                size="lg"
+                py={7}
+                textTransform="uppercase"
+                colorScheme="linkedin"
+                onClick={handleAddtoCart}
+              >
+                Add to cart
+              </Button>
+
+              <Button
+                size="lg"
+                py={7}
+                textTransform="uppercase"
+                colorScheme="linkedin"
+              >
+                Buy now
+              </Button>
+            </Flex>
           </Box>
         </Container>
       ) : (

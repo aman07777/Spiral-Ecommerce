@@ -1,32 +1,18 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Box, Flex, Image, Heading, Text, useToast } from '@chakra-ui/react';
+import { Box, Flex, Image, Heading, Text } from '@chakra-ui/react';
 import { ShoppingCart } from '@mui/icons-material';
 
 import Saletime from './Saletime';
-import { getProduct } from '../services/ProductServices';
 
 const FeatureProducts = ({ products }) => {
-  const toast = useToast();
   const navigate = useNavigate();
 
-  const handleSelectedProduct = async (productId) => {
-    try {
-      const product = await getProduct(productId);
-      navigate("/productDetails", { state: product });
-    } catch (error) {
-      const errorMessage =
-        error.response?.data?.message || "An error occurred.";
-      toast({
-        title: "Error",
-        description: errorMessage,
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-    }
+  const handleSelectedProduct = (productId) => {
+    navigate(`/products/${productId}`);
   };
+
 
   return (
     <Box py={10} >

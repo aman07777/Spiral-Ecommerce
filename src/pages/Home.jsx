@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useToast,Box } from '@chakra-ui/react';
+import { useToast, Box } from '@chakra-ui/react';
 
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -49,10 +49,10 @@ const Home = () => {
     <>
       <Navbar />
       <Box ml="53px" mr="53px" width={{ base: '100%', md: '80%' }} margin="auto">
-      <HeroBanner />
-      {!isLoading ? <FeatureProducts products={featuredProducts} /> : <Loader />}
-      <BestExperience />
-      <Category />
+        <HeroBanner />
+        {!isLoading ? <FeatureProducts products={featuredProducts} /> : <Loader />}
+        <BestExperience />
+        <Category />
       </Box>
       <Footer />
     </>

@@ -37,11 +37,12 @@ function App() {
           <Route path="/adminAffliator" element={<AdminAffiliator />} />
           <Route path="/adminSetting" element={<AdminSettings />} />
           <Route path="/cart" element={<CartPage />} />
-          <Route path="/products" element={<ProductPage />} />
-          <Route path="/productDetails" element={<ProductDetails />} />
+          <Route path="/products" exact element={<ProductPage />} />
+          <Route path="/products/:id" element={<ProductDetails />} />
+          <Route path='*' element={<p>404 Not Found</p>} />
         </Routes>
       </Router>
-    </div>
+    </div >
   );
 }
 

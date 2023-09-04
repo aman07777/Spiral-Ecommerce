@@ -18,7 +18,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Loader from "../components/Loader";
 
-import { getProducts, getProduct } from "../services/ProductServices";
+import { getProducts } from "../services/ProductServices";
 
 function ProductPage() {
   const [products, setProducts] = useState([]);
@@ -103,21 +103,8 @@ function ProductPage() {
     setsortByPrice(event.target.value);
   };
 
-  const handleSelectedProduct = async (productId) => {
-    try {
-      const product = await getProduct(productId);
-      navigate("/productDetails", { state: product });
-    } catch (error) {
-      const errorMessage =
-        error.response?.data?.message || "An error occurred.";
-      toast({
-        title: "Error",
-        description: errorMessage,
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-    }
+  const handleSelectedProduct = (productId) => {
+    navigate(`/products/${productId}`);
   };
 
   return (
@@ -142,7 +129,7 @@ function ProductPage() {
                     isChecked={selectedCategories.includes("Category A")}
                     onChange={handleCategoryChange}
                   >
-                    Tradtional 
+                    Tradtional
                   </Checkbox>
                   <Checkbox
                     isChecked={selectedCategories.includes("Category A")}
@@ -206,7 +193,7 @@ function ProductPage() {
                   Price Range
                 </Heading>
                 <Flex direction="column">
-                
+
                 </Flex>
               </Box>
             </Box>
@@ -217,7 +204,7 @@ function ProductPage() {
                 alignItems="center"
                 mb={4}
               >
-                
+
                 <Text>
                   {totalProducts} products found in X category for X brand from
                 </Text>
@@ -302,7 +289,7 @@ function ProductPage() {
                     >
                       ${product.discount}
                     </Text>
-                 
+
                   </Box>
                 ))}
               </Grid>
