@@ -15,7 +15,7 @@ const Category = () => {
       <Heading size="lg" fontWeight="bold">Category</Heading>
       <Flex flexWrap="wrap" justifyContent="center" alignItems="center" mt={10}>
         {categories.map((category) => (
-          <Box key={category.name} p={2} textAlign="center" position="relative" width={{ base: '50%', md: 'auto' }}>
+          <Box key={category.name} p={2} textAlign="center" position="relative" width={{ base: '50%', md: '270px' }}>
             <Box mb={2} border="1px solid #ccc" borderRadius="10px" overflow="hidden" boxShadow="2xl">
               <Image src={category.imageUrl} alt={category.name} borderRadius="md" boxSize={{ base: '200px', md: '300px' }} />
             </Box>

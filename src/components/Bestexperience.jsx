@@ -13,7 +13,7 @@ const BestExperiencePage = () => {
       <Heading as="h1" size="xl" mb={8}>
         We Provide the Best Experience
       </Heading>
-      <Grid templateColumns={{base:"repeat(2, 165px)",md:"repeat(auto-fit, minmax(300px, 1fr))"}} gap={{base:'5', md:'15'}}>
+      <Grid templateColumns={{base:"repeat(2, 165px)",md:"repeat(auto-fit, minmax(270px, 1fr))"}} gap={{base:'5', md:'15'}}>
         <FeatureCard
           icon={<OriginalProductsIcon fontSize="large" />}
           title="Original Products"

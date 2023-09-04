@@ -1,5 +1,5 @@
 import React ,{useState} from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,NavLink as RouterNavLink } from 'react-router-dom';
 import { Box, Flex, Spacer, Link, Menu, MenuButton, MenuList, MenuItem, IconButton, useToast } from '@chakra-ui/react';
 import { Menu as MenuIcon, ShoppingCart, Star as StarIcon } from '@mui/icons-material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -41,23 +41,24 @@ const Navbar = () => {
     <Box as="nav" bg="gray.100" p={4} boxShadow="md" position="sticky" top={0} zIndex={10} width="100%">
       <Box ml="53px" mr="53px" width={{ base: '100%', md: '80%' }} margin="auto">
         <Flex alignItems="center">
-          <Link href="/" fontWeight="bold" fontSize="xl" color="teal.500">Spiral</Link>
+        <NavLink href="/" style={{ fontWeight: 'bold', fontSize: '1.5rem', color: 'teal', textDecoration: 'none', textTransform: 'uppercase' }}>AIJO</NavLink>
+          
           <Spacer />
-          <Box display={{ base: 'none', md: 'flex' }}>
-            <Menu>
-              <MenuButton as={NavLink} href="/favorites" onMouseMove={handleShopMenuOpen} onMouseLeave={handleShopMenuClose} mr={4}>Shop <ArrowDropDownIcon /></MenuButton>
-              <MenuList isOpen={isShopMenuOpen} onOpen={handleShopMenuOpen} onClose={handleShopMenuClose}>
-                <MenuItem><NavLink href="/western">Western</NavLink></MenuItem>
-                <MenuItem><NavLink href="/traditional">Traditional</NavLink></MenuItem>
-                <MenuItem><NavLink href="/accessories">Accessories</NavLink></MenuItem>
-                <MenuItem><NavLink href="/others">Others</NavLink></MenuItem>
-              </MenuList>
-            </Menu>
-            <NavLink href="/cart" mr={4}>New Arrival</NavLink>
-            <NavLink href="/cart" mr={4}>Brand</NavLink>
-            <NavLink href="/cart" mr={4}>Shoes</NavLink>
-            <NavLink href="/cart" mr={4}>Most Wanted</NavLink>
-          </Box>
+          <Box display={{ base: 'none', md: 'flex' }} alignItems="center">
+          <Menu>
+            <MenuButton as={NavLink} href="/favorites" onMouseMove={handleShopMenuOpen} onMouseLeave={handleShopMenuClose} mr={4}>Shop <ArrowDropDownIcon /></MenuButton>
+            <MenuList isOpen={isShopMenuOpen} onOpen={handleShopMenuOpen} onClose={handleShopMenuClose}>
+              <MenuItem><NavLink href="/western">Western</NavLink></MenuItem>
+              <MenuItem><NavLink href="/traditional">Traditional</NavLink></MenuItem>
+              <MenuItem><NavLink href="/accessories">Accessories</NavLink></MenuItem>
+              <MenuItem><NavLink href="/others">Others</NavLink></MenuItem>
+            </MenuList>
+          </Menu>
+          <NavLink href="/cart" mr={4}>New Arrival</NavLink>
+          <NavLink href="/cart" mr={4}>Brand</NavLink>
+          <NavLink href="/cart" mr={4}>Shoes</NavLink>
+          <NavLink href="/cart" mr={4}>Most Wanted</NavLink>
+        </Box>
           <Spacer />
           <Searchbar />
           <Spacer />
@@ -81,7 +82,7 @@ const Navbar = () => {
             </Menu>
           </Box>
           {/* Show the hamburger menu icon on small screens */}
-          <Box display={{ base: 'flex', md: 'none' }}>
+          <Box display={{ base: 'flex', md: 'none' }} >
             <Menu>
               <MenuButton as={IconButton} icon={<MenuIcon />} variant="outline" />
               <MenuList display="flex" flexDirection="column" fontWeight={10}> {/* added flexDirection property */}
@@ -103,10 +104,11 @@ const Navbar = () => {
   );
 };
 
-const NavLink = ({ href, children, ...rest }) => (
-  <Link href={href} mr={4} fontWeight="medium" {...rest}>
-    {children}
-  </Link>
-);
 
+
+const NavLink = ({ to, children, ...rest }) => (
+  <RouterNavLink to={to} style={{ marginRight: '12px' }} fontWeight="medium" activeStyle={{ textDecoration: 'none' }} {...rest}>
+    {children}
+  </RouterNavLink>
+);
 export default Navbar;

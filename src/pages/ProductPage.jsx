@@ -142,13 +142,25 @@ function ProductPage() {
                     isChecked={selectedCategories.includes("Category A")}
                     onChange={handleCategoryChange}
                   >
-                    Category A
+                    Tradtional 
+                  </Checkbox>
+                  <Checkbox
+                    isChecked={selectedCategories.includes("Category A")}
+                    onChange={handleCategoryChange}
+                  >
+                    Western
+                  </Checkbox>
+                  <Checkbox
+                    isChecked={selectedCategories.includes("Category A")}
+                    onChange={handleCategoryChange}
+                  >
+                    Accesories
                   </Checkbox>
                   <Checkbox
                     isChecked={selectedCategories.includes("Category B")}
                     onChange={handleCategoryChange}
                   >
-                    Category B
+                    Shoes
                   </Checkbox>
                 </Flex>
               </Box>
@@ -167,13 +179,25 @@ function ProductPage() {
                     isChecked={selectedBrands.includes("Brand A")}
                     onChange={handleBrandChange}
                   >
-                    Brand A
+                    Nike
+                  </Checkbox>
+                  <Checkbox
+                    isChecked={selectedBrands.includes("Brand A")}
+                    onChange={handleBrandChange}
+                  >
+                    Armani
+                  </Checkbox>
+                  <Checkbox
+                    isChecked={selectedBrands.includes("Brand A")}
+                    onChange={handleBrandChange}
+                  >
+                    Varsachhi
                   </Checkbox>
                   <Checkbox
                     isChecked={selectedBrands.includes("Brand B")}
                     onChange={handleBrandChange}
                   >
-                    Brand B
+                    Baanarasi
                   </Checkbox>
                 </Flex>
               </Box>
@@ -182,16 +206,18 @@ function ProductPage() {
                   Price Range
                 </Heading>
                 <Flex direction="column">
+                
                 </Flex>
               </Box>
             </Box>
             <Box w={["100%", "100%", "75%"]}>
               <Flex
-                direction="row"
+                direction="rows"
                 justifyContent="space-between"
                 alignItems="center"
                 mb={4}
               >
+                
                 <Text>
                   {totalProducts} products found in X category for X brand from
                 </Text>
@@ -276,6 +302,7 @@ function ProductPage() {
                     >
                       ${product.discount}
                     </Text>
+                 
                   </Box>
                 ))}
               </Grid>

@@ -13,6 +13,7 @@ import {
   List,
   ListItem,
   useToast,
+  useMediaQuery
 } from "@chakra-ui/react";
 
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
