@@ -24,7 +24,7 @@ const FeatureProducts = ({ products }) => {
           </p>
         </Marquee>
         <Flex justify="center" align="center" direction="column">
-          <div class="flex flex-col md:flex-row gap-y-3 md:justify-around w-full mb-5 px-4 items-center md:items-start">
+          <div className="flex flex-col md:flex-row gap-y-3 md:justify-around w-full mb-5 px-4 items-center md:items-start">
             <Text className="text-[#0077B5] font-semibold text-[1.5rem] font-mono">
               On Sale
             </Text>

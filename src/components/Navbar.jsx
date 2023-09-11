@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate, NavLink as RouterNavLink } from "react-router-dom";
 import {
   Box,
   Flex,
-  Link,
   Menu,
   MenuButton,
   MenuList,
@@ -16,7 +15,6 @@ import {
   ShoppingCart,
   Star as StarIcon,
 } from "@mui/icons-material";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Searchbar from "./Searchbar";
 import { useUserContext } from "../contexts/UserContext";
 
