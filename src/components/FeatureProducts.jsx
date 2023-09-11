@@ -1,10 +1,11 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
-import { Box, Flex, Image, Heading, Text } from '@chakra-ui/react';
-import { ShoppingCart } from '@mui/icons-material';
+import { Box, Flex, Image, Heading, Text } from "@chakra-ui/react";
+import { ShoppingCart } from "@mui/icons-material";
 
-import Saletime from './Saletime';
+import Saletime from "./Saletime";
+import { imageUrl } from "../global/config";
 
 const FeatureProducts = ({ products }) => {
   const navigate = useNavigate();
@@ -13,16 +14,17 @@ const FeatureProducts = ({ products }) => {
     navigate(`/products/${productId}`);
   };
 
-
   return (
-    <Box py={10} >
+    <Box py={10}>
       <Flex justify="center" align="center" direction="column">
         <Flex justify="space-between" align="center" width="80%" mb={10}>
           <Text fontSize="16px" fontWeight="10px" color="#007B5">
             On Sale
           </Text>
           <Saletime />
-          <Heading size="lg" mr="190px" color="#0077B5"><marquee>FLASH SALE!</marquee></Heading>
+          <Heading size="lg" mr="190px" color="#0077B5">
+            <marquee>FLASH SALE!</marquee>
+          </Heading>
           <Box
             bg="#0077B5"
             color="white"
@@ -31,14 +33,20 @@ const FeatureProducts = ({ products }) => {
             px={4}
             cursor="pointer"
             transition="transform 0.2s ease-in-out"
-            _hover={{ transform: 'scale(1.05)' }}
+            _hover={{ transform: "scale(1.05)" }}
           >
             <Text fontWeight="bold" fontSize="md">
               More Items
             </Text>
           </Box>
         </Flex>
-        <Flex justify="center" align="center" direction="row" flexWrap="wrap" gap={8} >
+        <Flex
+          justify="center"
+          align="center"
+          direction="row"
+          flexWrap="wrap"
+          gap={8}
+        >
           {products.map((product) => (
             <Box
               key={product.id}
@@ -50,7 +58,7 @@ const FeatureProducts = ({ products }) => {
               boxShadow="2xl"
               position="relative"
               transition="transform 0.2s ease-in-out"
-              _hover={{ transform: 'scale(1.05)' }}
+              _hover={{ transform: "scale(1.05)" }}
               onClick={() => handleSelectedProduct(product.id)}
             >
               <Box
@@ -61,7 +69,7 @@ const FeatureProducts = ({ products }) => {
                 mb={4}
               >
                 <Image
-                  src={`http://localhost:8080/${product.image}`}
+                  src={`${imageUrl}/${product.image}`}
                   width="250px"
                   height="250px"
                   objectFit="center"
@@ -81,10 +89,21 @@ const FeatureProducts = ({ products }) => {
               <Text fontWeight="bold" fontSize="lg" mb={2} ml={2}>
                 {product.name}
               </Text>
-              <Text fontSize="lg" color="grey.100" fontWeight="bold" mb={2} ml={2}>
+              <Text
+                fontSize="lg"
+                color="grey.100"
+                fontWeight="bold"
+                mb={2}
+                ml={2}
+              >
                 ${product.price}
               </Text>
-              <Text fontSize="lg" color="#0077B5" textDecoration="line-through" ml={2}>
+              <Text
+                fontSize="lg"
+                color="#0077B5"
+                textDecoration="line-through"
+                ml={2}
+              >
                 ${product.discount}
               </Text>
             </Box>
