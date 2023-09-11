@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Flex, Box, Heading, Button, FormControl, FormLabel, Input, Text } from '@chakra-ui/react';
-import Dashboard from './Dashboard';
+import AdminNavbar from './AdminNavbar';
 
 function AdminAffiliator() {
   const [affiliators, setAffiliators] = useState([]);
@@ -29,7 +29,7 @@ function AdminAffiliator() {
 
   return (
     <>
-      <Dashboard />
+      <AdminNavbar />
       <Flex direction="column" p={4}>
         <Heading as="h1" size="xl" mb={4}>
           Add a New Affiliator

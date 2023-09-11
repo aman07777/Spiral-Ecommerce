@@ -36,17 +36,16 @@ const Sidebar = () => {
           />
         </Box>
         <Spacer />
-      <Searchbar/>
+        <Searchbar />
         <Spacer />
         <Box display={{ base: 'none', md: 'flex' }} justifyContent="space-between" alignItems="center">
-        <NavLink to="/adminHome">Home</NavLink>
-        <NavLink to="/adminProduct">Products</NavLink>
-        <NavLink to="/adminOrder">Orders</NavLink>
-        <NavLink to="/adminCustomer">Customers</NavLink>
-        <NavLink to="/adminAffliator">Affiliators</NavLink>
-        <NavLink to="/adminSetting">Settings</NavLink>
-       
-        </Box>  
+          <NavLink to="/admin/home">Home</NavLink>
+          <NavLink to="/admin/product">Products</NavLink>
+          <NavLink to="/admin/order">Orders</NavLink>
+          <NavLink to="/admin/customer">Customers</NavLink>
+          <NavLink to="/admin/affliator">Affiliators</NavLink>
+          <NavLink to="/admin/setting">Settings</NavLink>
+        </Box>
         <IconButton
           colorScheme="whiteAlpha"
           icon={<Logout />}
@@ -60,38 +59,38 @@ const Sidebar = () => {
             <DrawerCloseButton />
             <DrawerHeader>Menu</DrawerHeader>
             <DrawerBody>
-            <VStack spacing={4} align="flex-start">
-          <Box as={Link} to="/adminHome" w="100%" textAlign="left">
-            <Icon as={Home} mr={2} />
-            <Text>Home</Text>
-          </Box>
-          <Box as={Link} to="/adminProduct" w="100%" textAlign="left">
-            <Icon as={ShoppingCart} mr={2} />
-            <Text>Products</Text>
-          </Box>
-          <Box as={Link} to="/adminOrder" w="100%" textAlign="left">
-            <Icon as={LocalMall} mr={2} />
-            <Text>Orders</Text>
-          </Box>
-          <Box as={Link} to="/adminCustomer" w="100%" textAlign="left">
-            <Icon as={People} mr={2} />
-            <Text>Customers</Text>
-          </Box>
-          <Box as={Link} to="/adminAffliator" w="100%" textAlign="left">
-            <Icon as={Assignment} mr={2} />
-            <Text>Affiliators</Text>
-          </Box>
-          <Box as={Link} to="/adminSetting" w="100%" textAlign="left">
-            <Icon as={Settings} mr={2} />
-            <Text>Settings</Text>
-          </Box>
-          
+              <VStack spacing={4} align="flex-start">
+                <Box as={Link} to="/adminHome" w="100%" textAlign="left">
+                  <Icon as={Home} mr={2} />
+                  <Text>Home</Text>
+                </Box>
+                <Box as={Link} to="/adminProduct" w="100%" textAlign="left">
+                  <Icon as={ShoppingCart} mr={2} />
+                  <Text>Products</Text>
+                </Box>
+                <Box as={Link} to="/adminOrder" w="100%" textAlign="left">
+                  <Icon as={LocalMall} mr={2} />
+                  <Text>Orders</Text>
+                </Box>
+                <Box as={Link} to="/adminCustomer" w="100%" textAlign="left">
+                  <Icon as={People} mr={2} />
+                  <Text>Customers</Text>
+                </Box>
+                <Box as={Link} to="/adminAffliator" w="100%" textAlign="left">
+                  <Icon as={Assignment} mr={2} />
+                  <Text>Affiliators</Text>
+                </Box>
+                <Box as={Link} to="/adminSetting" w="100%" textAlign="left">
+                  <Icon as={Settings} mr={2} />
+                  <Text>Settings</Text>
+                </Box>
+
               </VStack>
             </DrawerBody>
           </DrawerContent>
         </DrawerOverlay>
       </Drawer>
-      
+
     </>
   );
 };

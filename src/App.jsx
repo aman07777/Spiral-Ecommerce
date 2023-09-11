@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -14,10 +14,10 @@ import AdminSettings from "./pages/Admin/AdminSetting";
 import CartPage from "./pages/CartPage";
 import ProductPage from "./pages/ProductPage";
 import ProductDetails from "./pages/ProductDetails";
-import CustomerProfile from "./pages/CustomerProfile";
-import AffliatorProfile from "./pages/AffliatorProfile";
+// import CustomerProfile from "./pages/CustomerProfile";
+// import AffliatorProfile from "./pages/AffliatorProfile";
 // import Cart from './components/CartPageMobile'
-import CartPageMobile from "./components/CartPageMobile";
+// import CartPageMobile from "./components/CartPageMobile";
 
 
 function App() {
@@ -30,12 +30,15 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/emailverification" element={<EmailVerification />} />
           <Route path="/resetpassword" element={<ResetPassword />} />
-          <Route path="/adminHome" element={<AdminHome />} />
-          <Route path="/adminProduct" element={<AdminProduct />} />
-          <Route path="/adminOrder" element={<AdminOrder />} />
-          <Route path="/adminCustomer" element={<AdminCustomer />} />
-          <Route path="/adminAffliator" element={<AdminAffiliator />} />
-          <Route path="/adminSetting" element={<AdminSettings />} />
+          <Route path='/admin' >
+            <Route index element={<Navigate replace to="home" />} />
+            <Route path="home" element={<AdminHome />} />
+            <Route path="product" element={<AdminProduct />} />
+            <Route path="order" element={<AdminOrder />} />
+            <Route path="customer" element={<AdminCustomer />} />
+            <Route path="affilator" element={<AdminAffiliator />} />
+            <Route path="setting" element={<AdminSettings />} />
+          </Route>
           <Route path="/cart" element={<CartPage />} />
           <Route path="/products" exact element={<ProductPage />} />
           <Route path="/products/:id" element={<ProductDetails />} />

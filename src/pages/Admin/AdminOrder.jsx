@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Flex, Box, Heading, Button, FormControl, FormLabel, Input ,Table, Thead, Tbody, Tr, Th, Td } from '@chakra-ui/react';
-import Dashboard from './Dashboard';
+import { Flex, Box, Heading, Button, FormControl, FormLabel, Input, Table, Thead, Tbody, Tr, Th, Td } from '@chakra-ui/react';
+import AdminNavbar from './AdminNavbar';
 function OrderList() {
   const [orders, setOrders] = useState([]);
 
@@ -48,7 +48,7 @@ function AdminOrder() {
 
   return (
     <>
-      <Dashboard />
+      <AdminNavbar />
       <Flex direction="column" p={4}>
         <Heading as="h1" size="xl" mb={4}>
           Add a New Order

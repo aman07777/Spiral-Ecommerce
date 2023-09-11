@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Flex, Box, Heading, Button, FormControl, FormLabel, Switch } from '@chakra-ui/react';
-import Dashboard from './Dashboard';
+import AdminNavbar from './AdminNavbar';
 function AdminSettings() {
   const [settings, setSettings] = useState({
     enableNotifications: true,
@@ -11,7 +11,7 @@ function AdminSettings() {
   };
 
   return (<>
-    <Dashboard />
+    <AdminNavbar />
     <Flex direction="column" p={4}>
       <Heading as="h1" size="xl" mb={4}>
         Settings
@@ -36,7 +36,7 @@ function AdminSettings() {
         </Box>
       </Box>
     </Flex>
-    </>
+  </>
   );
 }
 

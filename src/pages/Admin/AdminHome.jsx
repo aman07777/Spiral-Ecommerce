@@ -1,6 +1,6 @@
 import React from 'react';
 import { Flex, Box, Heading, Text, Stat, StatLabel, StatNumber, StatHelpText, Divider, VStack, HStack, Badge } from '@chakra-ui/react';
-import Dashboard from './Dashboard';
+import AdminNavbar from './AdminNavbar';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, } from 'recharts';
 
 function AdminHome() {
@@ -44,11 +44,11 @@ function AdminHome() {
     { name: 'Jul', uv: 3490, pv: 4300 },
   ];
   return (<>
-   <Dashboard />
-      <Flex direction="column" p={4}>
+    <AdminNavbar />
+    <Flex direction="column" p={4}>
+      <VStack spacing={4} align="stretch">
+        {/* Total Orders, Total Revenue, and Average Order Value */}
         <VStack spacing={4} align="stretch">
-          {/* Total Orders, Total Revenue, and Average Order Value */}
-          <VStack spacing={4} align="stretch">
           <Stat>
             <StatLabel>Total Orders</StatLabel>
             <StatNumber>{totalOrders}</StatNumber>
@@ -65,43 +65,43 @@ function AdminHome() {
             <StatHelpText>From the last 30 days</StatHelpText>
           </Stat>
           <Box mt={8} p={4} borderWidth="1px" borderRadius="lg" overflow="hidden">
-  <Heading as="h2" size="md" mb={2}>
-    Sales Chart
-  </Heading>
-  <Box p={2}>
-                <AreaChart
+            <Heading as="h2" size="md" mb={2}>
+              Sales Chart
+            </Heading>
+            <Box p={2}>
+              <AreaChart
                 width={window.innerWidth <= 480 ? window.innerWidth - 40 : 730}
                 height={250}
                 data={data}
                 margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
               >
-                 <defs>
-    <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
-      <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
-    </linearGradient>
-    <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8}/>
-      <stop offset="95%" stopColor="#82ca9d" stopOpacity={0}/>
-    </linearGradient>
-  </defs>
-  <XAxis dataKey="name" />
-  <YAxis />
-  <CartesianGrid strokeDasharray="3 3" />
-  <Tooltip />
-  <Area type="monotone" dataKey="uv" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
-  <Area type="monotone" dataKey="pv" stroke="#82ca9d" fillOpacity={1} fill="url(#colorPv)" />
- 
-</AreaChart>
-</Box>
-</Box>
+                <defs>
+                  <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+                    <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+                  </linearGradient>
+                  <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
+                    <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <XAxis dataKey="name" />
+                <YAxis />
+                <CartesianGrid strokeDasharray="3 3" />
+                <Tooltip />
+                <Area type="monotone" dataKey="uv" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
+                <Area type="monotone" dataKey="pv" stroke="#82ca9d" fillOpacity={1} fill="url(#colorPv)" />
+
+              </AreaChart>
+            </Box>
+          </Box>
         </VStack>
         <Box>
           <Heading as="h2" size="md" mb={2}>
             Recent Orders
           </Heading>
           {recentOrders.map((order) => (
-              <Box
+            <Box
               key={order.id}
               borderWidth="1px"
               borderRadius="lg"
@@ -141,11 +141,11 @@ function AdminHome() {
             </Box>
           ))}
         </Box>
-    
+
       </VStack>
     </Flex>
-   
-    </>
+
+  </>
   );
 }
 

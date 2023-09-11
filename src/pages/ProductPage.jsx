@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   Box,
   Flex,
@@ -35,8 +35,8 @@ function ProductPage() {
 
   const toast = useToast();
   const navigate = useNavigate();
-  const { state } = useLocation();
-  const keyWord = state?.keyWord;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const keyWord = searchParams.get('search')
 
   useEffect(() => {
     getProducts(currentPage, keyWord, minPrice, maxPrice, sortByPrice)

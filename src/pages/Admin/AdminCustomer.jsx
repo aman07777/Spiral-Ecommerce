@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Flex, Box, Heading, Button, FormControl, FormLabel, Input } from '@chakra-ui/react';
-import Dashboard from './Dashboard';
+import AdminNavbar from './AdminNavbar';
 function AdminCustomer() {
   const [customer, setCustomer] = useState({
     firstName: '',
@@ -15,7 +15,7 @@ function AdminCustomer() {
   };
 
   return (<>
-  <Dashboard/>
+    <AdminNavbar />
     <Flex direction="column" p={4}>
       <Heading as="h1" size="xl" mb={4}>
         Add a New Customer
@@ -46,7 +46,7 @@ function AdminCustomer() {
         </Box>
       </Box>
     </Flex>
-    </>
+  </>
   );
 }
 
