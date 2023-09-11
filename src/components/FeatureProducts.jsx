@@ -18,7 +18,7 @@ const FeatureProducts = ({ products }) => {
     <div className="flex justify-center">
       <Box py={10} width={{ base: "100%", md: "95%", lg: "75%" }}>
         <Marquee gradient>
-          <p className="text-[2.5rem] md:text-[2.75rem] font-semibold mb-6 font-mono text-[#585858]/80">
+          <p className="text-[2.5rem] md:text-[2.75rem] font-semibold mb-6 font-mono text-[#585858]/80 select-none">
             FLASH SALE! Lorem ipsum, dolor sit amet consectetur adipisicing
             elit. Modi, repudiandae.
           </p>
