@@ -7,7 +7,6 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Button,
 } from "@chakra-ui/react";
 import { Search } from "@mui/icons-material";
 

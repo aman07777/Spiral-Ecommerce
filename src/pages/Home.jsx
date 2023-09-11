@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { useToast, Box } from '@chakra-ui/react';
+import React, { useState, useEffect } from "react";
+import { useToast, Box } from "@chakra-ui/react";
 
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import FeatureProducts from '../components/FeatureProducts';
-import BestExperience from '../components/Bestexperience';
-import Category from '../components/Category';
-import HeroBanner from '../components/HeroBanner';
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import FeatureProducts from "../components/FeatureProducts";
+import BestExperience from "../components/Bestexperience";
+import Category from "../components/Category";
+import HeroBanner from "../components/HeroBanner";
 
-import { getFeaturedProducts } from '../services/ProductServices';
-import Loader from '../components/Loader';
-
+import { getFeaturedProducts } from "../services/ProductServices";
+import Loader from "../components/Loader";
 
 const Home = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
@@ -19,19 +18,20 @@ const Home = () => {
   const toast = useToast();
 
   useEffect(() => {
-    getFeaturedProducts().then((result) => {
-      if (result.products.length === 0) {
-        toast({
-          title: "No feature product found",
-          description: "Please try again with different keywords.",
-          status: "warning",
-          duration: 3000,
-          isClosable: true,
-        });
-      }
-      setFeaturedProducts(result.products);
-      setIsLoading(false);
-    })
+    getFeaturedProducts()
+      .then((result) => {
+        if (result.products.length === 0) {
+          toast({
+            title: "No feature product found",
+            description: "Please try again with different keywords.",
+            status: "warning",
+            duration: 3000,
+            isClosable: true,
+          });
+        }
+        setFeaturedProducts(result.products);
+        setIsLoading(false);
+      })
       .catch((error) => {
         const errorMessage =
           error.response?.data?.message || "An error occurred.";
@@ -48,9 +48,13 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <Box ml="53px" mr="53px" width={{ base: '100%', md: '80%' }} margin="auto">
+      <Box w={"100%"}>
         <HeroBanner />
-        {!isLoading ? <FeatureProducts products={featuredProducts} /> : <Loader />}
+        {!isLoading ? (
+          <FeatureProducts products={featuredProducts} />
+        ) : (
+          <Loader />
+        )}
         <BestExperience />
         <Category />
       </Box>
