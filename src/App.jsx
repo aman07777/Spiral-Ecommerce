@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -18,37 +18,33 @@ import ProductDetails from "./pages/ProductDetails";
 // import AffliatorProfile from "./pages/AffliatorProfile";
 // import Cart from './components/CartPageMobile'
 import CartPageMobile from "./components/CartPageMobile";
-import ErrorPage from './pages/ErrorPage';
-
+import ErrorPage from "./pages/ErrorPage";
+import Layout from "./layout/layout";
 
 function App() {
   return (
-    <div className="container">
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/emailverification" element={<EmailVerification />} />
-          <Route path="/resetpassword" element={<ResetPassword />} />
-          <Route path='/admin' >
-            <Route index element={<Navigate replace to="home" />} />
-            <Route path="home" element={<AdminHome />} />
-            <Route path="product" element={<AdminProduct />} />
-            <Route path="order" element={<AdminOrder />} />
-            <Route path="customer" element={<AdminCustomer />} />
-            <Route path="affilator" element={<AdminAffiliator />} />
-            <Route path="setting" element={<AdminSettings />} />
-          </Route>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="" element={<Home />} />
+          <Route path="signup" element={<Signup />} />
+          <Route path="login" element={<Login />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/products" exact element={<ProductPage />} />
           <Route path="/products/:id" element={<ProductDetails />} />
-          <Route path="/error" element={<ErrorPage />} />
+        </Route>
+        <Route path="/resetpassword" element={<ResetPassword />} />
+        <Route path="/emailverification" element={<EmailVerification />} />
 
-          <Route path='*' element={<p>404 Not Found</p>} />
-        </Routes>
-      </Router>
-    </div >
+        <Route path="/adminHome" element={<AdminHome />} />
+        <Route path="/adminProduct" element={<AdminProduct />} />
+        <Route path="/adminOrder" element={<AdminOrder />} />
+        <Route path="/adminCustomer" element={<AdminCustomer />} />
+        <Route path="/adminAffliator" element={<AdminAffiliator />} />
+        <Route path="/adminSetting" element={<AdminSettings />} />
+        <Route path="*" element={<ErrorPage />} />
+      </Routes>
+    </Router>
   );
 }
 
