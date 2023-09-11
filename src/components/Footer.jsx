@@ -12,79 +12,76 @@ const Footer = () => {
             <Text fontSize={24} fontWeight={600}>
               Help
             </Text>
-            <NavLink
-              mt={2}
-              to=""
-              className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 "
-            >
-              FAQs
-            </NavLink>
-            <NavLink
-              mt={2}
-              to=""
-              className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 "
-            >
-              Return And Exchange
-            </NavLink>
-            <NavLink
-              mt={2}
-              to=""
-              className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 "
-            >
-              Support Team
-            </NavLink>
+            <div className="flex flex-col gap-y-1 mt-2">
+              <NavLink
+                to=""
+                className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 "
+              >
+                FAQs
+              </NavLink>
+              <NavLink
+                to=""
+                className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 "
+              >
+                Return And Exchange
+              </NavLink>
+              <NavLink
+                to=""
+                className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 "
+              >
+                Support Team
+              </NavLink>
+            </div>
           </Box>
           <Box textAlign={{ base: "center", sm: "start" }} py={5}>
             <Text fontSize={24} fontWeight={600}>
               Corporate
             </Text>
-            <NavLink
-              mt={2}
-              to=""
-              className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
-            >
-              Career Opportunities
-            </NavLink>
-            <NavLink
-              mt={2}
-              to=""
-              className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
-            >
-              Our Stores
-            </NavLink>
-            <NavLink
-              mt={2}
-              to=""
-              className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
-            >
-              About Us
-            </NavLink>
+            <div className="flex flex-col gap-y-1 mt-2">
+              <NavLink
+                to=""
+                className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
+              >
+                Career Opportunities
+              </NavLink>
+              <NavLink
+                to=""
+                className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
+              >
+                Our Stores
+              </NavLink>
+              <NavLink
+                to=""
+                className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
+              >
+                About Us
+              </NavLink>
+            </div>
           </Box>
           <Box textAlign={{ base: "center", sm: "start" }} py={5}>
             <Text fontSize={24} fontWeight={600}>
               Policies
             </Text>
-            <NavLink
-              mt={2}
-              to=""
-              className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
-            >
-              Privacy Policies
-            </NavLink>
-            <NavLink
-              mt={2}
-              to=""
-              className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
-            >
-              Terms & Conditions
-            </NavLink>
-            <NavLink
-              mt={2}
-              to=""
-              className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
-            >
-              Return Policies
-            </NavLink>
+            <div className="flex flex-col gap-y-1 mt-2">
+              <NavLink
+                to=""
+                className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
+              >
+                Privacy Policies
+              </NavLink>
+              <NavLink
+                to=""
+                className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
+              >
+                Terms & Conditions
+              </NavLink>
+              <NavLink
+                to=""
+                className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
+              >
+                Return Policies
+              </NavLink>
+            </div>
           </Box>
           <Box className="flex flex-col md:flex-row md:mt-5">
             <IconButton

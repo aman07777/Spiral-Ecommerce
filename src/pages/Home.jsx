@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useToast, Box } from "@chakra-ui/react";
 
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import FeatureProducts from "../components/FeatureProducts";
 import BestExperience from "../components/Bestexperience";
 import Category from "../components/Category";
@@ -47,7 +45,6 @@ const Home = () => {
 
   return (
     <>
-      <Navbar />
       <Box w={"100%"}>
         <HeroBanner />
         {!isLoading ? (
@@ -58,7 +55,6 @@ const Home = () => {
         <BestExperience />
         <Category />
       </Box>
-      <Footer />
     </>
   );
 };

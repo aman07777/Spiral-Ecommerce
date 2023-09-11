@@ -14,8 +14,6 @@ import {
 import { ShoppingCart } from "@mui/icons-material";
 
 import Pagination from "../components/Pagination";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import Loader from "../components/Loader";
 
 import { getProducts } from "../services/ProductServices";
@@ -88,14 +86,6 @@ function ProductPage() {
     }
   };
 
-  const handleMinPriceChange = (e) => {
-    setMinPrice(+e.target.value);
-  };
-
-  const handleMaxPriceChange = (e) => {
-    setMaxPrice(+e.target.value);
-  };
-
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -110,7 +100,6 @@ function ProductPage() {
 
   return (
     <>
-      <Navbar />
       {!isLoading ? (
         <>
           <Flex direction={["column", "column", "row"]} p={4}>
@@ -301,7 +290,6 @@ function ProductPage() {
       ) : (
         <Loader />
       )}
-      <Footer />
     </>
   );
 }

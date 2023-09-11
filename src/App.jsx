@@ -19,28 +19,30 @@ import AffliatorProfile from "./pages/AffliatorProfile";
 // import Cart from './components/CartPageMobile'
 import CartPageMobile from "./components/CartPageMobile";
 import ErrorPage from "./pages/ErrorPage";
+import Layout from "./layout/layout";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/emailverification" element={<EmailVerification />} />
+        <Route path="/" element={<Layout />}>
+          <Route path="" element={<Home />} />
+          <Route path="signup" element={<Signup />} />
+          <Route path="login" element={<Login />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/products" exact element={<ProductPage />} />
+          <Route path="/products/:id" element={<ProductDetails />} />
+        </Route>
         <Route path="/resetpassword" element={<ResetPassword />} />
+        <Route path="/emailverification" element={<EmailVerification />} />
+
         <Route path="/adminHome" element={<AdminHome />} />
         <Route path="/adminProduct" element={<AdminProduct />} />
         <Route path="/adminOrder" element={<AdminOrder />} />
         <Route path="/adminCustomer" element={<AdminCustomer />} />
         <Route path="/adminAffliator" element={<AdminAffiliator />} />
         <Route path="/adminSetting" element={<AdminSettings />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/products" exact element={<ProductPage />} />
-        <Route path="/products/:id" element={<ProductDetails />} />
-        <Route path="/error" element={<ErrorPage />} />
-
-        <Route path="*" element={<p>404 Not Found</p>} />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </Router>
   );

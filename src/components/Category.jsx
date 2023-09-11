@@ -25,7 +25,7 @@ const Category = () => {
   ];
 
   return (
-    <div className="flex justify-center w-full mb-10">
+    <div className="flex justify-center w-full mb-10 text-[#585858]">
       <Box p={4} width={{ base: "100%", md: "95%", lg: "75%" }}>
         <h1 className="text-[1.5rem] mb-5 font-semibold md:text-[2rem]">
           Category
