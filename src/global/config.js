@@ -1,8 +1,9 @@
 import axios from "axios";
 
 // export const baseUrl = "http://localhost:8080/; // for local host
-export const url = "http://localhost:8080/";
-export const baseUrl = `${url}api/v1/`; // for one server
+// export const url = "http://localhost:8080/";
+export const url = "http://192.168.1.67:8080";
+export const baseUrl = `${url}/api/v1/`; // for one server
 export const imageUrl = url; // for one server
 
 export const axios_auth = axios.create({
