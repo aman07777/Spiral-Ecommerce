@@ -30,10 +30,11 @@ const Searchbar = () => {
       alignItems="center"
       justifyContent={{ base: "center" }}
       py={{ base: 3, sm: 0 }}
+      className="border rounded-[.25em] border-[#585858]/60"
     >
       <FormControl
         as="form"
-        width={{ base: "100%", sm: "20vw", md: "30vw" }}
+        width={{ base: "100%", sm: "19vw", md: "15vw" }}
         minWidth="200px"
         onSubmit={handleFormSubmit}
       >
@@ -44,16 +45,10 @@ const Searchbar = () => {
             placeholder="Search for clothes..."
             onChange={handleKeyWordChange}
           />
-          <InputRightElement width="4rem">
-            <Button
-              h="1.75rem"
-              size="sm"
-              variant="solid"
-              colorScheme="linkedin"
-              type="submit"
-            >
-              <Search />
-            </Button>
+          <InputRightElement className="pr-1">
+            <button h="1.75rem" size="sm" type="submit">
+              <Search className="text-[#585858]" />
+            </button>
           </InputRightElement>
         </InputGroup>
       </FormControl>
