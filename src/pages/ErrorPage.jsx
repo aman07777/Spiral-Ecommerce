@@ -11,7 +11,7 @@ const ErrorPage = () => {
             height={{ base: "200px", md: "800px" }}
             backgroundPosition="center"
             backgroundSize="cover"
-            width={{ base: "100%", md: "50%" }}
+            width={{ base: "100%", md: "70%" }}
           />
           <Box
             className="contant_box_404"

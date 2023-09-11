@@ -71,16 +71,20 @@ function ProductPage() {
 
   const handleCategoryChange = (event) => {
     const category = event.target.value;
-    if (selectedCategories.includes(category)) {
+    if (category === "All") {
+      setSelectedCategories(selectedCategories.length === 4 ? [] : ["Tradtional", "Western", "Accesories", "Shoes"]);
+    } else if (selectedCategories.includes(category)) {
       setSelectedCategories(selectedCategories.filter((c) => c !== category));
     } else {
       setSelectedCategories([...selectedCategories, category]);
     }
   };
-
+  
   const handleBrandChange = (event) => {
     const brand = event.target.value;
-    if (selectedBrands.includes(brand)) {
+    if (brand === "All") {
+      setSelectedBrands(selectedBrands.length === 4 ? [] : ["Nike", "Armani", "Varsachhi", "Baanarasi"]);
+    } else if (selectedBrands.includes(brand)) {
       setSelectedBrands(selectedBrands.filter((b) => b !== brand));
     } else {
       setSelectedBrands([...selectedBrands, brand]);
@@ -310,3 +314,4 @@ function ProductPage() {
 }
 
 export default ProductPage;
+
