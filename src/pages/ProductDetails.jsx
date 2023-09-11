@@ -26,6 +26,7 @@ import Loader from "../components/Loader";
 import { getProduct } from "../services/ProductServices";
 import { postCart } from "../services/CartServices";
 import { useUserContext } from "../contexts/UserContext";
+import { imageUrl } from "../global/config";
 
 export default function ProductDetails() {
   const [product, setProduct] = useState({});
@@ -160,16 +161,16 @@ export default function ProductDetails() {
                   {...{
                     largeImage: {
                       src: selectedImage
-                        ? `http://localhost:8080/${selectedImage}`
-                        : `http://localhost:8080/${images[0]}`,
+                        ? `${imageUrl}/${selectedImage}`
+                        : `${imageUrl}/${images[0]}`,
                       width: 2200,
                       height: 1800,
                     },
                     smallImage: {
                       alt: "image",
                       src: selectedImage
-                        ? `http://localhost:8080/${selectedImage}`
-                        : `http://localhost:8080/${images[0]}`,
+                        ? `${imageUrl}/${selectedImage}`
+                        : `${imageUrl}/${images[0]}`,
                       width: isMobile ? 305 : 600,
                       height: isMobile ? 300 : 600,
                     },
@@ -181,7 +182,7 @@ export default function ProductDetails() {
                   {images.map((image, index) => (
                     <Image
                       key={index}
-                      src={`http://localhost:8080/${image}`}
+                      src={`${imageUrl}/${image}`}
                       boxSize={{ base: "40px", md: "50px" }}
                       objectFit="cover"
                       mb={2}
@@ -237,7 +238,7 @@ export default function ProductDetails() {
                   {product.brand}
                 </ListItem>
                 <ListItem>
-                  <Text as={"span"} fontWeight={"bold"}mt={1}>
+                  <Text as={"span"} fontWeight={"bold"} mt={1}>
                     Category:
                   </Text>{" "}
                   {product.category}
@@ -256,11 +257,13 @@ export default function ProductDetails() {
                       bg={color}
                       mx="2px"
                       onClick={() => {
-                        setSelectedColor(color)}}
-                        style={{
-                          cursor: "pointer",
-                          border: selectedColor === color ? "2px solid black" : "none"
-                        }}
+                        setSelectedColor(color);
+                      }}
+                      style={{
+                        cursor: "pointer",
+                        border:
+                          selectedColor === color ? "2px solid black" : "none",
+                      }}
                     ></Box>
                   ))}
                 </ListItem>
@@ -294,10 +297,7 @@ export default function ProductDetails() {
                 >
                   Quantity:
                 </Text>
-                <Flex
-                  alignItems="center"
-                  ml={{ base: "1rem", md: "2rem" }}
-                >
+                <Flex alignItems="center" ml={{ base: "1rem", md: "2rem" }}>
                   <Button
                     size="sm"
                     rounded="full"

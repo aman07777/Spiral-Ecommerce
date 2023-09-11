@@ -19,6 +19,7 @@ import Footer from "../components/Footer";
 import Loader from "../components/Loader";
 
 import { getProducts } from "../services/ProductServices";
+import { imageUrl } from "../global/config";
 
 function ProductPage() {
   const [products, setProducts] = useState([]);
@@ -192,9 +193,7 @@ function ProductPage() {
                 <Heading as="h2" size="md" mb={2}>
                   Price Range
                 </Heading>
-                <Flex direction="column">
-
-                </Flex>
+                <Flex direction="column"></Flex>
               </Box>
             </Box>
             <Box w={["100%", "100%", "75%"]}>
@@ -204,7 +203,6 @@ function ProductPage() {
                 alignItems="center"
                 mb={4}
               >
-
                 <Text>
                   {totalProducts} products found in X category for X brand from
                 </Text>
@@ -252,7 +250,7 @@ function ProductPage() {
                       mb={4}
                     >
                       <Image
-                        src={`http://localhost:8080/${product.image}`}
+                        src={`${imageUrl}/${product.image}`}
                         width="250px"
                         height="250px"
                         objectFit="center"
@@ -289,7 +287,6 @@ function ProductPage() {
                     >
                       ${product.discount}
                     </Text>
-
                   </Box>
                 ))}
               </Grid>
