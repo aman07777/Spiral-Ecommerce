@@ -29,11 +29,10 @@ const Searchbar = () => {
       alignItems="center"
       justifyContent={{ base: "center" }}
       py={{ base: 3, sm: 0 }}
-      className="border rounded-[.25em] border-[#585858]/60"
     >
       <FormControl
         as="form"
-        width={{ base: "100%", sm: "19vw", md: "15vw" }}
+        width={{ base: "8vw", sm: "19vw", md: "15vw" }}
         minWidth="200px"
         onSubmit={handleFormSubmit}
       >
