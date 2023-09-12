@@ -340,6 +340,10 @@ function ProductPage() {
                           p={1}
                           borderRadius="10px"
                           color="#0077B5"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate("/cart");
+                          }}
                         >
                           <ShoppingCart />
                         </Box>
@@ -353,14 +357,17 @@ function ProductPage() {
                             (product.discount / 100) * product.price}{" "}
                           NPR
                         </Text>
-                        <div className="font-medium text-[.8rem] flex gap-x-3">
-                          <span className="line-through text-rose-400">
-                            {product.price} NPR
-                          </span>
-                          <span className="text-green-400">
-                            {product.discount}% off
-                          </span>
-                        </div>
+                        {product.discount > 0 && (
+                          <div className="font-medium text-[.8rem] flex gap-x-3">
+                            <span className="line-through text-rose-400">
+                              {product.price} NPR
+                            </span>
+
+                            <span className="text-green-400">
+                              {product.discount}% off
+                            </span>
+                          </div>
+                        )}
                       </div>
                     </Box>
                   ))}
