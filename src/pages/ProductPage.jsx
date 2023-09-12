@@ -3,7 +3,6 @@ import { useNavigate, useLocation, NavLink } from "react-router-dom";
 import {
   Box,
   Flex,
-  Heading,
   Checkbox,
   Text,
   Select,
@@ -12,6 +11,12 @@ import {
   useToast,
   Breadcrumb,
   BreadcrumbItem,
+  Slider,
+  SliderTrack,
+  SliderFilledTrack,
+  SliderThumb,
+  SliderMark,
+  Tooltip,
 } from "@chakra-ui/react";
 import { ShoppingCart } from "@mui/icons-material";
 
@@ -29,11 +34,11 @@ function ProductPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(10000);
-
+  const [showTooltip, setShowTooltip] = React.useState(false);
   const [productsPerPage, setProductsPerPage] = useState(16);
   const [totalProducts, setTotalProducts] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [priceRange, setPriceRange] = React.useState(5);
   const toast = useToast();
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -202,10 +207,68 @@ function ProductPage() {
                   </div>
                 </Box>
                 <Box mb={4}>
-                  <h2 className="text-[1.2rem] font-semibold mb-2">
-                    Price Range
-                  </h2>
-                  <Flex direction="column"></Flex>
+                  <h2 className="text-[1.2rem] font-semibold">Price Range</h2>
+                  <Slider
+                    aria-label="slider-ex-4"
+                    defaultValue={30}
+                    onMouseEnter={() => setShowTooltip(true)}
+                    onMouseLeave={() => setShowTooltip(false)}
+                    onChange={(e) => setPriceRange(e)}
+                    min={500}
+                    max={50000}
+                    className="px-2"
+                  >
+                    <SliderMark
+                      value={1000}
+                      mt="1"
+                      ml="-2.5"
+                      fontSize="sm"
+                      className="font-mono"
+                    >
+                      1000
+                    </SliderMark>
+                    <SliderMark
+                      value={10000}
+                      mt="1"
+                      ml="-2.5"
+                      fontSize="sm"
+                      className="font-mono"
+                    >
+                      10k
+                    </SliderMark>
+                    <SliderMark
+                      value={30000}
+                      mt="1"
+                      ml="-2.5"
+                      fontSize="sm"
+                      className="font-mono"
+                    >
+                      30k
+                    </SliderMark>
+                    <SliderMark
+                      value={50000}
+                      mt="1"
+                      ml="-2.5"
+                      fontSize="sm"
+                      className="font-mono"
+                    >
+                      50k
+                    </SliderMark>
+                    <SliderTrack bg="linkedin.200">
+                      <SliderFilledTrack bg="linkedin.500" />
+                    </SliderTrack>
+                    <Tooltip
+                      hasArrow
+                      bg="linkedin.500"
+                      placement="top"
+                      isOpen={showTooltip}
+                      label={`${priceRange}`}
+                    >
+                      <SliderThumb boxSize={5}>
+                        <Box color="linkedin.500" />
+                      </SliderThumb>
+                    </Tooltip>
+                  </Slider>
                 </Box>
               </Box>
               <Box w={["100%", "100%", "75%"]}>
@@ -215,11 +278,11 @@ function ProductPage() {
                   alignItems="center"
                   mb={4}
                 >
-                  <Text>
+                  <Text className="font-semibold text-[.95rem]">
                     {totalProducts} products found in X category for X brand
                     from
                   </Text>
-                  <Flex alignItems="center">
+                  <Flex alignItems="center" className="">
                     <Text mr={2}>Sort by</Text>
                     <Select
                       value={sortByPrice}
