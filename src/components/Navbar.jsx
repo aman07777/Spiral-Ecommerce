@@ -28,7 +28,6 @@ const Navbar = () => {
   }
 
   const [isShopMenuOpen, setIsShopMenuOpen] = useState(false);
-
   const handleShopMenuOpen = () => {
     setIsShopMenuOpen(true);
   };
@@ -42,7 +41,6 @@ const Navbar = () => {
       <Box ml="53px" mr="53px" width={{ base: '100%', md: '80%' }} margin="auto">
         <Flex alignItems="center">
         <NavLink href="/" style={{ fontWeight: 'bold', fontSize: '1.5rem', color: 'teal', textDecoration: 'none', textTransform: 'uppercase' }}>AIJO</NavLink>
-          
           <Spacer />
           <Box display={{ base: 'none', md: 'flex' }} alignItems="center">
           <Menu>
@@ -65,27 +63,27 @@ const Navbar = () => {
           <Box display={{ base: 'none', md: 'flex' }} alignItems='center'>
             {
               currentUser &&
-              <><NavLink href="/favorites" mr={4}><StarIcon /></NavLink>
+              <>
+                <NavLink href="/favorites" mr={4}><StarIcon /></NavLink>
                 <NavLink href="/cart" mr={4}><ShoppingCart /></NavLink>
               </>
             }
             <Menu>
               <MenuButton as={IconButton} icon={<MenuIcon />} variant="outline" />
               <MenuList>
-                <MenuItem as={Link} href="/infos">My Information</MenuItem>
-                <MenuItem as={Link} href="/orders">Orders</MenuItem>
+                <MenuItem  href="/infos">My Information</MenuItem>
+                <MenuItem  href="/orders">Orders</MenuItem>
                 {currentUser
                   ? <MenuItem onClick={handleLogout}>Log Out</MenuItem>
-                  : <MenuItem as={Link} href='/login'>Log In</MenuItem>
+                  : <MenuItem  href='/login'>Log In</MenuItem>
                 }
               </MenuList>
             </Menu>
           </Box>
-          {/* Show the hamburger menu icon on small screens */}
           <Box display={{ base: 'flex', md: 'none' }} >
             <Menu>
               <MenuButton as={IconButton} icon={<MenuIcon />} variant="outline" />
-              <MenuList display="flex" flexDirection="column" fontWeight={10}> {/* added flexDirection property */}
+              <MenuList display="flex" flexDirection="column" fontWeight={10}> 
                 <MenuItem><NavLink href="/favorites" mr={4}>Shop</NavLink></MenuItem>
                 <MenuItem><NavLink href="/cart" mr={4}>Brand</NavLink></MenuItem>
                 <MenuItem><NavLink href="/cart" mr={4}>Shoes</NavLink></MenuItem>
@@ -103,8 +101,6 @@ const Navbar = () => {
     </Box>
   );
 };
-
-
 
 const NavLink = ({ to, children, ...rest }) => (
   <RouterNavLink to={to} style={{ marginRight: '12px' }} fontWeight="medium" activeStyle={{ textDecoration: 'none' }} {...rest}>
