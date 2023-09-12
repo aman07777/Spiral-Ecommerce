@@ -30,12 +30,7 @@ const Category = () => {
         <h1 className="text-[1.5rem] mb-5 font-semibold md:text-[2rem]">
           Category
         </h1>
-        <Flex
-          flexWrap="wrap"
-          justifyContent="center"
-          alignItems="center"
-          mt={10}
-        >
+        <Flex flexWrap="wrap" justifyContent="center" alignItems="center">
           {categories.map((category, index) => (
             <Box
               key={index}
