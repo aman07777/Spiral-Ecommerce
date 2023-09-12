@@ -110,168 +110,169 @@ function ProductPage() {
       {!isLoading ? (
         <div className="flex justify-center">
           <Box width={{ base: "100%", md: "95%", lg: "75%" }}>
-            <Breadcrumb
-              spacing="5px"
-              mt={3}
-              className="text-[.9rem] font-semibold text-[#585858]"
-            >
-              <BreadcrumbItem>
-                <NavLink
-                  to="/"
-                  className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
-                >
-                  Home
-                </NavLink>
-              </BreadcrumbItem>
-              <BreadcrumbItem isCurrentPage>
-                <NavLink to="#">Products</NavLink>
-              </BreadcrumbItem>
-            </Breadcrumb>
             <Flex
               direction={["column", "column", "row"]}
               justifyContent={"space-between"}
               columnGap={3}
               className="mt-3 text-[#585858] font-sans"
             >
-              <Box boxShadow="2xl" className="w-full px-5">
-                <Box my={4}>
-                  <h2 className="text-[1.3rem] font-semibold mb-2">
-                    Categories
-                  </h2>
-                  <div className="flex flex-col">
-                    <Checkbox
-                      isChecked={selectedCategories.length === 0}
-                      onChange={() => setSelectedCategories([])}
+              <Box className="w-full  lg:sticky top-[6em] max-h-screen">
+                <Breadcrumb
+                  spacing="5px"
+                  className="text-[.9rem] font-semibold text-[#585858] "
+                >
+                  <BreadcrumbItem>
+                    <NavLink
+                      to="/"
+                      className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
                     >
-                      All
-                    </Checkbox>
-                    <Checkbox
-                      isChecked={selectedCategories.includes("Category A")}
-                      onChange={handleCategoryChange}
+                      Home
+                    </NavLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbItem isCurrentPage>
+                    <NavLink to="#">Products</NavLink>
+                  </BreadcrumbItem>
+                </Breadcrumb>
+                <div className="w-full border mt-2 px-5 h-[96dvh]">
+                  <Box my={4}>
+                    <h2 className="text-[1.3rem] font-semibold mb-2">
+                      Categories
+                    </h2>
+                    <div className="flex flex-col">
+                      <Checkbox
+                        isChecked={selectedCategories.length === 0}
+                        onChange={() => setSelectedCategories([])}
+                      >
+                        All
+                      </Checkbox>
+                      <Checkbox
+                        isChecked={selectedCategories.includes("Category A")}
+                        onChange={handleCategoryChange}
+                      >
+                        Tradtional
+                      </Checkbox>
+                      <Checkbox
+                        isChecked={selectedCategories.includes("Category A")}
+                        onChange={handleCategoryChange}
+                      >
+                        Western
+                      </Checkbox>
+                      <Checkbox
+                        isChecked={selectedCategories.includes("Category A")}
+                        onChange={handleCategoryChange}
+                      >
+                        Accesories
+                      </Checkbox>
+                      <Checkbox
+                        isChecked={selectedCategories.includes("Category B")}
+                        onChange={handleCategoryChange}
+                      >
+                        Shoes
+                      </Checkbox>
+                    </div>
+                  </Box>
+                  <Box mb={4}>
+                    <h2 className="text-[1.2rem] font-semibold mb-2">Brands</h2>
+                    <div className="flex flex-col">
+                      <Checkbox
+                        isChecked={selectedBrands.length === 0}
+                        onChange={() => setSelectedBrands([])}
+                      >
+                        All
+                      </Checkbox>
+                      <Checkbox
+                        isChecked={selectedBrands.includes("Brand A")}
+                        onChange={handleBrandChange}
+                      >
+                        Nike
+                      </Checkbox>
+                      <Checkbox
+                        isChecked={selectedBrands.includes("Brand A")}
+                        onChange={handleBrandChange}
+                      >
+                        Armani
+                      </Checkbox>
+                      <Checkbox
+                        isChecked={selectedBrands.includes("Brand A")}
+                        onChange={handleBrandChange}
+                      >
+                        Varsachhi
+                      </Checkbox>
+                      <Checkbox
+                        isChecked={selectedBrands.includes("Brand B")}
+                        onChange={handleBrandChange}
+                      >
+                        Baanarasi
+                      </Checkbox>
+                    </div>
+                  </Box>
+                  <Box mb={4}>
+                    <h2 className="text-[1.2rem] font-semibold">Price Range</h2>
+                    <Slider
+                      aria-label="slider-ex-4"
+                      defaultValue={30}
+                      onMouseEnter={() => setShowTooltip(true)}
+                      onMouseLeave={() => setShowTooltip(false)}
+                      onChange={(e) => setPriceRange(e)}
+                      min={500}
+                      max={50000}
+                      className="px-2"
                     >
-                      Tradtional
-                    </Checkbox>
-                    <Checkbox
-                      isChecked={selectedCategories.includes("Category A")}
-                      onChange={handleCategoryChange}
-                    >
-                      Western
-                    </Checkbox>
-                    <Checkbox
-                      isChecked={selectedCategories.includes("Category A")}
-                      onChange={handleCategoryChange}
-                    >
-                      Accesories
-                    </Checkbox>
-                    <Checkbox
-                      isChecked={selectedCategories.includes("Category B")}
-                      onChange={handleCategoryChange}
-                    >
-                      Shoes
-                    </Checkbox>
-                  </div>
-                </Box>
-                <Box mb={4}>
-                  <h2 className="text-[1.2rem] font-semibold mb-2">Brands</h2>
-                  <div className="flex flex-col">
-                    <Checkbox
-                      isChecked={selectedBrands.length === 0}
-                      onChange={() => setSelectedBrands([])}
-                    >
-                      All
-                    </Checkbox>
-                    <Checkbox
-                      isChecked={selectedBrands.includes("Brand A")}
-                      onChange={handleBrandChange}
-                    >
-                      Nike
-                    </Checkbox>
-                    <Checkbox
-                      isChecked={selectedBrands.includes("Brand A")}
-                      onChange={handleBrandChange}
-                    >
-                      Armani
-                    </Checkbox>
-                    <Checkbox
-                      isChecked={selectedBrands.includes("Brand A")}
-                      onChange={handleBrandChange}
-                    >
-                      Varsachhi
-                    </Checkbox>
-                    <Checkbox
-                      isChecked={selectedBrands.includes("Brand B")}
-                      onChange={handleBrandChange}
-                    >
-                      Baanarasi
-                    </Checkbox>
-                  </div>
-                </Box>
-                <Box mb={4}>
-                  <h2 className="text-[1.2rem] font-semibold">Price Range</h2>
-                  <Slider
-                    aria-label="slider-ex-4"
-                    defaultValue={30}
-                    onMouseEnter={() => setShowTooltip(true)}
-                    onMouseLeave={() => setShowTooltip(false)}
-                    onChange={(e) => setPriceRange(e)}
-                    min={500}
-                    max={50000}
-                    className="px-2"
-                  >
-                    <SliderMark
-                      value={1000}
-                      mt="1"
-                      ml="-2.5"
-                      fontSize="sm"
-                      className="font-mono"
-                    >
-                      1000
-                    </SliderMark>
-                    <SliderMark
-                      value={10000}
-                      mt="1"
-                      ml="-2.5"
-                      fontSize="sm"
-                      className="font-mono"
-                    >
-                      10k
-                    </SliderMark>
-                    <SliderMark
-                      value={30000}
-                      mt="1"
-                      ml="-2.5"
-                      fontSize="sm"
-                      className="font-mono"
-                    >
-                      30k
-                    </SliderMark>
-                    <SliderMark
-                      value={50000}
-                      mt="1"
-                      ml="-2.5"
-                      fontSize="sm"
-                      className="font-mono"
-                    >
-                      50k
-                    </SliderMark>
-                    <SliderTrack bg="linkedin.200">
-                      <SliderFilledTrack bg="linkedin.500" />
-                    </SliderTrack>
-                    <Tooltip
-                      hasArrow
-                      bg="linkedin.500"
-                      placement="top"
-                      isOpen={showTooltip}
-                      label={`${priceRange}`}
-                    >
-                      <SliderThumb boxSize={5}>
-                        <Box color="linkedin.500" />
-                      </SliderThumb>
-                    </Tooltip>
-                  </Slider>
-                </Box>
+                      <SliderMark
+                        value={1000}
+                        mt="1"
+                        ml="-2.5"
+                        fontSize="sm"
+                        className="font-mono"
+                      >
+                        1000
+                      </SliderMark>
+                      <SliderMark
+                        value={10000}
+                        mt="1"
+                        ml="-2.5"
+                        fontSize="sm"
+                        className="font-mono"
+                      >
+                        10k
+                      </SliderMark>
+                      <SliderMark
+                        value={30000}
+                        mt="1"
+                        ml="-2.5"
+                        fontSize="sm"
+                        className="font-mono"
+                      >
+                        30k
+                      </SliderMark>
+                      <SliderMark
+                        value={50000}
+                        mt="1"
+                        ml="-2.5"
+                        fontSize="sm"
+                        className="font-mono"
+                      >
+                        50k
+                      </SliderMark>
+                      <SliderTrack bg="linkedin.200">
+                        <SliderFilledTrack bg="linkedin.500" />
+                      </SliderTrack>
+                      <Tooltip
+                        hasArrow
+                        bg="linkedin.500"
+                        placement="top"
+                        isOpen={showTooltip}
+                        label={`${priceRange}`}
+                      >
+                        <SliderThumb boxSize={5}>
+                          <Box color="linkedin.500" />
+                        </SliderThumb>
+                      </Tooltip>
+                    </Slider>
+                  </Box>
+                </div>
               </Box>
-              <Box w={["100%", "100%", "75%"]}>
+              <Box w={["100%", "100%", "75%"]} className="pb-5">
                 <Flex
                   direction="rows"
                   justifyContent="space-between"
@@ -300,7 +301,6 @@ function ProductPage() {
                     "repeat(1, 1fr)",
                     "repeat(2, 1fr)",
                     "repeat(3, 1fr)",
-                    // "repeat(4, 1fr)",
                   ]}
                   gap={4}
                 >
@@ -311,25 +311,26 @@ function ProductPage() {
                       borderRadius="lg"
                       bg="white"
                       width="250px"
-                      height="375px"
                       cursor="pointer"
                       boxShadow="2xl"
                       position="relative"
                       transition="transform 0.2s ease-in-out"
                       _hover={{ transform: "scale(1.05)" }}
+                      className="pb-3"
                     >
                       <Box
                         width="250px"
                         height="250px"
                         overflow="hidden"
                         position="relative"
-                        mb={4}
+                        mb={3}
                       >
                         <Image
                           src={`${imageUrl}/${product.image}`}
                           width="250px"
                           height="250px"
                           objectFit="center"
+                          borderTopRadius="lg"
                         />
                         <Box
                           position="absolute"
@@ -343,36 +344,34 @@ function ProductPage() {
                           <ShoppingCart />
                         </Box>
                       </Box>
-                      <Text fontWeight="bold" fontSize="lg" mb={2} ml={2}>
-                        {product.name}
-                      </Text>
-                      <Text
-                        fontSize="lg"
-                        color="grey.100"
-                        fontWeight="bold"
-                        mb={2}
-                        ml={2}
-                      >
-                        ${product.price}
-                      </Text>
-                      <Text
-                        fontSize="lg"
-                        color="#0077B5"
-                        textDecoration="line-through"
-                        ml={2}
-                      >
-                        ${product.discount}
-                      </Text>
+                      <div className="px-3">
+                        <Text className="text-[1.3rem] font-semibold">
+                          {product.name}
+                        </Text>
+                        <Text className="mt-2 font-semibold text-[1.1rem] text-[#585858]/80">
+                          {product.price -
+                            (product.discount / 100) * product.price}{" "}
+                          NPR
+                        </Text>
+                        <div className="font-medium text-[.8rem] flex gap-x-3">
+                          <span className="line-through text-rose-400">
+                            {product.price} NPR
+                          </span>
+                          <span className="text-green-400">
+                            {product.discount}% off
+                          </span>
+                        </div>
+                      </div>
                     </Box>
                   ))}
                 </Grid>
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={Math.ceil(totalProducts / productsPerPage)}
+                  onPageChange={handlePageChange}
+                />
               </Box>
             </Flex>
-            <Pagination
-              currentPage={currentPage}
-              totalPages={Math.ceil(totalProducts / productsPerPage)}
-              onPageChange={handlePageChange}
-            />
           </Box>
         </div>
       ) : (
