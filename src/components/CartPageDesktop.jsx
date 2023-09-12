@@ -132,7 +132,6 @@ function CartPageDesktop() {
 
   return (
     <>
-      <Navbar />
       {!isLoading ? (
         <Flex direction="column" p={4}>
           <Flex direction={["column", "column", "row"]} mb={4}>
@@ -346,7 +345,6 @@ function CartPageDesktop() {
       ) : (
         <Loader />
       )}
-      <Footer />
     </>
   );
 }

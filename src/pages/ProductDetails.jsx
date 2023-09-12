@@ -19,8 +19,6 @@ import {
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import ReactImageMagnify from "react-image-magnify";
 
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import Loader from "../components/Loader";
 
 import { getProduct } from "../services/ProductServices";
@@ -125,7 +123,6 @@ export default function ProductDetails() {
 
   return (
     <>
-      <Navbar />
       {!isLoading ? (
         <Container
           maxW={"7xl"}
@@ -371,7 +368,6 @@ export default function ProductDetails() {
       ) : (
         <Loader />
       )}
-      <Footer />
     </>
   );
 }
