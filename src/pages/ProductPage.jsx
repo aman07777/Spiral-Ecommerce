@@ -342,7 +342,7 @@ function ProductPage() {
                           color="#0077B5"
                           onClick={(e) => {
                             e.stopPropagation();
-                            navigate("/cart");
+                            navigate("/protect/cart");
                           }}
                         >
                           <ShoppingCart />

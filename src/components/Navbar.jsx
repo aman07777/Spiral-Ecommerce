@@ -68,28 +68,28 @@ const Navbar = () => {
           </NavLink>
           <Box display={{ base: "none", md: "flex" }} alignItems="center">
             <NavLink
-              to="/cart"
+              to="/products"
               mr={4}
               className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
             >
               New Arrival
             </NavLink>
             <NavLink
-              to="/cart"
+              to="/products"
               mr={4}
               className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
             >
               Brand
             </NavLink>
             <NavLink
-              to="/cart"
+              to="/products"
               mr={4}
               className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
             >
               Shoes
             </NavLink>
             <NavLink
-              to="/cart"
+              to="/products"
               mr={4}
               className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
             >
@@ -105,7 +105,7 @@ const Navbar = () => {
                 <NavLink to="/favorites" mr={4}>
                   <StarIcon />
                 </NavLink>
-                <NavLink to="/cart" mr={4}>
+                <NavLink to="/protect/cart" mr={4}>
                   <ShoppingCart />
                 </NavLink>
               </>
@@ -170,27 +170,27 @@ const Navbar = () => {
                   </NavLink>
                 </MenuItem>
                 <MenuItem>
-                  <NavLink to="/cart" mr={4}>
+                  <NavLink to="/products" mr={4}>
                     Brand
                   </NavLink>
                 </MenuItem>
                 <MenuItem>
-                  <NavLink to="/cart" mr={4}>
+                  <NavLink to="/products" mr={4}>
                     Shoes
                   </NavLink>
                 </MenuItem>
                 <MenuItem>
-                  <NavLink to="/cart" mr={4}>
+                  <NavLink to="/products" mr={4}>
                     New Arrival
                   </NavLink>
                 </MenuItem>
                 <MenuItem>
-                  <NavLink to="/cart" mr={4}>
+                  <NavLink to="/products" mr={4}>
                     Most Wanted
                   </NavLink>
                 </MenuItem>
                 <MenuItem>
-                  <NavLink to="/cart">Cart</NavLink>
+                  <NavLink to="/products">Cart</NavLink>
                 </MenuItem>
                 <MenuItem>
                   <NavLink to="/infos">My Information</NavLink>

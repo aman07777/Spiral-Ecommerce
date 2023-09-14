@@ -20,6 +20,7 @@ import AffliatorProfile from "./pages/AffliatorProfile";
 import CartPageMobile from "./components/CartPageMobile";
 import ErrorPage from "./pages/ErrorPage";
 import Layout from "./layout/layout";
+import CheckAuth from "./components/check-auth";
 
 function App() {
   return (
@@ -29,13 +30,16 @@ function App() {
           <Route path="" element={<Home />} />
           <Route path="signup" element={<Signup />} />
           <Route path="login" element={<Login />} />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/products" exact element={<ProductPage />} />
-          <Route path="/products/:id" element={<ProductDetails />} />
+          <Route path="products" exact element={<ProductPage />} />
+          <Route path="products/:id" element={<ProductDetails />} />
+
+          {/* <Route path="/protect/" element={<CheckAuth />}> */}
+          <Route path="/protect/cart" element={<CartPage />} />
+          {/* </Route> */}
         </Route>
-        <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/emailverification" element={<EmailVerification />} />
 
+        <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/adminHome" element={<AdminHome />} />
         <Route path="/adminProduct" element={<AdminProduct />} />
         <Route path="/adminOrder" element={<AdminOrder />} />

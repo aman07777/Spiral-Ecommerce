@@ -31,7 +31,7 @@ export default function ProductDetails() {
   const [product, setProduct] = useState({});
   const [images, setImages] = useState([]);
   const [selectedImage, setSelectedImage] = useState();
-  const [selectedQuantity, setSelectedQuantity] = useState(0);
+  const [selectedQuantity, setSelectedQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("null");
   const [isLoading, setIsLoading] = useState(true);
@@ -90,7 +90,6 @@ export default function ProductDetails() {
     if (currentUser) {
       try {
         const response = await postCart(
-          currentUser,
           product._id,
           selectedQuantity,
           selectedSize,
@@ -105,7 +104,7 @@ export default function ProductDetails() {
             isClosable: true,
           });
 
-          navigate("/cart");
+          navigate("/protect/cart");
         }
       } catch (error) {
         const errorMessage =
@@ -126,7 +125,7 @@ export default function ProductDetails() {
   return (
     <>
       {!isLoading ? (
-        <div className="w-full flex justify-center">
+        <div className="flex justify-center w-full">
           <Box width={{ base: "100%", md: "95%", lg: "75%" }}>
             <Breadcrumb
               spacing="5px"
@@ -252,7 +251,7 @@ export default function ProductDetails() {
                       NPR
                     </Text>
                     <div className="mt-1 font-medium text-[.9rem] flex gap-x-3">
-                      <span className="line-through text-red-500">
+                      <span className="text-red-500 line-through">
                         {product.price} NPR
                       </span>
                       <span className="text-green-500">

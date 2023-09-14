@@ -15,8 +15,10 @@ import {
 
 import { login } from "../services/AuthServices";
 import { useUserContext } from "../contexts/UserContext";
+import { useGlobalStore } from "../global/store";
 
 const Login = () => {
+  const setUser = useGlobalStore((state) => state.setUser);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -38,6 +40,7 @@ const Login = () => {
       const response = await login(email, password);
       if (response.status === 200) {
         setCurrentUser(response.data.token);
+        setUser(response.data.token);
         toast({
           title: "Login Successful",
           description: "You have been logged in successfully.",
@@ -45,11 +48,8 @@ const Login = () => {
           duration: 2500,
           isClosable: true,
         });
-        localStorage.setItem(
-          "currentUser",
-          JSON.stringify(response.data.token)
-        );
-        navigate("/cart");
+        localStorage.setItem("currentUser", response.data.token);
+        navigate("/");
       }
     } catch (error) {
       const errorMessage =

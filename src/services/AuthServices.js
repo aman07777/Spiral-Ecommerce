@@ -8,7 +8,7 @@ export const signup = async (
   password,
   confirmPassword
 ) => {
-  return axios.post(`${baseUrl}/signup`, {
+  return axios.post(`${baseUrl}auth/signup`, {
     firstName,
     lastName,
     email,
@@ -18,26 +18,26 @@ export const signup = async (
 };
 
 export const verifyEmail = async (token) => {
-  return axios.post(`${baseUrl}/verify-email`, {
+  return axios.post(`${baseUrl}auth/verify-email`, {
     verificationCode: token,
   });
 };
 
 export const login = async (email, passowrd) => {
-  return axios.post(`${baseUrl}/login`, {
+  return axios.post(`${baseUrl}auth/login`, {
     email: email,
     password: passowrd,
   });
 };
 
 export const forgotPassword = async (email) => {
-  return axios.post(`${baseUrl}/forgot-password`, {
+  return axios.post(`${baseUrl}auth/forgot-password`, {
     email,
   });
 };
 
 export const resetPassword = async (token, password, confirmPassword) => {
-  return axios.post(`${baseUrl}/reset-password`, {
+  return axios.post(`${baseUrl}auth/reset-password`, {
     token,
     password,
     confirmPassword,
