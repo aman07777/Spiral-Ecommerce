@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button, Flex, Image,Icon } from "@chakra-ui/react";
+import { Box, Button, Flex, Image, Icon } from "@chakra-ui/react";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 // Define a functional component called Category
@@ -37,7 +37,7 @@ const Category = () => {
           flexWrap="wrap"
           justifyContent={{ base: "center", md: "center" }}
           alignItems="center"
-          gap={{base:'6' ,md:'2'}}
+          gap={{ base: "6", md: "2" }}
         >
           {categories.map((category, index) => (
             <Box
@@ -70,7 +70,7 @@ const Category = () => {
                 position="absolute"
                 bottom={20}
                 left={{ base: "28%", md: "25%" }}
-                top={{base:'65%',md:'70%'}}
+                top={{ base: "65%", md: "70%" }}
                 width="50%"
                 height={{ base: "30px", md: "40px" }}
                 colorScheme="teal"
@@ -102,11 +102,16 @@ const Category = () => {
                   transition: "all .3s",
                 }}
               >
-                <Flex alignItems="center" justifyContent="space-between" fontSize={{base:'10px', md:'15px'}}>
+                <Flex
+                  alignItems="center"
+                  justifyContent="space-between"
+                  fontSize={{ base: "10px", md: "15px" }}
+                >
                   <span>{category.name}</span>
-                  
-                  <Icon as={ArrowForwardIcon}  fontSize={{base:'1xl' ,md:"2xl"}}/>
-                  
+                  <Icon
+                    as={ArrowForwardIcon}
+                    fontSize={{ base: "1xl", md: "2xl" }}
+                  />
                 </Flex>
               </Button>
             </Box>

@@ -1,20 +1,42 @@
-import { Box, Container, Flex, Heading, Text, Button, Input, FormControl, FormLabel, FormHelperText, Stack, Avatar, IconButton, Menu, MenuButton, MenuList, MenuItem, Divider, List, ListItem, ListIcon } from '@chakra-ui/react';
-import EditIcon from '@mui/icons-material/Edit';
-import LockIcon from '@mui/icons-material/Lock';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import CakeIcon from '@mui/icons-material/Cake';
-import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
-import { useState } from 'react';
+import {
+  Box,
+  Container,
+  Flex,
+  Heading,
+  Text,
+  Button,
+  Input,
+  FormControl,
+  FormLabel,
+  FormHelperText,
+  Stack,
+  Avatar,
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Divider,
+  List,
+  ListItem,
+  ListIcon,
+} from "@chakra-ui/react";
+import EditIcon from "@mui/icons-material/Edit";
+import LockIcon from "@mui/icons-material/Lock";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import CakeIcon from "@mui/icons-material/Cake";
+import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
+import { useState } from "react";
 
 const AffliatorProfile = () => {
-  const [firstName, setFirstName] = useState('John');
-  const [lastName, setLastName] = useState('Doe');
-  const [email, setEmail] = useState('johndoe@example.com');
-  const [birthday, setBirthday] = useState('1990-01-01');
-  const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState("John");
+  const [lastName, setLastName] = useState("Doe");
+  const [email, setEmail] = useState("johndoe@example.com");
+  const [birthday, setBirthday] = useState("1990-01-01");
+  const [password, setPassword] = useState("");
   const [bonus, setBonus] = useState(100);
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState("");
 
   const handlePasswordChange = () => {
     // TODO: Implement password change logic
@@ -42,7 +64,11 @@ const AffliatorProfile = () => {
           <Text fontSize="sm">{`Bonus: ${bonus}`}</Text>
         </Box>
         <Box ml="auto">
-          <IconButton aria-label="Edit Profile" icon={<EditIcon />} onClick={handleEditProfile} />
+          <IconButton
+            aria-label="Edit Profile"
+            icon={<EditIcon />}
+            onClick={handleEditProfile}
+          />
         </Box>
       </Flex>
       <Flex>
@@ -116,7 +142,13 @@ const AffliatorProfile = () => {
               <Box w="70%">
                 <FormControl>
                   <FormLabel>Password</FormLabel>
-                  <Input type="password" value={password} isReadOnly onChange={(e) => setPassword(e.target.value)} mr={2} />
+                  <Input
+                    type="password"
+                    value={password}
+                    isReadOnly
+                    onChange={(e) => setPassword(e.target.value)}
+                    mr={2}
+                  />
                   <IconButton
                     aria-label="Change Password"
                     icon={<LockIcon />}
@@ -125,7 +157,9 @@ const AffliatorProfile = () => {
                     isDisabled
                   />
                 </FormControl>
-                <FormHelperText>Leave blank to keep the same password</FormHelperText>
+                <FormHelperText>
+                  Leave blank to keep the same password
+                </FormHelperText>
               </Box>
             </Flex>
             <Flex>
@@ -135,7 +169,12 @@ const AffliatorProfile = () => {
               <Box w="70%">
                 <FormControl>
                   <FormLabel>Bonus</FormLabel>
-                  <Input type="number" value={bonus} isReadOnly onChange={(e) => setBonus(e.target.value)} />
+                  <Input
+                    type="number"
+                    value={bonus}
+                    isReadOnly
+                    onChange={(e) => setBonus(e.target.value)}
+                  />
                 </FormControl>
               </Box>
             </Flex>
@@ -145,7 +184,12 @@ const AffliatorProfile = () => {
               </Box>
               <Box w="70%">
                 <Flex alignItems="center">
-                  <Avatar size="xl" name={`${firstName} ${lastName}`} src={image} mr={4} />
+                  <Avatar
+                    size="xl"
+                    name={`${firstName} ${lastName}`}
+                    src={image}
+                    mr={4}
+                  />
                   <IconButton
                     aria-label="Upload Image"
                     icon={<AddAPhotoIcon />}
