@@ -12,7 +12,6 @@ import AdminCustomer from "./pages/Admin/AdminCustomer";
 import AdminAffiliator from "./pages/Admin/AdminAffliator";
 import AdminSettings from "./pages/Admin/AdminSetting";
 import CartPage from "./pages/CartPage";
-import ProductPage from "./pages/ProductPage";
 import ProductDetails from "./pages/ProductDetails";
 import CustomerProfile from "./pages/CustomerProfile";
 import AffliatorProfile from "./pages/AffliatorProfile";
@@ -21,6 +20,7 @@ import CartPageMobile from "./components/CartPageMobile";
 import ErrorPage from "./pages/ErrorPage";
 import Layout from "./layout/layout";
 import CheckAuth from "./components/check-auth";
+import ProductPage from "./pages/products/ProductPage";
 
 function App() {
   return (
