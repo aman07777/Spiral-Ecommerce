@@ -66,7 +66,7 @@ const Navbar = () => {
           >
             AIJO
           </NavLink>
-          {/* <Box display={{ base: "none", md: "flex" }} alignItems="center">
+          <Box display={{ base: "none", md: "flex" }} alignItems="center">
             <NavLink
               to="/products"
               mr={4}
@@ -79,7 +79,7 @@ const Navbar = () => {
               mr={4}
               className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
             >
-              Brand
+              Products
             </NavLink>
             <NavLink
               to="/products"
@@ -95,7 +95,7 @@ const Navbar = () => {
             >
               Most Wanted
             </NavLink>
-          </Box> */}
+          </Box>
           {/* search section */}
           <Searchbar />
           {/* user info section for lager screen */}
