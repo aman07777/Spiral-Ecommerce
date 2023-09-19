@@ -35,7 +35,6 @@ function App() {
         </Route>
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/emailverification" element={<EmailVerification />} />
-
         <Route path="/adminHome" element={<AdminHome />} />
         <Route path="/adminProduct" element={<AdminProduct />} />
         <Route path="/adminOrder" element={<AdminOrder />} />

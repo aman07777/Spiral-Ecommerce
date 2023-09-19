@@ -34,7 +34,6 @@ const Category = () => {
           flexWrap="wrap"
           justifyContent="center"
           alignItems="center"
-          mt={10}
         >
           {categories.map((category, index) => (
             <Box

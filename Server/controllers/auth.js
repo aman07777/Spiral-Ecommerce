@@ -7,6 +7,15 @@ import scheduleJob from "../utils/scheduleJob.js";
 import sendEmail from "../utils/sendMail.js";
 import crypto from "crypto";
 
+export const checkUser = catchAsync(async (req, res) => {
+  if (!req.user)
+    throw createError(
+      401,
+      "You are not logged in. Please login to get access."
+    );
+  res.status(200).send({ status: "success", isValidUser: true });
+});
+
 export const signupUser = catchAsync(async (req, res) => {
   // Generate random token
   const code = verificationCode();

@@ -11,10 +11,12 @@ import {
   updatePassword,
   forgotPassword,
   resetPassword,
+  checkUser,
 } from "../controllers/auth.js";
 
 const router = express.Router();
 
+router.get("/", protect, checkUser);
 router.post("/signup", validateSignup, signupUser);
 router.post("/verify-email", verificationEmail);
 router.post("/login", loginUser);
