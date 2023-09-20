@@ -42,7 +42,7 @@ const Sidebar = () => {
             aria-label="Open sidebar"
           />
         </Box>
-        <h1 className="text-[#fff] font-mono tracking-wide select-none cursor-pointer text-[1.4rem] hidden @[900px]:block">
+        <h1 className="text-[#fff] font-mono tracking-wide select-none cursor-pointer text-[1.4rem] hidden @[900px]:block @[1000px]:pl-3">
           AIJO
         </h1>
         <Spacer />

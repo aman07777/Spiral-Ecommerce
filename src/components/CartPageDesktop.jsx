@@ -18,9 +18,6 @@ import {
 
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-
 import { getCart, removeCartItem } from "../services/CartServices";
 import { useUserContext } from "../contexts/UserContext";
 import Loader from "../components/Loader";
