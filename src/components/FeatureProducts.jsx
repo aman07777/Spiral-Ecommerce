@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Box, Flex, Image, Heading, Text } from "@chakra-ui/react";
+import { Box, Flex, Image,Text } from "@chakra-ui/react";
 import { ShoppingCart } from "@mui/icons-material";
 import Marquee from "react-fast-marquee";
 import Saletime from "./Saletime";

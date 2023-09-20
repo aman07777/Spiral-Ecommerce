@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   Flex,
   Box,
-  Heading,
   Button,
   Checkbox,
   Input,
@@ -10,8 +9,6 @@ import {
   Text,
 } from "@chakra-ui/react";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
 
 function CartPageMobile() {
   const [cartItems, setCartItems] = useState([

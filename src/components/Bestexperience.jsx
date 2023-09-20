@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, Heading, Text } from "@chakra-ui/react";
+import { Box, Heading, Text } from "@chakra-ui/react";
 import Marquee from "react-fast-marquee";
 import {
   CheckBoxOutlineBlankOutlined as OriginalProductsIcon,

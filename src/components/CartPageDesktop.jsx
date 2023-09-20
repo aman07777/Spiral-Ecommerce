@@ -27,7 +27,7 @@ function CartPageDesktop() {
   const [cartItems, setCartItems] = useState([]);
   const [selectAll, setSelectAll] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-  const [totalQuantity, setTotalQuantity] = useState(0);
+  // const [totalQuantity, setTotalQuantity] = useState(0);
 
   const toast = useToast();
 

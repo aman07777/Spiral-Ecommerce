@@ -10,7 +10,7 @@ export const UserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
 
   const values = {
-    currentUser: localStorage.getItem("currentUser"),
+    currentUser: localStorage.getItem("currentUser") || currentUser,
     setCurrentUser,
   };
 

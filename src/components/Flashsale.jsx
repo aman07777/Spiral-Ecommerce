@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex, Image, Heading, Text, Spacer, Divider } from '@chakra-ui/react';
+import { Box, Flex, Image, Heading, Text } from '@chakra-ui/react';
 import { ShoppingCart } from '@mui/icons-material';
 import Saletime from './Saletime';
 
