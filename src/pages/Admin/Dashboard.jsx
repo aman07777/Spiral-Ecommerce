@@ -33,7 +33,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <Flex as="nav" bg="blue.600" p={4} align="center">
+      <Flex as="nav" bg="blue.600" p={4} align="center" className="@container">
         <Box display={{ base: "block", md: "none" }}>
           <IconButton
             colorScheme="whiteAlpha"
@@ -42,6 +42,9 @@ const Sidebar = () => {
             aria-label="Open sidebar"
           />
         </Box>
+        <h1 className="text-[#fff] font-mono tracking-wide select-none cursor-pointer text-[1.4rem] hidden @[900px]:block">
+          AIJO
+        </h1>
         <Spacer />
         <Searchbar />
         <Spacer />
@@ -87,11 +90,11 @@ const Sidebar = () => {
             Settings
           </NavLink>
         </Box>
-        <IconButton
+        {/* <IconButton
           colorScheme="whiteAlpha"
           icon={<Logout />}
           aria-label="Logout"
-        />
+        /> */}
       </Flex>
 
       <Drawer placement="left" onClose={onClose} isOpen={isOpen}>

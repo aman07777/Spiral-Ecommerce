@@ -1,18 +1,5 @@
 import React from "react";
-import {
-  Flex,
-  Box,
-  Heading,
-  Text,
-  Stat,
-  StatLabel,
-  StatNumber,
-  StatHelpText,
-  Divider,
-  VStack,
-  HStack,
-  Badge,
-} from "@chakra-ui/react";
+import { Flex, Box, Heading, Text, VStack, Badge } from "@chakra-ui/react";
 import Dashboard from "./Dashboard";
 import {
   AreaChart,
@@ -22,8 +9,9 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
-
+import UseGetInnerWidth from "./hooks/get-inner-width.jsx";
 function AdminHome() {
+  const innerWidth = UseGetInnerWidth();
   const totalOrders = 1234;
   const totalRevenue = 12345.67;
   const averageOrderValue = totalRevenue / totalOrders;
@@ -63,42 +51,65 @@ function AdminHome() {
     { name: "Jun", uv: 2390, pv: 3800 },
     { name: "Jul", uv: 3490, pv: 4300 },
   ];
+
   return (
     <>
       <Dashboard />
-      <Flex direction="column" p={4}>
+      <Flex direction="column" p={4} className="@container">
         <VStack spacing={4} align="stretch">
           {/* Total Orders, Total Revenue, and Average Order Value */}
           <VStack spacing={4} align="stretch">
-            <Stat>
-              <StatLabel>Total Orders</StatLabel>
-              <StatNumber>{totalOrders}</StatNumber>
-              <StatHelpText>From the last 30 days</StatHelpText>
-            </Stat>
-            <Stat>
-              <StatLabel>Total Revenue</StatLabel>
-              <StatNumber>${totalRevenue.toFixed(2)}</StatNumber>
-              <StatHelpText>From the last 30 days</StatHelpText>
-            </Stat>
-            <Stat>
-              <StatLabel>Average Order Value</StatLabel>
-              <StatNumber>${averageOrderValue.toFixed(2)}</StatNumber>
-              <StatHelpText>From the last 30 days</StatHelpText>
-            </Stat>
+            <h3 className="text-[#585858] font-bold text-[1.3rem] mt-5">
+              Stats
+            </h3>
+            <div className="grid @[600px]:grid-cols-3  gap-3 font-sans text-[#585858] max-w-[750px]">
+              <div className="border w-[15em] @[600px]:w-auto px-6 py-5 rounded-sm flex flex-col bg-slate-100">
+                <h3 className="font-semibold text-[.9rem]">Total Orders</h3>
+                <p className="text-[1.4rem]">
+                  <strong>{totalOrders}</strong>
+                </p>
+                <p className="text-[.9rem]">From the last 30 days</p>
+              </div>
+              <div className="border w-[15em] @[600px]:w-auto px-6 py-5 rounded-sm flex flex-col bg-slate-100">
+                <h3 className="font-semibold text-[.9rem]">Total Revenue</h3>
+                <p className="text-[1.4rem]">
+                  <strong>${totalRevenue.toFixed(2)}</strong>
+                </p>
+                <p className="text-[.9rem]">From the last 30 days</p>
+              </div>
+              <div className="border w-[15em] @[600px]:w-auto px-6 py-5 rounded-sm flex flex-col bg-slate-100">
+                <h3 className="font-semibold text-[.9rem]">
+                  Average Order Value
+                </h3>
+                <p className="text-[1.4rem]">
+                  <strong>${averageOrderValue.toFixed(2)}</strong>
+                </p>
+                <p className="text-[.9rem]">From the last 30 days</p>
+              </div>
+            </div>
             <Box
               mt={8}
               p={4}
               borderWidth="1px"
               borderRadius="lg"
-              overflow="hidden"
+              // overflow="hidden"
+              className="w-fit"
             >
               <Heading as="h2" size="md" mb={2}>
-                Sales Chart
+                <span className="text-[#585858] font-bold text-[1.3rem] mt-5">
+                  Sales Chart
+                </span>
               </Heading>
               <Box p={2}>
                 <AreaChart
                   width={
-                    window.innerWidth <= 480 ? window.innerWidth - 40 : 730
+                    innerWidth <= 450
+                      ? 250
+                      : innerWidth > 451 && innerWidth <= 700
+                      ? 350
+                      : innerWidth > 701 && innerWidth <= 800
+                      ? 500
+                      : 700
                   }
                   height={250}
                   data={data}
@@ -137,55 +148,46 @@ function AdminHome() {
             </Box>
           </VStack>
           <Box>
-            <Heading as="h2" size="md" mb={2}>
-              Recent Orders
+            <Heading as="h2" size="md" my={2}>
+              <span className="text-[#585858] font-bold text-[1.3rem] mt-5">
+                Recent Orders
+              </span>
             </Heading>
-            {recentOrders.map((order) => (
-              <Box
-                key={order.id}
-                borderWidth="1px"
-                borderRadius="lg"
-                overflow="hidden"
-                p={2}
-              >
-                <Box p="6">
-                  <Box d="flex" alignItems="baseline">
-                    <Badge borderRadius="full" px="2" colorScheme="teal">
-                      {order.status}
-                    </Badge>
-                    <Box
-                      color="gray.500"
-                      fontWeight="semibold"
-                      letterSpacing="wide"
-                      fontSize="xs"
-                      textTransform="uppercase"
-                      ml="2"
-                    >
-                      #{order.id} &bull; {order.date}
+            <div className="flex flex-col gap-y-3 mt-5">
+              {recentOrders.map((order) => (
+                <Box
+                  key={order.id}
+                  borderWidth="1px"
+                  borderRadius="lg"
+                  overflow="hidden"
+                  p={2}
+                >
+                  <Box p="6" className="text-[#585858]">
+                    <Box d="flex" alignItems="baseline">
+                      <div className="flex gap-x-1">
+                        <Badge borderRadius="full" px="2" colorScheme="teal">
+                          {order.status}
+                        </Badge>
+                        <p className="text-[.7rem] text-gray-500 uppercase font-semibold">
+                          &bull; {order.date}
+                        </p>
+                      </div>
+                      <p className="font-semibold text-[1.1rem] mt-2">
+                        #{order.id}
+                      </p>
+                    </Box>
+                    <p className="font-semibold ">{order.productName}</p>
+
+                    <Box className="text-[.8rem] font-semibold">
+                      <Text mt="2" color="gray.600">
+                        {order.customerName}
+                      </Text>
+                      <Text color="gray.600">NRP {order.price.toFixed(2)}</Text>
                     </Box>
                   </Box>
-
-                  <Box
-                    mt="1"
-                    fontWeight="semibold"
-                    as="h4"
-                    lineHeight="tight"
-                    isTruncated
-                  >
-                    {order.productName}
-                  </Box>
-
-                  <Box>
-                    <Text mt="2" color="gray.600">
-                      {order.customerName}
-                    </Text>
-                    <Text mt="2" color="gray.600">
-                      ${order.price.toFixed(2)}
-                    </Text>
-                  </Box>
                 </Box>
-              </Box>
-            ))}
+              ))}
+            </div>
           </Box>
         </VStack>
       </Flex>
