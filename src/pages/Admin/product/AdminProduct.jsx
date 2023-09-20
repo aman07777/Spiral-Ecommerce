@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {
-  Flex,
+  // Flex,
   Button,
   Table,
   Thead,
@@ -10,24 +10,30 @@ import {
   Td,
   Checkbox,
   Image,
-  IconButton,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
+  // IconButton,
+  // Modal,
+  // ModalOverlay,
+  // ModalContent,
+  // ModalHeader,
+  // ModalCloseButton,
+  // ModalBody,
+  // ModalFooter,
   Box,
   Icon,
 } from "@chakra-ui/react";
 import { Add } from "@mui/icons-material";
 import { Breadcrumb, BreadcrumbItem } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
-import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+// import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import Dashboard from "../Dashboard";
 import { Link } from "react-router-dom";
+import { useAdminProductStore } from "./store";
+import { useEffect } from "react";
 function AdminProduct() {
+  // stores
+  const getProducts = useAdminProductStore((state) => state.getProducts); // gets products from backend
+  // const products = useAdminProductStore((state) => state.products); // products stored in the store from backend
+  // states
   const [product, setProduct] = useState({
     name: "",
     description: "",
@@ -41,8 +47,8 @@ function AdminProduct() {
   const [selectAllLocal, setSelectAllLocal] = useState(false);
   const [products, setProducts] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
+  // const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  // const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
 
   const handleEdit = (product) => {
     // Set the form fields to the values of the selected product
@@ -54,20 +60,20 @@ function AdminProduct() {
     setProducts(products.filter((p) => p.id !== product.id));
   };
 
-  const handlePreviewModalClose = () => {
-    setIsPreviewModalOpen(false);
-    setSelectedImageIndex(0);
-  };
+  // const handlePreviewModalClose = () => {
+  //   setIsPreviewModalOpen(false);
+  //   setSelectedImageIndex(0);
+  // };
 
-  const handlePrevClick = () => {
-    setSelectedImageIndex(
-      (selectedImageIndex - 1 + product.images.length) % product.images.length
-    );
-  };
+  // const handlePrevClick = () => {
+  //   setSelectedImageIndex(
+  //     (selectedImageIndex - 1 + product.images.length) % product.images.length
+  //   );
+  // };
 
-  const handleNextClick = () => {
-    setSelectedImageIndex((selectedImageIndex + 1) % product.images.length);
-  };
+  // const handleNextClick = () => {
+  //   setSelectedImageIndex((selectedImageIndex + 1) % product.images.length);
+  // };
 
   const handleSelectAll = (checked) => {
     // Select or deselect all products
@@ -114,11 +120,16 @@ function AdminProduct() {
     handleDeleteAll(selectedProducts);
   };
 
+  // fetching the products from backend
+  useEffect(() => {
+    getProducts();
+  }, [getProducts]);
   return (
     <>
       <Dashboard />
       <div className="@container">
         <div className="px-4 mt-3 @[600px]:px-6">
+          {/* breadcrumb section starts here */}
           <Breadcrumb
             spacing="5px"
             className="text-[.9rem] font-semibold text-[#585858] px-4 @[767px]:px-0"
@@ -135,7 +146,9 @@ function AdminProduct() {
               <NavLink to="#">Products</NavLink>
             </BreadcrumbItem>
           </Breadcrumb>
+          {/* breadcrumb section fin here */}
         </div>
+        {/* the title and navigation to add product page */}
         <div className="flex justify-between px-4 mt-3 @[600px]:px-6">
           <p className="font-semibold text-[#585858] text-[1.2rem]">Products</p>
           <Box
@@ -147,7 +160,9 @@ function AdminProduct() {
             <Icon as={Add} />
           </Box>
         </div>
+        {/* title and navigation fin here */}
       </div>
+      {/*  table states here */}
       <Table variant="simple" className="mt-3">
         <Thead>
           <Tr>
@@ -233,52 +248,46 @@ function AdminProduct() {
           </tfoot>
         )}
       </Table>
-      <Modal
-        isOpen={isPreviewModalOpen}
-        onClose={handlePreviewModalClose}
-        size="xl"
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Product Images</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Flex direction="row">
-              <IconButton
-                icon={<ChevronLeft />}
-                aria-label="Previous Image"
-                size="sm"
-                onClick={handlePrevClick}
-                mr={2}
-              />
-              <Image
-                src={product.images[selectedImageIndex]}
-                alt={`Product Image ${selectedImageIndex + 1}`}
-                height="30vh"
-                width="30vw"
-              />
-              <IconButton
-                icon={<ChevronRight />}
-                aria-label="Next Image"
-                size="sm"
-                onClick={handleNextClick}
-                ml={2}
-              />
-            </Flex>
-          </ModalBody>
-          <ModalFooter>
-            <Button
-              colorScheme="blue"
-              size="sm"
-              onClick={handlePreviewModalClose}
-            >
-              Close
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      
     </>
   );
 }
 
 export default AdminProduct;
+
+//  <Modal isOpen={isPreviewModalOpen} onClose={handlePreviewModalClose} size="xl">
+//   <ModalOverlay />
+//   <ModalContent>
+//     <ModalHeader>Product Images</ModalHeader>
+//     <ModalCloseButton />
+//     <ModalBody>
+//       <Flex direction="row">
+//         <IconButton
+//           icon={<ChevronLeft />}
+//           aria-label="Previous Image"
+//           size="sm"
+//           onClick={handlePrevClick}
+//           mr={2}
+//         />
+//         <Image
+//           src={product.images[selectedImageIndex]}
+//           alt={`Product Image ${selectedImageIndex + 1}`}
+//           height="30vh"
+//           width="30vw"
+//         />
+//         <IconButton
+//           icon={<ChevronRight />}
+//           aria-label="Next Image"
+//           size="sm"
+//           onClick={handleNextClick}
+//           ml={2}
+//         />
+//       </Flex>
+//     </ModalBody>
+//     <ModalFooter>
+//       <Button colorScheme="blue" size="sm" onClick={handlePreviewModalClose}>
+//         Close
+//       </Button>
+//     </ModalFooter>
+//   </ModalContent>
+// </Modal>; 

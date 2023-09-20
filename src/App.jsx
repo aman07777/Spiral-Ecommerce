@@ -7,7 +7,7 @@ import ResetPassword from "./pages/ResetPassword";
 import AdminHome from "./pages/Admin/AdminHome";
 import Home from "./pages/Home";
 import AdminProduct from "./pages/Admin/product/AdminProduct";
-import AdminOrder from "./pages/Admin/AdminOrder";
+import AdminOrder from "./pages/Admin/order/AdminOrder";
 import AdminCustomer from "./pages/Admin/AdminCustomer";
 import AdminAffiliator from "./pages/Admin/AdminAffliator";
 import AdminSettings from "./pages/Admin/AdminSetting";
@@ -22,6 +22,7 @@ import Layout from "./layout/layout";
 import CheckAuth from "./components/check-auth";
 import ProductPage from "./pages/products/ProductPage";
 import AddProduct from "./pages/Admin/product/add-product/add-product";
+import AddOrder from "./pages/Admin/order/add-order/add-order";
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
         <Route path="/adminProduct" element={<AdminProduct />} />
         <Route path="/admin-add-product" element={<AddProduct />} />
         <Route path="/adminOrder" element={<AdminOrder />} />
+        <Route path="/admin-add-order" element={<AddOrder />} />
         <Route path="/adminCustomer" element={<AdminCustomer />} />
         <Route path="/adminAffliator" element={<AdminAffiliator />} />
         <Route path="/adminSetting" element={<AdminSettings />} />

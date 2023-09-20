@@ -18,9 +18,10 @@ import {
   ModalBody,
   ModalFooter,
   useToast,
+  Breadcrumb,
+  BreadcrumbItem,
 } from "@chakra-ui/react";
 import { ChevronLeft, ChevronRight, ArrowForward } from "@mui/icons-material";
-import { Breadcrumb, BreadcrumbItem } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import Dashboard from "../../Dashboard";
 import { AddProductClass } from "./helper";
