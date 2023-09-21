@@ -1,10 +1,9 @@
 import axios from "axios";
-
-const API_URL = "http://localhost:8080/api/v1/products/";
+import { baseUrl } from "../global/config";
 
 const buildApiUrl = (currentPage, params) => {
   const queryParams = new URLSearchParams(params).toString();
-  return `${API_URL}/?page=${currentPage}${
+  return `${baseUrl}products/?page=${currentPage}${
     queryParams ? `&${queryParams}` : ""
   }`;
 };
@@ -45,12 +44,12 @@ export const getProducts = async (
 };
 
 export const getProduct = async (productId) => {
-  const { data } = await axios.get(`${API_URL}/${productId}`);
+  const { data } = await axios.get(`${baseUrl}products/${productId}`);
   return data;
 };
 
 export const getFeaturedProducts = async () => {
-  const { data } = await axios.get(`${API_URL}/featured`);
+  const { data } = await axios.get(`${baseUrl}products/featured`);
   return data;
 };
 

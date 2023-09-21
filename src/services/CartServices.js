@@ -1,25 +1,26 @@
 import axios from "axios";
+import { baseUrl } from "../global/config";
 
-const API_URL = "http://localhost:8080/api/v1/carts/";
-
-export const postCart = async (currentUser, productId, quantity) => {
+export const postCart = async (productId, quantity, color, size) => {
   return axios.post(
-    `${API_URL}/`,
+    `${baseUrl}carts/`,
     {
       productId,
       quantity,
+      color,
+      size,
     },
     {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${currentUser}`,
+        Authorization: `Bearer ${localStorage.getItem("currentUser")}`,
       },
     }
   );
 };
 
 export const getCart = async (currentUser) => {
-  return axios.get(`${API_URL}/`, {
+  return axios.get(`${baseUrl}carts/`, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${currentUser}`,
@@ -28,7 +29,7 @@ export const getCart = async (currentUser) => {
 };
 
 export const removeCartItem = async (currentUser, cartId) => {
-  return axios.delete(`${API_URL}/products/${cartId}`, {
+  return axios.delete(`${baseUrl}carts/products/${cartId}`, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${currentUser}`,

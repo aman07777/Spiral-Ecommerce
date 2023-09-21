@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const API_URL = "http://localhost:8080/api/v1/auth/";
+import { baseUrl } from "../global/config";
 
 export const signup = async (
   firstName,
@@ -9,7 +8,7 @@ export const signup = async (
   password,
   confirmPassword
 ) => {
-  return axios.post(`${API_URL}/signup`, {
+  return axios.post(`${baseUrl}auth/signup`, {
     firstName,
     lastName,
     email,
@@ -19,26 +18,26 @@ export const signup = async (
 };
 
 export const verifyEmail = async (token) => {
-  return axios.post(`${API_URL}/verify-email`, {
+  return axios.post(`${baseUrl}auth/verify-email`, {
     verificationCode: token,
   });
 };
 
 export const login = async (email, passowrd) => {
-  return axios.post(`${API_URL}/login`, {
+  return axios.post(`${baseUrl}auth/login`, {
     email: email,
     password: passowrd,
   });
 };
 
 export const forgotPassword = async (email) => {
-  return axios.post(`${API_URL}/forgot-password`, {
+  return axios.post(`${baseUrl}auth/forgot-password`, {
     email,
   });
 };
 
 export const resetPassword = async (token, password, confirmPassword) => {
-  return axios.post(`${API_URL}/reset-password`, {
+  return axios.post(`${baseUrl}auth/reset-password`, {
     token,
     password,
     confirmPassword,
