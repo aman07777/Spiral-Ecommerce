@@ -4,7 +4,7 @@ import { axios_no_auth } from "../../../../global/config";
 export const useAddOrderStore = create((set) => ({
   addOrder: async (data) => {
     try {
-      const res = await axios_no_auth.post("", data);
+      const res = await axios_no_auth.post("orders", data);
       console.log("🚀 ~ file: store.js:8 ~ addOrder: ~ res:", res);
       return res.data.status === "success" ? true : false;
     } catch (error) {
