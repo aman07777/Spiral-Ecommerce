@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Flex,
   Box,
@@ -7,63 +7,60 @@ import {
   Input,
   Image,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { getCart, removeCartItem } from "../services/CartServices";
+import { useUserContext } from "../contexts/UserContext";
+import { imageUrl } from "../global/config";
 
 function CartPageMobile() {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Product 1",
-      image:
-        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
-      price: 10,
-      quantity: 1,
-      isChecked: true,
-      size: "M",
-      color: "Red",
-    },
-    {
-      id: 2,
-      name: "Product 2",
-      image:
-        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
-      price: 20,
-      quantity: 2,
-      isChecked: true,
-      size: "L",
-      color: "Blue",
-    },
-    {
-      id: 3,
-      name: "Product 3",
-      image:
-        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
-      price: 30,
-      quantity: 3,
-      isChecked: true,
-      size: "S",
-      color: "Green",
-    },
-    {
-      id: 4,
-      name: "Product 4",
-      image:
-        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg",
-      price: 10,
-      quantity: 1,
-      isChecked: true,
-      size: "M",
-      color: "Red",
-    },
-  ]);
-
+  const [cartItems, setCartItems] = useState([]);
   const [isSelectAllChecked, setIsSelectAllChecked] = useState(true);
   const [isDeleteAllVisible, setIsDeleteAllVisible] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+
+
+
+  const toast = useToast();
+
+  const { currentUser } = useUserContext();
+
+
+
+  // getting the cart items  
+  useEffect(() => {
+    getCart(currentUser)
+      .then((result) => {
+        if (result.data.cart.length === 0) {
+          toast({
+            title: "Cart is empty",
+            description: "Please add some products to cart.",
+            status: "warning",
+            duration: 3000,
+            isClosable: true,
+          });
+        }
+        setCartItems(result.data.cart);
+        console.log(result.data.cart)
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        const errorMessage =
+          error.response?.data?.message || "An error occurred.";
+        toast({
+          title: "Error",
+          description: errorMessage,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      });
+  }, [toast, currentUser]);
 
   const handleQuantityChange = (event, index) => {
     const newCartItems = [...cartItems];
-    newCartItems[index].quantity = parseInt(event.target.value);
+    newCartItems[index].selectedQuantity = parseInt(event.target.value);
     setCartItems(newCartItems);
   };
 
@@ -90,7 +87,7 @@ function CartPageMobile() {
     setIsSelectAllChecked(newCartItems.every((item) => item.isChecked));
     setIsDeleteAllVisible(
       newCartItems.filter((item) => item.isChecked).length ===
-        newCartItems.length
+      newCartItems.length
     );
   };
 
@@ -106,7 +103,7 @@ function CartPageMobile() {
   };
 
   const subtotal = cartItems.reduce(
-    (total, item) => total + (item.isChecked ? item.price * item.quantity : 0),
+    (total, item) => total + (item.isChecked ? item.price * item.selectedQuantity : 0),
     0
   );
   const discount = subtotal * 0.1;
@@ -163,7 +160,7 @@ function CartPageMobile() {
                       />
                     </Box>
                     <Image
-                      src={item.image}
+                      src={`${imageUrl}/${item.image}`}
                       alt="Product Image"
                       boxSize="50px"
                       mr={4}
@@ -197,18 +194,20 @@ function CartPageMobile() {
                       <Flex direction="row" alignItems="center">
                         <Button
                           size="sm"
-                          onClick={() =>
-                            handleQuantityChange(
-                              { target: { value: item.quantity - 1 } },
-                              index
-                            )
-                          }
+                          onClick={() => {
+                            if (item?.selectedQuantity > 0) {
+                              handleQuantityChange(
+                                { target: { value: item.selectedQuantity - 1 } },
+                                index
+                              )
+                            }
+                          }}
                         >
                           -
                         </Button>
                         <Input
                           type="number"
-                          value={item.quantity}
+                          value={item.selectedQuantity}
                           onChange={(event) =>
                             handleQuantityChange(event, index)
                           }
@@ -226,7 +225,7 @@ function CartPageMobile() {
                           size="sm"
                           onClick={() =>
                             handleQuantityChange(
-                              { target: { value: item.quantity + 1 } },
+                              { target: { value: item.selectedQuantity + 1 } },
                               index
                             )
                           }
@@ -237,7 +236,7 @@ function CartPageMobile() {
                     </Box>
                     <Box>
                       <Text>Price:</Text>
-                      <Text>${item.price}</Text>
+                      <Text>${item?.selectedQuantity * item.price}</Text>
                     </Box>
                   </Flex>
                 </Flex>

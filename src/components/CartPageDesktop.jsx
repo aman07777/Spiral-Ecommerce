@@ -63,7 +63,7 @@ function CartPageDesktop() {
 
   const handleQuantityChange = (event, index) => {
     const newCartItems = [...cartItems];
-    newCartItems[index].quantity = parseInt(event.target.value);
+    newCartItems[index].selectedQuantity = parseInt(event.target.value);
     setCartItems(newCartItems);
   };
 
@@ -114,6 +114,8 @@ function CartPageDesktop() {
     // ...
   };
 
+
+
   const handleDeleteAll = () => {
     const newCartItems = cartItems.filter((item) => !item.isChecked);
     setCartItems(newCartItems);
@@ -121,7 +123,7 @@ function CartPageDesktop() {
   };
 
   const subtotal = cartItems.reduce(
-    (total, item) => total + (item.isChecked ? item.price * item.quantity : 0),
+    (total, item) => total + (item.isChecked ? item.price * item.selectedQuantity : 0),
     0
   );
   const discount = subtotal * 0.1;
@@ -177,7 +179,7 @@ function CartPageDesktop() {
                           />
                         </Td>
                         <Td>
-                          <Flex align="center">
+                          <Flex align="center" className="bg-blue-200">
                             <Image
                               src={`${imageUrl}/${product.image}`}
                               alt="Product Image"
@@ -205,16 +207,18 @@ function CartPageDesktop() {
                           >
                             <Button
                               size="sm"
-                              onClick={() =>
-                                handleQuantityChange(
-                                  {
-                                    target: {
-                                      value: product.selectedQuantity - 1,
+                              onClick={() => {
+                                if (product.selectedQuantity > 0) {
+                                  handleQuantityChange(
+                                    {
+                                      target: {
+                                        value: product.selectedQuantity - 1,
+                                      },
                                     },
-                                  },
-                                  index
-                                )
-                              }
+                                    index
+                                  );
+                                }
+                              }}
                             >
                               -
                             </Button>
@@ -251,7 +255,7 @@ function CartPageDesktop() {
                             </Button>
                           </Flex>
                         </Td>
-                        <Td>${product.price}</Td>
+                        <Td>${product?.selectedQuantity * product.price}</Td>
                         <Td>
                           <Button
                             colorScheme="red"

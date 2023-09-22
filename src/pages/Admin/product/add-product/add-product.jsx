@@ -46,44 +46,11 @@ const AddProduct = () => {
     images: [],
   });
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage, setProductsPerPage] = useState(10);
   const [products, setProducts] = useState([]);
   //   const [selectAll, setSelectAll] = useState(false);
   const [loading, setLading] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
-  const [totalProducts, setTotalProducts] = useState(0);
-
-
-  useEffect(() => {
-    getProducts(currentPage)
-      .then((result) => {
-        if (result.products.length === 0) {
-          toast({
-            title: "No products found",
-            description: "Please try again with different keywords.",
-            status: "warning",
-            duration: 3000,
-            isClosable: true,
-          });
-        }
-        setProducts(result.products);
-        setCurrentPage(result.currentPage);
-        setProductsPerPage(result.productsPerPage);
-      })
-      .catch((error) => {
-        const errorMessage =
-          error.response?.data?.message || "An error occurred.";
-        toast({
-          title: "Error",
-          description: errorMessage,
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
-      });
-  }, [currentPage, toast]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -96,7 +63,6 @@ const AddProduct = () => {
       toast,
       setLading,
       setProduct,
-      setProduct
     );
     // Clear the form fields
     // setProduct({
@@ -233,10 +199,9 @@ const AddProduct = () => {
                         setProduct({ ...product, category: event.target.value })
                       }
                     >
-                      <option value="Traditional">Traditional</option>
-                      <option value="Clothing">Clothing</option>
-                      <option value="Electronics">Electronics</option>
-                      <option value="Home">Home</option>
+                      <option value="clothing">Clothing</option>
+                      <option value="electronics">Electronics</option>
+                      <option value="home">Home</option>
                     </Select>
                   </FormControl>
                 </Flex>
@@ -291,11 +256,7 @@ const AddProduct = () => {
                     placeholder="Enter product sizes (comma-separated)"
                     size="md"
                     value={product.sizes}
-                    onChange={(event) => {
-                      const { value } = event.target;
-                      const sizes = value.split(',');
-                      setProduct({ ...product, sizes });
-                    }}
+                    onChange={handleSizeChange}
                   />
                 </FormControl>
                 <FormControl id="description" isRequired mb={2}>
@@ -355,7 +316,7 @@ const AddProduct = () => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>{`Product Image ${selectedImageIndex + 1}`}</ModalHeader>
+          <ModalHeader>Product Images</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Flex direction="row">
@@ -397,4 +358,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default AddProduct
