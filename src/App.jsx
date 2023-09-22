@@ -9,7 +9,7 @@ import Home from "./pages/Home";
 import AdminProduct from "./pages/Admin/product/AdminProduct";
 import AdminOrder from "./pages/Admin/order/AdminOrder";
 import AdminCustomer from "./pages/Admin/users/AdminCustomer";
-import AdminAffiliator from "./pages/Admin/AdminAffliator";
+import AdminAffiliator from "./pages/Admin/affiliator/AdminAffliator";
 import AdminSettings from "./pages/Admin/AdminSetting";
 import CartPage from "./pages/CartPage";
 import ProductDetails from "./pages/ProductDetails";
@@ -24,6 +24,7 @@ import ProductPage from "./pages/products/ProductPage";
 import AddProduct from "./pages/Admin/product/add-product/add-product";
 import AddOrder from "./pages/Admin/order/add-order/add-order";
 import AddCustomer from "./pages/Admin/users/add-cutomer/add-customer";
+import AddAffiliator from "./pages/Admin/affiliator/add-affiliator/add-affiliator";
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
         <Route path="/adminCustomer" element={<AdminCustomer />} />
         <Route path="/admin-add-customer" element={<AddCustomer />} />
         <Route path="/adminAffliator" element={<AdminAffiliator />} />
+        <Route path="/admin-add-affliator" element={<AddAffiliator />} />
         <Route path="/adminSetting" element={<AdminSettings />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
