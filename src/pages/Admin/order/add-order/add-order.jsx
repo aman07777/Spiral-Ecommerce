@@ -15,6 +15,8 @@ import { NavLink } from "react-router-dom";
 import Dashboard from "../../Dashboard";
 import { useAddOrderStore } from "./store";
 import { AddOrderHelperClass } from "./helper";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { handleToast } from "../../../../global/toast";
 const AddOrder = () => {
   const toast = useToast();
   // class
@@ -29,6 +31,23 @@ const AddOrder = () => {
     price: "",
   });
   const [loading, setLoading] = useState(false);
+  // react query
+  const queryClient = useQueryClient();
+  const { mutate, isLoading, isError } = useMutation({
+    queryKey: ["add", "order"],
+    queryFn: addOrder,
+    onSuccess: (data) => {
+      // data?.status === "success" &&
+      //   queryClient.invalidateQueries(["get", "orders"]);
+      handleToast(toast, "Success", "Order added successfully", "success");
+      setOrder({
+        customerName: "",
+        productName: "",
+        quantity: "",
+        price: "",
+      });
+    },
+  });
   // handles
   const handleSubmit = (event) => {
     event.preventDefault();

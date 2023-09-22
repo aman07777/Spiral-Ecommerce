@@ -104,7 +104,7 @@ function ProductPage() {
     <>
       {!isLoading ? (
         <div className="flex justify-center">
-          <Box width={{ base: "100%", md: "95%", lg: "75%" }}>
+          <Box width={{ base: "100%", lg: "75%" }}>
             <Flex
               direction={["column", "column", "row"]}
               justifyContent={"space-between"}

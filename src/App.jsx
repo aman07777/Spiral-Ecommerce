@@ -8,7 +8,7 @@ import AdminHome from "./pages/Admin/AdminHome";
 import Home from "./pages/Home";
 import AdminProduct from "./pages/Admin/product/AdminProduct";
 import AdminOrder from "./pages/Admin/order/AdminOrder";
-import AdminCustomer from "./pages/Admin/AdminCustomer";
+import AdminCustomer from "./pages/Admin/users/AdminCustomer";
 import AdminAffiliator from "./pages/Admin/AdminAffliator";
 import AdminSettings from "./pages/Admin/AdminSetting";
 import CartPage from "./pages/CartPage";
@@ -23,6 +23,7 @@ import CheckAuth from "./components/check-auth";
 import ProductPage from "./pages/products/ProductPage";
 import AddProduct from "./pages/Admin/product/add-product/add-product";
 import AddOrder from "./pages/Admin/order/add-order/add-order";
+import AddCustomer from "./pages/Admin/users/add-cutomer/add-customer";
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
         <Route path="/adminOrder" element={<AdminOrder />} />
         <Route path="/admin-add-order" element={<AddOrder />} />
         <Route path="/adminCustomer" element={<AdminCustomer />} />
+        <Route path="/admin-add-customer" element={<AddCustomer />} />
         <Route path="/adminAffliator" element={<AdminAffiliator />} />
         <Route path="/adminSetting" element={<AdminSettings />} />
         <Route path="*" element={<ErrorPage />} />

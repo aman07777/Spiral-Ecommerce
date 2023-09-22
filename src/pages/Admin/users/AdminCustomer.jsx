@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Table,
   Thead,
@@ -9,39 +10,31 @@ import {
   BreadcrumbItem,
   Box,
   Icon,
-  useToast,
 } from "@chakra-ui/react";
-import { NavLink, Link } from "react-router-dom";
-import { Add } from "@mui/icons-material";
 import Dashboard from "../Dashboard";
-import { useAdminOrderStore } from "./store";
+import { Add } from "@mui/icons-material";
+import { NavLink, Link } from "react-router-dom";
+import { useCustomerStore } from "./store";
 import { useQuery } from "@tanstack/react-query";
-import { handleToast } from "../../../global/toast";
-function AdminOrder() {
-  const toast = useToast();
-  // stores
-  const getAllOrders = useAdminOrderStore((state) => state.getOrders);
-  const setOrders = useAdminOrderStore((state) => state.setOrders);
 
-  // react query
+function AdminCustomer() {
+  // stores
+  const getCustomers = useCustomerStore((state) => state.getCustomers);
+  const setCustomers = useCustomerStore((state) => state.setCustomers);
+
   const {
-    data: orders,
     isLoading,
+    data: customers,
+    error,
     isError,
     isSuccess,
-    error,
-  } = useQuery(["get", "orders"], getAllOrders);
-  //
-  !isLoading &&
-    !isError &&
-    isSuccess &&
-    Array.isArray(orders) &&
-    orders?.length > 0 &&
-    setOrders(orders);
+  } = useQuery({
+    queryKey: ["get", "customers"],
+    queryFn: () => getCustomers(),
+  });
+  !isLoading && isSuccess && setCustomers(customers);
 
-  isError && handleToast(toast, "Error", error.message, "error");
-
-  return (
+  return !isError ? (
     <>
       <Dashboard />
       <Breadcrumb
@@ -57,47 +50,51 @@ function AdminOrder() {
           </NavLink>
         </BreadcrumbItem>
         <BreadcrumbItem isCurrentPage>
-          <NavLink to="#">Orders</NavLink>
+          <NavLink to="#">Customers</NavLink>
         </BreadcrumbItem>
       </Breadcrumb>
       <div className="flex justify-between px-4 mt-3 @container">
-        <p className="font-semibold text-[#585858] text-[1.2rem]">Orders</p>
+        <p className="font-semibold text-[#585858] text-[1.2rem]">Customers</p>
         <Box
           as={Link}
           title="Add new order"
-          to="/admin-add-order"
+          to="/admin-add-customer"
           className="text-[#585858] hover:text-[#0077b5] transition-[color] relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:-bottom-[.1rem] before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 border hover:border-transparent p-1 rounded-sm before:left-0 @[600px]:px-3 @[700px]:px-5"
         >
           <Icon as={Add} />
         </Box>
       </div>
-      <div className="md:px-4 class">
+      <div className="md:px-4">
         <Table variant="simple">
           <Thead>
             <Tr>
-              <Th>Customer Name</Th>
-              <Th>Product Name</Th>
-              <Th>Quantity</Th>
-              <Th>Price</Th>
+              <Th>Name</Th>
+              <Th>Email</Th>
+              <Th>Status</Th>
             </Tr>
           </Thead>
           <Tbody>
             {isLoading ? (
-              <div className="">
-                <p>Loading...</p>
-              </div>
-            ) : Array.isArray(orders) && orders?.length > 0 ? (
-              orders.map((order) => (
-                <Tr key={order._id}>
-                  <Td>{order?.shippingInfo?.fullName}</Td>
-                  <Td>{order.productName || "unknown"}</Td>
-                  <Td>{order.quantity || 0}</Td>
-                  <Td>Rs. {order.price || 0}</Td>
+              "Lading..."
+            ) : Array.isArray(customers) && customers?.length > 0 ? (
+              customers.map((user) => (
+                <Tr key={user._id}>
+                  <Td className="capitalize">{`${user?.firstName} ${user?.lastName}`}</Td>
+                  <Td>{user?.email}</Td>
+                  <Td>
+                    <span
+                      className={`text-[#fff] text-[.8rem] px-[.25rem] rounded-full pb-[.15rem] ${
+                        user?.isVerified ? "bg-green-500" : "bg-rose-500"
+                      }`}
+                    >
+                      {user?.isVerified ? "verified" : "unverified"}
+                    </span>
+                  </Td>
                 </Tr>
               ))
             ) : (
               <Tr className="text-red-500 text-[.8rem] font-semibold">
-                <Td colSpan={4} className="text-center" c>
+                <Td colSpan={4} className="text-center">
                   No any orders are available
                 </Td>
               </Tr>
@@ -106,7 +103,12 @@ function AdminOrder() {
         </Table>
       </div>
     </>
+  ) : (
+    <>
+      <p>Error occurred</p>
+      <p>{error}</p>
+    </>
   );
 }
 
-export default AdminOrder;
+export default AdminCustomer;
