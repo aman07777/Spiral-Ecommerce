@@ -16,7 +16,6 @@ import ProductDetails from "./pages/ProductDetails";
 // import CustomerProfile from "./pages/CustomerProfile";
 // import AffliatorProfile from "./pages/AffliatorProfile";
 // import Cart from './components/CartPageMobile'
-import CartPageMobile from "./components/CartPageMobile";
 import ErrorPage from "./pages/ErrorPage";
 import Layout from "./layout/layout";
 import CheckAuth from "./components/check-auth";
