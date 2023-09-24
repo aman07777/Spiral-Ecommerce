@@ -37,7 +37,7 @@ function AdminAffiliator() {
             {isLoading ? (
               <>
                 <div className="flex justify-center w-full">
-                  <Spinner isIndeterminate color="blue.300" size={30} />
+                  <Spinner color="blue.300" size={30} />
                 </div>
               </>
             ) : [].length > 0 ? (

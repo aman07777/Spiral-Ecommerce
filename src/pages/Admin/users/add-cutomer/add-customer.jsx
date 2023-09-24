@@ -23,6 +23,7 @@ const AddCustomer = () => {
     lastName: "",
     email: "",
     phone: "",
+    password: "",
   });
 
   // stores
@@ -31,11 +32,19 @@ const AddCustomer = () => {
   const queryClient = useQueryClient();
   const { mutate, isLoading } = useMutation({
     queryKey: ["add", "customer"],
-    queryFn: addCustomer,
+    mutationFn: addCustomer,
     onSuccess: (data) => {
-      data?.status === "success" &&
+      if (data?.status === 204) {
         queryClient.invalidateQueries(["get", "customers"]);
-      handleToast(toast, "Success", "Customer added successfully", "success");
+        handleToast(toast, "Success", "Customer added successfully", "success");
+        setCustomer({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          password: "",
+        });
+      }
     },
     onError: (error) => {
       handleToast(toast, "Error", error.message, "error");
@@ -116,6 +125,17 @@ const AddCustomer = () => {
                   value={customer.email}
                   onChange={(event) =>
                     setCustomer({ ...customer, email: event.target.value })
+                  }
+                />
+              </FormControl>{" "}
+              <FormControl id="password" mt={4} isRequired>
+                <FormLabel>Password</FormLabel>
+                <Input
+                  type="password"
+                  placeholder="Enter password"
+                  value={customer.password}
+                  onChange={(event) =>
+                    setCustomer({ ...customer, password: event.target.value })
                   }
                 />
               </FormControl>

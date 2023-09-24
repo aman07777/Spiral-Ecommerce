@@ -149,7 +149,7 @@ function AdminProduct() {
           {isLoading ? (
             <Tr>
               <Td colSpan={10} textAlign={"center"}>
-                <Spinner isIndeterminate color="blue.300" size={30} />
+                <Spinner color="blue.300" size={30} />
               </Td>
             </Tr>
           ) : Array.isArray(products) && products?.length > 0 ? (

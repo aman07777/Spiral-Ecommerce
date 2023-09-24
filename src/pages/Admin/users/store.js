@@ -3,6 +3,9 @@ import { axios_auth } from "../../../global/config";
 
 export const useCustomerStore = create((set) => ({
   customers: [],
+  setCustomers: (data) => {
+    set({ customers: data });
+  },
   getCustomers: async () => {
     try {
       const res = await axios_auth.get("users/");
@@ -14,7 +17,12 @@ export const useCustomerStore = create((set) => ({
       return error;
     }
   },
-  setCustomers: (data) => {
-    set({ customers: data });
+  deleteUser: async (id) => {
+    try {
+      const res = await axios_auth.delete(`users/${id}`);
+      return res.data.status === "success" ? true : false;
+    } catch (error) {
+      return error;
+    }
   },
 }));
