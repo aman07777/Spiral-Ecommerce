@@ -66,7 +66,7 @@ function AdminCustomer() {
             {isLoading ? (
               <Tr className="text-red-500 text-[.8rem] font-semibold">
                 <Td colSpan={4} textAlign={"center"}>
-                  <Spinner color="blue.300" size={30} />
+                  <Spinner color="blue.300"/>
                 </Td>
               </Tr>
             ) : Array.isArray(customers) && customers?.length > 0 ? (

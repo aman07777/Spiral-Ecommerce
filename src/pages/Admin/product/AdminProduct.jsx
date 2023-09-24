@@ -12,6 +12,7 @@ import {
   Image,
   Spinner,
   useToast,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import Dashboard from "../Dashboard";
@@ -20,8 +21,10 @@ import BreadCrumb from "./components/bread-crumb";
 import Title from "./components/title";
 import { imageUrl } from "../../../global/config";
 import { handleToast } from "../../../global/toast";
+import DeleteModal from "./components/delete-modal";
 function AdminProduct() {
   const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   // stores
   const getProducts = useAdminProductStore((state) => state.getProducts); // gets products from backend
   const setProducts = useAdminProductStore((state) => state.setProducts); // set products stored in the store
@@ -36,6 +39,7 @@ function AdminProduct() {
     sizes: [],
     images: [],
   });
+  const [deleteProduct, setDeleteProduct] = useState({});
   const [selectAllLocal, setSelectAllLocal] = useState(false);
   const [selectAll, setSelectAll] = useState(false);
   // const [selectedImageIndex, setSelectedImageIndex] = useState(0);
@@ -46,6 +50,8 @@ function AdminProduct() {
     setProduct(product);
   };
   const handleDelete = (product) => {
+    onOpen();
+    setDeleteProduct(product);
     // Remove the selected product from the list of products
     setProducts(products.filter((p) => p.id !== product.id));
   };
@@ -149,7 +155,7 @@ function AdminProduct() {
           {isLoading ? (
             <Tr>
               <Td colSpan={10} textAlign={"center"}>
-                <Spinner color="blue.300" size={30} />
+                <Spinner color="blue.300" />
               </Td>
             </Tr>
           ) : Array.isArray(products) && products?.length > 0 ? (
@@ -222,6 +228,9 @@ function AdminProduct() {
           </tfoot>
         )}
       </Table>
+      {Object.keys(deleteProduct).length > 0 && (
+        <DeleteModal isOpen={isOpen} onClose={onClose} data={deleteProduct} />
+      )}
     </>
   );
 }
