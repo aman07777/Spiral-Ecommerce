@@ -18,14 +18,14 @@ function AdminAffiliator() {
       <Dashboard />
       <BreadCrumb />
       <Navigation />
-      <Flex direction="column" p={4}>
+      <Flex direction="column" p={4} className="text-[#585858]">
         <Box borderWidth="1px" borderRadius="lg" overflow="hidden" mb={4}>
           <Box p="6">
             <Heading as="h2" size="md" mb={4}>
-              Added Affiliators
+              All Affiliators
             </Heading>
-            {affiliators.length > 0 ? (
-              affiliators.map((affiliator, index) => (
+            {[].length > 0 ? (
+              [].map((affiliator, index) => (
                 <Box key={index} mb={2}>
                   <Text>
                     {affiliator.firstName} {affiliator.lastName} (

@@ -65,7 +65,7 @@ const AddCustomer = () => {
         </BreadcrumbItem>
         <BreadcrumbItem>
           <NavLink
-            to="/#"
+            to="/adminCustomer"
             className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
           >
             Customer
@@ -76,14 +76,14 @@ const AddCustomer = () => {
         </BreadcrumbItem>
       </Breadcrumb>
       <Flex direction="column" p={4} className="text-[#585858]">
-        <Heading as="h1" size="md" mb={4}>
-          Add a New Customer
-        </Heading>
+        <p className="font-semibold text-[#585858] text-[1.2rem]">
+          Add a new Customers
+        </p>
         <Box
           borderWidth="1px"
           borderRadius="lg"
           mb={4}
-          className="max-w-[450px]"
+          className="max-w-[450px] mt-3"
         >
           <Box p="6">
             <form onSubmit={handleSubmit}>
