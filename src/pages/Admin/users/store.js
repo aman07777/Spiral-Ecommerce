@@ -6,17 +6,12 @@ export const useCustomerStore = create((set) => ({
   getCustomers: async () => {
     try {
       const res = await axios_auth.get("users/");
-      if (
-        res.data.status === "success" &&
-        Array.isArray(res.data.data) &&
-        res.data.data.length > 0
-      ) {
-        // set({ customers: res.data.data });
+      if (res.data.status === "success") {
         return res.data.data;
       }
-      return false;
+      return [];
     } catch (error) {
-      return false;
+      return error;
     }
   },
   setCustomers: (data) => {
