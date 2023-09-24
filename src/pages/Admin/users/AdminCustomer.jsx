@@ -1,12 +1,23 @@
 import React from "react";
-import { Table, Thead, Tbody, Tr, Th, Td, Spinner } from "@chakra-ui/react";
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  Spinner,
+  useToast,
+} from "@chakra-ui/react";
 import Dashboard from "../Dashboard";
 import { useCustomerStore } from "./store";
 import { useQuery } from "@tanstack/react-query";
 import Navigation from "./components/navigation";
 import BreadCrumb from "./components/bread-crumb";
+import { handleToast } from "../../../global/toast";
 
 function AdminCustomer() {
+  const toast = useToast();
   // stores
   const getCustomers = useCustomerStore((state) => state.getCustomers);
   const setCustomers = useCustomerStore((state) => state.setCustomers);
@@ -27,6 +38,8 @@ function AdminCustomer() {
     Array.isArray(customers) &&
     customers?.length > 0 &&
     setCustomers(customers);
+
+  isError && handleToast(toast, "Error", error.message, "error");
 
   return !isError ? (
     <>

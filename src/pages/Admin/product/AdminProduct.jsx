@@ -11,6 +11,7 @@ import {
   Checkbox,
   Image,
   Spinner,
+  useToast,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import Dashboard from "../Dashboard";
@@ -18,7 +19,9 @@ import { useAdminProductStore } from "./store";
 import BreadCrumb from "./components/bread-crumb";
 import Title from "./components/title";
 import { imageUrl } from "../../../global/config";
+import { handleToast } from "../../../global/toast";
 function AdminProduct() {
+  const toast = useToast();
   // stores
   const getProducts = useAdminProductStore((state) => state.getProducts); // gets products from backend
   const setProducts = useAdminProductStore((state) => state.setProducts); // set products stored in the store
@@ -97,6 +100,7 @@ function AdminProduct() {
     data: products,
     isLoading,
     isError,
+    error,
   } = useQuery(["get", "products"], getProducts);
 
   !isLoading &&
@@ -104,7 +108,7 @@ function AdminProduct() {
     Array.isArray(products) &&
     products?.length > 0 &&
     setProducts(products);
-
+  isError && handleToast(toast, "Error", error.message, "error");
   return (
     <>
       <Dashboard />

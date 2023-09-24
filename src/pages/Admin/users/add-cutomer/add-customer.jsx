@@ -1,8 +1,7 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import {
   Flex,
   Box,
-  Heading,
   Button,
   FormControl,
   FormLabel,
@@ -30,7 +29,7 @@ const AddCustomer = () => {
   const addCustomer = useAddCustomerStore((state) => state.addCustomer);
   // react query
   const queryClient = useQueryClient();
-  const { mutate, isLoading, isError } = useMutation({
+  const { mutate, isLoading } = useMutation({
     queryKey: ["add", "customer"],
     queryFn: addCustomer,
     onSuccess: (data) => {

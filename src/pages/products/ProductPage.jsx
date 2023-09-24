@@ -72,10 +72,6 @@ function ProductPage() {
 
   const handleCategoryChange = (event) => {
     const category = event.target.value;
-    console.log(
-      "🚀 ~ file: ProductPage.jsx:75 ~ handleCategoryChange ~ category:",
-      category
-    );
     if (selectedCategories.includes(category)) {
       setSelectedCategories(selectedCategories.filter((c) => c !== category));
     } else {
