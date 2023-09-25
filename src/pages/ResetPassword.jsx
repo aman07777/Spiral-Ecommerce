@@ -9,7 +9,6 @@ import {
 } from "@chakra-ui/react";
 
 import { forgotPassword, resetPassword } from "../services/AuthServices";
-import { Password } from "@mui/icons-material";
 
 const ResetPassword = () => {
   const [email, setEmail] = useState("");
@@ -109,7 +108,7 @@ const ResetPassword = () => {
             {" "}
             Don't have an account?{" "}
             <Text color="blue">
-              <a href="#">Sign Up</a>
+              <a href="/signup">Sign Up</a>
             </Text>
           </Text>
         </>

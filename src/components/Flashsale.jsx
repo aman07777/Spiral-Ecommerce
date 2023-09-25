@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Flex, Image, Heading, Text } from "@chakra-ui/react";
 import { ShoppingCart } from "@mui/icons-material";
 import Saletime from "./Saletime";
-
+import Marquee from "react-fast-marquee";
 const Dummy = [
   {
     id: 1,
@@ -63,7 +63,7 @@ const Flashsale = () => {
                   color="#0077B5"
                   fontSize={{ base: "1.5rem", md: "2rem" }}
                 >
-                  <marquee>FLASH SALE!</marquee>
+                  <Marquee>FLASH SALE!</Marquee>
                 </Heading>
               </div>
             </Box>
@@ -82,7 +82,7 @@ const Flashsale = () => {
                 color="#0077B5"
                 fontSize={{ base: "1.5rem", md: "2rem" }}
               >
-                <marquee>FLASH SALE!</marquee>
+                <Marquee>FLASH SALE!</Marquee>
               </Heading>
             </Box>
 

@@ -1,9 +1,8 @@
-import { Flex, Spinner } from "@chakra-ui/react";
-function Loader({ height = "50vh" }) {
+function Loader() {
   return (
-    <Flex justifyContent="center" alignItems="center" height={height}>
-      <Spinner size="xl" />
-    </Flex>
+    <div className="flex items-center justify-center h-screen bg-[#efefef]">
+      <div class="loader"></div>
+    </div>
   );
 }
 

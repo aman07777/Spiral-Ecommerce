@@ -12,6 +12,7 @@ import {
   List,
   ListItem,
   useToast,
+  Spinner,
   // useMediaQuery,
   Breadcrumb,
   BreadcrumbItem,
@@ -20,7 +21,6 @@ import { NavLink } from "react-router-dom";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 // import ReactImageMagnify from "react-image-magnify";
 
-import Loader from "../components/Loader";
 import { getProduct } from "../services/ProductServices";
 import { postCart } from "../services/CartServices";
 import { useUserContext } from "../contexts/UserContext";
@@ -396,7 +396,7 @@ export default function ProductDetails() {
           </Box>
         </div>
       ) : (
-        <Loader />
+        <Spinner />
       )}
     </>
   );

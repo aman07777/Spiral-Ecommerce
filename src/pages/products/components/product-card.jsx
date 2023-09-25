@@ -55,7 +55,6 @@ const ProductCard = ({ data }) => {
               <span className="line-through text-rose-400">
                 {data.price} NPR
               </span>
-
               <span className="text-green-400">{data.discount}% off</span>
             </div>
           )}

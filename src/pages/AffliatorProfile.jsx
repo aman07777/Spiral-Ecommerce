@@ -128,40 +128,146 @@ const AffliatorProfile = () => {
                 </Flex>
               </Box>
             </Flex>
-            <Flex>
-              <Box w="30%">
-                <Text fontWeight="bold">Password:</Text>
-              </Box>
-              <Box w="70%">
-                <FormControl>
-                  <FormLabel>Password</FormLabel>
+            {/* <form
+            // onSubmit={handleSubmit}
+            >
+              <Flex>
+                <Box w="30%">
+                  <Text fontWeight="bold">Password:</Text>
+                </Box>
+                <Box w="70%">
+                  <FormControl>
+                    <FormLabel>Password</FormLabel>
+                    <Input
+                      type="password"
+                      value={password}
+                      // isReadOnly
+                      // onChange={(e) => setPassword(e.target.value)}
+                      mr={2}
+                    />
+                    <IconButton
+                      aria-label="Change Password"
+                      icon={<LockIcon />}
+                      onClick={handlePasswordChange}
+                      variant="outline"
+                      isDisabled
+                    />
+                  </FormControl>
+                  <FormHelperText>
+                    Leave blank to keep the same password
+                  </FormHelperText>
+                </Box>
+              </Flex>
+              <Flex>
+                <Box w="30%">
+                  <Text fontWeight="bold">Collected Bonus:</Text>
+                </Box>
+                <Box w="70%">
+                  <FormControl>
+                    <FormLabel>Bonus</FormLabel>
+                    <Input
+                      type="number"
+                      value={bonus}
+                      // isReadOnly
+                      // onChange={(e) => setBonus(e.target.value)}
+                    />
+                  </FormControl>
+                </Box>
+              </Flex>
+              <Flex>
+                <Box w="30%">
+                  <Text fontWeight="bold">Profile Image:</Text>
+                </Box>
+                <Box w="70%">
+                  <Flex alignItems="center">
+                    <Avatar
+                      size="xl"
+                      name={`${firstName} ${lastName}`}
+                      src={image}
+                      mr={4}
+                    />
+                    <IconButton
+                      aria-label="Upload Image"
+                      icon={<AddAPhotoIcon />}
+                      onClick={handleImageUpload}
+                      variant="outline"
+                      isDisabled
+                    />
+                  </Flex>
+                </Box>
+              </Flex>
+            </form> */}
+            <Box w={{ base: "100%", md: "75%" }} p={4}>
+              <Heading size="md" mb={4}>
+                My Profile
+              </Heading>
+
+              <Stack spacing={4}>
+                <FormControl id="firstName">
+                  <FormLabel>First Name</FormLabel>
                   <Input
-                    type="password"
-                    value={password}
+                    type="text"
+                    value={firstName}
                     isReadOnly
-                    onChange={(e) => setPassword(e.target.value)}
-                    mr={2}
-                  />
-                  <IconButton
-                    aria-label="Change Password"
-                    icon={<LockIcon />}
-                    onClick={handlePasswordChange}
-                    variant="outline"
-                    isDisabled
+                    onChange={(e) => setFirstName(e.target.value)}
                   />
                 </FormControl>
-                <FormHelperText>
-                  Leave blank to keep the same password
-                </FormHelperText>
-              </Box>
-            </Flex>
-            <Flex>
-              <Box w="30%">
-                <Text fontWeight="bold">Collected Bonus:</Text>
-              </Box>
-              <Box w="70%">
-                <FormControl>
-                  <FormLabel>Bonus</FormLabel>
+                <FormControl id="lastName">
+                  <FormLabel>Last Name</FormLabel>
+                  <Input
+                    type="text"
+                    value={lastName}
+                    isReadOnly
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
+                </FormControl>
+                <FormControl id="email">
+                  <FormLabel>Email</FormLabel>
+                  <Input
+                    type="email"
+                    value={email}
+                    isReadOnly
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </FormControl>
+                <FormControl id="password">
+                  <FormLabel>Password</FormLabel>
+                  <Flex alignItems="center">
+                    <Input
+                      type="password"
+                      value={password}
+                      isReadOnly
+                      onChange={(e) => setPassword(e.target.value)}
+                      mr={2}
+                    />
+                    <IconButton
+                      aria-label="Change Password"
+                      icon={<LockIcon />}
+                      onClick={handlePasswordChange}
+                      variant="outline"
+                      isDisabled
+                    />
+                  </Flex>
+                  <FormHelperText>
+                    Leave blank to keep the same password
+                  </FormHelperText>
+                </FormControl>
+                <FormControl id="birthday">
+                  <FormLabel>Birthday</FormLabel>
+                  <Flex alignItems="center">
+                    <CakeIcon size={20} />
+                    <Input
+                      type="date"
+                      value={birthday}
+                      isReadOnly
+                      onChange={(e) => setBirthday(e.target.value)}
+                      ml={2}
+                    />
+                  </Flex>
+                </FormControl>
+
+                <FormControl id="bonus">
+                  <FormLabel>Collected Bonus</FormLabel>
                   <Input
                     type="number"
                     value={bonus}
@@ -169,30 +275,26 @@ const AffliatorProfile = () => {
                     onChange={(e) => setBonus(e.target.value)}
                   />
                 </FormControl>
-              </Box>
-            </Flex>
-            <Flex>
-              <Box w="30%">
-                <Text fontWeight="bold">Profile Image:</Text>
-              </Box>
-              <Box w="70%">
-                <Flex alignItems="center">
-                  <Avatar
-                    size="xl"
-                    name={`${firstName} ${lastName}`}
-                    src={image}
-                    mr={4}
-                  />
-                  <IconButton
-                    aria-label="Upload Image"
-                    icon={<AddAPhotoIcon />}
-                    onClick={handleImageUpload}
-                    variant="outline"
-                    isDisabled
-                  />
-                </Flex>
-              </Box>
-            </Flex>
+                <FormControl id="image">
+                  <FormLabel>Profile Image</FormLabel>
+                  <Flex alignItems="center">
+                    <Avatar
+                      size="xl"
+                      name={`${firstName} ${lastName}`}
+                      src={image}
+                      mr={4}
+                    />
+                    <IconButton
+                      aria-label="Upload Image"
+                      icon={<AddAPhotoIcon />}
+                      onClick={handleImageUpload}
+                      variant="outline"
+                      isDisabled
+                    />
+                  </Flex>
+                </FormControl>
+              </Stack>
+            </Box>
           </Stack>
         </Box>
       </Flex>

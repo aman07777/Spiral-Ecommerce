@@ -14,13 +14,13 @@ import {
   Image,
   Text,
   useToast,
+  Spinner,
 } from "@chakra-ui/react";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import { getCart, removeCartItem } from "../services/CartServices";
 import { useUserContext } from "../contexts/UserContext";
-import Loader from "../components/Loader";
 import { imageUrl } from "../global/config";
 
 function CartPageDesktop() {
@@ -340,7 +340,7 @@ function CartPageDesktop() {
           </Flex>
         </Flex>
       ) : (
-        <Loader />
+        <Spinner />
       )}
     </>
   );
