@@ -3,8 +3,9 @@ import { Suspense, lazy } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 // import Cart from './components/CartPageMobile'
-import CartPageMobile from "./components/CartPageMobile";
+// import CartPageMobile from "./components/CartPageMobile";
 
+const Fallback = lazy(() => import("./components/fallback"));
 const CustomerProfile = lazy(() => import("./pages/CustomerProfile"));
 const AffliatorProfile = lazy(() => import("./pages/AffliatorProfile"));
 const CheckAuth = lazy(() => import("./components/check-auth"));
@@ -41,37 +42,39 @@ const EmailVerification = lazy(() => import("./pages/EmailVerification"));
 function App() {
   return (
     <Router>
-      <Suspense fallback={<Loader />}>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route path="" element={<Home />} />
-            <Route path="signup" element={<Signup />} />
-            <Route path="login" element={<Login />} />
-            <Route path="products" exact element={<ProductPage />} />
-            <Route path="products/:id" element={<ProductDetails />} />
+      <ErrorBoundary FallbackComponent={Fallback}>
+        <Suspense fallback={<Loader />}>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route path="" element={<Home />} />
+              <Route path="signup" element={<Signup />} />
+              <Route path="login" element={<Login />} />
+              <Route path="products" exact element={<ProductPage />} />
+              <Route path="products/:id" element={<ProductDetails />} />
 
-            {/* <Route path="/protect/" element={<CheckAuth />}> */}
-            <Route path="/protect/cart" element={<CartPage />} />
-            {/* </Route> */}
-          </Route>
-          <Route path="/emailverification" element={<EmailVerification />} />
+              {/* <Route path="/protect/" element={<CheckAuth />}> */}
+              <Route path="/protect/cart" element={<CartPage />} />
+              {/* </Route> */}
+            </Route>
+            <Route path="/emailverification" element={<EmailVerification />} />
 
-          <Route path="/resetpassword" element={<ResetPassword />} />
-          <Route path="/adminHome" element={<AdminHome />} />
-          <Route path="/adminProduct" element={<AdminProduct />} />
-          <Route path="/admin-add-product" element={<AddProduct />} />
-          <Route path="/adminOrder" element={<AdminOrder />} />
-          <Route path="/admin-add-order" element={<AddOrder />} />
-          <Route path="/adminCustomer" element={<AdminCustomer />} />
-          <Route path="/admin-add-customer" element={<AddCustomer />} />
-          <Route path="/adminAffliator" element={<AdminAffiliator />} />
-          <Route path="/admin-add-affliator" element={<AddAffiliator />} />
-          <Route path="/adminSetting" element={<AdminSettings />} />
-          <Route path="/profile/affiliator" element={<AffliatorProfile />} />
-          <Route path="/profile/customer" element={<CustomerProfile />} />
-          <Route path="*" element={<ErrorPage />} />
-        </Routes>
-      </Suspense>
+            <Route path="/resetpassword" element={<ResetPassword />} />
+            <Route path="/adminHome" element={<AdminHome />} />
+            <Route path="/adminProduct" element={<AdminProduct />} />
+            <Route path="/admin-add-product" element={<AddProduct />} />
+            <Route path="/adminOrder" element={<AdminOrder />} />
+            <Route path="/admin-add-order" element={<AddOrder />} />
+            <Route path="/adminCustomer" element={<AdminCustomer />} />
+            <Route path="/admin-add-customer" element={<AddCustomer />} />
+            <Route path="/adminAffliator" element={<AdminAffiliator />} />
+            <Route path="/admin-add-affliator" element={<AddAffiliator />} />
+            <Route path="/adminSetting" element={<AdminSettings />} />
+            <Route path="/profile/affiliator" element={<AffliatorProfile />} />
+            <Route path="/profile/customer" element={<CustomerProfile />} />
+            <Route path="*" element={<ErrorPage />} />
+          </Routes>
+        </Suspense>
+      </ErrorBoundary>
     </Router>
   );
 }
