@@ -10,29 +10,24 @@ import {
   Td,
   Checkbox,
   Image,
-  // IconButton,
-  // Modal,
-  // ModalOverlay,
-  // ModalContent,
-  // ModalHeader,
-  // ModalCloseButton,
-  // ModalBody,
-  // ModalFooter,
-  Box,
-  Icon,
+  Spinner,
+  useToast,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { Add } from "@mui/icons-material";
-import { Breadcrumb, BreadcrumbItem } from "@chakra-ui/react";
-import { NavLink } from "react-router-dom";
-// import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import { useQuery } from "@tanstack/react-query";
 import Dashboard from "../Dashboard";
-import { Link } from "react-router-dom";
 import { useAdminProductStore } from "./store";
-import { useEffect } from "react";
+import BreadCrumb from "./components/bread-crumb";
+import Title from "./components/title";
+import { imageUrl } from "../../../global/config";
+import { handleToast } from "../../../global/toast";
+import DeleteModal from "./components/delete-modal";
 function AdminProduct() {
+  const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   // stores
   const getProducts = useAdminProductStore((state) => state.getProducts); // gets products from backend
-  // const products = useAdminProductStore((state) => state.products); // products stored in the store from backend
+  const setProducts = useAdminProductStore((state) => state.setProducts); // set products stored in the store
   // states
   const [product, setProduct] = useState({
     name: "",
@@ -44,8 +39,8 @@ function AdminProduct() {
     sizes: [],
     images: [],
   });
+  const [deleteProduct, setDeleteProduct] = useState({});
   const [selectAllLocal, setSelectAllLocal] = useState(false);
-  const [products, setProducts] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   // const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   // const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
@@ -54,27 +49,12 @@ function AdminProduct() {
     // Set the form fields to the values of the selected product
     setProduct(product);
   };
-
   const handleDelete = (product) => {
+    onOpen();
+    setDeleteProduct(product);
     // Remove the selected product from the list of products
     setProducts(products.filter((p) => p.id !== product.id));
   };
-
-  // const handlePreviewModalClose = () => {
-  //   setIsPreviewModalOpen(false);
-  //   setSelectedImageIndex(0);
-  // };
-
-  // const handlePrevClick = () => {
-  //   setSelectedImageIndex(
-  //     (selectedImageIndex - 1 + product.images.length) % product.images.length
-  //   );
-  // };
-
-  // const handleNextClick = () => {
-  //   setSelectedImageIndex((selectedImageIndex + 1) % product.images.length);
-  // };
-
   const handleSelectAll = (checked) => {
     // Select or deselect all products
     setProducts(products.map((p) => ({ ...p, selected: checked })));
@@ -98,6 +78,7 @@ function AdminProduct() {
     setSelectAllLocal(checked);
     handleSelectAll(checked);
     setSelectAll(checked);
+    setProducts(products.map((p) => ({ ...p, selected: checked })));
   };
 
   const handleSelectClick = (event, product) => {
@@ -121,45 +102,30 @@ function AdminProduct() {
   };
 
   // fetching the products from backend
-  useEffect(() => {
-    getProducts();
-  }, [getProducts]);
+  const {
+    data: products,
+    isLoading,
+    isError,
+    error,
+  } = useQuery(["get", "products"], getProducts);
+
+  !isLoading &&
+    !isError &&
+    Array.isArray(products) &&
+    products?.length > 0 &&
+    setProducts(products);
+  isError && handleToast(toast, "Error", error.message, "error");
   return (
     <>
       <Dashboard />
       <div className="@container">
         <div className="px-4 mt-3 @[600px]:px-6">
           {/* breadcrumb section starts here */}
-          <Breadcrumb
-            spacing="5px"
-            className="text-[.9rem] font-semibold text-[#585858] px-4 @[767px]:px-0"
-          >
-            <BreadcrumbItem>
-              <NavLink
-                to="/adminHome"
-                className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
-              >
-                Home
-              </NavLink>
-            </BreadcrumbItem>
-            <BreadcrumbItem isCurrentPage>
-              <NavLink to="#">Products</NavLink>
-            </BreadcrumbItem>
-          </Breadcrumb>
+          <BreadCrumb />
           {/* breadcrumb section fin here */}
         </div>
         {/* the title and navigation to add product page */}
-        <div className="flex justify-between px-4 mt-3 @[600px]:px-6">
-          <p className="font-semibold text-[#585858] text-[1.2rem]">Products</p>
-          <Box
-            as={Link}
-            title="Add new product"
-            to="/admin-add-product"
-            className="text-[#585858] hover:text-[#0077b5] transition-[color] relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:-bottom-[.1rem] before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 border hover:border-transparent p-1 rounded-sm before:left-0 @[600px]:px-3"
-          >
-            <Icon as={Add} />
-          </Box>
-        </div>
+        <Title />
         {/* title and navigation fin here */}
       </div>
       {/*  table states here */}
@@ -169,7 +135,7 @@ function AdminProduct() {
             <Th>
               <Checkbox
                 isChecked={
-                  selectAll || products.every((product) => product.selected)
+                  selectAll || products?.every((product) => product.selected)
                 }
                 onChange={handleSelectAllClick}
               />
@@ -186,50 +152,64 @@ function AdminProduct() {
           </Tr>
         </Thead>
         <Tbody>
-          {products.map((product) => (
-            <Tr key={product.id}>
-              <Td>
-                <Checkbox
-                  isChecked={product.selected}
-                  onChange={(event) => handleSelectClick(event, product)}
-                />
+          {isLoading ? (
+            <Tr>
+              <Td colSpan={10} textAlign={"center"}>
+                <Spinner color="blue.300" />
               </Td>
-              <Td>{product.name}</Td>
-              <Td>{product.price}</Td>
-              <Td>{product.category}</Td>
-              <Td>{product.brand}</Td>
-              <Td>{product.color}</Td>
-              <Td>{product.sizes.join(", ")}</Td>
-              <Td>{product.description}</Td>
-              <Td>
-                {product.images.length > 0 && (
+            </Tr>
+          ) : Array.isArray(products) && products?.length > 0 ? (
+            products?.map((product) => (
+              <Tr key={product.id}>
+                <Td>
+                  <Checkbox
+                    isChecked={product.selected}
+                    onChange={(event) => handleSelectClick(event, product)}
+                  />
+                </Td>
+                <Td>{product.name}</Td>
+                <Td>{product.price}</Td>
+                <Td>{product.category}</Td>
+                <Td>{product.brand}</Td>
+                <Td>{product.color}</Td>
+                <Td>{product.sizes?.join(", ")}</Td>
+                <Td>{product.description}</Td>
+                <Td>
                   <Image
-                    src={product.images[0]}
+                    src={`${imageUrl}/${product.image}`}
                     alt={product.name}
                     boxSize="50px"
                     objectFit="cover"
                     mr={2}
                   />
-                )}
-              </Td>
-              <Td display="flex" gap="2px">
-                <Button
-                  colorScheme="blue"
-                  size="sm"
-                  onClick={() => handleEdit(product)}
-                >
-                  Edit
-                </Button>
-                <Button
-                  colorScheme="red"
-                  size="sm"
-                  onClick={() => handleDelete(product)}
-                >
-                  Delete
-                </Button>
+                </Td>
+                <Td display="flex" gap="2px">
+                  <Button
+                    colorScheme="blue"
+                    size="sm"
+                    className="w-[5em]"
+                    onClick={() => handleEdit(product)}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    colorScheme="red"
+                    size="sm"
+                    className="w-[5em]"
+                    onClick={() => handleDelete(product)}
+                  >
+                    Delete
+                  </Button>
+                </Td>
+              </Tr>
+            ))
+          ) : (
+            <Tr>
+              <Td colSpan={10} textAlign={"center"} className="text-rose-500">
+                No products found
               </Td>
             </Tr>
-          ))}
+          )}
         </Tbody>
         {selectAll && (
           <tfoot>
@@ -248,46 +228,11 @@ function AdminProduct() {
           </tfoot>
         )}
       </Table>
-      
+      {Object.keys(deleteProduct).length > 0 && (
+        <DeleteModal isOpen={isOpen} onClose={onClose} data={deleteProduct} />
+      )}
     </>
   );
 }
 
 export default AdminProduct;
-
-//  <Modal isOpen={isPreviewModalOpen} onClose={handlePreviewModalClose} size="xl">
-//   <ModalOverlay />
-//   <ModalContent>
-//     <ModalHeader>Product Images</ModalHeader>
-//     <ModalCloseButton />
-//     <ModalBody>
-//       <Flex direction="row">
-//         <IconButton
-//           icon={<ChevronLeft />}
-//           aria-label="Previous Image"
-//           size="sm"
-//           onClick={handlePrevClick}
-//           mr={2}
-//         />
-//         <Image
-//           src={product.images[selectedImageIndex]}
-//           alt={`Product Image ${selectedImageIndex + 1}`}
-//           height="30vh"
-//           width="30vw"
-//         />
-//         <IconButton
-//           icon={<ChevronRight />}
-//           aria-label="Next Image"
-//           size="sm"
-//           onClick={handleNextClick}
-//           ml={2}
-//         />
-//       </Flex>
-//     </ModalBody>
-//     <ModalFooter>
-//       <Button colorScheme="blue" size="sm" onClick={handlePreviewModalClose}>
-//         Close
-//       </Button>
-//     </ModalFooter>
-//   </ModalContent>
-// </Modal>; 

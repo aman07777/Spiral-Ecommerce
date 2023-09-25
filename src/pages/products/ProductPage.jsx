@@ -72,10 +72,6 @@ function ProductPage() {
 
   const handleCategoryChange = (event) => {
     const category = event.target.value;
-    console.log(
-      "🚀 ~ file: ProductPage.jsx:75 ~ handleCategoryChange ~ category:",
-      category
-    );
     if (selectedCategories.includes(category)) {
       setSelectedCategories(selectedCategories.filter((c) => c !== category));
     } else {
@@ -104,7 +100,7 @@ function ProductPage() {
     <>
       {!isLoading ? (
         <div className="flex justify-center">
-          <Box width={{ base: "100%", md: "95%", lg: "75%" }}>
+          <Box width={{ base: "100%", lg: "75%" }}>
             <Flex
               direction={["column", "column", "row"]}
               justifyContent={"space-between"}

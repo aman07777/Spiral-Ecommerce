@@ -215,8 +215,8 @@ const NavLink = ({ to, children, ...rest }) => (
     to={to}
     style={{ marginRight: "12px" }}
     fontWeight="medium"
-    activeStyle={{ textDecoration: "none" }}
     {...rest}
+    className="active:no-underline"
   >
     {children}
   </RouterNavLink>
