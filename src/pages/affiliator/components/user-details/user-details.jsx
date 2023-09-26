@@ -1,8 +1,13 @@
-import { Avatar } from "@chakra-ui/react";
+import { Avatar, useDisclosure } from "@chakra-ui/react";
 import { AiOutlineMail } from "react-icons/ai";
 import { HiOutlinePhone } from "react-icons/hi";
 import { BiSolidMessageSquareEdit } from "react-icons/bi";
+import { lazy } from "react";
+const UpdateUserDetailsModal = lazy(() =>
+  import("./update-user-details-modal")
+);
 const UserDetails = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const user = {
     firstName: "John",
     lastName: "Doe",
@@ -35,6 +40,7 @@ const UserDetails = () => {
             <BiSolidMessageSquareEdit
               className="text-[1.2rem] cursor-pointer"
               title="update profile"
+              onClick={onOpen}
             />
           </div>
           <p className="font-semibold text-[1.1rem]">{user?.address}</p>
@@ -57,6 +63,12 @@ const UserDetails = () => {
         </div>
         {/* user detail section fin */}
       </div>
+      {/* update modal -> updates the affiliator details */}
+      <UpdateUserDetailsModal
+        isOpen={isOpen}
+        onClose={onClose}
+        userData={user}
+      />
     </>
   );
 };
