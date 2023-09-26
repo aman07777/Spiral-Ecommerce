@@ -4,7 +4,8 @@ const InputField = ({ label, type, name, placeholder, value, onChange }) => {
   return (
     <>
       <div className="">
-        <label htmlFor="promo-code">
+        {/* label */}
+        <label htmlFor={label}>
           {label} <span className="text-red-500">*</span>
         </label>
         <div className="flex px-[.6em] py-2 mt-2 border">
