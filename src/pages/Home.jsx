@@ -26,23 +26,22 @@ const Home = () => {
     <>
       <Box w={"100%"}>
         <HeroBanner />
-        {!isLoading ? (
+        {isLoading ? (
           !isError &&
-          data.status === "success" &&
+          data?.status === "success" &&
           Array.isArray(data.products) &&
-          data.products?.length > 0 ? (
+          data.products?.length > 0 && (
             <FeatureProducts products={data.products} />
-          ) : (
-            isError &&
-            handleToast(
-              toast,
-              "No products",
-              "No any products are available",
-              "info"
-            )
           )
         ) : (
-          <Spinner />
+          <div className="flex justify-center my-5">
+            <Box
+              width={{ base: "100%", md: "95%", lg: "75%" }}
+              className="flex justify-center"
+            >
+              <Spinner />
+            </Box>
+          </div>
         )}
         <BestExperience />
         <Category />

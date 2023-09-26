@@ -7,8 +7,10 @@ import { ErrorBoundary } from "react-error-boundary";
 
 const Fallback = lazy(() => import("./components/fallback"));
 const CustomerProfile = lazy(() => import("./pages/CustomerProfile"));
-const AffliatorProfile = lazy(() => import("./pages/AffliatorProfile"));
-const CheckAuth = lazy(() => import("./components/check-auth"));
+const AffliatorProfile = lazy(() =>
+  import("./pages/affiliator/AffliatorProfile")
+);
+// const CheckAuth = lazy(() => import("./components/check-auth"));
 const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const AdminHome = lazy(() => import("./pages/Admin/AdminHome"));
 const AdminProduct = lazy(() => import("./pages/Admin/product/AdminProduct"));

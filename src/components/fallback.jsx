@@ -12,7 +12,7 @@ const Fallback = ({ error, resetErrorBoundary }) => {
             {error?.message || "An error has occurred."}
           </pre>
         </div>
-        <div class="group relative mt-5">
+        <div className="relative mt-5 group">
           <svg
             viewBox="0 0 1024 1024"
             fill="#585858"
@@ -32,7 +32,7 @@ const Fallback = ({ error, resetErrorBoundary }) => {
             </g>
           </svg>
           <span
-            class="absolute top-0 left-[50%] -translate-x-[50%] z-20 origin-left scale-0 px-3 rounded-lg border border-gray-300 bg-white py-2 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 cursor-pointer"
+            className="absolute top-0 left-[50%] -translate-x-[50%] z-20 origin-left scale-0 px-3 rounded-lg border border-gray-300 bg-white py-2 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 cursor-pointer"
             onClick={() => {
               resetErrorBoundary();
               window.history.back();
