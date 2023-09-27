@@ -80,7 +80,7 @@ const AddCustomer = () => {
           </NavLink>
         </BreadcrumbItem>
         <BreadcrumbItem isCurrentPage>
-          <NavLink to="#">Add</NavLink>
+          <NavLink to="#" className="cursor-default">Add</NavLink>
         </BreadcrumbItem>
       </Breadcrumb>
       <Flex direction="column" p={4} className="text-[#585858]">

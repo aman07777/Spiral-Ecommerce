@@ -17,7 +17,9 @@ const BreadCrumb = () => {
           </NavLink>
         </BreadcrumbItem>
         <BreadcrumbItem isCurrentPage>
-          <NavLink to="#">Affiliator</NavLink>
+          <NavLink to="#" className="cursor-default">
+            Affiliator
+          </NavLink>
         </BreadcrumbItem>
       </Breadcrumb>
     </>

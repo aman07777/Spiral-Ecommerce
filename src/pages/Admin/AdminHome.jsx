@@ -147,13 +147,13 @@ function AdminHome() {
               </Box>
             </Box>
           </VStack>
-          <Box>
+          <Box className="@container">
             <Heading as="h2" size="md" my={2}>
               <span className="text-[#585858] font-bold text-[1.3rem] mt-5">
                 Recent Orders
               </span>
             </Heading>
-            <div className="flex flex-col gap-y-3 mt-5">
+            <div className="grid mt-5 gap-y-3 gap-3 @[600px]:grid-cols-2 @[1000px]:grid-cols-3">
               {recentOrders.map((order) => (
                 <Box
                   key={order.id}

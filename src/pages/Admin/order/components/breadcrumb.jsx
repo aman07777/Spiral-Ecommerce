@@ -1,7 +1,4 @@
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-} from "@chakra-ui/react";
+import { Breadcrumb, BreadcrumbItem } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 const BreadCrumb = () => {
   return (
@@ -19,7 +16,9 @@ const BreadCrumb = () => {
           </NavLink>
         </BreadcrumbItem>
         <BreadcrumbItem isCurrentPage>
-          <NavLink to="#">Orders</NavLink>
+          <NavLink to="#" className="cursor-default">
+            Orders
+          </NavLink>
         </BreadcrumbItem>
       </Breadcrumb>
     </>

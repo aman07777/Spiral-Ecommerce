@@ -13,10 +13,10 @@ import {
   SliderThumb,
   SliderMark,
   Tooltip,
+  Spinner,
 } from "@chakra-ui/react";
 
 import Pagination from "../../components/Pagination";
-import Loader from "../../components/Loader";
 
 import { getProducts } from "../../services/ProductServices";
 import ProductPageBreadcrumb from "./components/product-page-breadcrumb";
@@ -296,7 +296,7 @@ function ProductPage() {
           </Box>
         </div>
       ) : (
-        <Loader />
+        <Spinner />
       )}
     </>
   );

@@ -1,12 +1,16 @@
-import { Box, Container, Heading, Text, Link, Image } from '@chakra-ui/react';
+import { Box, Container, Heading, Text, Link } from "@chakra-ui/react";
 
 const ErrorPage = () => {
   return (
     <Box padding="40px 0" background="#fff" fontFamily="'Arvo', serif">
       <Container maxWidth="container.xl">
-        <Box display={{ md: "flex" }} justifyContent="center" alignItems="center">
+        <Box
+          display={{ md: "flex" }}
+          justifyContent="center"
+          alignItems="center"
+        >
           <Box
-            marginTop={{base:'50px'}}
+            marginTop={{ base: "50px" }}
             backgroundImage="url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif)"
             height={{ base: "200px", md: "800px" }}
             backgroundPosition="center"
@@ -28,7 +32,14 @@ const ErrorPage = () => {
               The page you are looking for is not available!
             </Text>
 
-            <Link href="/" className="link_404" color="#fff !important" padding="10px 20px" background="#39ac31" display="inline-block">
+            <Link
+              href="/"
+              className="link_404"
+              color="#fff !important"
+              padding="10px 20px"
+              background="#39ac31"
+              display="inline-block"
+            >
               Go to Home
             </Link>
           </Box>

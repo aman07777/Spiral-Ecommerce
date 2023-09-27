@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { lazy, useState } from "react";
 import {
-  // Flex,
   Button,
   Table,
   Thead,
@@ -15,35 +14,33 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import Dashboard from "../Dashboard";
 import { useAdminProductStore } from "./store";
-import BreadCrumb from "./components/bread-crumb";
-import Title from "./components/title";
 import { imageUrl } from "../../../global/config";
 import { handleToast } from "../../../global/toast";
 import DeleteModal from "./components/delete-modal";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+const Dashboard = lazy(() => import("../Dashboard"));
+const Title = lazy(() => import("./components/title"));
+const BreadCrumb = lazy(() => import("./components/bread-crumb"));
+const TablePagination = lazy(() =>
+  import("../../../components/table-pagination")
+);
 function AdminProduct() {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   // stores
   const getProducts = useAdminProductStore((state) => state.getProducts); // gets products from backend
   const setProducts = useAdminProductStore((state) => state.setProducts); // set products stored in the store
+
   // states
-  const [product, setProduct] = useState({
-    name: "",
-    description: "",
-    price: "",
-    category: "",
-    brand: "",
-    color: "",
-    sizes: [],
-    images: [],
-  });
-  const [deleteProduct, setDeleteProduct] = useState({});
-  const [selectAllLocal, setSelectAllLocal] = useState(false);
+  const [product, setProduct] = useState({});
+  // const [selectAllLocal, setSelectAllLocal] = useState(false);
   const [selectAll, setSelectAll] = useState(false);
-  // const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  // const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
+  // pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
 
   const handleEdit = (product) => {
     // Set the form fields to the values of the selected product
@@ -51,7 +48,7 @@ function AdminProduct() {
   };
   const handleDelete = (product) => {
     onOpen();
-    setDeleteProduct(product);
+    setProduct(product);
     // Remove the selected product from the list of products
     setProducts(products.filter((p) => p.id !== product.id));
   };
@@ -75,7 +72,7 @@ function AdminProduct() {
 
   const handleSelectAllClick = (event) => {
     const { checked } = event.target;
-    setSelectAllLocal(checked);
+    // setSelectAllLocal(checked);
     handleSelectAll(checked);
     setSelectAll(checked);
     setProducts(products.map((p) => ({ ...p, selected: checked })));
@@ -96,7 +93,7 @@ function AdminProduct() {
     const selectedProducts = products.filter((product) => product.selected);
     if (selectAll) {
       setSelectAll(false);
-      setSelectAllLocal(false);
+      // setSelectAllLocal(false);
     }
     handleDeleteAll(selectedProducts);
   };
@@ -159,7 +156,7 @@ function AdminProduct() {
               </Td>
             </Tr>
           ) : Array.isArray(products) && products?.length > 0 ? (
-            products?.map((product) => (
+            products?.slice(startIndex, endIndex)?.map((product) => (
               <Tr key={product.id}>
                 <Td>
                   <Checkbox
@@ -172,7 +169,7 @@ function AdminProduct() {
                 <Td>{product.category}</Td>
                 <Td>{product.brand}</Td>
                 <Td>{product.color}</Td>
-                <Td>{product.sizes?.join(", ")}</Td>
+                <Td>{product.sizes?.join(",")}</Td>
                 <Td>{product.description}</Td>
                 <Td>
                   <Image
@@ -192,14 +189,12 @@ function AdminProduct() {
                   >
                     Edit
                   </Button>
-                  <Button
-                    colorScheme="red"
-                    size="sm"
-                    className="w-[5em]"
+                  <span
+                    title={`Delete ${product?.name}`}
                     onClick={() => handleDelete(product)}
                   >
-                    Delete
-                  </Button>
+                    <DeleteForeverIcon className="text-rose-500 cursor-pointer text-[.9rem]" />
+                  </span>
                 </Td>
               </Tr>
             ))
@@ -228,8 +223,14 @@ function AdminProduct() {
           </tfoot>
         )}
       </Table>
-      {Object.keys(deleteProduct).length > 0 && (
-        <DeleteModal isOpen={isOpen} onClose={onClose} data={deleteProduct} />
+      <TablePagination
+        length={products?.length}
+        currentPage={currentPage}
+        itemsPerPage={itemsPerPage}
+        setCurrentPage={setCurrentPage}
+      />
+      {Object.keys(product).length > 0 && (
+        <DeleteModal isOpen={isOpen} onClose={onClose} data={product} />
       )}
     </>
   );

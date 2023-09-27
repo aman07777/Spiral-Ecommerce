@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useToast, Box } from "@chakra-ui/react";
+import React from "react";
+import { useToast, Box, Spinner } from "@chakra-ui/react";
 
 import FeatureProducts from "../components/FeatureProducts";
 import BestExperience from "../components/Bestexperience";
@@ -7,50 +7,41 @@ import Category from "../components/Category";
 import HeroBanner from "../components/HeroBanner";
 
 import { getFeaturedProducts } from "../services/ProductServices";
-import Loader from "../components/Loader";
+
+import { useQuery } from "@tanstack/react-query";
+import { handleToast } from "../global/toast";
 
 const Home = () => {
-  const [featuredProducts, setFeaturedProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  // const [featuredProducts, setFeaturedProducts] = useState([]);
 
   const toast = useToast();
 
-  useEffect(() => {
-    getFeaturedProducts()
-      .then((result) => {
-        if (result.products.length === 0) {
-          toast({
-            title: "No feature product found",
-            description: "Please try again with different keywords.",
-            status: "warning",
-            duration: 3000,
-            isClosable: true,
-          });
-        }
-        setFeaturedProducts(result.products);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        const errorMessage =
-          error.response?.data?.message || "An error occurred.";
-        toast({
-          title: "Error",
-          description: errorMessage,
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
-      });
-  }, [toast]);
+  const { data, error, isLoading, isError } = useQuery(
+    ["get", "featured-products"],
+    getFeaturedProducts
+  );
+  isError && handleToast(toast, "Error", error.message, "error");
 
   return (
     <>
       <Box w={"100%"}>
         <HeroBanner />
         {!isLoading ? (
-          <FeatureProducts products={featuredProducts} />
+          !isError &&
+          data?.status === "success" &&
+          Array.isArray(data.products) &&
+          data.products?.length > 0 && (
+            <FeatureProducts products={data.products} />
+          )
         ) : (
-          <Loader />
+          <div className="flex justify-center my-5">
+            <Box
+              width={{ base: "100%", md: "95%", lg: "75%" }}
+              className="flex justify-center"
+            >
+              <Spinner />
+            </Box>
+          </div>
         )}
         <BestExperience />
         <Category />

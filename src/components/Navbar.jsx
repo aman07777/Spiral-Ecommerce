@@ -119,7 +119,7 @@ const Navbar = () => {
               <MenuList className="px-2 pb-2">
                 <MenuItem className="hover:bg-white">
                   <NavLink
-                    to="/infos"
+                    to="/profile/customer"
                     className="relative before:absolute before:content-[''] before:w-0 before:h-[1.5px] before:-bottom-1 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-300 capitalize"
                   >
                     My profile
