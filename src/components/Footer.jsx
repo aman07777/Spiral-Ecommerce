@@ -15,19 +15,19 @@ const Footer = () => {
             <div className="flex flex-col gap-y-1 mt-2">
               <NavLink
                 to=""
-                className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 "
+                className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-[1rem] duration-200 "
               >
                 FAQs
               </NavLink>
               <NavLink
                 to=""
-                className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 "
+                className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-[60%] duration-200 "
               >
                 Return And Exchange
               </NavLink>
               <NavLink
                 to=""
-                className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 "
+                className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-[60%] duration-200 "
               >
                 Support Team
               </NavLink>
@@ -40,19 +40,19 @@ const Footer = () => {
             <div className="flex flex-col gap-y-1 mt-2">
               <NavLink
                 to=""
-                className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
+                className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-[60%] duration-200"
               >
                 Career Opportunities
               </NavLink>
               <NavLink
                 to=""
-                className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
+                className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-[3rem] duration-200"
               >
                 Our Stores
               </NavLink>
               <NavLink
                 to=""
-                className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
+                className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-[3rem] duration-200"
               >
                 About Us
               </NavLink>
@@ -65,19 +65,19 @@ const Footer = () => {
             <div className="flex flex-col gap-y-1 mt-2">
               <NavLink
                 to=""
-                className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
+                className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-[60%] duration-200"
               >
                 Privacy Policies
               </NavLink>
               <NavLink
                 to=""
-                className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
+                className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-[60%] duration-200"
               >
                 Terms & Conditions
               </NavLink>
               <NavLink
                 to=""
-                className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
+                className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-[60%] duration-200"
               >
                 Return Policies
               </NavLink>

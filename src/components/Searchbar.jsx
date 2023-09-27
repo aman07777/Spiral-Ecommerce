@@ -16,7 +16,7 @@ const Searchbar = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    navigate("/products", { state: { keyWord } });
+    navigate(`/products?search=${keyWord}`);
   };
 
   const handleKeyWordChange = (e) => {

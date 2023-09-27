@@ -63,7 +63,6 @@ const AddProduct = () => {
       toast,
       setLading,
       setProduct,
-      setProduct
     );
     // Clear the form fields
     // setProduct({
@@ -361,4 +360,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default AddProduct

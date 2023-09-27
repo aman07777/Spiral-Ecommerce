@@ -52,3 +52,42 @@ export const getFeaturedProducts = async () => {
   const { data } = await axios.get(`${baseUrl}products/featured`);
   return data;
 };
+
+export const removeProduct = async (currentUser, productId) => {
+  return axios.delete(`${API_URL}/${productId}`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${currentUser}`,
+    },
+  });
+};
+
+export const createProduct = async (currentUser, product) => {
+  return axios.post(
+    API_URL,
+    {
+      product,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${currentUser}`,
+      },
+    }
+  );
+};
+
+export const updateProduct = async (currentUser, product) => {
+  return axios.put(
+    `${API_URL}/${product.id}`,
+    {
+      product,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${currentUser}`,
+      },
+    }
+  );
+};

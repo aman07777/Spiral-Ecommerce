@@ -4,6 +4,12 @@ import { ErrorBoundary } from "react-error-boundary";
 
 // import Cart from './components/CartPageMobile'
 // import CartPageMobile from "./components/CartPageMobile";
+import PaymentOption from "./pages/Customer/PaymentOption";
+import AddressBook from "./pages/Customer/AddressBook";
+import MyWhislist from "./pages/Customer/MyWhislist";
+import MyOrder from "./pages/Customer/MyOrder";
+import MyReview from "./pages/Customer/MyReview";
+import CustomerProfile from "./pages/Customer/CustomerProfile";
 
 const Fallback = lazy(() => import("./components/fallback"));
 const CustomerProfile = lazy(() => import("./pages/CustomerProfile"));
@@ -41,6 +47,9 @@ const ProductDetails = lazy(() => import("./pages/ProductDetails"));
 const CartPage = lazy(() => import("./pages/CartPage"));
 const EmailVerification = lazy(() => import("./pages/EmailVerification"));
 
+
+
+
 function App() {
   return (
     <Router>
@@ -60,6 +69,14 @@ function App() {
             </Route>
             <Route path="/emailverification" element={<EmailVerification />} />
 
+          <Route path="profile" element={<CustomerProfile />} />
+          <Route path="profile/paymentoption" element={<PaymentOption />} />
+          <Route path="profile/addressbook" element={<AddressBook />} />
+          <Route path="profile/whishlist" element={<MyWhislist />} />
+          <Route path="profile/myorders" element={<MyOrder />} />
+          <Route path="profile/myreview" element={<MyReview />} />
+            <Route path="profile/addressbook" element={<AddressBook />} />
+            
             <Route path="/resetpassword" element={<ResetPassword />} />
             <Route path="/adminHome" element={<AdminHome />} />
             <Route path="/adminProduct" element={<AdminProduct />} />

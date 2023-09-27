@@ -38,6 +38,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await login(email, password);
+      console.log(response);
       if (response.status === 200) {
         setCurrentUser(response.data.token);
         setUser(response.data.token);

@@ -11,13 +11,14 @@ import {
   Td,
   Checkbox,
   Input,
-  Image,
   Text,
   useToast,
   Spinner,
 } from "@chakra-ui/react";
 
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useMediaQuery } from '@chakra-ui/react';
+
 
 import { getCart, removeCartItem } from "../services/CartServices";
 import { useUserContext } from "../contexts/UserContext";
@@ -27,6 +28,8 @@ function CartPageDesktop() {
   const [cartItems, setCartItems] = useState([]);
   const [selectAll, setSelectAll] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const [isDesktop] = useMediaQuery("(min-width: 968px)");
+
   // const [totalQuantity, setTotalQuantity] = useState(0);
 
   const toast = useToast();
@@ -63,7 +66,7 @@ function CartPageDesktop() {
 
   const handleQuantityChange = (event, index) => {
     const newCartItems = [...cartItems];
-    newCartItems[index].quantity = parseInt(event.target.value);
+    newCartItems[index].selectedQuantity = parseInt(event.target.value);
     setCartItems(newCartItems);
   };
 
@@ -114,6 +117,8 @@ function CartPageDesktop() {
     // ...
   };
 
+
+
   const handleDeleteAll = () => {
     const newCartItems = cartItems.filter((item) => !item.isChecked);
     setCartItems(newCartItems);
@@ -121,7 +126,7 @@ function CartPageDesktop() {
   };
 
   const subtotal = cartItems.reduce(
-    (total, item) => total + (item.isChecked ? item.price * item.quantity : 0),
+    (total, item) => total + (item.isChecked ? item.price * item.selectedQuantity : 0),
     0
   );
   const discount = subtotal * 0.1;
@@ -131,140 +136,268 @@ function CartPageDesktop() {
     <>
       {!isLoading ? (
         <Flex direction="column" p={4}>
-          <Flex direction={["column", "column", "row"]} mb={4}>
-            <Box flex={1}>
+          <Flex direction={isDesktop ? ["column", "column", "row"] : { base: "column" }} mb={4}>
+            <Box flex={1} className="">
               <Box
                 borderWidth="1px"
                 borderRadius="lg"
                 overflow="hidden"
-                boxShadow="md"
+                boxShadow={isDesktop ? "md" : ""}
+                className="h-[100%] sm:mb-5"
               >
+                {selectAll ? (
+                  <Button
+                    colorScheme="red"
+                    size="sm"
+                    onClick={handleDeleteAll}
+                    borderRadius="0.5rem"
+                    m={5}
+                  >
+                    DeleteAll
+                  </Button>
+                ) : null}
                 <Table variant="simple">
                   <Thead>
-                    {selectAll ? (
-                      <Button
-                        colorScheme="red"
-                        size="sm"
-                        onClick={handleDeleteAll}
-                        isFullWidth
-                        borderRadius="0.5rem"
-                        m={5}
-                      >
-                        DeleteAll
-                      </Button>
-                    ) : null}
+
                     <Tr>
                       <Th>
                         <Checkbox
                           isChecked={selectAll}
                           onChange={handleSelectAll}
                           borderRadius="full"
+                          className={!isDesktop && "ml-[-7px]"}
                         />
+                        <span className={`ml-3 ${isDesktop ? "hidden" : ""}`}>select all</span>
                       </Th>
-                      <Th>Product</Th>
-                      <Th>Quantity</Th>
-                      <Th>Price</Th>
-                      <Th>Actions</Th>
+                      {
+                        isDesktop && (
+                          <>
+                            <Th>Product</Th>
+                            <Th>Quantity</Th>
+                            <Th>Price</Th>
+                            <Th>Actions</Th>
+                          </>
+                        )
+                      }
+
                     </Tr>
                   </Thead>
-                  <Tbody>
-                    {cartItems.map((product, index) => (
-                      <Tr key={product.id}>
-                        <Td>
-                          <Checkbox
-                            isChecked={product.isChecked}
-                            onChange={(event) => handleSelectItem(event, index)}
-                          />
-                        </Td>
-                        <Td>
-                          <Flex align="center">
-                            <Image
-                              src={`${imageUrl}/${product.image}`}
-                              alt="Product Image"
-                              boxSize={["30px", "30px", "50px"]}
-                              mr={4}
-                              borderRadius="0.5rem"
-                            />
-                            <Box>
-                              <Text fontWeight="bold">{product.name}</Text>
-                              <Text
-                                fontSize={["sm", "sm", "md"]}
-                                color="gray.500"
+                  {
+                    isDesktop ? (
+                      <>
+                        <Tbody>
+                          {cartItems.map((product, index) => (
+                            <Tr key={product.id}>
+                              <Td>
+                                <Checkbox
+                                  isChecked={product.isChecked}
+                                  onChange={(event) => handleSelectItem(event, index)}
+                                />
+                              </Td>
+                              <Td>
+                                <ul className="flex  gap-x-4 py-4 items-center">
+                                  {/* product image  */}
+                                  <li className="w-[3.5rem]">
+                                    <img
+                                      src={`${imageUrl}/${product.image}`}
+                                      className="object-cover rounded-md"
+                                    />
+                                  </li>
+                                  {/* product desc  */}
+                                  <li className="flex flex-col gap-y-1">
+                                    <span className="text-lg font-bold">{product.name}</span>
+                                    <span className="text-xs font-semibold">{product.description}</span>
+                                    <span className="text-xs flex gap-x-1"> <span className="font-semibold">Size:</span> {product.size}</span>
+                                    <span className="text-xs flex gap-x-1 "><span className="font-semibold">Color:</span>{product.color ? product.color : "Yellow"}</span>
+                                  </li>
+                                </ul>
+                              </Td>
+                              <Td>
+                                <Flex
+                                  direction={isDesktop ? ["column", "column", "row"] : "row"}
+                                  align={isDesktop ? ["flex-start", "flex-start", "center"] : "center"}
+                                >
+                                  <Button
+                                    size="sm"
+                                    onClick={() => {
+                                      if (product.selectedQuantity > 0) {
+                                        handleQuantityChange(
+                                          {
+                                            target: {
+                                              value: product.selectedQuantity - 1,
+                                            },
+                                          },
+                                          index
+                                        );
+                                      }
+                                    }}
+                                  >
+                                    -
+                                  </Button>
+                                  <Input
+                                    type="number"
+                                    value={product.selectedQuantity}
+                                    onChange={(event) =>
+                                      handleQuantityChange(event, index)
+                                    }
+                                    min={1}
+                                    max={10}
+                                    size="sm"
+                                    w={["50px", "50px", "70px"]}
+                                    mx={2}
+                                    borderRadius="0.5rem"
+                                    border="1px solid black"
+                                    color="black"
+                                    bg="white"
+                                    readOnly
+                                  />
+                                  <Button
+                                    size="sm"
+                                    onClick={() =>
+                                      handleQuantityChange(
+                                        {
+                                          target: {
+                                            value: product.selectedQuantity + 1,
+                                          },
+                                        },
+                                        index
+                                      )
+                                    }
+                                  >
+                                    +
+                                  </Button>
+                                </Flex>
+                              </Td>
+                              <Td>
+                                <span className="font-serif text-sm">
+                                  Rs. {product?.selectedQuantity * product.price}
+                                </span>
+
+                              </Td>
+                              <Td>
+                                <Button
+                                  onClick={() => handleRemoveCartItem(product.id)}
+                                >
+                                  <DeleteIcon className="text-red-600" />
+                                </Button>
+                              </Td>
+                            </Tr>
+                          ))}
+                        </Tbody>
+                      </>
+                    ) : (
+                      <>
+                        {cartItems.map((item, index) => (
+                          <Box
+                            key={item.id}
+                            borderWidth="1px"
+                            borderRadius="lg"
+                            overflow="hidden"
+                            boxShadow="md"
+                            mb={4}
+                          >
+                            <Flex direction="column" className="p-4">
+                              <Flex
+                                direction="row"
+                                justifyContent="space-between"
+                                alignItems="center"
+                                className=""
                               >
-                                {product.description}
-                              </Text>
-                              <Text>Size {product.size}</Text>
-                              <Text>Color {product.color}</Text>
-                            </Box>
-                          </Flex>
-                        </Td>
-                        <Td>
-                          <Flex
-                            direction={["column", "column", "row"]}
-                            align={["flex-start", "flex-start", "center"]}
-                          >
-                            <Button
-                              size="sm"
-                              onClick={() =>
-                                handleQuantityChange(
-                                  {
-                                    target: {
-                                      value: product.selectedQuantity - 1,
-                                    },
-                                  },
-                                  index
-                                )
-                              }
-                            >
-                              -
-                            </Button>
-                            <Input
-                              type="number"
-                              value={product.selectedQuantity}
-                              onChange={(event) =>
-                                handleQuantityChange(event, index)
-                              }
-                              min={1}
-                              max={10}
-                              size="sm"
-                              w={["50px", "50px", "70px"]}
-                              mx={2}
-                              borderRadius="0.5rem"
-                              border="1px solid black"
-                              color="black"
-                              bg="white"
-                            />
-                            <Button
-                              size="sm"
-                              onClick={() =>
-                                handleQuantityChange(
-                                  {
-                                    target: {
-                                      value: product.selectedQuantity + 1,
-                                    },
-                                  },
-                                  index
-                                )
-                              }
-                            >
-                              +
-                            </Button>
-                          </Flex>
-                        </Td>
-                        <Td>${product.price}</Td>
-                        <Td>
-                          <Button
-                            colorScheme="red"
-                            size="sm"
-                            onClick={() => handleRemoveCartItem(product.id)}
-                            borderRadius="2rem"
-                          >
-                            <DeleteIcon />
-                          </Button>
-                        </Td>
-                      </Tr>
-                    ))}
-                  </Tbody>
+                                <Box pb={20}>
+                                  <Checkbox
+                                    isChecked={item.isChecked}
+                                    onChange={(event) => handleSelectItem(event, index)}
+                                  />
+                                </Box>
+                                <ul className="flex gap-x-3 w-[100%] items-center space-around p-3">
+                                  {/* image  */}
+                                  <li className="w-[30%]">
+                                    <img
+                                      src={`${imageUrl}/${item.image}`}
+                                      className="object-cover w-[3.5rem] rounded-md"
+                                    />
+                                  </li>
+                                  {/* product desc  */}
+                                  <li className="flex flex-col gap-y-1">
+                                    <span className="text-lg font-bold">{item.name}</span>
+                                    <span className="text-xs font-semibold">{item.description}</span>
+                                    <span className="text-xs flex gap-x-1"> <span className="font-semibold">Size:</span> {item.size}</span>
+                                    <span className="text-xs flex gap-x-1 "><span className="font-semibold">Color:</span>{item.color ? item.color : "Yellow"}</span>
+                                  </li>
+
+                                </ul>
+                                <button
+                                  onClick={() => handleRemoveCartItem(item.id)}
+                                >
+                                  <DeleteIcon className="text-red-600" />
+                                </button>
+                              </Flex>
+                              <Flex
+                                direction="row"
+                                justifyContent="space-between"
+                                alignItems="center"
+                                p={2}
+                              >
+                                <Box>
+                                  <Text className="mb-2 font-serif text-sm">Quantity:</Text>
+                                  <Flex direction="row" alignItems="center">
+                                    <Button
+                                      size="sm"
+                                      onClick={() => {
+                                        if (item?.selectedQuantity > 0) {
+                                          handleQuantityChange(
+                                            { target: { value: item.selectedQuantity - 1 } },
+                                            index
+                                          )
+                                        }
+                                      }}
+                                    >
+                                      -
+                                    </Button>
+                                    <Input
+                                      type="number"
+                                      value={item.selectedQuantity}
+                                      onChange={(event) =>
+                                        handleQuantityChange(event, index)
+                                      }
+                                      min={1}
+                                      max={10}
+                                      size="sm"
+                                      w="50px"
+                                      mx={2}
+                                      borderRadius="0.5rem"
+                                      border="1px solid black"
+                                      color="black"
+                                      bg="white"
+                                      readOnly
+                                    />
+                                    <Button
+                                      size="sm"
+                                      onClick={() =>
+                                        handleQuantityChange(
+                                          { target: { value: item.selectedQuantity + 1 } },
+                                          index
+                                        )
+                                      }
+                                    >
+                                      +
+                                    </Button>
+                                  </Flex>
+                                </Box>
+                                <Box>
+                                  <Text className="font-serif mb-2 text-sm">Price:</Text>
+                                  <span className="text-sm font-semibold">
+                                    Rs. {item?.selectedQuantity * item.price}
+                                  </span>
+                                </Box>
+                              </Flex>
+                            </Flex>
+                          </Box>
+                        ))}
+
+                      </>
+                    )
+                  }
                 </Table>
               </Box>
             </Box>
@@ -285,19 +418,19 @@ function CartPageDesktop() {
                   <Box mb={4}>
                     <Flex direction="row" justifyContent="space-between">
                       <Text>Subtotal:</Text>
-                      <Text>${subtotal.toFixed(2)}</Text>
+                      <Text className="">Rs.{subtotal.toFixed(2)}</Text>
                     </Flex>
                   </Box>
                   <Box mb={4}>
                     <Flex direction="row" justifyContent="space-between">
                       <Text>Discount:</Text>
-                      <Text>${discount.toFixed(2)}</Text>
+                      <Text className="">Rs.{discount.toFixed(2)}</Text>
                     </Flex>
                   </Box>
                   <Box mb={4}>
                     <Flex direction="row" justifyContent="space-between">
                       <Text fontWeight="bold">Total:</Text>
-                      <Text fontWeight="bold">${grandTotal.toFixed(2)}</Text>
+                      <Text fontWeight="bold" className="">Rs.{grandTotal.toFixed(2)}</Text>
                     </Flex>
                   </Box>
                   <Flex direction="column">
@@ -309,29 +442,25 @@ function CartPageDesktop() {
                       border="1px solid black"
                       color="black"
                       bg="white"
+                      className="py-4"
                     />
                     <Box mt={5}>
+
                       <Button
                         size="sm"
                         borderRadius="0.5rem"
                         bg="white"
                         color="black"
                         _hover={{ bg: "black", color: "white" }}
+                        className=""
                       >
                         Apply Voucher
                       </Button>
                     </Box>
                     <Box p={2}>
-                      <Button
-                        colorScheme="blue"
-                        size="lg"
-                        onClick={handleCheckout}
-                        isFullWidth
-                        borderRadius="0.5rem"
-                        width={["100%", "100%", "16vw"]}
-                      >
+                      <button className="px-6 py-2 rounded-md  font-semibold bg-[#3182ce] text-white md:ml-[-7.5px]" onClick={handleCheckout}>
                         Checkout now
-                      </Button>
+                      </button>
                     </Box>
                   </Flex>
                 </Flex>
