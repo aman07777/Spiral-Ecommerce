@@ -107,9 +107,9 @@ function ProductPage() {
               columnGap={3}
               className="mt-3 text-[#585858] font-sans @container"
             >
-              <Box className="w-full lg:sticky top-[6em] @[767px]:max-h-screen @[767px]:w-[20em]">
+              <Box className="lg:sticky top-[6em] @[767px]:max-h-screen @[767px]:w-[20em]">
                 <ProductPageBreadcrumb />
-                <div className="w-full border mt-2 px-5 @[767px]:h-[96dvh] mb-3 pb-2">
+                <div className="w-full border mt-2 px-5 @[767px]:h-[96dvh] mb-3 pb-2 ">
                   <div className="@[767px]:flex-col gap-y-3 flex @[767px]:items-start items-center gap-x-[5em] my-4">
                     <Box>
                       <h2 className="text-[1.2rem] font-semibold mb-2">
@@ -277,7 +277,10 @@ function ProductPage() {
                     </Select>
                   </Flex>
                 </Flex>
-                <div className="grid gap-5 @[520px]:grid-cols-2 @[750px]:grid-cols-3">
+               
+                  {/* <div className="grid gap-5 @[520px]:grid-cols-2 @[750px]:grid-cols-3 @[996px]:grid-cols-2 bg-yellow-500"> */}
+                  <div className="grid gap-5 grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 ">
+                  {/* 996 -1176 */}
                   {products.map((product) => (
                     <ProductCard data={product} key={product?.id} />
                   ))}

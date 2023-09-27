@@ -13,7 +13,7 @@ import AdminAffiliator from "./pages/Admin/affiliator/AdminAffliator";
 import AdminSettings from "./pages/Admin/AdminSetting";
 import CartPage from "./pages/CartPage";
 import ProductDetails from "./pages/ProductDetails";
-// import CustomerProfile from "./pages/CustomerProfile";
+import CustomerProfile from "./pages/Customer/CustomerProfile";
 // import AffliatorProfile from "./pages/AffliatorProfile";
 // import Cart from './components/CartPageMobile'
 import ErrorPage from "./pages/ErrorPage";
@@ -24,6 +24,11 @@ import AddProduct from "./pages/Admin/product/add-product/add-product";
 import AddOrder from "./pages/Admin/order/add-order/add-order";
 import AddCustomer from "./pages/Admin/users/add-cutomer/add-customer";
 import AddAffiliator from "./pages/Admin/affiliator/add-affiliator/add-affiliator";
+import PaymentOption from "./pages/Customer/PaymentOption";
+import AddressBook from "./pages/Customer/AddressBook";
+import MyWhislist from "./pages/Customer/MyWhislist";
+import MyOrder from "./pages/Customer/MyOrder";
+import MyReview from "./pages/Customer/MyReview";
 
 function App() {
   return (
@@ -35,6 +40,14 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="products" exact element={<ProductPage />} />
           <Route path="products/:id" element={<ProductDetails />} />
+          <Route path="profile" element={<CustomerProfile />} />
+          <Route path="profile/paymentoption" element={<PaymentOption />} />
+          <Route path="profile/addressbook" element={<AddressBook />} />
+          <Route path="profile/whishlist" element={<MyWhislist />} />
+          <Route path="profile/myorders" element={<MyOrder />} />
+          <Route path="profile/myreview" element={<MyReview />} />
+          <Route path="profile/addressbook" element={<AddressBook />} />
+
 
           {/* <Route path="/protect/" element={<CheckAuth />}> */}
           <Route path="/protect/cart" element={<CartPage />} />
