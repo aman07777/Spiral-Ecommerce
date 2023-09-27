@@ -22,6 +22,7 @@ import Title from "./components/title";
 import { imageUrl } from "../../../global/config";
 import { handleToast } from "../../../global/toast";
 import DeleteModal from "./components/delete-modal";
+import Pagination from "../../../global/pagination";
 function AdminProduct() {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -42,8 +43,12 @@ function AdminProduct() {
   const [deleteProduct, setDeleteProduct] = useState({});
   const [selectAllLocal, setSelectAllLocal] = useState(false);
   const [selectAll, setSelectAll] = useState(false);
-  // const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  // const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
+
+  // pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
 
   const handleEdit = (product) => {
     // Set the form fields to the values of the selected product
@@ -159,7 +164,7 @@ function AdminProduct() {
               </Td>
             </Tr>
           ) : Array.isArray(products) && products?.length > 0 ? (
-            products?.map((product) => (
+            products?.slice(startIndex, endIndex)?.map((product) => (
               <Tr key={product.id}>
                 <Td>
                   <Checkbox
@@ -228,6 +233,12 @@ function AdminProduct() {
           </tfoot>
         )}
       </Table>
+      <Pagination
+        length={products?.length}
+        currentPage={currentPage}
+        itemsPerPage={itemsPerPage}
+        setCurrentPage={setCurrentPage}
+      />
       {Object.keys(deleteProduct).length > 0 && (
         <DeleteModal isOpen={isOpen} onClose={onClose} data={deleteProduct} />
       )}
