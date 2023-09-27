@@ -26,7 +26,7 @@ const Home = () => {
     <>
       <Box w={"100%"}>
         <HeroBanner />
-        {isLoading ? (
+        {!isLoading ? (
           !isError &&
           data?.status === "success" &&
           Array.isArray(data.products) &&

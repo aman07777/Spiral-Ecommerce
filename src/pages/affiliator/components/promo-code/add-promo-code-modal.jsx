@@ -61,7 +61,7 @@ const AddPromoCodeModal = ({ isOpen, onClose }) => {
                   />
                   {/* generate promo code button */}
                   <div
-                    className="flex items-center cursor-pointer"
+                    className="flex items-center cursor-pointer select-none"
                     onClick={generatePromoCode}
                   >
                     <span>Generate</span>

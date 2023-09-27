@@ -16,7 +16,9 @@ const BreadCrumb = () => {
           </NavLink>
         </BreadcrumbItem>
         <BreadcrumbItem isCurrentPage>
-          <NavLink to="#">Customers</NavLink>
+          <NavLink to="#" className="cursor-default">
+            Customers
+          </NavLink>
         </BreadcrumbItem>
       </Breadcrumb>
     </>

@@ -145,7 +145,9 @@ const AddProduct = () => {
           </NavLink>
         </BreadcrumbItem>
         <BreadcrumbItem isCurrentPage>
-          <NavLink to="#">Add</NavLink>
+          <NavLink to="#" className="cursor-default">
+            Add
+          </NavLink>
         </BreadcrumbItem>
       </Breadcrumb>
       <Flex direction={{ base: "column", md: "row" }} p={4}>
