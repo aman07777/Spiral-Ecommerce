@@ -38,7 +38,7 @@ const AddAffiliator = lazy(() =>
 const Layout = lazy(() => import("./layout/layout"));
 const Loader = lazy(() => import("./components/Loader"));
 const Signup = lazy(() => import("./pages/Signup"));
-const Home = lazy(() => import("./pages/Home"));
+const Home = lazy(() => import("./pages/home/Home"));
 const Login = lazy(() => import("./pages/Login"));
 const ProductPage = lazy(() => import("./pages/products/ProductPage"));
 const ProductDetails = lazy(() => import("./pages/ProductDetails"));

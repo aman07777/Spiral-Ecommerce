@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Text, Image } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { ShoppingCart } from "@mui/icons-material";
 import { imageUrl } from "../global/config";
 import { BsCartPlusFill } from "react-icons/bs";
 const ProductCard = ({ data }) => {

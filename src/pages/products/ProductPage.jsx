@@ -17,8 +17,8 @@ function ProductPage() {
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [sortByPrice, setsortByPrice] = useState("best");
   const [currentPage, setCurrentPage] = useState(1);
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(10000);
+  const minPrice = 0;
+  const maxPrice = 10000;
 
   const [productsPerPage, setProductsPerPage] = useState(16);
   const [totalProducts, setTotalProducts] = useState(0);

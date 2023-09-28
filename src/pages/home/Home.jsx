@@ -1,15 +1,15 @@
 import React from "react";
 import { useToast, Box, Spinner } from "@chakra-ui/react";
 
-import FeatureProducts from "../components/FeatureProducts";
-import BestExperience from "../components/Bestexperience";
-import Category from "../components/Category";
-import HeroBanner from "../components/HeroBanner";
+import FeatureProducts from "../../components/FeatureProducts";
+import BestExperience from "../../components/Bestexperience";
+import Category from "../../components/Category";
+import HeroBanner from "../../components/HeroBanner";
 
-import { getFeaturedProducts } from "../services/ProductServices";
+import { getFeaturedProducts } from "../../services/ProductServices";
 
 import { useQuery } from "@tanstack/react-query";
-import { handleToast } from "../global/toast";
+import { handleToast } from "../../global/toast";
 
 const Home = () => {
   // const [featuredProducts, setFeaturedProducts] = useState([]);

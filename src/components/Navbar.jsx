@@ -165,7 +165,15 @@ const Navbar = () => {
                 {/* added flexDirection property */}
                 <MenuItem className="">
                   <div
-                    onClick={() => navigate("/favorites")}
+                    onClick={() => navigate("/")}
+                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
+                  >
+                    Home
+                  </div>
+                </MenuItem>
+                <MenuItem className="">
+                  <div
+                    onClick={() => null}
                     className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
                   >
                     Shop
@@ -173,7 +181,7 @@ const Navbar = () => {
                 </MenuItem>
                 <MenuItem>
                   <div
-                    onClick={() => navigate("/products")}
+                    onClick={() => null}
                     className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
                   >
                     Brand
@@ -205,7 +213,7 @@ const Navbar = () => {
                 </MenuItem>
                 <MenuItem>
                   <div
-                    onClick={() => navigate("/products")}
+                    onClick={() => navigate("/protect/cart")}
                     className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
                   >
                     Cart
@@ -213,7 +221,7 @@ const Navbar = () => {
                 </MenuItem>
                 <MenuItem>
                   <div
-                    onClick={() => navigate("/products")}
+                    onClick={() => navigate("/profile/customer")}
                     className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
                   >
                     My Information
