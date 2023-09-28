@@ -85,7 +85,7 @@ function App() {
             <Route path="/admin-add-affliator" element={<AddAffiliator />} />
             <Route path="/adminSetting" element={<AdminSettings />} />
             <Route path="/profile/affiliator" element={<AffliatorProfile />} />
-            <Route path="/profile/customer" element={<CustomerProfile />} />
+
             <Route path="*" element={<ErrorPage />} />
           </Routes>
         </Suspense>
