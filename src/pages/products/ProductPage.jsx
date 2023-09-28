@@ -1,26 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import {
-  Box,
-  Flex,
-  Checkbox,
-  Text,
-  Select,
-  useToast,
-  Slider,
-  SliderTrack,
-  SliderFilledTrack,
-  SliderThumb,
-  SliderMark,
-  Tooltip,
-  Spinner,
-} from "@chakra-ui/react";
+import { Box, Flex, Text, Select, useToast, Spinner } from "@chakra-ui/react";
 
 import Pagination from "../../components/Pagination";
 
 import { getProducts } from "../../services/ProductServices";
 import ProductPageBreadcrumb from "./components/product-page-breadcrumb";
 import ProductCard from "./components/product-card";
+import PriceRange from "./components/price-range";
+import Brands from "./components/brands";
+import Category from "./components/categories";
 
 function ProductPage() {
   const [products, setProducts] = useState([]);
@@ -30,11 +19,10 @@ function ProductPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(10000);
-  const [showTooltip, setShowTooltip] = React.useState(false);
+
   const [productsPerPage, setProductsPerPage] = useState(16);
   const [totalProducts, setTotalProducts] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [priceRange, setPriceRange] = React.useState(5);
   const toast = useToast();
   const { state } = useLocation();
   const keyWord = state?.keyWord;
@@ -111,145 +99,18 @@ function ProductPage() {
                 <ProductPageBreadcrumb />
                 <div className="w-full border mt-2 px-5 @[767px]:h-[96dvh] mb-3 pb-2 ">
                   <div className="@[767px]:flex-col gap-y-3 flex @[767px]:items-start items-center gap-x-[5em] my-4">
-                    <Box>
-                      <h2 className="text-[1.2rem] font-semibold mb-2">
-                        Categories
-                      </h2>
-                      <div className="flex flex-col">
-                        <Checkbox
-                          isChecked={selectedCategories.length === 0}
-                          onChange={() => setSelectedCategories([])}
-                        >
-                          All
-                        </Checkbox>
-                        <Checkbox
-                          // isChecked={selectedCategories.includes("Category A")}
-                          onChange={handleCategoryChange}
-                        >
-                          Traditional
-                        </Checkbox>
-                        <Checkbox
-                          // isChecked={selectedCategories.includes("Category A")}
-                          onChange={handleCategoryChange}
-                        >
-                          Western
-                        </Checkbox>
-                        <Checkbox
-                          // isChecked={selectedCategories.includes("Category A")}
-                          onChange={handleCategoryChange}
-                        >
-                          Accesories
-                        </Checkbox>
-                        <Checkbox
-                          // isChecked={selectedCategories.includes("Category B")}
-                          onChange={handleCategoryChange}
-                        >
-                          Shoes
-                        </Checkbox>
-                      </div>
-                    </Box>
-                    <Box>
-                      <h2 className="text-[1.2rem] font-semibold mb-2">
-                        Brands
-                      </h2>
-                      <div className="flex flex-col">
-                        <Checkbox
-                          isChecked={selectedBrands.length === 0}
-                          onChange={() => setSelectedBrands([])}
-                        >
-                          All
-                        </Checkbox>
-                        <Checkbox
-                          // isChecked={selectedBrands.includes("Brand A")}
-                          onChange={handleBrandChange}
-                        >
-                          Nike
-                        </Checkbox>
-                        <Checkbox
-                          isChecked={selectedBrands.includes("Brand A")}
-                          onChange={handleBrandChange}
-                        >
-                          Armani
-                        </Checkbox>
-                        <Checkbox
-                          isChecked={selectedBrands.includes("Brand A")}
-                          onChange={handleBrandChange}
-                        >
-                          Varsachhi
-                        </Checkbox>
-                        <Checkbox
-                          isChecked={selectedBrands.includes("Brand B")}
-                          onChange={handleBrandChange}
-                        >
-                          Baanarasi
-                        </Checkbox>
-                      </div>
-                    </Box>
+                    <Category
+                      selectedCategories={selectedCategories}
+                      setSelectedCategories={setSelectedCategories}
+                      handleCategoryChange={handleCategoryChange}
+                    />
+                    <Brands
+                      selectedBrands={selectedBrands}
+                      setSelectedBrands={setSelectedBrands}
+                      handleBrandChange={handleBrandChange}
+                    />
                   </div>
-                  <Box mb={4}>
-                    <h2 className="text-[1.2rem] font-semibold">Price Range</h2>
-                    <Slider
-                      aria-label="slider-ex-4"
-                      defaultValue={30}
-                      onMouseEnter={() => setShowTooltip(true)}
-                      onMouseLeave={() => setShowTooltip(false)}
-                      onChange={(e) => setPriceRange(e)}
-                      min={500}
-                      max={50000}
-                      className="px-2"
-                    >
-                      <SliderMark
-                        value={1000}
-                        mt="1"
-                        ml="-2.5"
-                        fontSize="sm"
-                        className="font-mono"
-                      >
-                        1k
-                      </SliderMark>
-                      <SliderMark
-                        value={10000}
-                        mt="1"
-                        ml="-2.5"
-                        fontSize="sm"
-                        className="font-mono"
-                      >
-                        10k
-                      </SliderMark>
-                      <SliderMark
-                        value={30000}
-                        mt="1"
-                        ml="-2.5"
-                        fontSize="sm"
-                        className="font-mono"
-                      >
-                        30k
-                      </SliderMark>
-                      <SliderMark
-                        value={50000}
-                        mt="1"
-                        ml="-2.5"
-                        fontSize="sm"
-                        className="font-mono"
-                      >
-                        50k
-                      </SliderMark>
-                      <SliderTrack bg="linkedin.200">
-                        <SliderFilledTrack bg="linkedin.500" />
-                      </SliderTrack>
-                      <Tooltip
-                        hasArrow
-                        bg="linkedin.500"
-                        placement="top"
-                        isOpen={showTooltip}
-                        label={`${priceRange}`}
-                      >
-                        <SliderThumb boxSize={5}>
-                          <Box color="linkedin.500" />
-                        </SliderThumb>
-                      </Tooltip>
-                    </Slider>
-                  </Box>
+                  <PriceRange />
                 </div>
               </Box>
               <Box className="pb-5 px-4 mt-3 @container flex-1">
@@ -277,9 +138,9 @@ function ProductPage() {
                     </Select>
                   </Flex>
                 </Flex>
-               
-                  {/* <div className="grid gap-5 @[520px]:grid-cols-2 @[750px]:grid-cols-3 @[996px]:grid-cols-2 bg-yellow-500"> */}
-                  <div className="grid gap-5 grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 ">
+
+                {/* <div className="grid gap-5 @[520px]:grid-cols-2 @[750px]:grid-cols-3 @[996px]:grid-cols-2 bg-yellow-500"> */}
+                <div className="grid gap-5 grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 ">
                   {/* 996 -1176 */}
                   {products.map((product) => (
                     <ProductCard data={product} key={product?.id} />

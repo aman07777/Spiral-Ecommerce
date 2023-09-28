@@ -1,22 +1,18 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
-import { Box, Flex, Image,Text } from "@chakra-ui/react";
-import { ShoppingCart } from "@mui/icons-material";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import Marquee from "react-fast-marquee";
 import Saletime from "./Saletime";
-import { imageUrl } from "../global/config";
+import ProductCard from "./product-card";
 
 const FeatureProducts = ({ products }) => {
-  const navigate = useNavigate();
-
-  const handleSelectedProduct = (productId) => {
-    navigate(`/products/${productId}`);
-  };
-
   return (
     <div className="flex justify-center">
-      <Box py={10} width={{ base: "100%", md: "95%", lg: "75%" }}>
+      <Box
+        py={10}
+        width={{ base: "100%", md: "95%", lg: "75%" }}
+        className="@container"
+      >
         <Marquee gradient>
           <p className="text-[2.5rem] md:text-[2.75rem] font-semibold mb-6 font-mono text-[#585858]/80 select-none">
             FLASH SALE! Lorem ipsum, dolor sit amet consectetur adipisicing
@@ -43,75 +39,11 @@ const FeatureProducts = ({ products }) => {
               </Text>
             </Box>
           </div>
-          <Flex
-            justify="center"
-            align="center"
-            direction="row"
-            flexWrap="wrap"
-            gap={8}
-          >
+          <div className="grid grid-cols-1 px-4 w-full @[500px]:grid-cols-2 gap-5 @[800px]:grid-cols-3 @[1100px]:grid-cols-4">
             {products.map((product) => (
-              <Box
-                key={product.id}
-                borderRadius="lg"
-                bg="white"
-                width="250px"
-                height="375px"
-                cursor="pointer"
-                boxShadow="2xl"
-                position="relative"
-                transition="transform 0.2s ease-in-out"
-                _hover={{ transform: "scale(1.05)" }}
-                onClick={() => handleSelectedProduct(product.id)}
-              >
-                <Box
-                  width="250px"
-                  height="250px"
-                  overflow="hidden"
-                  position="relative"
-                  mb={4}
-                >
-                  <Image
-                    src={`${imageUrl}/${product.image}`}
-                    width="250px"
-                    height="250px"
-                    objectFit="center"
-                  />
-                  <Box
-                    position="absolute"
-                    top={2}
-                    right={2}
-                    bg="white"
-                    p={1}
-                    borderRadius="10px"
-                    color="#0077B5"
-                  >
-                    <ShoppingCart />
-                  </Box>
-                </Box>
-                <Text fontWeight="bold" fontSize="lg" mb={2} ml={2}>
-                  {product.name}
-                </Text>
-                <Text
-                  fontSize="lg"
-                  color="grey.100"
-                  fontWeight="bold"
-                  mb={2}
-                  ml={2}
-                >
-                  ${product.price}
-                </Text>
-                <Text
-                  fontSize="lg"
-                  color="#0077B5"
-                  textDecoration="line-through"
-                  ml={2}
-                >
-                  ${product.discount}
-                </Text>
-              </Box>
+              <ProductCard data={product} key={product?.id} /> // this is the new product card component
             ))}
-          </Flex>
+          </div>
         </Flex>
         <div className="flex justify-center w-full mt-5 md:hidden">
           <Box

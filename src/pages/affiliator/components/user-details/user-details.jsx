@@ -2,10 +2,7 @@ import { Avatar, useDisclosure } from "@chakra-ui/react";
 import { AiOutlineMail } from "react-icons/ai";
 import { HiOutlinePhone } from "react-icons/hi";
 import { BiSolidMessageSquareEdit } from "react-icons/bi";
-import { lazy } from "react";
-const UpdateUserDetailsModal = lazy(() =>
-  import("./update-user-details-modal")
-);
+import UpdateUserDetailsModal from "./update-user-details-modal";
 const UserDetails = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const user = {

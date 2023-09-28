@@ -36,7 +36,7 @@ function ProductPage() {
   const toast = useToast();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const keyWord = searchParams.get('search')
+  const keyWord = searchParams.get("search");
 
   useEffect(() => {
     getProducts(currentPage, keyWord, minPrice, maxPrice, sortByPrice)
@@ -192,9 +192,7 @@ function ProductPage() {
                 <Heading as="h2" size="md" mb={2}>
                   Price Range
                 </Heading>
-                <Flex direction="column">
-
-                </Flex>
+                <Flex direction="column"></Flex>
               </Box>
             </Box>
             <Box w={["100%", "100%", "75%"]}>
@@ -204,7 +202,6 @@ function ProductPage() {
                 alignItems="center"
                 mb={4}
               >
-
                 <Text>
                   {totalProducts} products found in X category for X brand from
                 </Text>
@@ -289,7 +286,6 @@ function ProductPage() {
                     >
                       ${product.discount}
                     </Text>
-
                   </Box>
                 ))}
               </Grid>

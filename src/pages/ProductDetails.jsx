@@ -171,43 +171,6 @@ export default function ProductDetails() {
                   mb={{ base: "2rem", md: 0 }}
                   className="w-full"
                 >
-                  {/* <Box
-                display="flex"
-                justifyContent="center"
-                flexDirection="column"
-                flex="1"
-              >
-                <ReactImageMagnify
-                  imageAlt="Product image" // removed curly braces
-                  dragToMove={false}
-                  mouseActivation="hover"
-                  cursorStyle="crosshair"
-                  onError={() => console.log("Error loading image")}
-                  className="product-image" // removed curly braces
-                  style={{ zIndex: 1 }}
-                  enlargedImageContainerDimensions={{
-                    width: "80%",
-                    height: "80%",
-                  }}
-                  {...{
-                    largeImage: {
-                      src: selectedImage
-                        ? `${imageUrl}/${selectedImage}`
-                        : `${imageUrl}/${images[0]}`,
-                      width: 2200,
-                      height: 1800,
-                    },
-                    smallImage: {
-                      alt: "image",
-                      src: selectedImage
-                        ? `${imageUrl}/${selectedImage}`
-                        : `${imageUrl}/${images[0]}`,
-                      width: isMobile ? 305 : 600,
-                      height: isMobile ? 300 : 600,
-                    },
-                  }}
-                />
-              </Box> */}
                   {/* image magnifier section starts */}
                   <ImageMagnifier image={selectedImage} />
                   {/* image magnifier section ends */}
