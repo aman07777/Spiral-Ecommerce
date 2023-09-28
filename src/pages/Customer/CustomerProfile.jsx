@@ -175,7 +175,7 @@ const CustomerProfile = () => {
               <DrawerBody>
                 <div className="flex flex-col gap-y-6">
                   <div className="flex gap-x-2 items-center cursor-pointer " onClick={() => {
-                    navigate('/profile')
+                    navigate('/profile/customer')
                   }}>
                     <i><FaUserCircle size={20} className="text-[#008080]" /></i>
                     <span className="text-sm  font-semibold hover:text-[#008080]">My Profile</span>

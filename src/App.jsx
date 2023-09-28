@@ -64,7 +64,7 @@ function App() {
             </Route>
             <Route path="/emailverification" element={<EmailVerification />} />
 
-            <Route path="profile" element={<CustomerProfile />} />
+            <Route path="profile/customer" element={<CustomerProfile />} />
             <Route path="profile/paymentoption" element={<PaymentOption />} />
             <Route path="profile/addressbook" element={<AddressBook />} />
             <Route path="profile/whishlist" element={<MyWhislist />} />
@@ -84,7 +84,7 @@ function App() {
             <Route path="/admin-add-affliator" element={<AddAffiliator />} />
             <Route path="/adminSetting" element={<AdminSettings />} />
             <Route path="/profile/affiliator" element={<AffliatorProfile />} />
-            <Route path="/profile/customer" element={<CustomerProfile />} />
+
             <Route path="*" element={<ErrorPage />} />
           </Routes>
         </Suspense>
