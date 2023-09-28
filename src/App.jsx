@@ -70,9 +70,10 @@ function App() {
               <Route path="profile/myreview" element={<MyReview />} />
               <Route path="profile/addressbook" element={<AddressBook />} />
             </Route>
-            <Route path="/emailverification" element={<EmailVerification />} />
 
+            <Route path="/emailverification" element={<EmailVerification />} />
             <Route path="/resetpassword" element={<ResetPassword />} />
+
             <Route path="/adminHome" element={<AdminHome />} />
             <Route path="/adminProduct" element={<AdminProduct />} />
             <Route path="/admin-add-product" element={<AddProduct />} />

@@ -27,7 +27,7 @@ const Category = () => {
   return (
     <div className="flex justify-center w-full text-[#585858]">
       <Box p={4} width={{ base: "100%", md: "95%", lg: "75%" }}>
-        <h1 className="text-[1.5rem] mb-5 font-semibold md:text-[2rem]">
+        <h1 className="text-[1.3rem] mb-5 font-semibold md:text-[2rem]">
           Category
         </h1>
         <Flex flexWrap="wrap" justifyContent="center" alignItems="center">

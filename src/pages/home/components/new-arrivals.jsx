@@ -9,7 +9,7 @@ const NewArrivals = () => {
           width={{ base: "100%", md: "95%", lg: "75%" }}
           className="@container"
         >
-          <h1 className="text-[1.5rem] mb-5 font-semibold md:text-[2rem]">
+          <h1 className="text-[1.3rem] mb-5 font-semibold md:text-[2rem]">
             New Arrival
           </h1>
         </Box>

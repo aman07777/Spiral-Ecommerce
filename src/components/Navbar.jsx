@@ -123,7 +123,7 @@ const Navbar = () => {
                 </MenuItem>
                 <MenuItem className="hover:bg-white">
                   <NavLink
-                    to="/orders"
+                    to="/profile/myorders"
                     className="relative before:absolute before:content-[''] before:w-0 before:h-[1.5px] before:-bottom-1 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-300 capitalize"
                   >
                     Orders
@@ -229,7 +229,7 @@ const Navbar = () => {
                 </MenuItem>
                 <MenuItem>
                   <div
-                    onClick={() => navigate("/products")}
+                    onClick={() => navigate("/profile/myorders")}
                     className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
                   >
                     Orders

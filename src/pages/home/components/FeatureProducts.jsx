@@ -51,7 +51,7 @@ const FeatureProducts = () => {
                 </Text>
               </Box>
             </div>
-            <div className="grid grid-cols-1 px-4 w-full @[500px]:grid-cols-2 gap-5 @[800px]:grid-cols-3 @[1100px]:grid-cols-4">
+            <div className="grid grid-cols-1 px-4 w-full @[500px]:grid-cols-2 gap-5 @[800px]:grid-cols-3 @[1000px]:grid-cols-4">
               {products?.map((product) => (
                 <ProductCard data={product} key={product?.id} /> // this is the new product card component
               ))}
