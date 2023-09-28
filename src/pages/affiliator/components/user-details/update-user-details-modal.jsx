@@ -1,4 +1,4 @@
-import React, { lazy, useState } from "react";
+import React, { useState } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -8,7 +8,7 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
-const InputField = lazy(() => import("./input-field"));
+import InputField from "./input-field";
 const UpdateUserDetailsModal = ({ isOpen, onClose, userData }) => {
   // states
   // user details state
@@ -33,7 +33,9 @@ const UpdateUserDetailsModal = ({ isOpen, onClose, userData }) => {
               <p className="text-[#585858] text-[1.3rem]">
                 Hello, {userData?.firstName}
               </p>
-              <p className="text-[#585858] text-[1rem]">Update your details here</p>
+              <p className="text-[#585858] text-[1rem]">
+                Update your details here
+              </p>
             </div>
           </ModalHeader>
           {/* modal heading fin */}

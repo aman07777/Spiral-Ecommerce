@@ -1,4 +1,4 @@
-import React, { lazy, useState } from "react";
+import React, { useState } from "react";
 import {
   Button,
   Table,
@@ -19,12 +19,10 @@ import { imageUrl } from "../../../global/config";
 import { handleToast } from "../../../global/toast";
 import DeleteModal from "./components/delete-modal";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-const Dashboard = lazy(() => import("../Dashboard"));
-const Title = lazy(() => import("./components/title"));
-const BreadCrumb = lazy(() => import("./components/bread-crumb"));
-const TablePagination = lazy(() =>
-  import("../../../components/table-pagination")
-);
+import Dashboard from "../Dashboard";
+import Title from "./components/title";
+import BreadCrumb from "./components/bread-crumb";
+import TablePagination from "../../../components/table-pagination";
 function AdminProduct() {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();

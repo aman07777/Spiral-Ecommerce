@@ -1,19 +1,12 @@
-import { lazy } from "react";
 // import LockIcon from "@mui/icons-material/Lock";
 // import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 // import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 // import CakeIcon from "@mui/icons-material/Cake";
 // import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
-const Stats = lazy(() => import("./components/stats"));
-const UserDetails = lazy(() =>
-  import("./components/user-details/user-details")
-);
-const PromoCodTable = lazy(() =>
-  import("./components/promo-code/promo-code-table")
-);
-const PromoCodeUserTable = lazy(() =>
-  import("./components/promo-code-user-table")
-);
+import Stats from "./components/stats";
+import UserDetails from "./components/user-details/user-details";
+import PromoCodTable from "./components/promo-code/promo-code-table";
+import PromoCodeUserTable from "./components/promo-code-user-table";
 const AffliatorProfile = () => {
   return (
     <>

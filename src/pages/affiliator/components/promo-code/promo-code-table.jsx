@@ -1,7 +1,6 @@
-import React, { lazy } from "react";
 import { Table, Thead, Tbody, Tr, Th, Td, Spinner } from "@chakra-ui/react";
 
-const Heading = lazy(() => import("./heading"));
+import Heading from "./heading";
 const PromoCodTable = () => {
   return (
     <>
