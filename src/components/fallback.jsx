@@ -4,7 +4,7 @@ const Fallback = ({ error, resetErrorBoundary }) => {
   return (
     <>
       <div className="flex flex-col items-center justify-center w-full h-screen">
-        <div>
+        <div className="w-[20em]">
           <p className="text-[.8rem] text-[#585858] font-semibold">
             Something went wrong:
           </p>

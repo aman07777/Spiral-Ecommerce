@@ -3,6 +3,7 @@ import { Box, Text, Image } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { imageUrl } from "../global/config";
 import { BsCartPlusFill } from "react-icons/bs";
+import { MdFavorite } from "react-icons/md";
 const ProductCard = ({ data }) => {
   const navigate = useNavigate();
   const handleSelectedProduct = (productId) => {
@@ -35,17 +36,23 @@ const ProductCard = ({ data }) => {
             right={2}
             p={1}
             borderRadius="10px"
-            color="#0077B5"
+            color="#008080"
             onClick={(e) => {
               e.stopPropagation();
               navigate("/protect/cart");
             }}
           >
-            <BsCartPlusFill className="text-[1.3rem]" />
+            <BsCartPlusFill title="add to cart" className="text-[1.3rem]" />
           </Box>
         </Box>
         <div className="px-3">
-          <Text className="text-[1.3rem] font-semibold">{data.name}</Text>
+          <div className="flex justify-between items-center">
+            <Text className="text-[1.3rem] font-semibold">{data.name}</Text>
+            <MdFavorite
+              className="text-[1.3rem] hover:text-rose-500"
+              title="favorite"
+            />
+          </div>
           <Text className="mt-2 font-semibold text-[1.1rem] text-[#585858]/80">
             {data.price - (data.discount / 100) * data.price} NPR
           </Text>

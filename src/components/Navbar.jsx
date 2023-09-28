@@ -10,14 +10,10 @@ import {
   IconButton,
   useToast,
 } from "@chakra-ui/react";
-import {
-  Menu as MenuIcon,
-  ShoppingCart,
-  Star as StarIcon,
-} from "@mui/icons-material";
+import { Menu as MenuIcon, ShoppingCart } from "@mui/icons-material";
 import Searchbar from "./Searchbar";
 import { useUserContext } from "../contexts/UserContext";
-
+import { MdFavorite } from "react-icons/md";
 const Navbar = () => {
   const { currentUser, setCurrentUser } = useUserContext();
   const toast = useToast();
@@ -99,10 +95,14 @@ const Navbar = () => {
             {currentUser && (
               <>
                 <NavLink to="/favorites" mr={4}>
-                  <StarIcon className="text-[#2e2e2e] hover:text-[#585858]" />
+                  <span title="your favorites">
+                    <MdFavorite className="text-[#2e2e2e] hover:text-[#585858] text-[1.4rem]" />
+                  </span>
                 </NavLink>
                 <NavLink to="/protect/cart" mr={4}>
-                  <ShoppingCart className="text-[#2e2e2e] hover:text-[#585858]" />
+                  <span title="your cart">
+                    <ShoppingCart className="text-[#2e2e2e] hover:text-[#585858]" />
+                  </span>
                 </NavLink>
               </>
             )}
