@@ -24,8 +24,6 @@ import ChangePasswordModal from "./ChangePasswordModal";
 import { FaUserCircle } from "react-icons/fa";
 import LeftSide from "./LeftSide";
 
-
-
 const CustomerProfile = () => {
   const navigate = useNavigate();
   const [firstName, setFirstName] = useState("John");
@@ -52,27 +50,36 @@ const CustomerProfile = () => {
   };
 
   const handleEditProfile = (newValue) => {
-    setIsDrawerOpen(false)
+    setIsDrawerOpen(false);
     // TODO: Implement edit profile logic
-    setEditProfile(newValue)
+    setEditProfile(newValue);
   };
 
   function handleChangePassword(newValue) {
-    setChangePassword(newValue)
+    setChangePassword(newValue);
   }
 
   return (
     <div className="w-[100%] flex items-center justify-center my-8">
       <div className="w-[100%] md:w-[80%]">
-        <Box borderWidth="1px" borderRadius="lg" overflow="hidden" className="p-5">
+        <Box
+          borderWidth="1px"
+          borderRadius="lg"
+          overflow="hidden"
+          className="p-5"
+        >
           <Flex alignItems="center" bg="gray.50" p={4}>
             <Avatar size="lg" name={`${firstName} ${lastName}`} src={image} />
             <Box ml={4}>
               <Text fontWeight="bold">{`${firstName} ${lastName}`}</Text>
-              <Text fontSize="sm" className="font-roboto">{email}</Text>
-              <Text fontSize="sm">Bonus: <span className="font-roboto">{bonus}</span></Text>
+              <Text fontSize="sm" className="font-roboto">
+                {email}
+              </Text>
+              <Text fontSize="sm">
+                Bonus: <span className="font-roboto">{bonus}</span>
+              </Text>
             </Box>
-            <Box ml="auto" display={{ base: "none", md: "block" }} >
+            <Box ml="auto" display={{ base: "none", md: "block" }}>
               <IconButton
                 aria-label="Edit Profile"
                 icon={<EditIcon />}
@@ -87,19 +94,17 @@ const CustomerProfile = () => {
               />
             </Box>
           </Flex>
-          {
-            editProfile && (
-              <>
-                <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none shadow-2xl">
-                  <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                    <EditProfile props={handleEditProfile} />
-                  </div>
+          {editProfile && (
+            <>
+              <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto shadow-2xl outline-none focus:outline-none">
+                <div className="relative w-auto max-w-3xl mx-auto my-6">
+                  <EditProfile props={handleEditProfile} />
                 </div>
-                <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-              </>
-            )
-          }
-          <Flex>
+              </div>
+              <div className="fixed inset-0 z-40 bg-black opacity-25"></div>
+            </>
+          )}
+          <Flex className="">
             <Box
               w={{ base: "100%", md: "35%" }}
               bg="gray.50"
@@ -109,50 +114,59 @@ const CustomerProfile = () => {
               <Heading size="md" mb={8}>
                 My Account
               </Heading>
-              <LeftSide/>
+              <LeftSide />
             </Box>
 
-            <div className="flex flex-col gap-y-8 w-[100%] ">
+            <div className="flex flex-col gap-y-8 w-[100%] pt-2 pl-3">
               <div className="grid xl:grid-cols-3 md:grid-cols-2 @[922px]:grid-cols-2 sm:grid-cols-2 gap-y-6  select-none w-[75%] items-center ">
                 <div className="flex flex-col gap-y-2">
                   <span className="font-semibold">Full name</span>
-                  <span className="font-roboto text-sm tracking-wide">{`${firstName} ${lastName}`}</span>
+                  <span className="text-sm tracking-wide font-roboto">{`${firstName} ${lastName}`}</span>
                 </div>
                 <div className="flex flex-col gap-y-2">
                   <span className="font-semibold">Email</span>
-                  <span className="font-roboto text-sm tracking-wide">{email}</span>
+                  <span className="text-sm tracking-wide font-roboto">
+                    {email}
+                  </span>
                 </div>
                 <div className="flex flex-col gap-y-2">
                   <span className="font-semibold">Mobile Number</span>
-                  <span className="font-roboto text-sm tracking-wide">9803234232</span>
+                  <span className="text-sm tracking-wide font-roboto">
+                    9803234232
+                  </span>
                 </div>
                 <div className="flex flex-col gap-y-2">
                   <span className="font-semibold">Birthday</span>
                   <div>
-                    <span className="font-roboto text-sm tracking-wide">{birthday}</span>
+                    <span className="text-sm tracking-wide font-roboto">
+                      {birthday}
+                    </span>
                   </div>
                 </div>
                 <div className="flex flex-col gap-y-2">
                   <span className="font-semibold">Gender</span>
-                  <span className="font-roboto text-sm tracking-wide">Male</span>
+                  <span className="text-sm tracking-wide font-roboto">
+                    Male
+                  </span>
                 </div>
               </div>
-              <span className="px-4 w-[10rem] py-2 bg-[#008080] text-white rounded-md text-sm font-semibold tracking-wide cursor-pointer" onClick={handleChangePassword}>
+              <span
+                className="px-4 w-[10rem] py-2 bg-[#008080] text-white rounded-md text-sm font-semibold tracking-wide cursor-pointer"
+                onClick={handleChangePassword}
+              >
                 Change Password
               </span>
             </div>
-            {
-              changePassword && (
-                <>
-                  <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none shadow-2xl">
-                    <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                      <ChangePasswordModal props={handleChangePassword} />
-                    </div>
+            {changePassword && (
+              <>
+                <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto shadow-2xl outline-none focus:outline-none">
+                  <div className="relative w-auto max-w-3xl mx-auto my-6">
+                    <ChangePasswordModal props={handleChangePassword} />
                   </div>
-                  <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-                </>
-              )
-            }
+                </div>
+                <div className="fixed inset-0 z-40 bg-black opacity-25"></div>
+              </>
+            )}
           </Flex>
           <Drawer
             placement="left"
@@ -164,7 +178,12 @@ const CustomerProfile = () => {
               <DrawerCloseButton />
               <DrawerHeader>
                 <div className="">
-                  <Avatar size="lg" name={`${firstName} ${lastName}`} src={image} className="mb-3" />
+                  <Avatar
+                    size="lg"
+                    name={`${firstName} ${lastName}`}
+                    src={image}
+                    className="mb-3"
+                  />
                   <Box>
                     <Text fontWeight="bold">{`${firstName} ${lastName}`}</Text>
                     <Text fontSize="sm">{email}</Text>
@@ -174,52 +193,96 @@ const CustomerProfile = () => {
               </DrawerHeader>
               <DrawerBody>
                 <div className="flex flex-col gap-y-6">
-                  <div className="flex gap-x-2 items-center cursor-pointer " onClick={() => {
-                    navigate('/profile')
-                  }}>
-                    <i><FaUserCircle size={20} className="text-[#008080]" /></i>
-                    <span className="text-sm  font-semibold hover:text-[#008080]">My Profile</span>
+                  <div
+                    className="flex items-center cursor-pointer gap-x-2 "
+                    onClick={() => {
+                      navigate("/profile");
+                    }}
+                  >
+                    <i>
+                      <FaUserCircle size={20} className="text-[#008080]" />
+                    </i>
+                    <span className="text-sm  font-semibold hover:text-[#008080]">
+                      My Profile
+                    </span>
                   </div>
-                  <div className="flex gap-x-2 items-center cursor-pointer " onClick={()=>{
-                    navigate("/profile/addressbook")
-                  }}>
-                    <i><FaAddressBook size={20} className="text-[#008080]" /></i>
-                    <span className="text-sm  font-semibold hover:text-[#008080]">Address Book</span>
+                  <div
+                    className="flex items-center cursor-pointer gap-x-2 "
+                    onClick={() => {
+                      navigate("/profile/addressbook");
+                    }}
+                  >
+                    <i>
+                      <FaAddressBook size={20} className="text-[#008080]" />
+                    </i>
+                    <span className="text-sm  font-semibold hover:text-[#008080]">
+                      Address Book
+                    </span>
                   </div>
-                  <div className="flex gap-x-2 items-center cursor-pointer " onClick={() => {
-                    navigate('/profile/paymentoption')  
-                  }}>
-
-                    <i><MdOutlinePayment size={20} className="text-[#008080]" /></i>
-                    <span className="text-sm  font-semibold hover:text-[#008080]">Payment Options</span>
+                  <div
+                    className="flex items-center cursor-pointer gap-x-2 "
+                    onClick={() => {
+                      navigate("/profile/paymentoption");
+                    }}
+                  >
+                    <i>
+                      <MdOutlinePayment size={20} className="text-[#008080]" />
+                    </i>
+                    <span className="text-sm  font-semibold hover:text-[#008080]">
+                      Payment Options
+                    </span>
                   </div>
-                  <div className="flex gap-x-2 items-center cursor-pointer " onClick={()=>{
-                    navigate("/profile/myorders")
-                  }}>
-
-                    <i><BiSolidCart size={20} className="text-[#008080]" /></i>
-                    <span className="text-sm  font-semibold hover:text-[#008080]">My Orders</span>
+                  <div
+                    className="flex items-center cursor-pointer gap-x-2 "
+                    onClick={() => {
+                      navigate("/profile/myorders");
+                    }}
+                  >
+                    <i>
+                      <BiSolidCart size={20} className="text-[#008080]" />
+                    </i>
+                    <span className="text-sm  font-semibold hover:text-[#008080]">
+                      My Orders
+                    </span>
                   </div>
-                  <div className="flex gap-x-2 items-center cursor-pointer " onClick={()=>{
-                    navigate("/profile/whishlist")
-                  }}>
-
-                    <i><FaThList size={20} className="text-[#008080]" /></i>
-                    <span className="text-sm  font-semibold hover:text-[#008080]">My Whishlist</span>
+                  <div
+                    className="flex items-center cursor-pointer gap-x-2 "
+                    onClick={() => {
+                      navigate("/profile/whishlist");
+                    }}
+                  >
+                    <i>
+                      <FaThList size={20} className="text-[#008080]" />
+                    </i>
+                    <span className="text-sm  font-semibold hover:text-[#008080]">
+                      My Whishlist
+                    </span>
                   </div>
-                  <div className="flex gap-x-2 items-center cursor-pointer " onClick={()=>{
-                    navigate('/profile/myreview')
-                  }}>
-
-                    <i><MdPreview size={20} className="text-[#008080]" /></i>
-                    <span className="text-sm  font-semibold hover:text-[#008080]">My Review</span>
+                  <div
+                    className="flex items-center cursor-pointer gap-x-2 "
+                    onClick={() => {
+                      navigate("/profile/myreview");
+                    }}
+                  >
+                    <i>
+                      <MdPreview size={20} className="text-[#008080]" />
+                    </i>
+                    <span className="text-sm  font-semibold hover:text-[#008080]">
+                      My Review
+                    </span>
                   </div>
-                  <div className="flex gap-x-2 items-center cursor-pointer ">
-
-                    <i><BiLogOut size={20} className="text-[#008080]" /></i>
-                    <span className="text-sm  font-semibold hover:text-[#008080]">Log Out</span>
+                  <div className="flex items-center cursor-pointer gap-x-2 ">
+                    <i>
+                      <BiLogOut size={20} className="text-[#008080]" />
+                    </i>
+                    <span className="text-sm  font-semibold hover:text-[#008080]">
+                      Log Out
+                    </span>
                   </div>
-                  <span className="px-4 w-[10rem] py-2 bg-[#008080] text-white rounded-md text-sm font-semibold tracking-wide cursor-pointer" onClick={handleEditProfile}>
+                  <span
+                    className="px-4 w-[10rem] py-2 bg-[#008080] text-white rounded-md text-sm font-semibold tracking-wide cursor-pointer"
+                    onClick={handleEditProfile}
+                  >
                     Edit Profile
                   </span>
                 </div>

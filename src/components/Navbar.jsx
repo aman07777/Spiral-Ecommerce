@@ -67,34 +67,30 @@ const Navbar = () => {
             AIJO
           </NavLink>
           <Box display={{ base: "none", md: "flex" }} alignItems="center">
-            <NavLink
-              to="/products"
-              mr={4}
-              className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
+            <div
+              onClick={() => navigate("/")}
+              className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit cursor-pointer mr-3"
             >
-              New Arrival
-            </NavLink>
-            <NavLink
-              to="/products"
-              mr={4}
-              className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
+              Home
+            </div>
+            <div
+              onClick={() => navigate("/products")}
+              className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit cursor-pointer mr-3"
             >
               Products
-            </NavLink>
-            <NavLink
-              to="/products"
-              mr={4}
-              className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
+            </div>
+            <div
+              onClick={() => navigate("/brands")}
+              className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit cursor-pointer mr-3"
             >
               Shoes
-            </NavLink>
-            <NavLink
-              to="/products"
-              mr={4}
-              className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
+            </div>
+            <div
+              onClick={() => navigate("/brands")}
+              className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit cursor-pointer"
             >
               Most Wanted
-            </NavLink>
+            </div>
           </Box>
           {/* search section */}
           <Searchbar />
@@ -103,10 +99,10 @@ const Navbar = () => {
             {currentUser && (
               <>
                 <NavLink to="/favorites" mr={4}>
-                  <StarIcon />
+                  <StarIcon className="text-[#2e2e2e] hover:text-[#585858]" />
                 </NavLink>
                 <NavLink to="/protect/cart" mr={4}>
-                  <ShoppingCart />
+                  <ShoppingCart className="text-[#2e2e2e] hover:text-[#585858]" />
                 </NavLink>
               </>
             )}
@@ -134,8 +130,11 @@ const Navbar = () => {
                   </NavLink>
                 </MenuItem>
                 {currentUser ? (
-                  <MenuItem onClick={handleLogout} className="hover:bg-white">
-                    <div className="relative before:absolute before:content-[''] before:w-0 before:h-[1.5px] before:-bottom-1 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-300 capitalize">
+                  <MenuItem
+                    onClick={handleLogout}
+                    className="hover:bg-white w-full"
+                  >
+                    <div className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit cursor-pointer mr-3">
                       Log Out
                     </div>
                   </MenuItem>
@@ -162,44 +161,79 @@ const Navbar = () => {
                 icon={<MenuIcon />}
                 variant="outline"
               />
-              <MenuList display="flex" flexDirection="column" fontWeight={10}>
+              <MenuList display="flex" flexDirection="column">
                 {/* added flexDirection property */}
-                <MenuItem>
-                  <NavLink to="/favorites" mr={4}>
+                <MenuItem className="">
+                  <div
+                    onClick={() => navigate("/favorites")}
+                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
+                  >
                     Shop
-                  </NavLink>
+                  </div>
                 </MenuItem>
                 <MenuItem>
-                  <NavLink to="/products" mr={4}>
+                  <div
+                    onClick={() => navigate("/products")}
+                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
+                  >
                     Brand
-                  </NavLink>
+                  </div>
                 </MenuItem>
                 <MenuItem>
-                  <NavLink to="/products" mr={4}>
+                  <div
+                    onClick={() => navigate("/products")}
+                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
+                  >
                     Shoes
-                  </NavLink>
+                  </div>
                 </MenuItem>
                 <MenuItem>
-                  <NavLink to="/products" mr={4}>
+                  <div
+                    onClick={() => navigate("/products")}
+                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
+                  >
                     New Arrival
-                  </NavLink>
+                  </div>
                 </MenuItem>
                 <MenuItem>
-                  <NavLink to="/products" mr={4}>
+                  <div
+                    onClick={() => navigate("/products")}
+                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
+                  >
                     Most Wanted
-                  </NavLink>
+                  </div>
                 </MenuItem>
                 <MenuItem>
-                  <NavLink to="/products">Cart</NavLink>
+                  <div
+                    onClick={() => navigate("/products")}
+                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
+                  >
+                    Cart
+                  </div>
                 </MenuItem>
                 <MenuItem>
-                  <NavLink to="/infos">My Information</NavLink>
+                  <div
+                    onClick={() => navigate("/products")}
+                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
+                  >
+                    My Information
+                  </div>
                 </MenuItem>
                 <MenuItem>
-                  <NavLink to="/orders">Orders</NavLink>
+                  <div
+                    onClick={() => navigate("/products")}
+                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
+                  >
+                    Orders
+                  </div>
                 </MenuItem>
-                <MenuItem onClick={() => console.log("Log out")}>
-                  Log out
+                <MenuItem>
+                  <div
+                    onClick={handleLogout}
+                    className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit cursor-pointer mr-3"
+                  >
+                    Log out
+                  </div>
                 </MenuItem>
               </MenuList>
             </Menu>
@@ -216,7 +250,6 @@ const NavLink = ({ to, children, ...rest }) => (
     style={{ marginRight: "12px" }}
     fontWeight="medium"
     {...rest}
-    className="active:no-underline"
   >
     {children}
   </RouterNavLink>

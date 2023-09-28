@@ -61,16 +61,16 @@ function App() {
               {/* <Route path="/protect/" element={<CheckAuth />}> */}
               <Route path="/protect/cart" element={<CartPage />} />
               {/* </Route> */}
+
+              <Route path="profile/customer" element={<CustomerProfile />} />
+              <Route path="profile/paymentoption" element={<PaymentOption />} />
+              <Route path="profile/addressbook" element={<AddressBook />} />
+              <Route path="profile/whishlist" element={<MyWhislist />} />
+              <Route path="profile/myorders" element={<MyOrder />} />
+              <Route path="profile/myreview" element={<MyReview />} />
+              <Route path="profile/addressbook" element={<AddressBook />} />
             </Route>
             <Route path="/emailverification" element={<EmailVerification />} />
-
-            <Route path="profile" element={<CustomerProfile />} />
-            <Route path="profile/paymentoption" element={<PaymentOption />} />
-            <Route path="profile/addressbook" element={<AddressBook />} />
-            <Route path="profile/whishlist" element={<MyWhislist />} />
-            <Route path="profile/myorders" element={<MyOrder />} />
-            <Route path="profile/myreview" element={<MyReview />} />
-            <Route path="profile/addressbook" element={<AddressBook />} />
 
             <Route path="/resetpassword" element={<ResetPassword />} />
             <Route path="/adminHome" element={<AdminHome />} />

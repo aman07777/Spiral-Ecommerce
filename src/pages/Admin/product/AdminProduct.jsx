@@ -7,7 +7,7 @@ import {
   Tr,
   Th,
   Td,
-  Checkbox,
+  // Checkbox,
   Image,
   Spinner,
   useToast,
@@ -52,36 +52,36 @@ function AdminProduct() {
     // Remove the selected product from the list of products
     setProducts(products.filter((p) => p.id !== product.id));
   };
-  const handleSelectAll = (checked) => {
-    // Select or deselect all products
-    setProducts(products.map((p) => ({ ...p, selected: checked })));
-    setSelectAll(checked);
-  };
+  // const handleSelectAll = (checked) => {
+  //   // Select or deselect all products
+  //   setProducts(products.map((p) => ({ ...p, selected: checked })));
+  //   setSelectAll(checked);
+  // };
 
-  const handleSelect = (product, checked) => {
-    // Select or deselect a single product
-    setProducts(
-      products.map((p) =>
-        p.id === product.id ? { ...p, selected: checked } : p
-      )
-    );
-    if (!checked) {
-      setSelectAll(false);
-    }
-  };
+  // const handleSelect = (product, checked) => {
+  //   // Select or deselect a single product
+  //   setProducts(
+  //     products.map((p) =>
+  //       p.id === product.id ? { ...p, selected: checked } : p
+  //     )
+  //   );
+  //   if (!checked) {
+  //     setSelectAll(false);
+  //   }
+  // };
 
-  const handleSelectAllClick = (event) => {
-    const { checked } = event.target;
-    // setSelectAllLocal(checked);
-    handleSelectAll(checked);
-    setSelectAll(checked);
-    setProducts(products.map((p) => ({ ...p, selected: checked })));
-  };
+  // const handleSelectAllClick = (event) => {
+  //   const { checked } = event.target;
+  //   // setSelectAllLocal(checked);
+  //   handleSelectAll(checked);
+  //   setSelectAll(checked);
+  //   setProducts(products.map((p) => ({ ...p, selected: checked })));
+  // };
 
-  const handleSelectClick = (event, product) => {
-    const { checked } = event.target;
-    handleSelect(product, checked);
-  };
+  // const handleSelectClick = (event, product) => {
+  //   const { checked } = event.target;
+  //   handleSelect(product, checked);
+  // };
 
   const handleDeleteAll = (selectedProducts) => {
     // Remove all selected products from the list of products
@@ -129,14 +129,14 @@ function AdminProduct() {
       <Table variant="simple" className="mt-3">
         <Thead>
           <Tr>
-            <Th>
+            {/* <Th>
               <Checkbox
                 isChecked={
                   selectAll || products?.every((product) => product.selected)
                 }
                 onChange={handleSelectAllClick}
               />
-            </Th>
+            </Th> */}
             <Th>Name</Th>
             <Th>Price</Th>
             <Th>Category</Th>
@@ -158,12 +158,12 @@ function AdminProduct() {
           ) : Array.isArray(products) && products?.length > 0 ? (
             products?.slice(startIndex, endIndex)?.map((product) => (
               <Tr key={product.id}>
-                <Td>
+                {/* <Td>
                   <Checkbox
                     isChecked={product.selected}
                     onChange={(event) => handleSelectClick(event, product)}
                   />
-                </Td>
+                </Td> */}
                 <Td>{product.name}</Td>
                 <Td>{product.price}</Td>
                 <Td>{product.category}</Td>
