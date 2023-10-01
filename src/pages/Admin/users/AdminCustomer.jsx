@@ -20,6 +20,7 @@ import DoneIcon from "@mui/icons-material/Done";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import DeleteModal from "./components/delete-modal";
+import TablePagination from "../../../components/table-pagination";
 function AdminCustomer() {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -28,6 +29,10 @@ function AdminCustomer() {
   const setCustomers = useCustomerStore((state) => state.setCustomers);
   // states
   const [deleteUser, setDeleteUser] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
   const {
     isLoading,
     data: customers,
@@ -70,7 +75,7 @@ function AdminCustomer() {
                 </Td>
               </Tr>
             ) : Array.isArray(customers) && customers?.length > 0 ? (
-              customers.map((user) => (
+              customers?.slice(startIndex, endIndex)?.map((user) => (
                 <Tr key={user._id}>
                   <Td className="capitalize">{`${user?.firstName} ${user?.lastName}`}</Td>
                   <Td>{user?.email}</Td>
@@ -99,7 +104,7 @@ function AdminCustomer() {
                     >
                       <DeleteForeverIcon
                         className="text-rose-500 cursor-pointer text-[.9rem]"
-                        // onClick={setDeleteUser(user)}
+                        onClick={() => setDeleteUser(user)}
                       />
                     </span>
                   </Td>
@@ -114,6 +119,14 @@ function AdminCustomer() {
             )}
           </Tbody>
         </Table>
+        {Array.isArray(customers) && customers?.length > 10 && (
+          <TablePagination
+            length={customers?.length}
+            currentPage={currentPage}
+            itemsPerPage={itemsPerPage}
+            setCurrentPage={setCurrentPage}
+          />
+        )}
       </div>
       {Object.keys(deleteUser).length > 0 && (
         <DeleteModal isOpen={isOpen} onClose={onClose} data={deleteUser} />

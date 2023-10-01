@@ -14,11 +14,13 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { BiSolidMessageSquareEdit } from "react-icons/bi";
+
 import { useAdminProductStore } from "./store";
 import { imageUrl } from "../../../global/config";
 import { handleToast } from "../../../global/toast";
 import DeleteModal from "./components/delete-modal";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import Dashboard from "../Dashboard";
 import Title from "./components/title";
 import BreadCrumb from "./components/bread-crumb";
@@ -50,36 +52,6 @@ function AdminProduct() {
     // Remove the selected product from the list of products
     setProducts(products.filter((p) => p.id !== product.id));
   };
-  // const handleSelectAll = (checked) => {
-  //   // Select or deselect all products
-  //   setProducts(products.map((p) => ({ ...p, selected: checked })));
-  //   setSelectAll(checked);
-  // };
-
-  // const handleSelect = (product, checked) => {
-  //   // Select or deselect a single product
-  //   setProducts(
-  //     products.map((p) =>
-  //       p.id === product.id ? { ...p, selected: checked } : p
-  //     )
-  //   );
-  //   if (!checked) {
-  //     setSelectAll(false);
-  //   }
-  // };
-
-  // const handleSelectAllClick = (event) => {
-  //   const { checked } = event.target;
-  //   // setSelectAllLocal(checked);
-  //   handleSelectAll(checked);
-  //   setSelectAll(checked);
-  //   setProducts(products.map((p) => ({ ...p, selected: checked })));
-  // };
-
-  // const handleSelectClick = (event, product) => {
-  //   const { checked } = event.target;
-  //   handleSelect(product, checked);
-  // };
 
   const handleDeleteAll = (selectedProducts) => {
     // Remove all selected products from the list of products
@@ -178,15 +150,13 @@ function AdminProduct() {
                     mr={2}
                   />
                 </Td>
-                <Td display="flex" gap="2px">
-                  <Button
-                    colorScheme="blue"
-                    size="sm"
-                    className="w-[5em]"
+                <Td gap="2px" className="flex items-center">
+                  <span
+                    title={`Update details of ${product?.name}`}
                     onClick={() => handleEdit(product)}
                   >
-                    Edit
-                  </Button>
+                    <BiSolidMessageSquareEdit className="text-gray-500 cursor-pointer text-[1.3rem]" />
+                  </span>
                   <span
                     title={`Delete ${product?.name}`}
                     onClick={() => handleDelete(product)}
@@ -221,12 +191,14 @@ function AdminProduct() {
           </tfoot>
         )}
       </Table>
-      <TablePagination
-        length={products?.length}
-        currentPage={currentPage}
-        itemsPerPage={itemsPerPage}
-        setCurrentPage={setCurrentPage}
-      />
+      {Array.isArray(products) && products?.length > 10 && (
+        <TablePagination
+          length={products?.length}
+          currentPage={currentPage}
+          itemsPerPage={itemsPerPage}
+          setCurrentPage={setCurrentPage}
+        />
+      )}
       {Object.keys(product).length > 0 && (
         <DeleteModal isOpen={isOpen} onClose={onClose} data={product} />
       )}

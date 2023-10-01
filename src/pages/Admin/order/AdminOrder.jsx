@@ -14,11 +14,19 @@ import { useQuery } from "@tanstack/react-query";
 import { handleToast } from "../../../global/toast";
 import BreadCrumb from "./components/breadcrumb";
 import Navigation from "./components/navigation";
+import { useState } from "react";
+import TablePagination from "../../../components/table-pagination";
 function AdminOrder() {
   const toast = useToast();
   // stores
   const getAllOrders = useAdminOrderStore((state) => state.getOrders);
   const setOrders = useAdminOrderStore((state) => state.setOrders);
+
+  // pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
 
   // react query
   const {
@@ -60,7 +68,7 @@ function AdminOrder() {
                 </Td>
               </Tr>
             ) : Array.isArray(orders) && orders?.length > 0 ? (
-              orders.map((order) => (
+              orders?.slice(startIndex, endIndex)?.map((order) => (
                 <Tr key={order._id}>
                   <Td>{order?.shippingInfo?.fullName}</Td>
                   <Td>{order.productName || "unknown"}</Td>
@@ -77,6 +85,14 @@ function AdminOrder() {
             )}
           </Tbody>
         </Table>
+        {Array.isArray(orders) && orders.length > 10 && (
+          <TablePagination
+            length={orders?.length}
+            currentPage={currentPage}
+            itemsPerPage={itemsPerPage}
+            setCurrentPage={setCurrentPage}
+          />
+        )}
       </div>
     </>
   );
