@@ -65,25 +65,25 @@ const Navbar = () => {
           <Box display={{ base: "none", md: "flex" }} alignItems="center">
             <div
               onClick={() => navigate("/")}
-              className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit cursor-pointer mr-3"
+              className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit cursor-pointer mr-3"
             >
               Home
             </div>
             <div
               onClick={() => navigate("/products")}
-              className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit cursor-pointer mr-3"
+              className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit cursor-pointer mr-3"
             >
               Products
             </div>
             <div
               onClick={() => navigate("/brands")}
-              className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit cursor-pointer mr-3"
+              className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit cursor-pointer mr-3"
             >
               Shoes
             </div>
             <div
               onClick={() => navigate("/brands")}
-              className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit cursor-pointer"
+              className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit cursor-pointer"
             >
               Most Wanted
             </div>
@@ -116,7 +116,7 @@ const Navbar = () => {
                 <MenuItem className="hover:bg-white">
                   <NavLink
                     to="/profile/customer"
-                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1.5px] before:-bottom-1 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-300 capitalize"
+                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1.5px] before:-bottom-1 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-300 capitalize"
                   >
                     My profile
                   </NavLink>
@@ -124,7 +124,7 @@ const Navbar = () => {
                 <MenuItem className="hover:bg-white">
                   <NavLink
                     to="/profile/myorders"
-                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1.5px] before:-bottom-1 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-300 capitalize"
+                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1.5px] before:-bottom-1 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-300 capitalize"
                   >
                     Orders
                   </NavLink>
@@ -134,7 +134,7 @@ const Navbar = () => {
                     onClick={handleLogout}
                     className="hover:bg-white w-full"
                   >
-                    <div className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit cursor-pointer mr-3">
+                    <div className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit cursor-pointer mr-3">
                       Log Out
                     </div>
                   </MenuItem>
@@ -142,7 +142,7 @@ const Navbar = () => {
                   <MenuItem className="hover:bg-white">
                     <NavLink
                       to="/login"
-                      className="relative before:absolute before:content-[''] before:w-0 before:h-[1.5px] before:-bottom-1 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-300 capitalize"
+                      className="relative before:absolute before:content-[''] before:w-0 before:h-[1.5px] before:-bottom-1 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-300 capitalize"
                     >
                       Log In
                     </NavLink>
@@ -166,7 +166,7 @@ const Navbar = () => {
                 <MenuItem className="">
                   <div
                     onClick={() => navigate("/")}
-                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
+                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
                   >
                     Home
                   </div>
@@ -174,7 +174,7 @@ const Navbar = () => {
                 <MenuItem className="">
                   <div
                     onClick={() => null}
-                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
+                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
                   >
                     Shop
                   </div>
@@ -182,7 +182,7 @@ const Navbar = () => {
                 <MenuItem>
                   <div
                     onClick={() => null}
-                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
+                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
                   >
                     Brand
                   </div>
@@ -190,7 +190,7 @@ const Navbar = () => {
                 <MenuItem>
                   <div
                     onClick={() => navigate("/products")}
-                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
+                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
                   >
                     Shoes
                   </div>
@@ -198,7 +198,7 @@ const Navbar = () => {
                 <MenuItem>
                   <div
                     onClick={() => navigate("/products")}
-                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
+                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
                   >
                     New Arrival
                   </div>
@@ -206,7 +206,7 @@ const Navbar = () => {
                 <MenuItem>
                   <div
                     onClick={() => navigate("/products")}
-                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
+                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
                   >
                     Most Wanted
                   </div>
@@ -214,7 +214,7 @@ const Navbar = () => {
                 <MenuItem>
                   <div
                     onClick={() => navigate("/protect/cart")}
-                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
+                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
                   >
                     Cart
                   </div>
@@ -222,7 +222,7 @@ const Navbar = () => {
                 <MenuItem>
                   <div
                     onClick={() => navigate("/profile/customer")}
-                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
+                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
                   >
                     My Information
                   </div>
@@ -230,7 +230,7 @@ const Navbar = () => {
                 <MenuItem>
                   <div
                     onClick={() => navigate("/profile/myorders")}
-                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
+                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
                   >
                     Orders
                   </div>
@@ -238,7 +238,7 @@ const Navbar = () => {
                 <MenuItem>
                   <div
                     onClick={handleLogout}
-                    className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200 w-fit cursor-pointer mr-3"
+                    className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit cursor-pointer mr-3"
                   >
                     Log out
                   </div>

@@ -13,30 +13,35 @@ export default function Category({
           <Checkbox
             isChecked={selectedCategories.length === 0}
             onChange={() => setSelectedCategories([])}
+            colorScheme="teal"
           >
             All
           </Checkbox>
           <Checkbox
             // isChecked={selectedCategories.includes("Category A")}
             onChange={handleCategoryChange}
+            colorScheme="teal"
           >
             Traditional
           </Checkbox>
           <Checkbox
             // isChecked={selectedCategories.includes("Category A")}
             onChange={handleCategoryChange}
+            colorScheme="teal"
           >
             Western
           </Checkbox>
           <Checkbox
             // isChecked={selectedCategories.includes("Category A")}
             onChange={handleCategoryChange}
+            colorScheme="teal"
           >
             Accesories
           </Checkbox>
           <Checkbox
             // isChecked={selectedCategories.includes("Category B")}
             onChange={handleCategoryChange}
+            colorScheme="teal"
           >
             Shoes
           </Checkbox>

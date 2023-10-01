@@ -28,7 +28,7 @@ function AdminCustomer() {
   const getCustomers = useCustomerStore((state) => state.getCustomers);
   const setCustomers = useCustomerStore((state) => state.setCustomers);
   // states
-  const [deleteUser, setDeleteUser] = useState({});
+  const [user, setUser] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -98,13 +98,13 @@ function AdminCustomer() {
                     <span
                       title={`Delete ${user?.firstName}`}
                       onClick={(e) => {
-                        setDeleteUser(user);
+                        setUser(user);
                         onOpen(e);
                       }}
                     >
                       <DeleteForeverIcon
                         className="text-rose-500 cursor-pointer text-[.9rem]"
-                        onClick={() => setDeleteUser(user)}
+                        onClick={() => setUser(user)}
                       />
                     </span>
                   </Td>
@@ -128,8 +128,8 @@ function AdminCustomer() {
           />
         )}
       </div>
-      {Object.keys(deleteUser).length > 0 && (
-        <DeleteModal isOpen={isOpen} onClose={onClose} data={deleteUser} />
+      {Object.keys(user).length > 0 && (
+        <DeleteModal isOpen={isOpen} onClose={onClose} data={user} />
       )}
     </>
   );

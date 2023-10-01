@@ -16,7 +16,7 @@ const ProductCard = () => {
         bg="white"
         cursor="pointer"
         position="relative"
-        className="pb-3 border shadow-sm hover:shadow-lg transition duration-300 ease-in-out hover:translate-y-1"
+        className="pb-3 transition duration-300 ease-in-out border shadow-sm hover:shadow-lg hover:translate-y-1"
       >
         <Box height="250px" overflow="hidden" position="relative" mb={3}>
           <Image
@@ -33,17 +33,17 @@ const ProductCard = () => {
             right={2}
             p={1}
             borderRadius="10px"
-            color="#0077B5"
+            color="#008080"
             onClick={(e) => {
               e.stopPropagation();
               navigate("/protect/cart");
             }}
           >
-            <BsCartPlusFill title="add to cart" className="text-[1.3rem]" />
+            <BsCartPlusFill title="add to cart" className="text-[1.3rem] " />
           </Box>
         </Box>
         <div className="px-3">
-          <div className="flex justify-between items-center">
+          <div className="flex items-center justify-between">
             <Text className="text-[1.3rem] font-semibold">Nike Air</Text>
             <MdFavorite
               className="text-[1.3rem] hover:text-rose-500"

@@ -37,7 +37,7 @@ const ProductCard = ({ data }) => {
             bg="white"
             p={1}
             borderRadius="10px"
-            color="#0077B5"
+            color="teal"
             onClick={(e) => {
               e.stopPropagation();
               navigate("/protect/cart");
@@ -47,7 +47,7 @@ const ProductCard = ({ data }) => {
           </Box>
         </Box>
         <div className="px-3">
-          <div className="flex justify-between items-center">
+          <div className="flex items-center justify-between">
             <Text className="text-[1.3rem] font-semibold">Nike Air</Text>
             <MdFavorite
               className="text-[1.3rem] hover:text-rose-500"

@@ -62,18 +62,18 @@ const PriceRange = () => {
           >
             50k
           </SliderMark>
-          <SliderTrack bg="linkedin.200">
-            <SliderFilledTrack bg="linkedin.500" />
+          <SliderTrack bg="rgb(0, 128, 128, .3)">
+            <SliderFilledTrack bg="#008080" />
           </SliderTrack>
           <Tooltip
             hasArrow
-            bg="linkedin.500"
+            bg="#008080"
             placement="top"
             isOpen={showTooltip}
             label={`${priceRange}`}
           >
             <SliderThumb boxSize={5}>
-              <Box color="linkedin.500" />
+              <Box color="#008080" />
             </SliderThumb>
           </Tooltip>
         </Slider>

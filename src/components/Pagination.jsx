@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Button, Flex, Text } from '@chakra-ui/react';
+import React, { useState, useEffect } from "react";
+import { Box, Button, Flex, Text } from "@chakra-ui/react";
 
 function Pagination({ currentPage, totalPages, onPageChange }) {
   const [pageButtons, setPageButtons] = useState([]);
@@ -32,7 +32,7 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
         disabled={currentPage === 1}
         onClick={() => handlePageClick(currentPage - 1)}
         mr={2}
-        colorScheme="blue"
+        colorScheme="teal"
       >
         Previous
       </Button>
@@ -41,7 +41,7 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
           key={page}
           onClick={() => handlePageClick(page)}
           mr={2}
-          colorScheme={currentPage === page ? 'blue' : 'gray'}
+          colorScheme={currentPage === page ? "teal" : "gray"}
         >
           {page}
         </Button>
@@ -49,7 +49,7 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
       <Button
         disabled={currentPage === totalPages}
         onClick={() => handlePageClick(currentPage + 1)}
-        colorScheme="blue"
+        colorScheme="teal"
       >
         Next
       </Button>

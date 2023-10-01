@@ -131,6 +131,7 @@ function ProductPage() {
                       onChange={handlesortByPriceChange}
                       w={["100px", "100px", "auto"]}
                       className="flex-1"
+                      colorScheme="teal"
                     >
                       <option value="">Best</option>
                       <option value="-price">High to Low</option>
@@ -138,9 +139,7 @@ function ProductPage() {
                     </Select>
                   </Flex>
                 </Flex>
-
-                {/* <div className="grid gap-5 @[520px]:grid-cols-2 @[750px]:grid-cols-3 @[996px]:grid-cols-2 bg-yellow-500"> */}
-                <div className="grid gap-5 grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 ">
+                <div className="grid grid-cols-2 gap-5 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 ">
                   {/* 996 -1176 */}
                   {products.map((product) => (
                     <ProductCard data={product} key={product?.id} />
