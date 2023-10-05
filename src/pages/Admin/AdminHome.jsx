@@ -65,14 +65,14 @@ function AdminHome() {
             <div className="grid @[600px]:grid-cols-3  gap-3 font-sans text-[#585858] max-w-[750px]">
               <div className="border w-[15em] @[600px]:w-auto px-6 py-5 rounded-sm flex flex-col bg-slate-100">
                 <h3 className="font-semibold text-[.9rem]">Total Orders</h3>
-                <p className="text-[1.4rem]">
+                <p className="text-[1.4rem] text-[#008080]">
                   <strong>{totalOrders}</strong>
                 </p>
                 <p className="text-[.9rem]">From the last 30 days</p>
               </div>
               <div className="border w-[15em] @[600px]:w-auto px-6 py-5 rounded-sm flex flex-col bg-slate-100">
                 <h3 className="font-semibold text-[.9rem]">Total Revenue</h3>
-                <p className="text-[1.4rem]">
+                <p className="text-[1.4rem] text-[#008080]">
                   <strong>${totalRevenue.toFixed(2)}</strong>
                 </p>
                 <p className="text-[.9rem]">From the last 30 days</p>
@@ -81,7 +81,7 @@ function AdminHome() {
                 <h3 className="font-semibold text-[.9rem]">
                   Average Order Value
                 </h3>
-                <p className="text-[1.4rem]">
+                <p className="text-[1.4rem] text-[#008080]">
                   <strong>${averageOrderValue.toFixed(2)}</strong>
                 </p>
                 <p className="text-[.9rem]">From the last 30 days</p>

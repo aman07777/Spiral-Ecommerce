@@ -113,14 +113,17 @@ const Navbar = () => {
                 variant="outline"
               />
               <MenuList className="px-2 pb-2">
-                <MenuItem className="hover:bg-white">
-                  <NavLink
-                    to="/profile/customer"
-                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1.5px] before:-bottom-1 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-300 capitalize"
-                  >
-                    My profile
-                  </NavLink>
-                </MenuItem>
+                {currentUser && (
+                  <MenuItem className="hover:bg-white">
+                    <NavLink
+                      to="/profile/customer"
+                      className="relative before:absolute before:content-[''] before:w-0 before:h-[1.5px] before:-bottom-1 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-300 capitalize"
+                    >
+                      My profile
+                    </NavLink>
+                  </MenuItem>
+                )}
+
                 <MenuItem className="hover:bg-white">
                   <NavLink
                     to="/profile/myorders"
@@ -132,7 +135,7 @@ const Navbar = () => {
                 {currentUser ? (
                   <MenuItem
                     onClick={handleLogout}
-                    className="hover:bg-white w-full"
+                    className="w-full hover:bg-white"
                   >
                     <div className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit cursor-pointer mr-3">
                       Log Out
