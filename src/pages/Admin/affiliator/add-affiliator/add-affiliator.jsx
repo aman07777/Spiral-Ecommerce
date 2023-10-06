@@ -6,6 +6,7 @@ import {
   FormLabel,
   Input,
   useToast,
+  Select,
 } from "@chakra-ui/react";
 import { QueryClient, useMutation } from "@tanstack/react-query";
 import { useAffiliatorStore } from "./store";
@@ -17,12 +18,14 @@ const AddAffiliator = () => {
   const toast = useToast();
   // stores
   const addAffiliator = useAffiliatorStore((state) => state.addAffiliator);
+
   // states
   const [affiliator, setAffiliator] = useState({
     firstName: "",
     lastName: "",
     email: "",
-    promoCode: "",
+    password: "",
+    role: "",
   });
 
   // react-query
@@ -30,22 +33,23 @@ const AddAffiliator = () => {
   const { mutate, isLoading } = useMutation({
     mutationKey: ["add", "affiliators"],
     mutationFn: addAffiliator,
-
-    onSuccess: (data) => {
-      data?.status === "success" &&
+    onSuccess: (res) => {
+      if (res?.data?.status === "success") {
         queryClient.invalidateQueries(["get", "affiliator"], { exact: true });
-      handleToast(
-        toast,
-        "Success",
-        "Affiliator added successfully.",
-        "success"
-      );
-      setAffiliator({
-        firstName: "",
-        lastName: "",
-        email: "",
-        promoCode: "",
-      });
+        handleToast(
+          toast,
+          "Success",
+          "Affiliator added successfully.",
+          "success"
+        );
+        setAffiliator({
+          firstName: "",
+          lastName: "",
+          email: "",
+          password: "",
+          role: "",
+        });
+      }
     },
     onError: (error) => {
       handleToast(toast, "Error", error.message, "error");
@@ -56,10 +60,6 @@ const AddAffiliator = () => {
     mutate(affiliator);
   };
 
-  const generatePromoCode = () => {
-    const promoCode = Math.random().toString(36).substring(2, 8);
-    setAffiliator({ ...affiliator, promoCode });
-  };
   return (
     <>
       <Dashboard />
@@ -76,10 +76,11 @@ const AddAffiliator = () => {
           className="max-w-[550px] text-[#585858] mt-3"
         >
           <Box p="6">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-y-3">
               <FormControl id="firstName" isRequired>
                 <FormLabel>First Name</FormLabel>
                 <Input
+                  size="md"
                   type="text"
                   placeholder="Enter first name"
                   value={affiliator.firstName}
@@ -91,9 +92,10 @@ const AddAffiliator = () => {
                   }
                 />
               </FormControl>
-              <FormControl id="lastName" mt={4} isRequired>
+              <FormControl id="lastName" isRequired>
                 <FormLabel>Last Name</FormLabel>
                 <Input
+                  size="md"
                   type="text"
                   placeholder="Enter last name"
                   value={affiliator.lastName}
@@ -105,7 +107,7 @@ const AddAffiliator = () => {
                   }
                 />
               </FormControl>
-              <FormControl id="email" mt={4} isRequired>
+              <FormControl id="email" isRequired>
                 <FormLabel>Email</FormLabel>
                 <Input
                   type="email"
@@ -116,29 +118,40 @@ const AddAffiliator = () => {
                   }
                 />
               </FormControl>
-              <FormControl id="promoCode" mt={4} isRequired>
-                <FormLabel>Promo Code</FormLabel>
+              <FormControl id="password" isRequired>
+                <FormLabel>Password</FormLabel>
                 <Input
-                  type="text"
-                  placeholder="Enter promo code"
-                  value={affiliator.promoCode}
+                  size="md"
+                  type="password"
+                  placeholder="Enter password"
+                  value={affiliator.password}
                   onChange={(event) =>
                     setAffiliator({
                       ...affiliator,
-                      promoCode: event.target.value,
+                      password: event.target.value,
                     })
                   }
                 />
               </FormControl>
-              <Button
-                type="button"
-                colorScheme="blue"
-                mt={4}
-                onClick={generatePromoCode}
-              >
-                Generate Promo Code
-              </Button>
-              <Button type="submit" colorScheme="blue" mt={4} ml={4}>
+              <FormControl id="role" isRequired>
+                <FormLabel>Role</FormLabel>
+                <Select
+                  placeholder="Select role"
+                  size="md"
+                  value={affiliator.role}
+                  onChange={(event) =>
+                    setAffiliator({
+                      ...affiliator,
+                      role: event.target.value,
+                    })
+                  }
+                >
+                  <option value="admin">Admin</option>
+                  <option value="affiliator">Affiliator</option>
+                </Select>
+              </FormControl>
+
+              <Button type="submit" colorScheme="teal" className="mt-1">
                 {isLoading ? "Adding..." : "Add Affiliator"}
               </Button>
             </form>

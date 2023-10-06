@@ -3,14 +3,13 @@ import { Flex, Box, Heading, Text, useToast, Spinner } from "@chakra-ui/react";
 import Dashboard from "../Dashboard";
 import BreadCrumb from "./components/bread-crumb";
 import Navigation from "./components/navigation";
-import { useQuery } from "@chakra-ui/react";
 import { handleToast } from "../../../global/toast";
 import { useAffiliatorStore } from "./store";
+import { useQuery } from "@tanstack/react-query";
 function AdminAffiliator() {
   const toast = useToast();
   // stores
   const getAffiliators = useAffiliatorStore((state) => state.getAffiliators);
-  const setAffiliator = useAffiliatorStore((state) => state.setAffiliator);
 
   const {
     data: affiliators,
@@ -18,11 +17,8 @@ function AdminAffiliator() {
     isLoading,
     error,
   } = useQuery(["get", "affiliators"], getAffiliators);
+
   isError && handleToast(toast, "Error", error.message, "error");
-  !isLoading &&
-    !isError &&
-    Array.isArray(affiliators) &&
-    setAffiliator(affiliators);
   return (
     <>
       <Dashboard />
@@ -37,15 +33,15 @@ function AdminAffiliator() {
             {isLoading ? (
               <>
                 <div className="flex justify-center w-full">
-                  <Spinner color="blue.300" size={30} />
+                  <Spinner color="blue.300" />
                 </div>
               </>
-            ) : [].length > 0 ? (
-              [].map((affiliator, index) => (
+            ) : affiliators.length > 0 ? (
+              affiliators.map((affiliator, index) => (
                 <Box key={index} mb={2}>
                   <Text>
                     {affiliator.firstName} {affiliator.lastName} (
-                    {affiliator.email}) - Promo Code: {affiliator.promoCode}
+                    {affiliator.email}) - Promo Code: {affiliator.promoCode || "no promo code set"}
                   </Text>
                 </Box>
               ))
