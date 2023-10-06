@@ -87,7 +87,7 @@ const MyWhislist = () => {
                                 <Text fontSize="sm" className="font-roboto">{email}</Text>
                                 <Text fontSize="sm">Bonus: <span className="font-roboto">{bonus}</span></Text>
                             </Box>
-                            <div className="w-full items-center justify-center flex gap-x-2" >
+                            <div className="w-full items-center justify-center gap-x-2 hidden md:flex" >
                                 <span className="text-lg font-bold">My favorites</span>
                                 <i><MdFavorite className="text-[#008080]" size={20}/></i>
                             </div>
@@ -99,6 +99,12 @@ const MyWhislist = () => {
                                 />
                             </Box>
                         </Flex>
+
+
+                        <div className="w-full items-center justify-center gap-x-2 flex md:hidden" >
+                                <span className="text-lg font-bold">My favorites</span>
+                                <i><MdFavorite className="text-[#008080]" size={20}/></i>
+                            </div>
 
                         <Flex className="md:h-96">
                             <Box
@@ -115,12 +121,12 @@ const MyWhislist = () => {
 
                             <div className="flex flex-col items-center justifty-center gap-y-8 w-[100%] md:h-96 overflow-y-scroll ">
                                 <div className="w-[90%]">
-                                    <span className="text-xs mb-4">Watchlist</span>
-                                    <div className="flex flex-col gap-y-3">
+                                    <span className="text-xs">Wishlist</span>
+                                    <div className="flex flex-col gap-y-3 mt-4">
                                         {
                                             item?.map((val, index) => (
                                                 <>
-                                                    <div key={index} className="p-5 bg-gray-100">
+                                                    <div key={index} className="p-5 bg-gray-100 rounded-md">
                                                         <div className="w-[100%] flex items-end justify-end">
                                                             <span><AiOutlineCloseCircle size={20} className="cursor-pointer text-orange-700" /></span>
                                                         </div>
