@@ -20,7 +20,6 @@ import DeleteModal from "./delete-modal";
 const PromoCodTable = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
-  // const client = useQueryClient();
   // stores
   const getPromoCode = usePromoCodeStore((state) => state.getPromoCode);
 
@@ -75,32 +74,18 @@ const PromoCodTable = () => {
                   <Td>{code?.promoCode}</Td>
                   <Td>{code?.discountPercentage}</Td>
                   <Td>{code?.expiresAt?.split("T")[0]}</Td>
-                  <Td>{code?.status}</Td>
-                  <Td className="flex items-center gap-x-2">
-                    {/*    <span
-                      title={`Verify ${code?.promoCode}`}
-                      // onClick={() => {
-                      //   setUserDetails(user);
-                      //   mutate(user._id);
-                      // }}
+                  <Td>
+                    <span
+                      className={`border text-[.8rem] ${
+                        code?.status === "active" && "bg-green-400"
+                      } ${
+                        code?.status === "inactive" && "bg-rose-400"
+                      } px-2 text-white pb-[.2rem] rounded-full select-none`}
                     >
-                     {user?.isVerified ? (
-                        !verifyLoading && user?._id !== userDetails._id ? (
-                          <CloseIcon className="text-sky-500 cursor-pointer text-[.9rem] border bg-slate-100 rounded-md" />
-                        ) : user?._id === userDetails._id ? (
-                          <Spinner color="teal.300" />
-                        ) : (
-                          <CloseIcon className="text-sky-500 cursor-pointer text-[.9rem] border bg-slate-100 rounded-md" />
-                        )
-                      ) : !verifyLoading && user?._id !== userDetails._id ? (
-                        <DoneIcon className="text-green-500 cursor-pointer text-[.9rem] border bg-slate-100 rounded-md" />
-                      ) : user?._id === userDetails._id ? (
-                        <Spinner color="teal.300" />
-                      ) : (
-                        <DoneIcon className="text-green-500 cursor-pointer text-[.9rem] border bg-slate-100 rounded-md" />
-                      )} 
-                    </span>*/}
-
+                      {code?.status}
+                    </span>
+                  </Td>
+                  <Td className="flex items-center gap-x-2">
                     <span
                       title={`Delete ${code?.promoCode}`}
                       onClick={(e) => {

@@ -5,10 +5,10 @@ export const usePromoCodeStore = create((set) => ({
   promoCodes: [],
   getPromoCode: async () => {
     try {
-      const res = await axios_auth.get("promo-code");
+      const res = await axios_auth.get("promo-code/my-promo-code");
       if (res.data.status === "success") {
-        set({ promoCodes: res.data.promoCodes });
-        return res.data.promoCodes;
+        set({ promoCodes: res.data.codes });
+        return res.data.codes;
       }
       return [];
     } catch (error) {
