@@ -8,12 +8,14 @@ import {
   useToast,
   Select,
 } from "@chakra-ui/react";
-import { QueryClient, useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAffiliatorStore } from "./store";
 import { handleToast } from "../../../../global/toast";
 import Dashboard from "../../Dashboard";
 import BreadCrumb from "./bread-crumb";
+import { useNavigate } from "react-router-dom";
 const AddAffiliator = () => {
+  const navigate = useNavigate();
   // toast
   const toast = useToast();
   // stores
@@ -29,13 +31,13 @@ const AddAffiliator = () => {
   });
 
   // react-query
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
   const { mutate, isLoading } = useMutation({
     mutationKey: ["add", "affiliators"],
     mutationFn: addAffiliator,
     onSuccess: (res) => {
       if (res?.data?.status === "success") {
-        queryClient.invalidateQueries(["get", "affiliator"], { exact: true });
+        queryClient.invalidateQueries(["get", "affiliators"], { exact: true });
         handleToast(
           toast,
           "Success",

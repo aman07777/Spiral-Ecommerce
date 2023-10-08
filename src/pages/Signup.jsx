@@ -54,14 +54,7 @@ const Signup = () => {
     e.preventDefault();
     if (isTermsAccepted) {
       try {
-        const response = await signup(
-          firstName,
-          lastName,
-          email,
-          password,
-          confirmPassword
-        );
-        console.log(response.data);
+        await signup(firstName, lastName, email, password, confirmPassword);
         toast({
           title: "Verfication Code Sent Successfully",
           description: "Please check your email for the verification code.",
