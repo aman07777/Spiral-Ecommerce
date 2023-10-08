@@ -29,9 +29,9 @@ const AddProduct = lazy(() =>
   import("./pages/Admin/product/add-product/add-product")
 );
 const AddOrder = lazy(() => import("./pages/Admin/order/add-order/add-order"));
-const AddCustomer = lazy(() =>
-  import("./pages/Admin/users/add-cutomer/add-customer")
-);
+// const AddCustomer = lazy(() =>
+//   import("./pages/Admin/users/add-cutomer/add-customer")
+// );
 const AddAffiliator = lazy(() =>
   import("./pages/Admin/affiliator/add-affiliator/add-affiliator")
 );
@@ -80,7 +80,7 @@ function App() {
           <Route path="/adminOrder" element={<AdminOrder />} />
           <Route path="/admin-add-order" element={<AddOrder />} />
           <Route path="/adminCustomer" element={<AdminCustomer />} />
-          <Route path="/admin-add-customer" element={<AddCustomer />} />
+          {/* <Route path="/admin-add-customer" element={<AddCustomer />} /> */}
           <Route path="/adminAffliator" element={<AdminAffiliator />} />
           <Route path="/admin-add-affliator" element={<AddAffiliator />} />
           <Route path="/adminSetting" element={<AdminSettings />} />
