@@ -18,7 +18,7 @@ const Fallback = ({ error, resetErrorBoundary }) => {
             fill="#585858"
             className="w-6 duration-200 icon hover:scale-125 hover:stroke-blue-500"
           >
-            <g stroke-width="0"></g>
+            <g strokeWidth="0"></g>
             <g strokeLinecap="round" strokeLinejoin="round"></g>
             <g>
               <path

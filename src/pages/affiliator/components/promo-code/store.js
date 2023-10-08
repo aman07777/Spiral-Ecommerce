@@ -23,4 +23,12 @@ export const usePromoCodeStore = create((set) => ({
       return error;
     }
   },
+  deletePromoCode: async (id) => {
+    try {
+      const res = await axios_auth.delete(`promo-code/${id}`);
+      return res.data.status === "success" ? true : false;
+    } catch (error) {
+      return false;
+    }
+  },
 }));

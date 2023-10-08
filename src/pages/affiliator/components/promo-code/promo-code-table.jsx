@@ -7,9 +7,8 @@ import {
   Td,
   Spinner,
   useToast,
+  useDisclosure,
 } from "@chakra-ui/react";
-import DoneIcon from "@mui/icons-material/Done";
-import CloseIcon from "@mui/icons-material/Close";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { useQuery } from "@tanstack/react-query";
 import Heading from "./heading";
@@ -17,24 +16,33 @@ import { usePromoCodeStore } from "./store";
 import { handleToast } from "../../../../global/toast";
 import { useState } from "react";
 import TablePagination from "../../../../components/table-pagination";
+import DeleteModal from "./delete-modal";
 const PromoCodTable = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
+  // const client = useQueryClient();
   // stores
   const getPromoCode = usePromoCodeStore((state) => state.getPromoCode);
+
   // states
+  // delete
+  const [promoCodeDetails, setPromoCodeDetails] = useState({});
   // pagination
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
+  // react query
+  // getting the promo codes from the database
   const {
     data: codes,
     isLoading: getLoading,
-    isError,
-    error,
+    isError: getIsError,
+    error: getError,
   } = useQuery(["get", "promo-codes"], getPromoCode);
-  isError &&
-    handleToast(toast, "Error fetching promo codes", error.message, "error");
+  // deleting the promo code
+  getIsError &&
+    handleToast(toast, "Error fetching promo codes", getError.message, "error");
   return (
     <>
       <div className="flex-1 border rounded bg-slate-50">
@@ -69,14 +77,14 @@ const PromoCodTable = () => {
                   <Td>{code?.expiresAt?.split("T")[0]}</Td>
                   <Td>{code?.status}</Td>
                   <Td className="flex items-center gap-x-2">
-                    <span
+                    {/*    <span
                       title={`Verify ${code?.promoCode}`}
                       // onClick={() => {
                       //   setUserDetails(user);
                       //   mutate(user._id);
                       // }}
                     >
-                      {/* {user?.isVerified ? (
+                     {user?.isVerified ? (
                         !verifyLoading && user?._id !== userDetails._id ? (
                           <CloseIcon className="text-sky-500 cursor-pointer text-[.9rem] border bg-slate-100 rounded-md" />
                         ) : user?._id === userDetails._id ? (
@@ -90,21 +98,17 @@ const PromoCodTable = () => {
                         <Spinner color="teal.300" />
                       ) : (
                         <DoneIcon className="text-green-500 cursor-pointer text-[.9rem] border bg-slate-100 rounded-md" />
-                      )} */}
-                      <CloseIcon className="text-sky-500 cursor-pointer text-[.9rem] border bg-slate-100 rounded-md" />
-                    </span>
+                      )} 
+                    </span>*/}
 
                     <span
                       title={`Delete ${code?.promoCode}`}
                       onClick={(e) => {
-                        // setUserDetails(user);
-                        // onOpen(e);
+                        setPromoCodeDetails(code);
+                        onOpen(e);
                       }}
                     >
-                      <DeleteForeverIcon
-                        className="text-rose-500 cursor-pointer text-[.9rem]"
-                        // onClick={() => setUserDetails(user)}
-                      />
+                      <DeleteForeverIcon className="text-rose-500 cursor-pointer text-[.9rem]" />
                     </span>
                   </Td>
                 </Tr>
@@ -129,6 +133,13 @@ const PromoCodTable = () => {
           />
         )}
       </div>
+      {Object.keys(promoCodeDetails).length > 0 && (
+        <DeleteModal
+          isOpen={isOpen}
+          onClose={onClose}
+          data={promoCodeDetails}
+        />
+      )}
     </>
   );
 };
