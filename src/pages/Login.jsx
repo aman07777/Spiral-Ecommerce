@@ -40,7 +40,7 @@ const Login = () => {
       const response = await login(email, password);
       if (response.status === 200) {
         setCurrentUser(response.data.token);
-        setUser(response.data.token);
+        setUser(response.data);
         toast({
           title: "Login Successful",
           description: "You have been logged in successfully.",
@@ -49,7 +49,10 @@ const Login = () => {
           isClosable: true,
         });
         localStorage.setItem("currentUser", response.data.token);
-        navigate("/");
+        response.data.user?.role === "user" && navigate("/");
+        response.data.user?.role === "admin" && navigate("/adminHome");
+        response.data.user?.role === "affiliator" &&
+          navigate("/profile/affiliator");
       }
     } catch (error) {
       const errorMessage =

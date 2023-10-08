@@ -13,9 +13,7 @@ import { useAffiliatorStore } from "./store";
 import { handleToast } from "../../../../global/toast";
 import Dashboard from "../../Dashboard";
 import BreadCrumb from "./bread-crumb";
-import { useNavigate } from "react-router-dom";
 const AddAffiliator = () => {
-  const navigate = useNavigate();
   // toast
   const toast = useToast();
   // stores
