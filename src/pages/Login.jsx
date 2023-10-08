@@ -16,6 +16,7 @@ import {
 import { login } from "../services/AuthServices";
 import { useUserContext } from "../contexts/UserContext";
 import { useGlobalStore } from "../global/store";
+import { handleToast } from "../global/toast";
 
 const Login = () => {
   const setUser = useGlobalStore((state) => state.setUser);
@@ -41,29 +42,22 @@ const Login = () => {
       if (response.status === 200) {
         setCurrentUser(response.data.token);
         setUser(response.data);
-        toast({
-          title: "Login Successful",
-          description: "You have been logged in successfully.",
-          status: "success",
-          duration: 2500,
-          isClosable: true,
-        });
+        handleToast(
+          toast,
+          "Login Successful",
+          "You have been logged in successfully.",
+          "success"
+        );
         localStorage.setItem("currentUser", response.data.token);
         response.data.user?.role === "user" && navigate("/");
         response.data.user?.role === "admin" && navigate("/adminHome");
         response.data.user?.role === "affiliator" &&
-          navigate("/profile/affiliator");
+          navigate("/protect/profile/affiliator");
       }
     } catch (error) {
       const errorMessage =
         error.response?.data?.message || "An error occurred.";
-      toast({
-        title: "Error",
-        description: errorMessage,
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      handleToast(toast, "Error", errorMessage, "error");
     }
   };
   return (

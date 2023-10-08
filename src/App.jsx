@@ -14,7 +14,7 @@ const Fallback = lazy(() => import("./components/fallback"));
 const AffliatorProfile = lazy(() =>
   import("./pages/affiliator/AffliatorProfile")
 );
-// const CheckAuth = lazy(() => import("./components/check-auth"));
+const CheckAuth = lazy(() => import("./components/check-auth"));
 const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const AdminHome = lazy(() => import("./pages/Admin/AdminHome"));
 const AdminProduct = lazy(() => import("./pages/Admin/product/AdminProduct"));
@@ -58,10 +58,14 @@ function App() {
               <Route path="products" exact element={<ProductPage />} />
               <Route path="products/:id" element={<ProductDetails />} />
 
-              {/* <Route path="/protect/" element={<CheckAuth />}> */}
-              <Route path="/protect/cart" element={<CartPage />} />
-              <Route path="profile/customer" element={<CustomerProfile />} />
-              {/* </Route> */}
+              <Route path="/" element={<CheckAuth />}>
+                <Route path="cart" element={<CartPage />} />
+                <Route path="profile/customer" element={<CustomerProfile />} />
+                <Route
+                  path="profile/affiliator"
+                  element={<AffliatorProfile />}
+                />
+              </Route>
 
               <Route path="profile/paymentoption" element={<PaymentOption />} />
               <Route path="profile/addressbook" element={<AddressBook />} />
@@ -84,7 +88,6 @@ function App() {
             <Route path="/adminAffliator" element={<AdminAffiliator />} />
             <Route path="/admin-add-affliator" element={<AddAffiliator />} />
             <Route path="/adminSetting" element={<AdminSettings />} />
-            <Route path="/profile/affiliator" element={<AffliatorProfile />} />
 
             <Route path="*" element={<ErrorPage />} />
           </Routes>
