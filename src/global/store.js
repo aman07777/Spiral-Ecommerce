@@ -7,11 +7,14 @@ export const useGlobalStore = create((set) => ({
     try {
       const res = await axios_auth.get("auth/check-auth");
       if (res.data?.status === "success") {
-        set(() => ({ user: res.data?.user }));
+        set(() => ({ user: res?.data?.user }));
         return true;
       }
       return false;
-    } catch (error) {}
+    } catch (error) {
+      set(() => ({ user: null }));
+      return false;
+    }
   },
   setUser: (user) => set(() => ({ user })),
 }));
