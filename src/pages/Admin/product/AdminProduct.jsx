@@ -7,7 +7,6 @@ import {
   Tr,
   Th,
   Td,
-  // Checkbox,
   Image,
   Spinner,
   useToast,
@@ -34,7 +33,6 @@ function AdminProduct() {
 
   // states
   const [product, setProduct] = useState({});
-  // const [selectAllLocal, setSelectAllLocal] = useState(false);
   const [selectAll, setSelectAll] = useState(false);
   // pagination states
   const [currentPage, setCurrentPage] = useState(1);
@@ -49,8 +47,6 @@ function AdminProduct() {
   const handleDelete = (product) => {
     onOpen();
     setProduct(product);
-    // Remove the selected product from the list of products
-    setProducts(products.filter((p) => p.id !== product.id));
   };
 
   const handleDeleteAll = (selectedProducts) => {
@@ -98,14 +94,6 @@ function AdminProduct() {
       <Table variant="simple" className="mt-3">
         <Thead>
           <Tr>
-            {/* <Th>
-              <Checkbox
-                isChecked={
-                  selectAll || products?.every((product) => product.selected)
-                }
-                onChange={handleSelectAllClick}
-              />
-            </Th> */}
             <Th>Name</Th>
             <Th>Price</Th>
             <Th>Category</Th>
@@ -127,12 +115,6 @@ function AdminProduct() {
           ) : Array.isArray(products) && products?.length > 0 ? (
             products?.slice(startIndex, endIndex)?.map((product, index) => (
               <Tr key={product._id}>
-                {/* <Td>
-                  <Checkbox
-                    isChecked={product.selected}
-                    onChange={(event) => handleSelectClick(event, product)}
-                  />
-                </Td> */}
                 <Td>{product.name}</Td>
                 <Td>{product.price}</Td>
                 <Td>{product.category}</Td>
@@ -198,9 +180,7 @@ function AdminProduct() {
           setCurrentPage={setCurrentPage}
         />
       )}
-      {Object.keys(product).length > 0 && (
-        <DeleteModal isOpen={isOpen} onClose={onClose} data={product} />
-      )}
+      <DeleteModal isOpen={isOpen} onClose={onClose} data={product} />
     </>
   );
 }

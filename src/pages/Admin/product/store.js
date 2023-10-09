@@ -13,9 +13,11 @@ export const useAdminProductStore = create((set) => ({
       return error;
     }
   },
-  deleteProducts: async (id) => {
+  deleteProduct: async (id) => {
+    console.log("🚀 ~ file: store.js:17 ~ deleteProduct: ~ id:", id);
     try {
       const res = await axios_auth.delete(`products/${id}`);
+      console.log("🚀 ~ file: store.js:20 ~ deleteProducts: ~ res:", res);
       return res.data.status === "success" ? true : false;
     } catch (error) {
       return error;

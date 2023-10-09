@@ -21,9 +21,9 @@ const UpdateUserDetailsModal = ({ isOpen, onClose, userData }) => {
   // user details state
   const [userDetails, setUserDetails] = useState({
     ...userData,
-    phoneNumber: "",
-    fullAddress: "",
-    birthDate: "",
+    phoneNumber: userData?.phoneNumber || "",
+    fullAddress: userData?.fullAddress || "",
+    birthDate: userData?.birthDate?.split("T")?.[0] || "",
   });
   // handlers
   // on change handler
