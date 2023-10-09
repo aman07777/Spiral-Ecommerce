@@ -10,13 +10,13 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useAdminProductStore } from "../store";
-import { useMutation, QueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { handleToast } from "../../../../global/toast";
 const DeleteModal = ({ isOpen, onClose, data }) => {
   const toast = useToast();
   // stores
   const deleteProduct = useAdminProductStore((state) => state.deleteProducts);
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
   const { mutateAsync, isLoading } = useMutation({
     mutationKey: ["delete", "product", data?.id],
     mutationFn: deleteProduct,

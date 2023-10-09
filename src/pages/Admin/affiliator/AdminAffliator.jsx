@@ -41,7 +41,7 @@ function AdminAffiliator() {
                 <Box key={index} mb={2}>
                   <Text>
                     {affiliator.firstName} {affiliator.lastName} (
-                    {affiliator.email}) - Promo Code: {affiliator.promoCode || "no promo code set"}
+                    {affiliator.email})
                   </Text>
                 </Box>
               ))

@@ -71,12 +71,11 @@ function AdminProduct() {
   // fetching the products from backend
   const {
     data: products,
-    isLoading,
+    isFetching,
     isError,
     error,
   } = useQuery(["get", "products"], getProducts);
-
-  !isLoading &&
+  !isFetching &&
     !isError &&
     Array.isArray(products) &&
     products?.length > 0 &&
@@ -119,15 +118,15 @@ function AdminProduct() {
           </Tr>
         </Thead>
         <Tbody>
-          {isLoading ? (
+          {isFetching ? (
             <Tr>
               <Td colSpan={10} textAlign={"center"}>
                 <Spinner color="blue.300" />
               </Td>
             </Tr>
           ) : Array.isArray(products) && products?.length > 0 ? (
-            products?.slice(startIndex, endIndex)?.map((product) => (
-              <Tr key={product.id}>
+            products?.slice(startIndex, endIndex)?.map((product, index) => (
+              <Tr key={product._id}>
                 {/* <Td>
                   <Checkbox
                     isChecked={product.selected}
@@ -138,7 +137,7 @@ function AdminProduct() {
                 <Td>{product.price}</Td>
                 <Td>{product.category}</Td>
                 <Td>{product.brand}</Td>
-                <Td>{product.color}</Td>
+                <Td>{product.colors?.join(",")}</Td>
                 <Td>{product.sizes?.join(",")}</Td>
                 <Td>{product.description}</Td>
                 <Td>

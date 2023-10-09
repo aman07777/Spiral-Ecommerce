@@ -5,11 +5,8 @@ import { useQuery } from "@tanstack/react-query";
 import Loader from "./Loader";
 const CheckAuth = () => {
   const checkAuth = useGlobalStore((state) => state.checkAuth);
-  const { data: auth, isLoading: loading } = useQuery(
-    ["check", "auth"],
-    checkAuth
-  );
-  return loading ? <Loader /> : !auth ? <Login /> : <Outlet />;
+  const { data: auth, isFetching } = useQuery(["check", "auth"], checkAuth);
+  return isFetching ? <Loader /> : !auth ? <Login /> : <Outlet />;
 };
 
 export default CheckAuth;
