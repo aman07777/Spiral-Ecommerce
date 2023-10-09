@@ -61,10 +61,6 @@ function App() {
               <Route path="/" element={<CheckAuth />}>
                 <Route path="cart" element={<CartPage />} />
                 <Route path="profile/customer" element={<CustomerProfile />} />
-                <Route
-                  path="profile/affiliator"
-                  element={<AffliatorProfile />}
-                />
               </Route>
 
               <Route path="profile/paymentoption" element={<PaymentOption />} />
@@ -75,9 +71,12 @@ function App() {
               <Route path="profile/addressbook" element={<AddressBook />} />
             </Route>
 
+            <Route path="/" element={<CheckAuth />}>
+              <Route path="profile/affiliator" element={<AffliatorProfile />} />
+            </Route>
+
             <Route path="/emailverification" element={<EmailVerification />} />
             <Route path="/resetpassword" element={<ResetPassword />} />
-
             <Route path="/adminHome" element={<AdminHome />} />
             <Route path="/adminProduct" element={<AdminProduct />} />
             <Route path="/admin-add-product" element={<AddProduct />} />

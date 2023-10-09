@@ -7,17 +7,46 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  useToast,
 } from "@chakra-ui/react";
-import InputField from "./input-field";
+import { useAffiliatorProfileStore } from "./store";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { handleToast } from "../../../../global/toast";
 const UpdateUserDetailsModal = ({ isOpen, onClose, userData }) => {
+  const client = useQueryClient();
+  const toast = useToast();
+  // stores
+  const update = useAffiliatorProfileStore((state) => state.updateDetails);
   // states
   // user details state
-  const [userDetails, setUserDetails] = useState({ ...userData });
+  const [userDetails, setUserDetails] = useState({
+    ...userData,
+    phoneNumber: "",
+    fullAddress: "",
+    birthDate: "",
+  });
   // handlers
   // on change handler
-  const handleChange = (e) => {
-    setUserDetails((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
+
+  const { mutateAsync, isLoading } = useMutation({
+    mutationKey: ["update", "user", "details"],
+    mutationFn: update,
+    onSuccess: async (data) => {
+      if (data) {
+        client.invalidateQueries(["get", "my-details"], { exact: true });
+        handleToast(
+          toast,
+          "Success",
+          "Details updated successfully",
+          "success"
+        );
+        onClose();
+      }
+    },
+    onError: (error) => {
+      handleToast(toast, "Error", error.message, "error");
+    },
+  });
   return (
     <>
       <Modal isCentered isOpen={isOpen} onClose={onClose} size={"md"}>
@@ -43,46 +72,116 @@ const UpdateUserDetailsModal = ({ isOpen, onClose, userData }) => {
           <ModalBody>
             {/* form section */}
             <div className="mb-1 text-[#585858] grid gap-y-2">
-              <InputField
-                label="First Name"
-                type="text"
-                name="firstName"
-                placeholder="Enter first name @Ram"
-                value={userDetails?.firstName}
-                onChange={handleChange}
-              />
-              <InputField
-                label="Last Name"
-                type="text"
-                name="lastName"
-                placeholder="Enter last name @Pokhrel"
-                value={userDetails?.lastName}
-                onChange={handleChange}
-              />
-              <InputField
-                label="Email"
-                type="email"
-                name="email"
-                placeholder="Enter email @example@gmail.com"
-                value={userDetails?.email}
-                onChange={handleChange}
-              />
-              <InputField
-                label="Phone Number"
-                type="text"
-                name="phone"
-                placeholder="Enter phone @98XXXXXXXX"
-                value={userDetails?.phone}
-                onChange={handleChange}
-              />
-              <InputField
-                label="Address"
-                type="text"
-                name="address"
-                placeholder="Enter address @Itahari-5"
-                value={userDetails?.address}
-                onChange={handleChange}
-              />
+              <div className="">
+                {/* label */}
+                <label htmlFor="First Name">
+                  First Name <span className="text-red-500">*</span>
+                </label>
+                <div className="flex px-[.6em] py-2 mt-2 border">
+                  {/* the input field */}
+                  <input
+                    type="text"
+                    placeholder="Enter first name @Ram"
+                    value={userDetails?.firstName}
+                    onChange={(e) => {
+                      setUserDetails((prev) => ({
+                        ...prev,
+                        firstName: e.target.value,
+                      }));
+                    }}
+                    required
+                    className="flex-1 outline-transparent"
+                  />
+                </div>
+              </div>
+              <div className="">
+                {/* label */}
+                <label htmlFor="Last Name">
+                  Last Name <span className="text-red-500">*</span>
+                </label>
+                <div className="flex px-[.6em] py-2 mt-2 border">
+                  {/* the input field */}
+                  <input
+                    type="text"
+                    placeholder="Enter last name @Pokhrel"
+                    value={userDetails?.lastName}
+                    onChange={(e) => {
+                      setUserDetails((prev) => ({
+                        ...prev,
+                        lastName: e.target.value,
+                      }));
+                    }}
+                    required
+                    className="flex-1 outline-transparent"
+                  />
+                </div>
+              </div>
+
+              <div className="">
+                {/* label */}
+                <label htmlFor="Phone Number">
+                  Phone Number <span className="text-red-500">*</span>
+                </label>
+                <div className="flex px-[.6em] py-2 mt-2 border">
+                  {/* the input field */}
+                  <input
+                    type="text"
+                    placeholder="Enter phone @98XXXXXXXX"
+                    value={userDetails?.phoneNumber}
+                    onChange={(e) => {
+                      setUserDetails((prev) => ({
+                        ...prev,
+                        phoneNumber: e.target.value,
+                      }));
+                    }}
+                    required
+                    className="flex-1 outline-transparent"
+                  />
+                </div>
+              </div>
+              <div className="">
+                {/* label */}
+                <label htmlFor="Full Address">
+                  Full Address <span className="text-red-500">*</span>
+                </label>
+                <div className="flex px-[.6em] py-2 mt-2 border">
+                  {/* the input field */}
+                  <input
+                    type="text"
+                    placeholder="Enter phone @Itahari-5"
+                    value={userDetails?.fullAddress}
+                    onChange={(e) => {
+                      setUserDetails((prev) => ({
+                        ...prev,
+                        fullAddress: e.target.value,
+                      }));
+                    }}
+                    required
+                    className="flex-1 outline-transparent"
+                  />
+                </div>
+              </div>
+              <div className="">
+                {/* label */}
+                <label htmlFor="Date of Birth">
+                  Date of Birth <span className="text-red-500">*</span>
+                </label>
+                <div className="flex px-[.6em] py-2 mt-2 border">
+                  {/* the input field */}
+                  <input
+                    type="date"
+                    value={userDetails?.birthDate}
+                    onChange={(e) => {
+                      setUserDetails((prev) => ({
+                        ...prev,
+                        birthDate: e.target.value,
+                      }));
+                    }}
+                    required
+                    className="flex-1 outline-transparent"
+                  />
+                </div>
+              </div>
             </div>
             {/* form section fin here */}
           </ModalBody>
@@ -99,9 +198,12 @@ const UpdateUserDetailsModal = ({ isOpen, onClose, userData }) => {
             <button
               variant="outline"
               className="px-4 py-2 text-white border rounded-sm border-cyan-400/60 hover:text-sky-500 bg-sky-500 hover:bg-sky-50 w-[5.5em]"
-              // onClick={handleUpdateClick}
+              onClick={(e) => {
+                e.preventDefault();
+                mutateAsync(userDetails);
+              }}
             >
-              {false ? "Updating..." : "Update"}
+              {isLoading ? "Updating..." : "Update"}
             </button>
             {/* submit button fin here */}
           </ModalFooter>

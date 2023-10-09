@@ -4,20 +4,19 @@ import { HiOutlinePhone } from "react-icons/hi";
 import { BiSolidMessageSquareEdit } from "react-icons/bi";
 import UpdateUserDetailsModal from "./update-user-details-modal";
 import { useGlobalStore } from "../../../../global/store";
+import { useAffiliatorProfileStore } from "./store";
+import { useQuery } from "@tanstack/react-query";
 const UserDetails = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   // stores
   const user = useGlobalStore((state) => state.user);
-  // const user = {
-  //   firstName: "John",
-  //   lastName: "Doe",
-  //   email: "johndoe@gmail.com",
-  //   phone: "988376454",
-  //   address: "Itahari-5, Nepal",
-  //   birthday: "1990-01-01",
-  //   bonus: 100,
-  //   image: "https://cdn-icons-png.flaticon.com/512/21/21104.png",
-  // };
+  const setUser = useGlobalStore((state) => state.setUser);
+  // stores
+  const getMyDetails = useAffiliatorProfileStore((state) => state.getMyDetails);
+
+  const { data, isFetching } = useQuery(["get", "my-details"], getMyDetails);
+  !isFetching && (data ?? setUser(data));
+
   return (
     <>
       <div className="flex flex-col min-w-[350px] @[850px]:min-w-[500px] text-[#585858] relative @[650px]:border-l-[.15rem] border-b-[.15rem] pb-5 rounded justify-center bg-slate-50">
@@ -44,8 +43,12 @@ const UserDetails = () => {
             />
           </div>
           <p className="font-semibold text-[1.1rem]">
-            {user?.address || (
-              <span className="text-[.8rem] cursor-pointer border px-1 rounded-sm hover:border-[#585858]/60 transition-[border]">
+            {user?.fullAddress || (
+              <span
+                className="text-[.8rem] cursor-pointer border px-1 rounded-sm hover:border-[#585858]/60 transition-[border]"
+                onClick={onOpen}
+                title="add address"
+              >
                 Add
               </span>
             )}
@@ -62,8 +65,12 @@ const UserDetails = () => {
               <div className="flex items-center gap-x-2">
                 <HiOutlinePhone className="text-[1.2rem]" />
                 <p className="font-semibold text-[1rem]">
-                  {user?.phone || (
-                    <span className="text-[.8rem] cursor-pointer border px-1 rounded-sm hover:border-[#585858]/60 transition-[border]">
+                  {user?.phoneNumber || (
+                    <span
+                      className="text-[.8rem] cursor-pointer border px-1 rounded-sm hover:border-[#585858]/60 transition-[border]"
+                      title="add phone number"
+                      onClick={onOpen}
+                    >
                       Add
                     </span>
                   )}
@@ -76,11 +83,13 @@ const UserDetails = () => {
         {/* user detail section fin */}
       </div>
       {/* update modal -> updates the affiliator details */}
-      <UpdateUserDetailsModal
-        isOpen={isOpen}
-        onClose={onClose}
-        userData={user}
-      />
+      {Object.keys(user).length > 0 && (
+        <UpdateUserDetailsModal
+          isOpen={isOpen}
+          onClose={onClose}
+          userData={user}
+        />
+      )}
     </>
   );
 };
