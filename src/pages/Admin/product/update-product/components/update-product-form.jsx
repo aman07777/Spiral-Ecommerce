@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import {
   Flex,
   Box,
@@ -10,83 +10,19 @@ import {
   Select,
   Image,
   IconButton,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-  useToast,
-  Breadcrumb,
-  BreadcrumbItem,
 } from "@chakra-ui/react";
-import { ChevronLeft, ChevronRight, ArrowForward } from "@mui/icons-material";
-import { NavLink } from "react-router-dom";
-import Dashboard from "../../Dashboard";
-import { AddProductClass } from "./helper";
-import { useAddProductStore } from "./store";
-const AddProduct = () => {
-  const toast = useToast();
 
-  // class
-  const addProductClass = useMemo(() => new AddProductClass(), []);
-  // stores
-  const addProduct = useAddProductStore((state) => state.addProduct);
+import { ArrowForward } from "@mui/icons-material";
 
+const UpdateProductForm = ({ handlePreviewClick, product, setProduct }) => {
   //states
-  const [product, setProduct] = useState({
-    name: "",
-    description: "",
-    price: "",
-    category: "",
-    brand: "",
-    colors: [],
-    sizes: [],
-    images: [],
-    previewImages: [],
-  });
 
-  const [products, setProducts] = useState([]);
   const [images, setImages] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Add the new product to the list of products
-    setProducts([...products, { ...product, id: Date.now() }]);
-    let formData = new FormData();
-    formData.append("name", product.name);
-    formData.append("description", product.description);
-    formData.append("price", product.price);
-    formData.append("category", product.category);
-    formData.append("brand", product.brand);
-    for (let i = 0; i < product.colors?.length; i++) {
-      formData.append("colors", product.colors[i]?.trim());
-    }
-    product?.sizes.forEach((size) => {
-      formData.append("sizes", size?.trim());
-    });
-    for (let i = 0; i < images?.length; i++) {
-      formData.append("productImage", images[i]);
-    }
-    addProductClass.addProduct(
-      formData,
-      addProduct,
-      toast,
-      setLoading,
-      setProduct
-    );
-  };
-
   const handleSizeChange = (event) => {
     const { value } = event.target;
     const sizes = value.split(",");
     setProduct({ ...product, sizes });
   };
-
   const handleImageChangeMultiple = (event) => {
     const files = event.target.files;
     const images = [];
@@ -107,58 +43,33 @@ const AddProduct = () => {
       }
     }
   };
-
-  const handlePreviewClick = () => {
-    setIsPreviewModalOpen(true);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    let formData = new FormData();
+    formData.append("name", product.name);
+    formData.append("description", product.description);
+    formData.append("price", product.price);
+    formData.append("category", product.category);
+    formData.append("brand", product.brand);
+    for (let i = 0; i < product.colors?.length; i++) {
+      formData.append("colors", product.colors[i]?.trim());
+    }
+    product?.sizes.forEach((size) => {
+      formData.append("sizes", size?.trim());
+    });
+    for (let i = 0; i < images?.length; i++) {
+      formData.append("productImage", images[i]);
+    }
+    // addProductClass.addProduct(
+    //   formData,
+    //   addProduct,
+    //   toast,
+    //   setLoading,
+    //   setProduct
+    // );
   };
-
-  const handlePreviewModalClose = () => {
-    setIsPreviewModalOpen(false);
-    setSelectedImageIndex(0);
-  };
-
-  const handlePrevClick = () => {
-    setSelectedImageIndex(
-      (selectedImageIndex - 1 + product.previewImages?.length) %
-        product.previewImages?.length
-    );
-  };
-
-  const handleNextClick = () => {
-    setSelectedImageIndex(
-      (selectedImageIndex + 1) % product.previewImages?.length
-    );
-  };
-
   return (
     <>
-      <Dashboard />
-      <Breadcrumb
-        spacing="5px"
-        className="text-[.9rem] font-semibold text-[#585858] px-4 @[767px]:px-0 mt-3"
-      >
-        <BreadcrumbItem>
-          <NavLink
-            to="/adminHome"
-            className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
-          >
-            Home
-          </NavLink>
-        </BreadcrumbItem>
-        <BreadcrumbItem>
-          <NavLink
-            to="/adminProduct"
-            className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-200"
-          >
-            Products
-          </NavLink>
-        </BreadcrumbItem>
-        <BreadcrumbItem isCurrentPage>
-          <NavLink to="#" className="cursor-default">
-            Add
-          </NavLink>
-        </BreadcrumbItem>
-      </Breadcrumb>
       <Flex direction={{ base: "column", md: "row" }} p={4}>
         <Flex direction="column" className="max-w-[550px] w-full">
           <Box
@@ -300,61 +211,15 @@ const AddProduct = () => {
                   </Flex>
                 )}
                 <Button type="submit" colorScheme="blue" mt={4} size="md">
-                  {loading ? "Adding..." : " Add Product"}
+                  {false ? "Adding..." : " Add Product"}
                 </Button>
               </form>
             </Box>
           </Box>
         </Flex>
       </Flex>
-
-      <Modal
-        isOpen={isPreviewModalOpen}
-        onClose={handlePreviewModalClose}
-        size="xl"
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Product Images</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Flex direction="row">
-              <IconButton
-                icon={<ChevronLeft />}
-                aria-label="Previous Image"
-                size="sm"
-                onClick={handlePrevClick}
-                mr={2}
-              />
-              <Image
-                src={product.previewImages[selectedImageIndex]}
-                alt={`Product Image ${selectedImageIndex + 1}`}
-                height="30vh"
-                width="30vw"
-                className="object-cover"
-              />
-              <IconButton
-                icon={<ChevronRight />}
-                aria-label="Next Image"
-                size="sm"
-                onClick={handleNextClick}
-                ml={2}
-              />
-            </Flex>
-          </ModalBody>
-          <ModalFooter>
-            <Button
-              colorScheme="blue"
-              size="sm"
-              onClick={handlePreviewModalClose}
-            >
-              Close
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
     </>
   );
 };
 
-export default AddProduct;
+export default UpdateProductForm;
