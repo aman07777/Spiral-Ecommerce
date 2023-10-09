@@ -44,11 +44,13 @@ const AddProduct = () => {
     colors: [],
     sizes: [],
     images: [],
+    previewImages: [],
   });
 
   const [products, setProducts] = useState([]);
+  const [images, setImages] = useState([]);
   //   const [selectAll, setSelectAll] = useState(false);
-  const [loading, setLading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
 
@@ -56,25 +58,28 @@ const AddProduct = () => {
     event.preventDefault();
     // Add the new product to the list of products
     setProducts([...products, { ...product, id: Date.now() }]);
-
+    let formData = new FormData();
+    formData.append("name", product.name);
+    formData.append("description", product.description);
+    formData.append("price", product.price);
+    formData.append("category", product.category);
+    formData.append("brand", product.brand);
+    for (let i = 0; i < product.colors?.length; i++) {
+      formData.append("colors", product.colors[i]?.trim());
+    }
+    product?.sizes.forEach((size) => {
+      formData.append("sizes", size?.trim());
+    });
+    for (let i = 0; i < images?.length; i++) {
+      formData.append("productImage", images[i]);
+    }
     addProductClass.addProduct(
-      product,
+      formData,
       addProduct,
       toast,
-      setLading,
-      setProduct,
+      setLoading,
+      setProduct
     );
-    // Clear the form fields
-    // setProduct({
-    //   name: "",
-    //   description: "",
-    //   price: "",
-    //   category: "",
-    //   brand: "",
-    //   color: "",
-    //   sizes: [],
-    //   images: [],
-    // });
   };
 
   const handleSizeChange = (event) => {
@@ -86,14 +91,17 @@ const AddProduct = () => {
   const handleImageChangeMultiple = (event) => {
     const files = event.target.files;
     const images = [];
-    for (let i = 0; i < files.length; i++) {
+    for (let i = 0; i < files?.length; i++) {
       const file = files[i];
       if (file && /\.(jpe?g|png)$/i.test(file.name)) {
         const reader = new FileReader();
         reader.onload = (event) => {
           images.push(event.target.result);
-          if (images.length === files.length) {
-            setProduct({ ...product, images: [...product.images, ...images] });
+          if (images?.length === files?.length) {
+            setProduct({
+              ...product,
+              previewImages: [...product.previewImages, ...images],
+            });
           }
         };
         reader.readAsDataURL(file);
@@ -112,12 +120,15 @@ const AddProduct = () => {
 
   const handlePrevClick = () => {
     setSelectedImageIndex(
-      (selectedImageIndex - 1 + product.images.length) % product.images.length
+      (selectedImageIndex - 1 + product.previewImages?.length) %
+        product.previewImages?.length
     );
   };
 
   const handleNextClick = () => {
-    setSelectedImageIndex((selectedImageIndex + 1) % product.images.length);
+    setSelectedImageIndex(
+      (selectedImageIndex + 1) % product.previewImages?.length
+    );
   };
 
   return (
@@ -234,23 +245,6 @@ const AddProduct = () => {
                     }}
                   />
                 </FormControl>
-                {/* <FormControl id="category" mt={2} isRequired>
-                  <FormLabel>Product Color</FormLabel>
-                  <Select
-                    placeholder="Select product color"
-                    size="md"
-                    value={product.color}
-                    onChange={(event) =>
-                      setProduct({ ...product, color: event.target.value })
-                    }
-                  >
-                    <option value="black">Black</option>
-                    <option value="white">White</option>
-                    <option value="green">Green</option>
-                    <option value="blue">Blue</option>
-                    <option value="red">Red</option>
-                  </Select>
-                </FormControl> */}
                 <FormControl id="sizes" mt={2} isRequired>
                   <FormLabel>Product Sizes</FormLabel>
                   <Input
@@ -280,15 +274,19 @@ const AddProduct = () => {
                   <Input
                     type="file"
                     accept="image/*"
-                    onChange={handleImageChangeMultiple}
+                    onChange={(e) => {
+                      handleImageChangeMultiple(e);
+
+                      setImages(e.target.files);
+                    }}
                     multiple
                     size="md"
                   />
                 </FormControl>
-                {product.images.length > 0 && (
+                {product.previewImages?.length > 0 && (
                   <Flex direction="row" alignItems="center" mt={2}>
                     <Image
-                      src={product.images[0]}
+                      src={product.previewImages?.[0]}
                       alt={`Product Image 1`}
                       boxSize="50px"
                       objectFit="cover"
@@ -330,7 +328,7 @@ const AddProduct = () => {
                 mr={2}
               />
               <Image
-                src={product.images[selectedImageIndex]}
+                src={product.previewImages[selectedImageIndex]}
                 alt={`Product Image ${selectedImageIndex + 1}`}
                 height="30vh"
                 width="30vw"
@@ -360,4 +358,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct
+export default AddProduct;
