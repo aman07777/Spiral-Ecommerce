@@ -118,12 +118,12 @@ const Navbar = () => {
               />
               <MenuList className="px-2 pb-2">
                 <MenuItem className="hover:bg-white">
-                  <NavLink
-                    to="/profile/customer"
+                  <span
                     className="relative before:absolute before:content-[''] before:w-0 before:h-[1.5px] before:-bottom-1 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-300 capitalize"
+                    onClick={() => navigate("/profile/customer")}
                   >
                     My profile
-                  </NavLink>
+                  </span>
                 </MenuItem>
                 <MenuItem className="hover:bg-white">
                   <NavLink

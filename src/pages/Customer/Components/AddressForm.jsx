@@ -2,19 +2,19 @@ import React, { useEffect, useState } from 'react'
 import { AiOutlineClose } from "react-icons/ai";
 import axios from 'axios';
 import { city } from './CityData';
-
 import { BiChevronDown } from "react-icons/bi";
-import { AiOutlineSearch } from "react-icons/ai";
+import { addressBookStore } from '../helper/AddressBookStore';
+import { useToast } from '@chakra-ui/react';
 
-
-
-const AddressForm = ({ props }) => {
+const AddressForm = ({ props, profileDetails, updateAddressDetails }) => {
+    const toast = useToast()
     const [provienceList, setProvienceList] = useState([])
     const [selectedProvience, setSelectedProvience] = useState({});
     const [cityList, setCityList] = useState([]);
     const [selectedCity, setSelectedCity] = useState("");
     const [areaList, setAreaList] = useState([]);
     const [selectedArea, setSelectedArea] = useState("");
+    const [full_address, setFull_address] = useState("");
     const [openStates, setOpenStates] = useState({ div1: false, div2: false, div3: false });
 
     const API_BASE_URL = 'https://www.nepallocation.com.np/api/v1';
@@ -90,6 +90,68 @@ const AddressForm = ({ props }) => {
         }));
     };
 
+    // if all fields are non-empty
+    const areAllFieldsFilled = () => {
+        return (
+            selectedArea.trim() !== "" &&
+            selectedCity.trim() !== "" &&
+            selectedProvience
+
+        );
+    };
+
+    //create address book 
+    const createAddressBookFunction = async () => {
+        try {
+            const data = {
+                province_id: selectedProvience.id,
+                province: selectedProvience.name,
+                city: selectedCity,
+                area: selectedArea,
+                fullAddress: full_address
+            }
+            const message = await addressBookStore.getState().createAddressBook(data);
+            if (message.status !== "success") {
+                toast({
+                    title: "Error",
+                    description: "Something went wrong",
+                    status: "error",
+                    duration: 3000,
+                    isClosable: true,
+                });
+
+            } else {
+                toast({
+                    title: "success",
+                    description: "Succesfully created!",
+                    status: "success",
+                    duration: 3000,
+                    isClosable: true,
+                });
+                updateAddressDetails(message.message)
+                props(false)
+            }
+
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    // button -> create function 
+    function createHandler() {
+        if (areAllFieldsFilled()) {
+            createAddressBookFunction();
+        } else {
+            toast({
+                title: "Error",
+                description: "Fields can't be empty",
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+            });
+        }
+    }
+
 
     return (
         <>
@@ -112,27 +174,25 @@ const AddressForm = ({ props }) => {
                         <div className='flex flex-col gap-y-2'>
                             <span className='font-semibold'>Full Name</span>
                             <div className="flex items-center gap-2">
-                                <input
-                                    type="text"
-                                    placeholder="Enter your full name"
+                                <span
                                     className="border border-gray-400 rounded-md pl-3 py-2 w-72"
 
-                                />
+                                >{profileDetails?.firstName} {profileDetails?.lastName}</span>
                             </div>
                         </div>
                         <div className='flex flex-col gap-y-2'>
                             <span className='font-semibold'>Phone Number</span>
                             <div className="flex items-center gap-2">
-                                <input
-                                    type="text"
-                                    placeholder="Enter your phone number"
+                                <span
                                     className="border border-gray-400 rounded-md pl-3 py-2 w-72 "
 
-                                />
+                                >
+                                    {profileDetails?.phoneNumber}
+                                </span>
                             </div>
                         </div>
                         <div className='relative flex flex-col gap-y-2'>
-                            <span className='font-semibold'>Provience</span>
+                            <span className='font-semibold'>Provience *</span>
                             <div className="w-72 font-medium ">
                                 <div
                                     onClick={() => toggleOpen('div1')}
@@ -163,8 +223,8 @@ const AddressForm = ({ props }) => {
                                 </ul>
                             </div>
                         </div>
-                        <div className='flex flex-col gap-y-2'>
-                            <span className='font-semibold'>City</span>
+                        <div className='relative select-none flex flex-col gap-y-2'>
+                            <span className='font-semibold'>City *</span>
                             <div className="w-72 font-medium ">
                                 <div
                                     onClick={() => toggleOpen('div2')}
@@ -196,7 +256,7 @@ const AddressForm = ({ props }) => {
                             </div>
                         </div>
                         <div className='flex flex-col gap-y-2'>
-                            <span className='font-semibold'>Area</span>
+                            <span className='font-semibold'>Area *</span>
                             <div className="w-72 font-medium ">
                                 <div
                                     onClick={() => toggleOpen('div3')}
@@ -236,6 +296,7 @@ const AddressForm = ({ props }) => {
                                     placeholder="Enter your delivery full Address"
                                     className="border border-gray-400 rounded-md pl-3 py-2 w-72 "
                                     required
+                                    onChange={(e)=>{setFull_address(e.target.value)}}
                                 />
                             </div>
                         </div>
@@ -244,6 +305,7 @@ const AddressForm = ({ props }) => {
                     <div className="w-full flex items-center justify-center">
                         <span
                             className="mt-4 px-8 py-2 text-sm font-semibold tracking-wide rounded-md bg-[#008080] text-white cursor-pointer"
+                            onClick={createHandler}
                         >
                             Save
                         </span>
@@ -251,7 +313,7 @@ const AddressForm = ({ props }) => {
                 </div>
             </div>
 
-        </> 
+        </>
     )
 }
 

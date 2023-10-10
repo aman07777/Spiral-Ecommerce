@@ -3,8 +3,6 @@ import {
     Box,
     Flex,
     Heading,
-    Text,
-    Avatar,
     IconButton,
     Drawer,
     DrawerOverlay,
@@ -14,22 +12,14 @@ import {
     DrawerBody,
 } from "@chakra-ui/react";
 import MenuIcon from "@mui/icons-material/Menu";
-import { FaAddressBook, FaThList } from "react-icons/fa";
-import { MdOutlinePayment, MdPreview } from "react-icons/md";
-import { BiSolidCart, BiLogOut } from "react-icons/bi";
-import { useNavigate } from "react-router-dom";
-import { FaUserCircle } from "react-icons/fa";
-import LeftSide from "./LeftSide";
+import { MdPreview } from "react-icons/md";
+import LeftSide from "../Components/LeftSide";
 import { AiFillStar } from "react-icons/ai";
+import OptionsMobile from "../Components/OptionsMobile";
+import TopSide from "../Components/TopSide";
 
 
 const MyReview = () => {
-    const navigate = useNavigate();
-    const [firstName, setFirstName] = useState("John");
-    const [lastName, setLastName] = useState("Doe");
-    const [image, setImage] = useState("");
-    const [email, setEmail] = useState("johndoe@example.com");
-    const [bonus, setBonus] = useState(100);
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
 
@@ -75,12 +65,7 @@ const MyReview = () => {
                 <div className="w-[100%] md:w-[80%]">
                     <Box borderWidth="1px" borderRadius="lg" overflow="hidden" className="p-5">
                         <Flex alignItems="center" bg="gray.50" p={4}>
-                            <Avatar size="lg" name={`${firstName} ${lastName}`} src={image} />
-                            <Box ml={4}>
-                                <Text fontWeight="bold">{`${firstName} ${lastName}`}</Text>
-                                <Text fontSize="sm" className="font-roboto">{email}</Text>
-                                <Text fontSize="sm">Bonus: <span className="font-roboto">{bonus}</span></Text>
-                            </Box>
+                            <TopSide/>
                             <div className="w-full items-center justify-center hidden md:flex gap-x-2" >
                                 <span className="text-lg font-bold">My Review</span>
                                 <i><MdPreview className="text-[#008080]" size={20} /></i>
@@ -148,55 +133,11 @@ const MyReview = () => {
                                 <DrawerCloseButton />
                                 <DrawerHeader>
                                     <div className="">
-                                        <Avatar size="lg" name={`${firstName} ${lastName}`} src={image} className="mb-3" />
-                                        <Box>
-                                            <Text fontWeight="bold">{`${firstName} ${lastName}`}</Text>
-                                            <Text fontSize="sm">{email}</Text>
-                                            <Text fontSize="sm">{`Bonus: ${bonus}`}</Text>
-                                        </Box>
+                                        <TopSide/>
                                     </div>
                                 </DrawerHeader>
                                 <DrawerBody>
-                                    <div className="flex flex-col gap-y-6">
-                                        <div className="flex gap-x-2 items-center cursor-pointer " onClick={() => {
-                                            navigate('/profile')
-                                        }}>
-                                            <i><FaUserCircle size={20} className="text-[#008080]" /></i>
-                                            <span className="text-sm  font-semibold hover:text-[#008080]">My Profile</span>
-                                        </div>
-                                        <div className="flex gap-x-2 items-center cursor-pointer ">
-                                            <i><FaAddressBook size={20} className="text-[#008080]" /></i>
-                                            <span className="text-sm  font-semibold hover:text-[#008080]">Address Book</span>
-                                        </div>
-                                        <div className="flex gap-x-2 items-center cursor-pointer ">
-
-                                            <i><MdOutlinePayment size={20} className="text-[#008080]" /></i>
-                                            <span className="text-sm  font-semibold hover:text-[#008080]">Payment Options</span>
-                                        </div>
-                                        <div className="flex gap-x-2 items-center cursor-pointer ">
-
-                                            <i><BiSolidCart size={20} className="text-[#008080]" /></i>
-                                            <span className="text-sm  font-semibold hover:text-[#008080]">My Orders</span>
-                                        </div>
-                                        <div className="flex gap-x-2 items-center cursor-pointer ">
-
-                                            <i><FaThList size={20} className="text-[#008080]" /></i>
-                                            <span className="text-sm  font-semibold hover:text-[#008080]">My Whishlist</span>
-                                        </div>
-                                        <div className="flex gap-x-2 items-center cursor-pointer ">
-
-                                            <i><MdPreview size={20} className="text-[#008080]" /></i>
-                                            <span className="text-sm  font-semibold hover:text-[#008080]">My Review</span>
-                                        </div>
-                                        <div className="flex gap-x-2 items-center cursor-pointer ">
-
-                                            <i><BiLogOut size={20} className="text-[#008080]" /></i>
-                                            <span className="text-sm  font-semibold hover:text-[#008080]">Log Out</span>
-                                        </div>
-                                        <span className="px-4 w-[10rem] py-2 bg-[#008080] text-white rounded-md text-sm font-semibold tracking-wide cursor-pointer" >
-                                            Edit Profile
-                                        </span>
-                                    </div>
+                                    <OptionsMobile props={"Not Profile"} />
                                 </DrawerBody>
                             </DrawerContent>
                         </Drawer>
