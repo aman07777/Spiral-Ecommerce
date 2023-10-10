@@ -10,12 +10,21 @@ import {
   Select,
   Image,
   IconButton,
+  useToast,
 } from "@chakra-ui/react";
 
 import { ArrowForward } from "@mui/icons-material";
 import { imageUrl } from "../../../../../global/config";
+import { useUpdateProductStore } from "../store";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { handleToast } from "../../../../../global/toast";
 
 const UpdateProductForm = ({ setIsPreviewModalOpen, product, setProduct }) => {
+  const toast = useToast();
+  const client = useQueryClient();
+  // stores
+  const updateProduct = useUpdateProductStore((state) => state.updateProduct);
+  const getDetails = useUpdateProductStore((state) => state.getProductDetails);
   //states
   const [images, setImages] = useState([]);
   const handleSizeChange = (event) => {
@@ -43,7 +52,26 @@ const UpdateProductForm = ({ setIsPreviewModalOpen, product, setProduct }) => {
       }
     }
   };
-  const handleSubmit = (event) => {
+  const { mutateAsync, isLoading } = useMutation({
+    mutationFn: updateProduct,
+    mutationKey: ["update", "product", product?._id],
+    onSuccess: (data) => {
+      if (data) {
+        client.invalidateQueries(["get", "products"], { exact: true });
+        getDetails();
+        handleToast(
+          toast,
+          "Success",
+          "Product updated successfully",
+          "success"
+        );
+      }
+    },
+    onError: (error) => {
+      handleToast(toast, "Error", error.message, "error");
+    },
+  });
+  const handleSubmit = async (event) => {
     event.preventDefault();
     let formData = new FormData();
     formData.append("name", product.name);
@@ -52,14 +80,16 @@ const UpdateProductForm = ({ setIsPreviewModalOpen, product, setProduct }) => {
     formData.append("category", product.category);
     formData.append("brand", product.brand);
     for (let i = 0; i < product.colors?.length; i++) {
-      formData.append("colors", product.colors[i]?.trim());
+      formData.append("colors", product.colors[i]);
     }
     product?.sizes.forEach((size) => {
-      formData.append("sizes", size?.trim());
+      formData.append("sizes", size);
     });
     for (let i = 0; i < images?.length; i++) {
       formData.append("productImage", images[i]);
     }
+
+    mutateAsync({ data: formData, id: product?._id });
   };
   return (
     <>
@@ -84,7 +114,7 @@ const UpdateProductForm = ({ setIsPreviewModalOpen, product, setProduct }) => {
                     type="text"
                     placeholder="Enter product name"
                     size="md"
-                    value={product.name | ""}
+                    value={product.name || ""}
                     onChange={(event) =>
                       setProduct({ ...product, name: event.target.value })
                     }
@@ -172,7 +202,7 @@ const UpdateProductForm = ({ setIsPreviewModalOpen, product, setProduct }) => {
                     }
                   />
                 </FormControl>
-                <FormControl id="image" mt={2} isRequired>
+                <FormControl id="image" mt={2}>
                   <FormLabel>Product Image</FormLabel>
                   <Input
                     type="file"
@@ -209,7 +239,7 @@ const UpdateProductForm = ({ setIsPreviewModalOpen, product, setProduct }) => {
                   </Flex>
                 )}
                 <Button type="submit" colorScheme="blue" mt={4} size="md">
-                  {false ? "Updating..." : "Update"}
+                  {isLoading ? "Updating..." : "Update"}
                 </Button>
               </form>
             </Box>

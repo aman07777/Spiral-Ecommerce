@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { axios_auth } from "../../../../global/config";
+import { axios_auth, axios_file_with_auth } from "../../../../global/config";
 
 export const useUpdateProductStore = create((set) => ({
   productDetails: {},
@@ -13,6 +13,20 @@ export const useUpdateProductStore = create((set) => ({
       return {};
     } catch (error) {
       return error;
+    }
+  },
+  updateProduct: async (data) => {
+    try {
+      const res = await axios_file_with_auth.put(
+        `products/${data.id}`,
+        data.data
+      );
+      if (res.data.status === "success") {
+        return true;
+      }
+      return false;
+    } catch (error) {
+      return false;
     }
   },
 }));
