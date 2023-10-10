@@ -13,20 +13,37 @@ import {
   ModalFooter,
 } from "@chakra-ui/react";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import { imageUrl } from "../../../../../global/config";
 const PreviewModal = ({
   isPreviewModalOpen,
-  handlePreviewModalClose,
-  handleNextClick,
   product,
   selectedImageIndex,
-  handlePrevClick,
+  setIsPreviewModalOpen,
+  setSelectedImageIndex,
 }) => {
+  const handlePreviewModalClose = () => {
+    setIsPreviewModalOpen(false);
+    setSelectedImageIndex(0);
+  };
+
+  const handlePrevClick = () => {
+    setSelectedImageIndex((prev) =>
+      prev > 0 ? prev - 1 : product.images?.length - 1
+    );
+  };
+
+  const handleNextClick = () => {
+    setSelectedImageIndex((prev) =>
+      prev < product.images?.length - 1 ? prev + 1 : 0
+    );
+  };
   return (
     <>
       <Modal
         isOpen={isPreviewModalOpen}
         onClose={handlePreviewModalClose}
         size="xl"
+        isCentered
       >
         <ModalOverlay />
         <ModalContent>
@@ -42,7 +59,7 @@ const PreviewModal = ({
                 mr={2}
               />
               <Image
-                src={product.images[selectedImageIndex]}
+                src={`${imageUrl}/${product?.images?.[selectedImageIndex]}`}
                 alt={`Product Image ${selectedImageIndex + 1}`}
                 height="30vh"
                 width="30vw"

@@ -13,10 +13,10 @@ import {
 } from "@chakra-ui/react";
 
 import { ArrowForward } from "@mui/icons-material";
+import { imageUrl } from "../../../../../global/config";
 
-const UpdateProductForm = ({ handlePreviewClick, product, setProduct }) => {
+const UpdateProductForm = ({ setIsPreviewModalOpen, product, setProduct }) => {
   //states
-
   const [images, setImages] = useState([]);
   const handleSizeChange = (event) => {
     const { value } = event.target;
@@ -60,13 +60,6 @@ const UpdateProductForm = ({ handlePreviewClick, product, setProduct }) => {
     for (let i = 0; i < images?.length; i++) {
       formData.append("productImage", images[i]);
     }
-    // addProductClass.addProduct(
-    //   formData,
-    //   addProduct,
-    //   toast,
-    //   setLoading,
-    //   setProduct
-    // );
   };
   return (
     <>
@@ -91,7 +84,7 @@ const UpdateProductForm = ({ handlePreviewClick, product, setProduct }) => {
                     type="text"
                     placeholder="Enter product name"
                     size="md"
-                    value={product.name}
+                    value={product.name | ""}
                     onChange={(event) =>
                       setProduct({ ...product, name: event.target.value })
                     }
@@ -106,7 +99,7 @@ const UpdateProductForm = ({ handlePreviewClick, product, setProduct }) => {
                       type="number"
                       placeholder="Enter product price"
                       size="md"
-                      value={product.price}
+                      value={product.price || ""}
                       onChange={(event) =>
                         setProduct({ ...product, price: event.target.value })
                       }
@@ -117,7 +110,7 @@ const UpdateProductForm = ({ handlePreviewClick, product, setProduct }) => {
                     <Select
                       placeholder="Select category"
                       size="md"
-                      value={product.category}
+                      value={product.category || ""}
                       onChange={(event) =>
                         setProduct({ ...product, category: event.target.value })
                       }
@@ -134,7 +127,7 @@ const UpdateProductForm = ({ handlePreviewClick, product, setProduct }) => {
                     type="text"
                     placeholder="Enter product brand"
                     size="md"
-                    value={product.brand}
+                    value={product.brand || ""}
                     onChange={(event) =>
                       setProduct({ ...product, brand: event.target.value })
                     }
@@ -146,7 +139,7 @@ const UpdateProductForm = ({ handlePreviewClick, product, setProduct }) => {
                     type="text"
                     placeholder="Enter product color (comma-separated)"
                     size="md"
-                    value={product.colors}
+                    value={product.colors || ""}
                     onChange={(event) => {
                       setProduct({
                         ...product,
@@ -161,7 +154,7 @@ const UpdateProductForm = ({ handlePreviewClick, product, setProduct }) => {
                     type="text"
                     placeholder="Enter product sizes (comma-separated)"
                     size="md"
-                    value={product.sizes}
+                    value={product.sizes || ""}
                     onChange={handleSizeChange}
                   />
                 </FormControl>
@@ -170,7 +163,7 @@ const UpdateProductForm = ({ handlePreviewClick, product, setProduct }) => {
                   <Textarea
                     placeholder="Enter product description"
                     size="md"
-                    value={product.description}
+                    value={product.description || ""}
                     onChange={(event) =>
                       setProduct({
                         ...product,
@@ -185,18 +178,23 @@ const UpdateProductForm = ({ handlePreviewClick, product, setProduct }) => {
                     type="file"
                     accept="image/*"
                     onChange={(e) => {
+                      e.preventDefault();
                       handleImageChangeMultiple(e);
-
                       setImages(e.target.files);
                     }}
                     multiple
                     size="md"
                   />
                 </FormControl>
-                {product.previewImages?.length > 0 && (
+                {(product.images?.length > 0 ||
+                  product.previewImages?.length > 0) && (
                   <Flex direction="row" alignItems="center" mt={2}>
                     <Image
-                      src={product.previewImages?.[0]}
+                      src={
+                        product.previewImages?.length > 0
+                          ? product.previewImages?.[0]
+                          : `${imageUrl}/${product.images?.[0]}`
+                      }
                       alt={`Product Image 1`}
                       boxSize="50px"
                       objectFit="cover"
@@ -206,12 +204,12 @@ const UpdateProductForm = ({ handlePreviewClick, product, setProduct }) => {
                       icon={<ArrowForward />}
                       aria-label="Preview Images"
                       size="md"
-                      onClick={handlePreviewClick}
+                      onClick={() => setIsPreviewModalOpen(true)}
                     />
                   </Flex>
                 )}
                 <Button type="submit" colorScheme="blue" mt={4} size="md">
-                  {false ? "Adding..." : " Add Product"}
+                  {false ? "Updating..." : "Update"}
                 </Button>
               </form>
             </Box>

@@ -24,9 +24,11 @@ import Dashboard from "../Dashboard";
 import Title from "./components/title";
 import BreadCrumb from "./components/bread-crumb";
 import TablePagination from "../../../components/table-pagination";
+import { useNavigate } from "react-router-dom";
 function AdminProduct() {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate();
   // stores
   const getProducts = useAdminProductStore((state) => state.getProducts); // gets products from backend
   const setProducts = useAdminProductStore((state) => state.setProducts); // set products stored in the store
@@ -43,6 +45,7 @@ function AdminProduct() {
   const handleEdit = (product) => {
     // Set the form fields to the values of the selected product
     setProduct(product);
+    navigate(`/admin-update-product/${product._id}`);
   };
   const handleDelete = (product) => {
     onOpen();
