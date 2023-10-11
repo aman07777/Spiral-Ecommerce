@@ -6,7 +6,6 @@ import App from "./App";
 import { ChakraProvider } from "@chakra-ui/react";
 import { UserProvider } from "./contexts/UserContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const queryClient = new QueryClient();
 
@@ -16,7 +15,6 @@ root.render(
     <ChakraProvider resetCSS>
       <UserProvider>
         <QueryClientProvider client={queryClient}>
-          <ReactQueryDevtools initialIsOpen />
           <App />
         </QueryClientProvider>
       </UserProvider>

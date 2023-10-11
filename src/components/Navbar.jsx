@@ -59,6 +59,7 @@ const Navbar = () => {
               textDecoration: "none",
               textTransform: "uppercase",
             }}
+            title="AIJO"
           >
             AIJO
           </NavLink>
