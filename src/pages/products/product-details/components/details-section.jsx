@@ -10,19 +10,35 @@ import {
   List,
   ListItem,
   useToast,
+  useDisclosure,
 } from "@chakra-ui/react";
 
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import { useUserContext } from "../../../../contexts/UserContext";
 import { handleToast } from "../../../../global/toast";
 import { postCart } from "../../../../services/CartServices";
+import BuyModal from "./buy-modal";
+import { getPurchasePrice, getTotalPrice } from "../helper";
+
 const DetailsSection = ({ product }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
-  const { currentUser } = useUserContext();
   const navigate = useNavigate();
+  const { currentUser } = useUserContext();
+
+  // states
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("null");
   const [selectedQuantity, setSelectedQuantity] = useState(1);
+  const [orderData, setOrderData] = useState({
+    product: "",
+    quantity: 1,
+    purchasePrice: 0,
+    totalPrice: 0,
+    status: "",
+    size: "",
+    color: "",
+  });
   const handleQuantityChange = (e) => {
     setSelectedQuantity(+e.target.value);
   };
@@ -37,37 +53,51 @@ const DetailsSection = ({ product }) => {
   };
 
   const handleAddToCart = async () => {
-    if (currentUser) {
-      try {
-        const res = await postCart(
-          product._id,
-          selectedQuantity,
-          selectedSize,
-          selectedColor
-        );
-        if (res.status === 201) {
-          handleToast(toast, "Success", "Product added to cart.", "success");
-          navigate("/protect/cart");
-        }
-      } catch (error) {
-        handleToast(
-          toast,
-          "Error",
-          error.res?.data?.message || "An error occurred.",
-          "error"
-        );
+    if (!currentUser) return navigate("/login");
+    try {
+      const res = await postCart(
+        product._id,
+        selectedQuantity,
+        selectedSize,
+        selectedColor
+      );
+      if (res.status === 201) {
+        handleToast(toast, "Success", "Product added to cart.", "success");
+        navigate("/cart");
       }
-    } else {
-      navigate("/login");
+    } catch (error) {
+      handleToast(
+        toast,
+        "Error",
+        error.res?.data?.message || "An error occurred.",
+        "error"
+      );
     }
   };
 
+  const handleBuyClick = (e) => {
+    e.preventDefault();
+    setOrderData((prev) => ({
+      ...prev,
+      product: product._id,
+      quantity: selectedQuantity,
+      purchasePrice: getPurchasePrice(
+        product.price,
+        selectedQuantity,
+        product.discount
+      ),
+      totalPrice: getTotalPrice(product.price, selectedQuantity),
+      size: selectedSize,
+      color: selectedColor,
+    }));
+    onOpen(e);
+  };
   useEffect(() => {
     setSelectedQuantity(+product.quantity);
   }, [product]);
 
   return (
-    <div>
+    <>
       <Box maxWidth="800px" className="flex-1 text-gray-600">
         <Box
           className="flex flex-col justify-between"
@@ -207,13 +237,20 @@ const DetailsSection = ({ product }) => {
             >
               Add to cart
             </Button>
-            <Button colorScheme="linkedin" className="w-[10em] py-4 uppercase">
+            <Button
+              colorScheme="linkedin"
+              className="w-[10em] py-4 uppercase"
+              onClick={(e) => {
+                handleBuyClick(e);
+              }}
+            >
               Buy now
             </Button>
           </Flex>
         </Box>
       </Box>
-    </div>
+      <BuyModal data={orderData} isOpen={isOpen} onClose={onClose} />
+    </>
   );
 };
 
