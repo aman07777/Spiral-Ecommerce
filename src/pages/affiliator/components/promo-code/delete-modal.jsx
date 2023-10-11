@@ -21,9 +21,11 @@ const DeleteModal = ({ isOpen, onClose, data }) => {
     mutationKey: ["delete", "user", data?._id],
     mutationFn: deletePromoCode,
     onSuccess: (data) => {
-      queryClient.invalidateQueries(["get", "promo-codes"], { exact: true });
-      handleToast(toast, "Success", "User deleted successfully!", "success");
-      onClose();
+      if (data) {
+        queryClient.invalidateQueries(["get", "promo-codes"], { exact: true });
+        handleToast(toast, "Success", "User deleted successfully!", "success");
+        onClose();
+      }
     },
     onError: (error) => {
       handleToast(toast, "Error", error.message, "error");

@@ -15,6 +15,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAffiliatorStore } from "../store";
 import { handleToast } from "../../../../global/toast";
+import { useEffect } from "react";
 const PromoCodeModal = ({ isOpen, onClose, data }) => {
   const toast = useToast();
   const client = useQueryClient();
@@ -22,6 +23,8 @@ const PromoCodeModal = ({ isOpen, onClose, data }) => {
   const active = useAffiliatorStore((state) => state.activatePromoCode);
   // states
   const [promoCode, setPromoCode] = useState({});
+  const [status, setStatus] = useState("all");
+  const [filteredData, setFilteredData] = useState([]);
   // react query
   const { mutateAsync, isLoading } = useMutation({
     mutationKey: ["activate", "promoCode", data?._id],
@@ -44,6 +47,18 @@ const PromoCodeModal = ({ isOpen, onClose, data }) => {
     },
   });
 
+  useEffect(() => {
+    if (status === "all") setFilteredData(data?.promoCode);
+
+    if (status === "active")
+      setFilteredData(
+        data?.promoCode?.filter((item) => item?.status === "active")
+      );
+    if (status === "inactive")
+      setFilteredData(
+        data?.promoCode?.filter((item) => item?.status === "inactive")
+      );
+  }, [status, data]);
   return (
     <>
       <Modal isCentered isOpen={isOpen} onClose={onClose} size={"lg"}>
@@ -62,15 +77,31 @@ const PromoCodeModal = ({ isOpen, onClose, data }) => {
             <div className="mb-1 text-[#585858] flex flex-col gap-y-1 max-h-[70dvh] overflow-y-scroll">
               <div className="flex items-center justify-between">
                 <p>Promo Codes</p>
-                <p className="flex text-[.8rem]">
-                  <span>Active</span>
-                  <span>Inactive</span>
+                <p className="flex text-[.8rem] gap-x-2">
+                  <span
+                    className="px-1 border rounded-sm cursor-pointer select-none"
+                    onClick={() => setStatus("all")}
+                  >
+                    All
+                  </span>
+                  <span
+                    className="px-1 border rounded-sm cursor-pointer select-none"
+                    onClick={() => setStatus("active")}
+                  >
+                    Active
+                  </span>
+                  <span
+                    className="px-1 border rounded-sm cursor-pointer select-none"
+                    onClick={() => setStatus("inactive")}
+                  >
+                    Inactive
+                  </span>
                 </p>
               </div>
               <div className="mt-1">
-                {Array.isArray(data.promoCode) &&
-                  data.promoCode?.length > 0 &&
-                  data.promoCode.map((code) => (
+                {Array.isArray(filteredData) &&
+                  filteredData?.length > 0 &&
+                  filteredData.map((code) => (
                     <div
                       className="flex items-center justify-between p-2 border-b"
                       key={code._id}
