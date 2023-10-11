@@ -16,4 +16,15 @@ export const useAffiliatorStore = create((set) => ({
       return error;
     }
   },
+  activatePromoCode: async (id) => {
+    try {
+      const res = await axios_auth.get(`promo-code/active/${id}`);
+      if (res.data.status === "success") {
+        return true;
+      }
+      return false;
+    } catch (error) {
+      return false;
+    }
+  },
 }));
