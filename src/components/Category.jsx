@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button, Flex, Image, IconButton } from "@chakra-ui/react";
+import { Box, Flex, Image } from "@chakra-ui/react";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 const Category = () => {
@@ -44,7 +44,7 @@ const Category = () => {
                 border="1px solid #ccc"
                 borderRadius="10px"
                 overflow="hidden"
-                boxShadow="2xl"
+                boxShadow="xl"
               >
                 <Image
                   src={category.imageUrl}
@@ -53,25 +53,10 @@ const Category = () => {
                   boxSize={{ base: "200px", md: "300px" }}
                 />
               </Box>
-              <Button
-                position="absolute"
-                bottom={20}
-                left={{ base: "30%", md: "20%" }}
-                width="50%"
-                colorScheme="blackAlpha"
-                variant="solid"
-                py={1}
-                px={1}
-              >
-                {category.name}
-                <IconButton
-                  icon={<ArrowForwardIcon />}
-                  ml={2}
-                  aria-label="Category Arrow"
-                  size="sm"
-                  variant="ghost"
-                />
-              </Button>
+              <di className="absolute border bottom-[20%] left-[50%] transform -translate-x-1/2 cursor-pointer text-[#fff] bg-[teal] border-[teal] flex items-center gap-x-1 px-2 py-1 rounded capitalize group">
+                <span className="text-[1.1rem]">{category.name}</span>
+                <ArrowForwardIcon className="group-hover:translate-x-1 group-hover:transition-[translate] duration-300 ease-linear" />
+              </di>
             </Box>
           ))}
         </Flex>
