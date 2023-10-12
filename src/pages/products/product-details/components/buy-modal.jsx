@@ -10,14 +10,19 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import UseGetInnerWidth from "../../../Admin/hooks/get-inner-width";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAffiliatorProfileStore } from "../../../affiliator/components/user-details/store";
 import { useState } from "react";
+import { useOrderStore } from "../store";
+import { handleToast } from "../../../../global/toast";
 const BuyModal = ({ isOpen, onClose, data }) => {
   const toast = useToast();
+  const client = useQueryClient();
+  // hooks
   const innerWidth = UseGetInnerWidth();
   // stores
   const getMyDetails = useAffiliatorProfileStore((state) => state.getMyDetails);
+  const makeOrder = useOrderStore((state) => state.makeOrder);
   // states
   const [shippingInfo, setShippingInfo] = useState({
     fullName: "",
@@ -30,7 +35,38 @@ const BuyModal = ({ isOpen, onClose, data }) => {
   });
 
   // react query
-  const { data: user, isError } = useQuery(["get", "my-details"], getMyDetails);
+  const { data: user, isError: isGetError } = useQuery(
+    ["get", "my-details"],
+    getMyDetails
+  );
+  const { isLoading, isError, mutate } = useMutation({
+    mutationKey: ["make", "order"],
+    mutationFn: makeOrder,
+    onSuccess: (data) => {
+      if (data === true) {
+        client.invalidateQueries();
+        handleToast(toast, "Success", "Order placed successfully", "success");
+        setShippingInfo({
+          fullName: "",
+          email: "",
+          address: "",
+          mobileNumber: "",
+          landMark: "",
+          province: "",
+          label: "",
+        });
+      }
+    },
+    onError: (error) => handleToast(toast, "Error", error.message, "error"),
+  });
+  isError && handleToast(toast, "Error", "Something went wrong", "error");
+  const handleBuyClick = () => {
+    const orderData = {
+      orderItems: [data],
+      shippingInfo,
+    };
+    mutate(orderData);
+  };
   return (
     <div>
       <Modal
@@ -46,7 +82,7 @@ const BuyModal = ({ isOpen, onClose, data }) => {
         <ModalContent>
           <ModalHeader>
             <p className="text-[#585858] capitalize">
-              Dear {`${!isError && user?.firstName}`},
+              Dear {`${!isGetError && user?.firstName}`},
             </p>
           </ModalHeader>
           <ModalCloseButton />
@@ -154,7 +190,9 @@ const BuyModal = ({ isOpen, onClose, data }) => {
                     })
                   }
                 >
-                  <option disabled>Select Province</option>
+                  <option disabled value={""}>
+                    Select Province
+                  </option>
                   <option value="Bagmati">Bagmati</option>
                   <option value="Gandaki">Gandaki</option>
                   <option value="Karnali">Karnali</option>
@@ -180,7 +218,9 @@ const BuyModal = ({ isOpen, onClose, data }) => {
                     })
                   }
                 >
-                  <option disabled>Select Label</option>
+                  <option disabled value={""}>
+                    Select Label
+                  </option>
                   <option value="Home">Home</option>
                   <option value="Office">Office</option>
                   <option value="Other">Other</option>
@@ -192,16 +232,16 @@ const BuyModal = ({ isOpen, onClose, data }) => {
           <ModalFooter className="flex gap-x-3 ">
             <button
               onClick={onClose}
-              className="px-4 py-2 border border-gray-400 rounded-sm bg-[#585858] hover:bg-slate-50 text-white hover:text-[#585858]"
+              className="px-4 py-2 border border-gray-400 rounded-sm bg-[#585858] hover:bg-slate-50 text-white hover:text-[#585858] w-[7em]"
             >
               Cancel
             </button>
             <button
               variant="outline"
-              className="px-4 py-2 text-white border rounded-sm border-red-400/60 hover:text-rose-500 bg-rose-500 hover:bg-rose-50"
-              //   onClick={() => mutateAsync(data?._id)}
+              className="px-4 py-2 text-white border rounded-sm border-[teal]/60 hover:text-[teal] bg-[teal] hover:bg-rose-50 w-[7em]"
+              onClick={(e) => handleBuyClick(e)}
             >
-              {false ? "Deleting..." : "Delete"}
+              {isLoading ? "Loading..." : "Order"}
             </button>
           </ModalFooter>
         </ModalContent>
