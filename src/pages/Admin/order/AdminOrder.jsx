@@ -16,11 +16,11 @@ import BreadCrumb from "./components/breadcrumb";
 import Navigation from "./components/navigation";
 import { useState } from "react";
 import TablePagination from "../../../components/table-pagination";
+import { BsFillInfoSquareFill } from "react-icons/bs";
 function AdminOrder() {
   const toast = useToast();
   // stores
   const getAllOrders = useAdminOrderStore((state) => state.getOrders);
-  const setOrders = useAdminOrderStore((state) => state.setOrders);
 
   // pagination states
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,16 +33,8 @@ function AdminOrder() {
     data: orders,
     isLoading,
     isError,
-    isSuccess,
     error,
   } = useQuery(["get", "orders"], getAllOrders);
-  !isLoading &&
-    !isError &&
-    isSuccess &&
-    Array.isArray(orders) &&
-    orders?.length > 0 &&
-    setOrders(orders);
-
   isError && handleToast(toast, "Error", error.message, "error");
 
   return (
@@ -56,8 +48,10 @@ function AdminOrder() {
             <Tr>
               <Th>Customer Name</Th>
               <Th>Product Name</Th>
-              <Th>Quantity</Th>
-              <Th>Price</Th>
+              <Th>Address</Th>
+              <Th>Email</Th>
+              <Th>Phone</Th>
+              <Th>Action</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -70,10 +64,24 @@ function AdminOrder() {
             ) : Array.isArray(orders) && orders?.length > 0 ? (
               orders?.slice(startIndex, endIndex)?.map((order) => (
                 <Tr key={order._id}>
-                  <Td>{order?.shippingInfo?.fullName}</Td>
-                  <Td>{order.productName || "unknown"}</Td>
-                  <Td>{order.quantity || 0}</Td>
-                  <Td>Rs. {order.price || 0}</Td>
+                  <Td className="capitalize">
+                    {order?.shippingInfo?.fullName}
+                  </Td>
+                  <Td className="capitalize">
+                    {Array.isArray(order?.orderItems) &&
+                      order?.orderItems
+                        ?.map((item) => item?.product?.name)
+                        .join(",")}
+                  </Td>
+                  <Td>{order?.shippingInfo?.address}</Td>
+                  <Td>{order?.shippingInfo?.email || "NA"}</Td>
+                  <Td>{order?.shippingInfo?.mobileNumber}</Td>
+                  <Td>
+                    <BsFillInfoSquareFill
+                      className="text-[#585858] cursor-pointer"
+                      title="More Info"
+                    />
+                  </Td>
                 </Tr>
               ))
             ) : (

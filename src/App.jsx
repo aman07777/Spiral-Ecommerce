@@ -2,8 +2,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
-// import Cart from './components/CartPageMobile'
-// import CartPageMobile from "./components/CartPageMobile";
 const PaymentOption = lazy(() => import("./pages/Customer/PaymentOption"));
 const AddressBook = lazy(() => import("./pages/Customer/AddressBook"));
 const MyWhislist = lazy(() => import("./pages/Customer/MyWhislist"));
@@ -20,7 +18,6 @@ const AdminHome = lazy(() => import("./pages/Admin/AdminHome"));
 const UpdateProduct = lazy(() =>
   import("./pages/Admin/product/update-product/update-product")
 );
-
 const AdminProduct = lazy(() => import("./pages/Admin/product/AdminProduct"));
 const AdminOrder = lazy(() => import("./pages/Admin/order/AdminOrder"));
 const AdminCustomer = lazy(() => import("./pages/Admin/users/AdminCustomer"));
@@ -32,10 +29,6 @@ const ErrorPage = lazy(() => import("./pages/ErrorPage"));
 const AddProduct = lazy(() =>
   import("./pages/Admin/product/add-product/add-product")
 );
-const AddOrder = lazy(() => import("./pages/Admin/order/add-order/add-order"));
-// const AddCustomer = lazy(() =>
-//   import("./pages/Admin/users/add-cutomer/add-customer")
-// );
 const AddAffiliator = lazy(() =>
   import("./pages/Admin/affiliator/add-affiliator/add-affiliator")
 );
@@ -63,7 +56,6 @@ function App() {
               <Route path="login" element={<Login />} />
               <Route path="products" exact element={<ProductPage />} />
               <Route path="products/:id" element={<ProductDetails />} />
-
               <Route path="/" element={<CheckAuth />}>
                 <Route path="cart" element={<CartPage />} />
                 <Route path="profile/customer" element={<CustomerProfile />} />
@@ -93,9 +85,7 @@ function App() {
               element={<UpdateProduct />}
             />
             <Route path="/adminOrder" element={<AdminOrder />} />
-            <Route path="/admin-add-order" element={<AddOrder />} />
             <Route path="/adminCustomer" element={<AdminCustomer />} />
-            {/* <Route path="/admin-add-customer" element={<AddCustomer />} /> */}
             <Route path="/adminAffliator" element={<AdminAffiliator />} />
             <Route path="/admin-add-affliator" element={<AddAffiliator />} />
             <Route path="/adminSetting" element={<AdminSettings />} />

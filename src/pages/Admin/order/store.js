@@ -5,8 +5,11 @@ export const useAdminOrderStore = create((set) => ({
   orders: [],
   getOrders: async () => {
     try {
-      const res = await axios_auth.get("orders/all-orders");
-      return res.data.orders;
+      const res = await axios_auth.get("orders/all");
+      if (res.data.status === "success") {
+        set({ orders: res.data.orders });
+        return res.data.orders;
+      }
     } catch (error) {
       return error;
     }
