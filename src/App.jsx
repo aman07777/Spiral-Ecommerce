@@ -2,6 +2,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
+const OrderDetails = lazy(() =>
+  import("./pages/Admin/order/order-details/order-details")
+);
 const PaymentOption = lazy(() => import("./pages/Customer/PaymentOption"));
 const AddressBook = lazy(() => import("./pages/Customer/AddressBook"));
 const MyWhislist = lazy(() => import("./pages/Customer/MyWhislist"));
@@ -85,6 +88,7 @@ function App() {
               element={<UpdateProduct />}
             />
             <Route path="/adminOrder" element={<AdminOrder />} />
+            <Route path="/admin-order-details/:id" element={<OrderDetails />} />
             <Route path="/adminCustomer" element={<AdminCustomer />} />
             <Route path="/adminAffliator" element={<AdminAffiliator />} />
             <Route path="/admin-add-affliator" element={<AddAffiliator />} />

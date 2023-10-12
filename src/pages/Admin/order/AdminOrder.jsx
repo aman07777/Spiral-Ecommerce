@@ -17,8 +17,10 @@ import Navigation from "./components/navigation";
 import { useState } from "react";
 import TablePagination from "../../../components/table-pagination";
 import { BsFillInfoSquareFill } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 function AdminOrder() {
   const toast = useToast();
+  const navigate = useNavigate();
   // stores
   const getAllOrders = useAdminOrderStore((state) => state.getOrders);
 
@@ -57,7 +59,7 @@ function AdminOrder() {
           <Tbody>
             {isLoading ? (
               <Tr className="text-red-500 text-[.8rem] font-semibold">
-                <Td colSpan={4} textAlign={"center"}>
+                <Td colSpan={6} textAlign={"center"}>
                   <Spinner color="blue.300" />
                 </Td>
               </Tr>
@@ -80,13 +82,16 @@ function AdminOrder() {
                     <BsFillInfoSquareFill
                       className="text-[#585858] cursor-pointer"
                       title="More Info"
+                      onClick={() => {
+                        navigate(`/admin-order-details/${order?._id}`);
+                      }}
                     />
                   </Td>
                 </Tr>
               ))
             ) : (
               <Tr className="text-red-500 text-[.8rem] font-semibold">
-                <Td colSpan={4} textAlign={"center"}>
+                <Td colSpan={6} textAlign={"center"}>
                   No any orders are available
                 </Td>
               </Tr>
