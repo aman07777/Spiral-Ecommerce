@@ -48,7 +48,7 @@ const Saletime = () => {
       <Box
         mx={1}
         borderRadius="5px"
-        backgroundColor="#0077B5"
+        backgroundColor="#008080"
         className="px-3 py-1"
       >
         <Text as="span" color="white">
@@ -62,7 +62,7 @@ const Saletime = () => {
         mx={1}
         borderRadius="5px"
         className="px-3 py-1"
-        backgroundColor="#0077B5"
+        backgroundColor="#008080"
       >
         <Text as="span" color="white">
           {timeLeft.minutes}
@@ -75,7 +75,7 @@ const Saletime = () => {
         mx={1}
         borderRadius="5px"
         className="px-3 py-1"
-        backgroundColor="#0077B5"
+        backgroundColor="#008080"
       >
         <Text as="span" color="white">
           {timeLeft.seconds}

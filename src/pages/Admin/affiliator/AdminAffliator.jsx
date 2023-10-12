@@ -1,28 +1,37 @@
-import React from "react";
-import { Flex, Box, Heading, Text, useToast, Spinner } from "@chakra-ui/react";
+import React, { useState } from "react";
+import {
+  Flex,
+  Box,
+  Heading,
+  Text,
+  useToast,
+  Spinner,
+  useDisclosure,
+} from "@chakra-ui/react";
 import Dashboard from "../Dashboard";
 import BreadCrumb from "./components/bread-crumb";
 import Navigation from "./components/navigation";
-import { useQuery } from "@chakra-ui/react";
 import { handleToast } from "../../../global/toast";
 import { useAffiliatorStore } from "./store";
+import { MdOutlineUnfoldMoreDouble } from "react-icons/md";
+import { useQuery } from "@tanstack/react-query";
+import PromoCodeModal from "./components/promo-code-modals";
 function AdminAffiliator() {
   const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   // stores
   const getAffiliators = useAffiliatorStore((state) => state.getAffiliators);
-  const setAffiliator = useAffiliatorStore((state) => state.setAffiliator);
 
+  // states
+  const [affiliator, setAffiliator] = useState([]);
   const {
     data: affiliators,
     isError,
     isLoading,
     error,
   } = useQuery(["get", "affiliators"], getAffiliators);
+
   isError && handleToast(toast, "Error", error.message, "error");
-  !isLoading &&
-    !isError &&
-    Array.isArray(affiliators) &&
-    setAffiliator(affiliators);
   return (
     <>
       <Dashboard />
@@ -37,16 +46,37 @@ function AdminAffiliator() {
             {isLoading ? (
               <>
                 <div className="flex justify-center w-full">
-                  <Spinner color="blue.300" size={30} />
+                  <Spinner color="blue.300" />
                 </div>
               </>
-            ) : [].length > 0 ? (
-              [].map((affiliator, index) => (
-                <Box key={index} mb={2}>
+            ) : affiliators.length > 0 ? (
+              affiliators.map((affiliator, index) => (
+                <Box key={index} mb={2} className="flex items-center gap-x-2">
                   <Text>
                     {affiliator.firstName} {affiliator.lastName} (
-                    {affiliator.email}) - Promo Code: {affiliator.promoCode}
+                    {affiliator.email})
                   </Text>
+                  <p>
+                    {Array.isArray(affiliator.promoCode) &&
+                      affiliator.promoCode?.length > 0 &&
+                      affiliator.promoCode?.length && <span> promo codes</span>}
+                  </p>
+                  {Array.isArray(affiliator.promoCode) &&
+                    affiliator.promoCode?.length > 0 && (
+                      <p className="flex items-center cursor-pointer">
+                        <MdOutlineUnfoldMoreDouble
+                          className="rotate-90 text-[1.4rem] hover:scale-x-125 hover:scale-y-105 transition-[scale] duration-300 text-[#585858] cursor-pointer"
+                          title={`${affiliator.firstName} has ${
+                            Array.isArray(affiliator.promoCode) &&
+                            affiliator.promoCode?.length
+                          } promo codes`}
+                          onClick={() => {
+                            onOpen();
+                            setAffiliator(affiliator);
+                          }}
+                        />
+                      </p>
+                    )}
                 </Box>
               ))
             ) : (
@@ -55,6 +85,7 @@ function AdminAffiliator() {
           </Box>
         </Box>
       </Flex>
+      <PromoCodeModal isOpen={isOpen} onClose={onClose} data={affiliator} />
     </>
   );
 }

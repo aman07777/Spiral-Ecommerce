@@ -41,7 +41,7 @@ const ResetPassword = () => {
     }
   };
 
-  const handleNewPassoword = async (e) => {
+  const handleNewPassword = async (e) => {
     try {
       const response = await resetPassword("token", password, confirmPassword);
       if (response.status === 200) {
@@ -150,7 +150,7 @@ const ResetPassword = () => {
             mt={5}
             width="100%"
             colorScheme="linkedin"
-            onClick={handleNewPassoword}
+            onClick={handleNewPassword}
           >
             Reset Password
           </Button>

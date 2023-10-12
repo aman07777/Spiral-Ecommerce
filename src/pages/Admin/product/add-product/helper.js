@@ -1,9 +1,5 @@
 export class AddProductClass {
   addProduct = async (data, addProduct, toast, setLoading, setProduct) => {
-    console.log(
-      "🚀 ~ file: helper.js:3 ~ AddProductClass ~ addProduct= ~ data:",
-      data
-    );
     try {
       setLoading(true);
       const res = await addProduct(data);

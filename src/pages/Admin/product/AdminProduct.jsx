@@ -1,4 +1,4 @@
-import React, { lazy, useState } from "react";
+import React, { useState } from "react";
 import {
   Button,
   Table,
@@ -7,34 +7,34 @@ import {
   Tr,
   Th,
   Td,
-  Checkbox,
   Image,
   Spinner,
   useToast,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { BiSolidMessageSquareEdit } from "react-icons/bi";
+
 import { useAdminProductStore } from "./store";
 import { imageUrl } from "../../../global/config";
 import { handleToast } from "../../../global/toast";
 import DeleteModal from "./components/delete-modal";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-const Dashboard = lazy(() => import("../Dashboard"));
-const Title = lazy(() => import("./components/title"));
-const BreadCrumb = lazy(() => import("./components/bread-crumb"));
-const TablePagination = lazy(() =>
-  import("../../../components/table-pagination")
-);
+import Dashboard from "../Dashboard";
+import Title from "./components/title";
+import BreadCrumb from "./components/bread-crumb";
+import TablePagination from "../../../components/table-pagination";
+import { useNavigate } from "react-router-dom";
 function AdminProduct() {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate();
   // stores
   const getProducts = useAdminProductStore((state) => state.getProducts); // gets products from backend
   const setProducts = useAdminProductStore((state) => state.setProducts); // set products stored in the store
 
   // states
   const [product, setProduct] = useState({});
-  // const [selectAllLocal, setSelectAllLocal] = useState(false);
   const [selectAll, setSelectAll] = useState(false);
   // pagination states
   const [currentPage, setCurrentPage] = useState(1);
@@ -45,42 +45,11 @@ function AdminProduct() {
   const handleEdit = (product) => {
     // Set the form fields to the values of the selected product
     setProduct(product);
+    navigate(`/admin-update-product/${product._id}`);
   };
   const handleDelete = (product) => {
     onOpen();
     setProduct(product);
-    // Remove the selected product from the list of products
-    setProducts(products.filter((p) => p.id !== product.id));
-  };
-  const handleSelectAll = (checked) => {
-    // Select or deselect all products
-    setProducts(products.map((p) => ({ ...p, selected: checked })));
-    setSelectAll(checked);
-  };
-
-  const handleSelect = (product, checked) => {
-    // Select or deselect a single product
-    setProducts(
-      products.map((p) =>
-        p.id === product.id ? { ...p, selected: checked } : p
-      )
-    );
-    if (!checked) {
-      setSelectAll(false);
-    }
-  };
-
-  const handleSelectAllClick = (event) => {
-    const { checked } = event.target;
-    // setSelectAllLocal(checked);
-    handleSelectAll(checked);
-    setSelectAll(checked);
-    setProducts(products.map((p) => ({ ...p, selected: checked })));
-  };
-
-  const handleSelectClick = (event, product) => {
-    const { checked } = event.target;
-    handleSelect(product, checked);
   };
 
   const handleDeleteAll = (selectedProducts) => {
@@ -101,12 +70,11 @@ function AdminProduct() {
   // fetching the products from backend
   const {
     data: products,
-    isLoading,
+    isFetching,
     isError,
     error,
   } = useQuery(["get", "products"], getProducts);
-
-  !isLoading &&
+  !isFetching &&
     !isError &&
     Array.isArray(products) &&
     products?.length > 0 &&
@@ -129,14 +97,6 @@ function AdminProduct() {
       <Table variant="simple" className="mt-3">
         <Thead>
           <Tr>
-            <Th>
-              <Checkbox
-                isChecked={
-                  selectAll || products?.every((product) => product.selected)
-                }
-                onChange={handleSelectAllClick}
-              />
-            </Th>
             <Th>Name</Th>
             <Th>Price</Th>
             <Th>Category</Th>
@@ -149,26 +109,20 @@ function AdminProduct() {
           </Tr>
         </Thead>
         <Tbody>
-          {isLoading ? (
+          {isFetching ? (
             <Tr>
               <Td colSpan={10} textAlign={"center"}>
                 <Spinner color="blue.300" />
               </Td>
             </Tr>
           ) : Array.isArray(products) && products?.length > 0 ? (
-            products?.slice(startIndex, endIndex)?.map((product) => (
-              <Tr key={product.id}>
-                <Td>
-                  <Checkbox
-                    isChecked={product.selected}
-                    onChange={(event) => handleSelectClick(event, product)}
-                  />
-                </Td>
+            products?.slice(startIndex, endIndex)?.map((product, index) => (
+              <Tr key={product._id}>
                 <Td>{product.name}</Td>
                 <Td>{product.price}</Td>
                 <Td>{product.category}</Td>
                 <Td>{product.brand}</Td>
-                <Td>{product.color}</Td>
+                <Td>{product.colors?.join(",")}</Td>
                 <Td>{product.sizes?.join(",")}</Td>
                 <Td>{product.description}</Td>
                 <Td>
@@ -180,15 +134,13 @@ function AdminProduct() {
                     mr={2}
                   />
                 </Td>
-                <Td display="flex" gap="2px">
-                  <Button
-                    colorScheme="blue"
-                    size="sm"
-                    className="w-[5em]"
+                <Td gap="2px" className="flex items-center">
+                  <span
+                    title={`Update details of ${product?.name}`}
                     onClick={() => handleEdit(product)}
                   >
-                    Edit
-                  </Button>
+                    <BiSolidMessageSquareEdit className="text-gray-500 cursor-pointer text-[1.3rem]" />
+                  </span>
                   <span
                     title={`Delete ${product?.name}`}
                     onClick={() => handleDelete(product)}
@@ -223,15 +175,15 @@ function AdminProduct() {
           </tfoot>
         )}
       </Table>
-      <TablePagination
-        length={products?.length}
-        currentPage={currentPage}
-        itemsPerPage={itemsPerPage}
-        setCurrentPage={setCurrentPage}
-      />
-      {Object.keys(product).length > 0 && (
-        <DeleteModal isOpen={isOpen} onClose={onClose} data={product} />
+      {Array.isArray(products) && products?.length > 10 && (
+        <TablePagination
+          length={products?.length}
+          currentPage={currentPage}
+          itemsPerPage={itemsPerPage}
+          setCurrentPage={setCurrentPage}
+        />
       )}
+      <DeleteModal isOpen={isOpen} onClose={onClose} data={product} />
     </>
   );
 }

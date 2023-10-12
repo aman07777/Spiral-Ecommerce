@@ -54,7 +54,7 @@ const ImageMagnifier = ({ image }) => {
             onMouseMove={handleMouseMove}
           />
         </div>
-        {isMagnifierVisible && (
+        {false && (
           <div
             className={`absolute w-[500px] h-[500px] border border-[#ccc] ${
               isMagnifierVisible ? "block" : "hidden"
@@ -66,7 +66,7 @@ const ImageMagnifier = ({ image }) => {
               backgroundPosition: `-${magnifiedPosition.x * 2}px -${
                 magnifiedPosition.y * 2
               }px`,
-              backgroundRepeat: "no-repeat",
+              // backgroundRepeat: "no-repeat",
               objectFit: "cover",
               left: `${magnifiedPosition.x - 250}px`,
               top: `${magnifiedPosition.y - 250}px`,

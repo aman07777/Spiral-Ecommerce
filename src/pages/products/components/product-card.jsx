@@ -3,6 +3,7 @@ import { Box, Text, Image } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { ShoppingCart } from "@mui/icons-material";
 import { imageUrl } from "../../../global/config";
+import { MdFavorite } from "react-icons/md";
 const ProductCard = ({ data }) => {
   const navigate = useNavigate();
   const handleSelectedProduct = (productId) => {
@@ -36,7 +37,7 @@ const ProductCard = ({ data }) => {
             bg="white"
             p={1}
             borderRadius="10px"
-            color="#0077B5"
+            color="teal"
             onClick={(e) => {
               e.stopPropagation();
               navigate("/protect/cart");
@@ -46,7 +47,13 @@ const ProductCard = ({ data }) => {
           </Box>
         </Box>
         <div className="px-3">
-          <Text className="text-[1.3rem] font-semibold">{data.name}</Text>
+          <div className="flex items-center justify-between">
+            <Text className="text-[1.3rem] font-semibold">Nike Air</Text>
+            <MdFavorite
+              className="text-[1.3rem] hover:text-rose-500"
+              title="favorite"
+            />
+          </div>
           <Text className="mt-2 font-semibold text-[1.1rem] text-[#585858]/80">
             {data.price - (data.discount / 100) * data.price} NPR
           </Text>

@@ -1,10 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-
 
 body {
   margin: 0;
@@ -75,4 +73,8 @@ code {
     -ms-transform: rotate(360deg);
     -o-transform: rotate(360deg);
   }
+}
+
+::-webkit-scrollbar {
+  width: 0;
 }

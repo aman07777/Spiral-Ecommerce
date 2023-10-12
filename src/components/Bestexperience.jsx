@@ -10,7 +10,7 @@ import {
 
 const BestExperiencePage = () => {
   return (
-    <div className="flex justify-center text-[#585858]">
+    <div className="flex justify-center text-[#585858] mb-5">
       <Box p={4} width={{ base: "100%", md: "95%", lg: "75%" }}>
         <h1 className="text-[1.5rem] mb-5 font-semibold md:text-[2rem]">
           We Provide the Best Experience

@@ -50,7 +50,7 @@ export const getProduct = async (productId) => {
 
 export const getFeaturedProducts = async () => {
   const { data } = await axios.get(`${baseUrl}products/featured`);
-  return data;
+  return data.status === "success" ? data.products : [];
 };
 
 export const removeProduct = async (currentUser, productId) => {

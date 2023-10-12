@@ -23,10 +23,10 @@ export const verifyEmail = async (token) => {
   });
 };
 
-export const login = async (email, passowrd) => {
+export const login = async (email, password) => {
   return axios.post(`${baseUrl}auth/login`, {
     email: email,
-    password: passowrd,
+    password: password,
   });
 };
 

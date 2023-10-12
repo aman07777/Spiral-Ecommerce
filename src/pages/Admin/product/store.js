@@ -6,18 +6,17 @@ export const useAdminProductStore = create((set) => ({
   setProducts: (products) => set({ products }),
   getProducts: async () => {
     try {
-      const res = await axios_auth.get("products");
+      const res = await axios_auth.get("products/all");
       if (res.data.status === "success") return res.data.products;
       else return [];
     } catch (error) {
       return error;
     }
   },
-  deleteProducts: async (id) => {
+  deleteProduct: async (id) => {
     try {
       const res = await axios_auth.delete(`products/${id}`);
-      console.log("🚀 ~ file: store.js:20 ~ deleteProducts: ~ res:", res);
-      return res.data.status === 204 ? true : false;
+      return res.data.status === "success" ? true : false;
     } catch (error) {
       return error;
     }

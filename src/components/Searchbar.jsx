@@ -2,12 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Box } from "@chakra-ui/react";
-import {
-  FormControl,
-  Input,
-  InputGroup,
-  InputRightElement,
-} from "@chakra-ui/react";
+import { FormControl } from "@chakra-ui/react";
 import { Search } from "@mui/icons-material";
 
 const Searchbar = () => {
@@ -36,19 +31,20 @@ const Searchbar = () => {
         minWidth="200px"
         onSubmit={handleFormSubmit}
       >
-        <InputGroup size="md">
-          <Input
+        <div className="flex bg-white border items-center rounded">
+          <input
             name="search"
-            pr="4.5rem"
-            placeholder="Search for clothes..."
+            type="search"
+            placeholder="Search..."
             onChange={handleKeyWordChange}
+            className="w-full h-10 px-3 outline-none rounded-[inherit]"
           />
-          <InputRightElement className="pr-1">
-            <button h="1.75rem" size="sm" type="submit">
+          <div className="pr-1">
+            <button type="submit">
               <Search className="text-[#585858]" />
             </button>
-          </InputRightElement>
-        </InputGroup>
+          </div>
+        </div>
       </FormControl>
     </Box>
   );

@@ -18,7 +18,7 @@ export default function TablePagination({
           key={i}
           className={`cursor-pointer px-2 rounded border ${
             i === currentPage
-              ? "bg-green-400 text-white border-green-400"
+              ? "bg-[#008080] text-white border-[#008080]"
               : "bg-slate-50"
           }`}
           onClick={() => handleClick(i)}

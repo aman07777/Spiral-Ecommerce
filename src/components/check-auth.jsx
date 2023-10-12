@@ -1,20 +1,12 @@
-import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { useGlobalStore } from "../global/store";
-import { useState } from "react";
 import Login from "../pages/Login";
-
+import { useQuery } from "@tanstack/react-query";
+import Loader from "./Loader";
 const CheckAuth = () => {
   const checkAuth = useGlobalStore((state) => state.checkAuth);
-  const [isAuth, setIsAuth] = useState(false);
-  useEffect(() => {
-    checkAuth().then((data) => {
-      if (data) {
-        setIsAuth(true);
-      }
-    });
-  }, [checkAuth]);
-  return !isAuth ? <Login /> : <Outlet />;
+  const { data: auth, isFetching } = useQuery(["check", "auth"], checkAuth);
+  return isFetching ? <Loader /> : !auth ? <Login /> : <Outlet />;
 };
 
 export default CheckAuth;
