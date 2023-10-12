@@ -23,12 +23,15 @@ import { useMediaQuery } from '@chakra-ui/react';
 import { getCart, removeCartItem } from "../services/CartServices";
 import { useUserContext } from "../contexts/UserContext";
 import { imageUrl } from "../global/config";
+import { cartStore } from "../services/CartStore";
 
 function CartPageDesktop() {
   const [cartItems, setCartItems] = useState([]);
   const [selectAll, setSelectAll] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [isDesktop] = useMediaQuery("(min-width: 968px)");
+  const getAllCarts = cartStore((state) => state.getAllCarts);
+  const deleteCart = cartStore((state) => state.removeCart);
 
   // const [totalQuantity, setTotalQuantity] = useState(0);
 
@@ -37,32 +40,30 @@ function CartPageDesktop() {
   const { currentUser } = useUserContext();
 
   useEffect(() => {
-    getCart(currentUser)
-      .then((result) => {
-        if (result.data.cart.length === 0) {
-          toast({
-            title: "Cart is empty",
-            description: "Please add some products to cart.",
-            status: "warning",
-            duration: 3000,
-            isClosable: true,
-          });
-        }
-        setCartItems(result.data.cart);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        const errorMessage =
-          error.response?.data?.message || "An error occurred.";
+    getAllCarts().then((data) => {
+      if (data.length === 0) {
         toast({
-          title: "Error",
-          description: errorMessage,
-          status: "error",
+          title: "Cart is empty",
+          description: "Please add some products to cart.",
+          status: "warning",
           duration: 3000,
           isClosable: true,
         });
+      }
+      setCartItems(data);
+      setIsLoading(false);
+    }).catch((error) => {
+      const errorMessage =
+        error.response?.data?.message || "An error occurred.";
+      toast({
+        title: "Error",
+        description: errorMessage,
+        status: "error",
+        duration: 3000,
+        isClosable: true,
       });
-  }, [toast, currentUser]);
+    });
+  }, [currentUser, toast])
 
   const handleQuantityChange = (event, index) => {
     const newCartItems = [...cartItems];
@@ -70,32 +71,34 @@ function CartPageDesktop() {
     setCartItems(newCartItems);
   };
 
-  const handleRemoveCartItem = (productId) => {
-    removeCartItem(currentUser, productId)
-      .then((result) => {
-        toast({
-          title: "Product removed",
-          description: "Product removed from cart successfully.",
-          status: "success",
-          duration: 3000,
-          isClosable: true,
-        });
 
-        const newCartItems = cartItems.filter((item) => item.id !== productId);
-        setCartItems(newCartItems);
-      })
-      .catch((error) => {
-        const errorMessage =
-          error.response?.data?.message || "An error occurred.";
-        toast({
-          title: "Error",
-          description: errorMessage,
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
+  const handleRemoveCartItem = async (productId) => {
+    try {
+      const response = await deleteCart(productId);
+      
+      toast({
+        title: "Product removed",
+        description: "Product removed from cart successfully.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
       });
+
+      const newCartItems = cartItems.filter((item) => item.id !== productId);
+      setCartItems(newCartItems);
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message || "An error occurred.";
+      toast({
+        title: "Error",
+        description: errorMessage,
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
   };
+
 
   const handleSelectAll = (event) => {
     const newCartItems = cartItems.map((item) => ({
@@ -125,7 +128,7 @@ function CartPageDesktop() {
     setSelectAll(false);
   };
 
-  const subtotal = cartItems.reduce(
+  const subtotal = cartItems?.reduce(
     (total, item) => total + (item.isChecked ? item.price * item.selectedQuantity : 0),
     0
   );

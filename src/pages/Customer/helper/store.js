@@ -5,10 +5,11 @@ export const customerProfileStore = create((set) => ({
   customerDetails: {},
   getCustomerDetails: async () => {
     try {
-      const response = await axios_auth.get("users/my-details");
+      const response = await axios_auth.get("users/me");
       if (response.data.status === "success") {
-        set({ customerDetails: response.data.data });
-        return response.data.data;
+        console.log(response)
+        set({ customerDetails: response.data.user });
+        return response.data.user;
       }
       return [];
     } catch (error) {

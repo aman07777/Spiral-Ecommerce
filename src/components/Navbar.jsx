@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, NavLink as RouterNavLink } from "react-router-dom";
 import {
   Box,
@@ -17,11 +17,14 @@ import {
 } from "@mui/icons-material";
 import Searchbar from "./Searchbar";
 import { useUserContext } from "../contexts/UserContext";
+import { cartStore } from "../services/CartStore";
 
 const Navbar = () => {
   const { currentUser, setCurrentUser } = useUserContext();
   const toast = useToast();
   const navigate = useNavigate();
+  const getAllCarts = cartStore((state) => state.getAllCarts)
+  const cartLen = cartStore((state) => state.cartLength)
 
   const handleLogout = () => {
     setCurrentUser(null);
@@ -35,6 +38,10 @@ const Navbar = () => {
       isClosable: true,
     });
   };
+
+  useEffect(() => {
+    getAllCarts()
+  }, [getAllCarts])
 
   return (
     <Box
@@ -106,7 +113,12 @@ const Navbar = () => {
                   <StarIcon />
                 </NavLink>
                 <NavLink to="/protect/cart" mr={4}>
-                  <ShoppingCart />
+                  <div className="relative">
+                    <span className="absolute bottom-4 left-4 bg-red-600 rounded-full w-[1rem] h-[1rem] flex items-center justify-center">
+                      <span className="text-xs">{cartLen}</span>
+                    </span>
+                    <ShoppingCart />
+                  </div>
                 </NavLink>
               </>
             )}

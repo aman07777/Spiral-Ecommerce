@@ -26,6 +26,7 @@ import { postCart } from "../services/CartServices";
 import { useUserContext } from "../contexts/UserContext";
 import { imageUrl } from "../global/config";
 import ImageMagnifier from "./image-magnifier";
+import { cartStore } from "../services/CartStore";
 
 export default function ProductDetails() {
   const [product, setProduct] = useState({});
@@ -35,6 +36,7 @@ export default function ProductDetails() {
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("null");
   const [isLoading, setIsLoading] = useState(true);
+  const addToCart = cartStore((state) => state.addToCart)
   // const [isMobile] = useMediaQuery("(max-width: 767px)");
 
   const { id: productId } = useParams();
@@ -89,13 +91,14 @@ export default function ProductDetails() {
   const handleAddtoCart = async () => {
     if (currentUser) {
       try {
-        const response = await postCart(
-          product._id,
-          selectedQuantity,
-          selectedSize,
-          selectedColor
-        );
-        if (response.status === 201) {
+        const data = {
+          productId: product._id,
+          quantity: selectedQuantity,
+          size: selectedSize,
+          color: selectedColor
+        };
+        const response = await addToCart(data)
+        if (response.status === "success") {
           toast({
             title: "Success",
             description: "Product added to cart.",
@@ -295,10 +298,9 @@ export default function ProductDetails() {
                             style={{
                               cursor: "pointer",
                             }}
-                            className={`${
-                              selectedColor === color &&
+                            className={`${selectedColor === color &&
                               "relative before:h-full before:w-full before:absolute before:inset-0 before:content-[''] before:scale-[1.25] before:bg-transparent before:border before:border-[#585858] before:z-[-1] isolate before:rounded-full"
-                            }`}
+                              }`}
                           ></Box>
                         ))}
                       </div>

@@ -6,7 +6,6 @@ import { useToast } from '@chakra-ui/react';
 
 const EditProfile = ({ props, userProfile, updateUserDetail }) => {
     const toast = useToast();
-    const [gender, setGender] = useState("male");
 
     // update to user details triggring the store
     const update_user_details = customerProfileStore((state) => state.getCustomerDetails)
@@ -92,7 +91,6 @@ const EditProfile = ({ props, userProfile, updateUserDetail }) => {
         }
     }
 
-    console.log(gender)
 
     return (
         <>

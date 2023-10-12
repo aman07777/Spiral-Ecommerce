@@ -16,11 +16,13 @@ import {
 import { login } from "../services/AuthServices";
 import { useUserContext } from "../contexts/UserContext";
 import { useGlobalStore } from "../global/store";
+import { cartStore } from "../services/CartStore";
 
 const Login = () => {
   const setUser = useGlobalStore((state) => state.setUser);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const getAllCarts = cartStore((state) => state.getAllCarts)
 
   const { setCurrentUser } = useUserContext();
 
@@ -50,6 +52,7 @@ const Login = () => {
           isClosable: true,
         });
         localStorage.setItem("currentUser", response.data.token);
+        getAllCarts()
         navigate("/");
       }
     } catch (error) {
