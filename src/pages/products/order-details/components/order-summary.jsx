@@ -80,7 +80,7 @@ const OrderSummary = ({ data }) => {
           </div>
           <div className="flex gap-y-[.2rem] flex-col items-end">
             <p>Rs. {totalPrice}</p>
-            <p>Rs. 115</p>
+            <p>Rs. 150</p>
             <p>Rs. {purchasePrice}</p>
           </div>
         </div>

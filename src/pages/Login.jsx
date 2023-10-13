@@ -52,7 +52,7 @@ const Login = () => {
         response.data.user?.role === "user" && navigate("/");
         response.data.user?.role === "admin" && navigate("/adminHome");
         response.data.user?.role === "affiliator" &&
-          navigate("/protect/profile/affiliator");
+          navigate("/profile/affiliator");
       }
     } catch (error) {
       const errorMessage =

@@ -17,17 +17,18 @@ import { useUserContext } from "../../../../contexts/UserContext";
 import { handleToast } from "../../../../global/toast";
 import { getPurchasePrice, getTotalPrice } from "../helper";
 import { cartStore } from "../../../../services/CartStore";
+import { useBuyStore } from "../../order-details/components/store";
 
 const DetailsSection = ({ product }) => {
   const toast = useToast();
   const navigate = useNavigate();
   const { currentUser } = useUserContext();
-
   const { state } = useLocation();
-
   const colorCart = state?.product.color;
   const sizeCart = state?.product.size;
-
+  // stores
+  const setOrderItems = useBuyStore((state) => state.setOrderItems);
+  const orderItems = useBuyStore((state) => state.orderItems);
   // states
   const [selectedSize, setSelectedSize] = useState(
     sizeCart || product?.sizes[0]
@@ -64,7 +65,7 @@ const DetailsSection = ({ product }) => {
       if (res.status === "success") {
         handleToast(toast, "Success", "Product added to cart.", "success");
       } else {
-        handleToast(toast, "Error", "product is out of stucks", "error");
+        handleToast(toast, "Error", "product is out of stocks", "error");
       }
     } catch (error) {
       handleToast(
@@ -78,7 +79,7 @@ const DetailsSection = ({ product }) => {
 
   const handleBuyClick = (e) => {
     e.preventDefault();
-    setOrderItems({
+    const data = {
       product: product._id,
       quantity: selectedQuantity,
       purchasePrice: getPurchasePrice(
@@ -91,7 +92,18 @@ const DetailsSection = ({ product }) => {
       color: selectedColor,
       image: product?.images[0],
       name: product?.name,
-    });
+    };
+    if (
+      Array.isArray(orderItems) &&
+      orderItems.some(
+        (item) => item.size === selectedSize && item.color === selectedColor
+      )
+    ) {
+      orderItems.find((item) => item.product === data.product).quantity +=
+        selectedQuantity;
+    } else {
+      setOrderItems(data);
+    }
     navigate(`/place/order`);
   };
   useEffect(() => {
@@ -240,7 +252,11 @@ const DetailsSection = ({ product }) => {
             >
               Add to cart
             </Button>
-            <Button colorScheme="linkedin" className="w-[10em] py-4 uppercase">
+            <Button
+              colorScheme="linkedin"
+              className="w-[10em] py-4 uppercase"
+              onClick={(e) => handleBuyClick(e)}
+            >
               Buy now
             </Button>
           </Flex>

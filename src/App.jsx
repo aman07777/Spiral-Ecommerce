@@ -76,18 +76,12 @@ function App() {
               <Route path="place/order" element={<PlaceOrder />} />
             </Route>
 
-            <Route path="/" element={<CheckAuth />}>
-              <Route path="/protect/cart" element={<CartPage />} />
-              <Route path="profile/customer" element={<CustomerProfile />} />
-            </Route>
-
             <Route path="profile/paymentoption" element={<PaymentOption />} />
             <Route path="profile/addressbook" element={<AddressBook />} />
-            <Route path="profile/whishlist" element={<MyWhislist />} />
             <Route path="profile/myorders" element={<MyOrder />} />
             <Route path="profile/myreview" element={<MyReview />} />
             <Route path="profile/addressbook" element={<AddressBook />} />
-            <Route path="place/order/:id" element={<PlaceOrder />} />
+            <Route path="place/order" element={<PlaceOrder />} />
 
             <Route path="/" element={<CheckAuth />}>
               <Route path="profile/affiliator" element={<AffliatorProfile />} />

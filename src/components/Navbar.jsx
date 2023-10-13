@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate, NavLink as RouterNavLink } from "react-router-dom";
 import {
   Box,
@@ -20,8 +20,8 @@ const Navbar = () => {
   const { currentUser, setCurrentUser } = useUserContext();
   const toast = useToast();
   const navigate = useNavigate();
-  const getAllCarts = cartStore((state) => state.getAllCarts)
-  const cartLen = cartStore((state) => state.cartLength)
+  const getAllCarts = cartStore((state) => state.getAllCarts);
+  const cartLen = cartStore((state) => state.cartLength);
 
   const handleLogout = () => {
     setCurrentUser(null);
@@ -37,8 +37,8 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    getAllCarts()
-  }, [getAllCarts])
+    getAllCarts();
+  }, [getAllCarts]);
 
   return (
     <Box
@@ -108,13 +108,13 @@ const Navbar = () => {
                     <MdFavorite className="text-[#2e2e2e] hover:text-[#585858] text-[1.4rem]" />
                   </span>
                 </NavLink>
-                <NavLink to="/protect/cart" mr={4}>
+                <NavLink to="/cart" mr={4}>
                   <div className="relative">
-                    {
-                      cartLen > 0 && (
-                        <span className="absolute bottom-4 left-2 text-xs text-white font-semibold bg-red-600 w-[1rem] h-[1rem] rounded-full flex items-center justify-center">{cartLen}</span>
-                      )
-                    }
+                    {cartLen > 0 && (
+                      <span className="absolute bottom-4 left-2 text-xs text-white font-semibold bg-red-600 w-[1rem] h-[1rem] rounded-full flex items-center justify-center">
+                        {cartLen}
+                      </span>
+                    )}
                     <ShoppingCart />
                   </div>
                 </NavLink>
@@ -227,7 +227,7 @@ const Navbar = () => {
                 </MenuItem>
                 <MenuItem>
                   <div
-                    onClick={() => navigate("/protect/cart")}
+                    onClick={() => navigate("/cart")}
                     className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
                   >
                     Cart
