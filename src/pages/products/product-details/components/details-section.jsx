@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import {
@@ -15,7 +15,6 @@ import {
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import { useUserContext } from "../../../../contexts/UserContext";
 import { handleToast } from "../../../../global/toast";
-import { getPurchasePrice, getTotalPrice } from "../helper";
 import { cartStore } from "../../../../services/CartStore";
 
 const DetailsSection = ({ product }) => {

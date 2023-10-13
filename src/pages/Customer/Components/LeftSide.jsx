@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FaUserCircle } from "react-icons/fa";
-import { FaAddressBook, FaThList } from "react-icons/fa";
+import { FaAddressBook} from "react-icons/fa";
 import { MdOutlinePayment, MdPreview } from "react-icons/md";
 import { BiSolidCart, BiLogOut } from "react-icons/bi";
 
@@ -36,13 +36,6 @@ const LeftSide = () => {
 
           <i><BiSolidCart size={20} className="text-[#008080]" /></i>
           <span className="text-sm  font-semibold hover:text-[#008080]">My Orders</span>
-        </div>
-        <div className="flex gap-x-2 items-center cursor-pointer " onClick={() => {
-          navigate("/profile/whishlist")
-        }}>
-
-          <i><FaThList size={20} className="text-[#008080]" /></i>
-          <span className="text-sm  font-semibold hover:text-[#008080]">My Whishlist</span>
         </div>
         <div className="flex gap-x-2 items-center cursor-pointer " onClick={() => {
           navigate('/profile/myreview')

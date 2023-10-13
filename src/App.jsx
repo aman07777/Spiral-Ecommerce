@@ -6,12 +6,15 @@ import PlaceOrder from "./pages/products/order-details/place-order";
 const OrderDetails = lazy(() =>
   import("./pages/Admin/order/order-details/order-details")
 );
+
+// profile section --> customer start
 const PaymentOption = lazy(() => import("./pages/Customer/Pages/PaymentOption"));
 const AddressBook = lazy(() => import("./pages/Customer/Pages/AddressBook"));
-const MyWhislist = lazy(() => import("./pages/Customer/Pages/MyWhislist"));
 const MyOrder = lazy(() => import("./pages/Customer/Pages/MyOrder"));
 const MyReview = lazy(() => import("./pages/Customer/Pages/MyReview"));
 const CustomerProfile = lazy(() => import("./pages/Customer/Pages/CustomerProfile"));
+// profile section --> customer end 
+
 const Fallback = lazy(() => import("./components/fallback"));
 const AffliatorProfile = lazy(() =>
   import("./pages/affiliator/AffliatorProfile")
@@ -51,7 +54,7 @@ const EmailVerification = lazy(() => import("./pages/EmailVerification"));
 function App() {
   return (
     <Router>
-      {/* <ErrorBoundary FallbackComponent={Fallback}> */}
+      <ErrorBoundary FallbackComponent={Fallback}>
       <Suspense fallback={<Loader />}>
         <Routes>
           <Route path="/" element={<Layout />}>
@@ -61,13 +64,12 @@ function App() {
             <Route path="products" exact element={<ProductPage />} />
             <Route path="products/:id" element={<ProductDetails />} />
             <Route path="/" element={<CheckAuth />}>
-              <Route path="/protect/cart" element={<CartPage />} />
+              <Route path="/cart" element={<CartPage />} />
               <Route path="profile/customer" element={<CustomerProfile />} />
             </Route>
 
             <Route path="profile/paymentoption" element={<PaymentOption />} />
             <Route path="profile/addressbook" element={<AddressBook />} />
-            <Route path="profile/whishlist" element={<MyWhislist />} />
             <Route path="profile/myorders" element={<MyOrder />} />
             <Route path="profile/myreview" element={<MyReview />} />
             <Route path="profile/addressbook" element={<AddressBook />} />
@@ -99,7 +101,7 @@ function App() {
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </Suspense>
-      {/* </ErrorBoundary> */}
+      </ErrorBoundary>
     </Router>
   );
 }

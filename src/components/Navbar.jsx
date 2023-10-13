@@ -14,7 +14,6 @@ import { Menu as MenuIcon, ShoppingCart } from "@mui/icons-material";
 import Searchbar from "./Searchbar";
 import { useUserContext } from "../contexts/UserContext";
 import { cartStore } from "../services/CartStore";
-import { MdFavorite } from "react-icons/md";
 
 const Navbar = () => {
   const { currentUser, setCurrentUser } = useUserContext();
@@ -103,12 +102,7 @@ const Navbar = () => {
           <Box display={{ base: "none", md: "flex" }} alignItems="center">
             {currentUser && (
               <>
-                <NavLink to="/favorites" mr={4}>
-                  <span title="your favorites">
-                    <MdFavorite className="text-[#2e2e2e] hover:text-[#585858] text-[1.4rem]" />
-                  </span>
-                </NavLink>
-                <NavLink to="/protect/cart" mr={4}>
+                <NavLink to="/cart" mr={4}>
                   <div className="relative">
                     {
                       cartLen > 0 && (
@@ -227,7 +221,7 @@ const Navbar = () => {
                 </MenuItem>
                 <MenuItem>
                   <div
-                    onClick={() => navigate("/protect/cart")}
+                    onClick={() => navigate("/cart")}
                     className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
                   >
                     Cart

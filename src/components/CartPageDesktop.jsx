@@ -25,7 +25,6 @@ import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 
 function CartPageDesktop() {
-  const navigate = useNavigate()
   const [cartItems, setCartItems] = useState([]);
   const [selectAll, setSelectAll] = useState(true);
   const [isLoading, setIsLoading] = useState(true);

@@ -7,7 +7,6 @@ export const customerProfileStore = create((set) => ({
     try {
       const response = await axios_auth.get("users/me");
       if (response.data.status === "success") {
-        console.log(response)
         set({ customerDetails: response.data.user });
         return response.data.user;
       }

@@ -1,8 +1,9 @@
 import React from 'react'
 import { BiLogOut, BiSolidCart } from 'react-icons/bi'
-import { FaAddressBook, FaThList, FaUserCircle } from 'react-icons/fa'
+import { FaAddressBook, FaUserCircle } from 'react-icons/fa'
 import { MdOutlinePayment, MdPreview } from 'react-icons/md'
 import { useNavigate } from 'react-router-dom'
+import { frontend_url } from '../../../global/config'
 
 const OptionsMobile = ({ props }) => {
   const navigate = useNavigate();
@@ -38,13 +39,6 @@ const OptionsMobile = ({ props }) => {
           <span className="text-sm  font-semibold hover:text-[#008080]">My Orders</span>
         </div>
         <div className="flex gap-x-2 items-center cursor-pointer " onClick={() => {
-          navigate("/profile/whishlist")
-        }}>
-
-          <i><FaThList size={20} className="text-[#008080]" /></i>
-          <span className="text-sm  font-semibold hover:text-[#008080]">My Whishlist</span>
-        </div>
-        <div className="flex gap-x-2 items-center cursor-pointer " onClick={() => {
           navigate('/profile/myreview')
         }}>
 
@@ -56,7 +50,7 @@ const OptionsMobile = ({ props }) => {
           <i><BiLogOut size={20} className="text-[#008080]" /></i>
           <span className="text-sm  font-semibold hover:text-[#008080]">Log Out</span>
         </div>
-        <span className={`${current_location === "http://localhost:3000/profile/customer" ? "flex" : "hidden"} px-4 w-[10rem] py-2 bg-[#008080] text-white rounded-md text-sm font-semibold tracking-wide cursor-pointer`} onClick={() => { props(true) }}>
+        <span className={`${current_location === frontend_url + "/profile/customer" ? "flex" : "hidden"} px-4 w-[10rem] py-2 bg-[#008080] text-white rounded-md text-sm font-semibold tracking-wide cursor-pointer`} onClick={() => { props(true) }}>
           Edit Profile
         </span>
       </div>
