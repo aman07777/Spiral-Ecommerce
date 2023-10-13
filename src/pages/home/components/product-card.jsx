@@ -8,6 +8,11 @@ const ProductCard = () => {
   const handleSelectedProduct = (productId) => {
     navigate(`/products/${productId}`);
   };
+
+  const handleAddToCart = ()=>{
+
+
+  }
   return (
     <>
       <Box
@@ -27,20 +32,6 @@ const ProductCard = () => {
             objectFit="center"
             borderTopRadius="lg"
           />
-          <Box
-            position="absolute"
-            top={2}
-            right={2}
-            p={1}
-            borderRadius="10px"
-            color="#008080"
-            onClick={(e) => {
-              e.stopPropagation();
-              navigate("/protect/cart");
-            }}
-          >
-            <BsCartPlusFill title="add to cart" className="text-[1.3rem] " />
-          </Box>
         </Box>
         <div className="px-3">
           <div className="flex items-center justify-between">

@@ -7,6 +7,7 @@ export const useAdminProductStore = create((set) => ({
   getProducts: async () => {
     try {
       const res = await axios_auth.get("products/all");
+      console.log(res)
       if (res.data.status === "success") return res.data.products;
       else return [];
     } catch (error) {

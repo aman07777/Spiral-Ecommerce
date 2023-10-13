@@ -6,12 +6,15 @@ import PlaceOrder from "./pages/products/order-details/place-order";
 const OrderDetails = lazy(() =>
   import("./pages/Admin/order/order-details/order-details")
 );
-const PaymentOption = lazy(() => import("./pages/Customer/PaymentOption"));
-const AddressBook = lazy(() => import("./pages/Customer/AddressBook"));
-const MyWhislist = lazy(() => import("./pages/Customer/MyWhislist"));
-const MyOrder = lazy(() => import("./pages/Customer/MyOrder"));
-const MyReview = lazy(() => import("./pages/Customer/MyReview"));
-const CustomerProfile = lazy(() => import("./pages/Customer/CustomerProfile"));
+const PaymentOption = lazy(() =>
+  import("./pages/Customer/Pages/PaymentOption")
+);
+const AddressBook = lazy(() => import("./pages/Customer/Pages/AddressBook"));
+const MyOrder = lazy(() => import("./pages/Customer/Pages/MyOrder"));
+const MyReview = lazy(() => import("./pages/Customer/Pages/MyReview"));
+const CustomerProfile = lazy(() =>
+  import("./pages/Customer/Pages/CustomerProfile")
+);
 const Fallback = lazy(() => import("./components/fallback"));
 const AffliatorProfile = lazy(() =>
   import("./pages/affiliator/AffliatorProfile")
@@ -67,12 +70,24 @@ function App() {
 
               <Route path="profile/paymentoption" element={<PaymentOption />} />
               <Route path="profile/addressbook" element={<AddressBook />} />
-              <Route path="profile/whishlist" element={<MyWhislist />} />
               <Route path="profile/myorders" element={<MyOrder />} />
               <Route path="profile/myreview" element={<MyReview />} />
               <Route path="profile/addressbook" element={<AddressBook />} />
               <Route path="place/order" element={<PlaceOrder />} />
             </Route>
+
+            <Route path="/" element={<CheckAuth />}>
+              <Route path="/protect/cart" element={<CartPage />} />
+              <Route path="profile/customer" element={<CustomerProfile />} />
+            </Route>
+
+            <Route path="profile/paymentoption" element={<PaymentOption />} />
+            <Route path="profile/addressbook" element={<AddressBook />} />
+            <Route path="profile/whishlist" element={<MyWhislist />} />
+            <Route path="profile/myorders" element={<MyOrder />} />
+            <Route path="profile/myreview" element={<MyReview />} />
+            <Route path="profile/addressbook" element={<AddressBook />} />
+            <Route path="place/order/:id" element={<PlaceOrder />} />
 
             <Route path="/" element={<CheckAuth />}>
               <Route path="profile/affiliator" element={<AffliatorProfile />} />

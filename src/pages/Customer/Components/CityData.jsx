@@ -2,6 +2,7 @@
 export const city = [
     {
         name: "Belbari",
+        // area name 
         area: [
             {
                 name: "betana road",

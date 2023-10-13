@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import {
   Box,
@@ -15,23 +15,31 @@ import {
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import { useUserContext } from "../../../../contexts/UserContext";
 import { handleToast } from "../../../../global/toast";
-import { postCart } from "../../../../services/CartServices";
 import { getPurchasePrice, getTotalPrice } from "../helper";
-import { useBuyStore } from "../../order-details/components/store";
+import { cartStore } from "../../../../services/CartStore";
 
 const DetailsSection = ({ product }) => {
   const toast = useToast();
   const navigate = useNavigate();
   const { currentUser } = useUserContext();
-  // stores
-  const setOrderItems = useBuyStore((state) => state.setOrderItems);
+
+  const { state } = useLocation();
+
+  const colorCart = state?.product.color;
+  const sizeCart = state?.product.size;
+
   // states
-  const [selectedSize, setSelectedSize] = useState("");
-  const [selectedColor, setSelectedColor] = useState("null");
+  const [selectedSize, setSelectedSize] = useState(
+    sizeCart || product?.sizes[0]
+  );
+  const [selectedColor, setSelectedColor] = useState(
+    colorCart || product?.colors[0]
+  );
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   const handleQuantityChange = (e) => {
     setSelectedQuantity(+e.target.value);
   };
+  const addProductTocart = cartStore((state) => state.addToCart);
 
   const handleIncreaseQuantity = (e) => {
     if (selectedQuantity < product.quantity)
@@ -45,15 +53,18 @@ const DetailsSection = ({ product }) => {
   const handleAddToCart = async () => {
     if (!currentUser) return navigate("/login");
     try {
-      const res = await postCart(
-        product._id,
-        selectedQuantity,
-        selectedSize,
-        selectedColor
-      );
-      if (res.status === 201) {
+      const data = {
+        productId: product._id,
+        quantity: selectedQuantity,
+        color: selectedColor,
+        size: selectedSize,
+      };
+      console.log(data);
+      const res = await addProductTocart(data);
+      if (res.status === "success") {
         handleToast(toast, "Success", "Product added to cart.", "success");
-        navigate("/cart");
+      } else {
+        handleToast(toast, "Error", "product is out of stucks", "error");
       }
     } catch (error) {
       handleToast(
@@ -97,8 +108,7 @@ const DetailsSection = ({ product }) => {
           <Box as={"header"}>
             <h1 className="font-semibold text-[1.75rem]">{product.name}</h1>
             <Text className="text-[.9rem] font-semibold">
-              {product.description} Lorem ipsum, dolor sit amet consectetur
-              adipisicing elit. Maiores, error!
+              {product.description}
             </Text>
             <Text className="mt-2 font-semibold text-[1.3rem]">
               {product.price - (product.discount / 100) * product.price} NPR
@@ -187,20 +197,22 @@ const DetailsSection = ({ product }) => {
               >
                 -
               </Button>
-              <input
-                type="number"
-                min="1"
-                max={`"${product.quantity}"`}
-                value={selectedQuantity}
-                onChange={handleQuantityChange}
-                disabled
-                style={{
-                  width: "50px",
-                  textAlign: "center",
-                  borderRadius: "0.5rem",
-                }}
-                className=""
-              />
+              {product && (
+                <input
+                  type="number"
+                  min="1"
+                  max={product.quantity}
+                  value={selectedQuantity}
+                  onChange={handleQuantityChange}
+                  disabled
+                  style={{
+                    width: "50px",
+                    textAlign: "center",
+                    borderRadius: "0.5rem",
+                  }}
+                  className=""
+                />
+              )}
               <Button
                 size="sm"
                 rounded="full"
@@ -228,13 +240,7 @@ const DetailsSection = ({ product }) => {
             >
               Add to cart
             </Button>
-            <Button
-              colorScheme="linkedin"
-              className="w-[10em] py-4 uppercase"
-              onClick={(e) => {
-                handleBuyClick(e);
-              }}
-            >
+            <Button colorScheme="linkedin" className="w-[10em] py-4 uppercase">
               Buy now
             </Button>
           </Flex>

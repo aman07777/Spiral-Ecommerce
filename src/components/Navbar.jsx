@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, NavLink as RouterNavLink } from "react-router-dom";
 import {
   Box,
@@ -13,11 +13,15 @@ import {
 import { Menu as MenuIcon, ShoppingCart } from "@mui/icons-material";
 import Searchbar from "./Searchbar";
 import { useUserContext } from "../contexts/UserContext";
+import { cartStore } from "../services/CartStore";
 import { MdFavorite } from "react-icons/md";
+
 const Navbar = () => {
   const { currentUser, setCurrentUser } = useUserContext();
   const toast = useToast();
   const navigate = useNavigate();
+  const getAllCarts = cartStore((state) => state.getAllCarts)
+  const cartLen = cartStore((state) => state.cartLength)
 
   const handleLogout = () => {
     setCurrentUser(null);
@@ -31,6 +35,10 @@ const Navbar = () => {
       isClosable: true,
     });
   };
+
+  useEffect(() => {
+    getAllCarts()
+  }, [getAllCarts])
 
   return (
     <Box
@@ -101,9 +109,14 @@ const Navbar = () => {
                   </span>
                 </NavLink>
                 <NavLink to="/protect/cart" mr={4}>
-                  <span title="your cart">
-                    <ShoppingCart className="text-[#2e2e2e] hover:text-[#585858]" />
-                  </span>
+                  <div className="relative">
+                    {
+                      cartLen > 0 && (
+                        <span className="absolute bottom-4 left-2 text-xs text-white font-semibold bg-red-600 w-[1rem] h-[1rem] rounded-full flex items-center justify-center">{cartLen}</span>
+                      )
+                    }
+                    <ShoppingCart />
+                  </div>
                 </NavLink>
               </>
             )}
@@ -114,17 +127,14 @@ const Navbar = () => {
                 variant="outline"
               />
               <MenuList className="px-2 pb-2">
-                {currentUser && (
-                  <MenuItem className="hover:bg-white">
-                    <NavLink
-                      to="/profile/customer"
-                      className="relative before:absolute before:content-[''] before:w-0 before:h-[1.5px] before:-bottom-1 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-300 capitalize"
-                    >
-                      My profile
-                    </NavLink>
-                  </MenuItem>
-                )}
-
+                <MenuItem className="hover:bg-white">
+                  <NavLink
+                    to="/profile/customer"
+                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1.5px] before:-bottom-1 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-300 capitalize"
+                  >
+                    My profile
+                  </NavLink>
+                </MenuItem>
                 <MenuItem className="hover:bg-white">
                   <NavLink
                     to="/profile/myorders"

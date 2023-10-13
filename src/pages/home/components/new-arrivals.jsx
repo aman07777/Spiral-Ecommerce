@@ -70,6 +70,8 @@ const NewArrivals = () => {
             modules={[Navigation]}
             className="h-[400px]"
           >
+
+            
             <SwiperSlide>
               <ProductCard />
             </SwiperSlide>

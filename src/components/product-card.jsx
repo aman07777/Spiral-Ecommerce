@@ -2,13 +2,16 @@ import React from "react";
 import { Box, Text, Image } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { imageUrl } from "../global/config";
-import { BsCartPlusFill } from "react-icons/bs";
 import { MdFavorite } from "react-icons/md";
+
+
 const ProductCard = ({ data }) => {
   const navigate = useNavigate();
   const handleSelectedProduct = (productId) => {
     navigate(`/products/${productId}`);
   };
+
+
   return (
     <>
       <Box
@@ -30,20 +33,6 @@ const ProductCard = ({ data }) => {
             objectFit="center"
             borderTopRadius="lg"
           />
-          <Box
-            position="absolute"
-            top={2}
-            right={2}
-            p={1}
-            borderRadius="10px"
-            color="#008080"
-            onClick={(e) => {
-              e.stopPropagation();
-              navigate("/protect/cart");
-            }}
-          >
-            <BsCartPlusFill title="add to cart" className="text-[1.3rem]" />
-          </Box>
         </Box>
         <div className="px-3">
           <div className="flex justify-between items-center">
