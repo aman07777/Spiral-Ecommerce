@@ -2,14 +2,15 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
-// import Cart from './components/CartPageMobile'
-// import CartPageMobile from "./components/CartPageMobile";
-const PaymentOption = lazy(() => import("./pages/Customer/Pages/PaymentOption"));
-const AddressBook = lazy(() => import("./pages/Customer/Pages/AddressBook"));
-const MyWhislist = lazy(() => import("./pages/Customer/Pages/MyWhislist"));
-const MyOrder = lazy(() => import("./pages/Customer/Pages/MyOrder"));
-const MyReview = lazy(() => import("./pages/Customer/Pages/MyReview"));
-const CustomerProfile = lazy(() => import("./pages/Customer/Pages/CustomerProfile"));
+const OrderDetails = lazy(() =>
+  import("./pages/Admin/order/order-details/order-details")
+);
+const PaymentOption = lazy(() => import("./pages/Customer/PaymentOption"));
+const AddressBook = lazy(() => import("./pages/Customer/AddressBook"));
+const MyWhislist = lazy(() => import("./pages/Customer/MyWhislist"));
+const MyOrder = lazy(() => import("./pages/Customer/MyOrder"));
+const MyReview = lazy(() => import("./pages/Customer/MyReview"));
+const CustomerProfile = lazy(() => import("./pages/Customer/CustomerProfile"));
 const Fallback = lazy(() => import("./components/fallback"));
 const AffliatorProfile = lazy(() =>
   import("./pages/affiliator/AffliatorProfile")
@@ -20,7 +21,6 @@ const AdminHome = lazy(() => import("./pages/Admin/AdminHome"));
 const UpdateProduct = lazy(() =>
   import("./pages/Admin/product/update-product/update-product")
 );
-
 const AdminProduct = lazy(() => import("./pages/Admin/product/AdminProduct"));
 const AdminOrder = lazy(() => import("./pages/Admin/order/AdminOrder"));
 const AdminCustomer = lazy(() => import("./pages/Admin/users/AdminCustomer"));
@@ -32,10 +32,6 @@ const ErrorPage = lazy(() => import("./pages/ErrorPage"));
 const AddProduct = lazy(() =>
   import("./pages/Admin/product/add-product/add-product")
 );
-const AddOrder = lazy(() => import("./pages/Admin/order/add-order/add-order"));
-// const AddCustomer = lazy(() =>
-//   import("./pages/Admin/users/add-cutomer/add-customer")
-// );
 const AddAffiliator = lazy(() =>
   import("./pages/Admin/affiliator/add-affiliator/add-affiliator")
 );
@@ -63,7 +59,6 @@ function App() {
               <Route path="login" element={<Login />} />
               <Route path="products" exact element={<ProductPage />} />
               <Route path="products/:id" element={<ProductDetails />} />
-
               <Route path="/" element={<CheckAuth />}>
                 <Route path="/protect/cart" element={<CartPage />} />
                 <Route path="profile/customer" element={<CustomerProfile />} />
@@ -93,9 +88,8 @@ function App() {
               element={<UpdateProduct />}
             />
             <Route path="/adminOrder" element={<AdminOrder />} />
-            <Route path="/admin-add-order" element={<AddOrder />} />
+            <Route path="/admin-order-details/:id" element={<OrderDetails />} />
             <Route path="/adminCustomer" element={<AdminCustomer />} />
-            {/* <Route path="/admin-add-customer" element={<AddCustomer />} /> */}
             <Route path="/adminAffliator" element={<AdminAffiliator />} />
             <Route path="/admin-add-affliator" element={<AddAffiliator />} />
             <Route path="/adminSetting" element={<AdminSettings />} />

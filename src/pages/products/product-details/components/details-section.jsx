@@ -41,7 +41,6 @@ const DetailsSection = ({ product }) => {
     quantity: 1,
     purchasePrice: 0,
     totalPrice: 0,
-    status: "",
     size: "",
     color: "",
   });
