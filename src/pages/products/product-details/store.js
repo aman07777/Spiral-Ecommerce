@@ -10,4 +10,14 @@ export const useOrderStore = create((set, get) => ({
       return error;
     }
   },
+  getPromoCodes: async () => {
+    try {
+      const res = await axios_auth.get("promo-code");
+      if (res.data.status === "success") {
+        return res.data.promoCodes;
+      }
+    } catch (error) {
+      return error;
+    }
+  },
 }));

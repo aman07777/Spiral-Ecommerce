@@ -21,6 +21,7 @@ export class AddProductClass {
           colors: [],
           sizes: [],
           images: [],
+          previewImages: [],
         });
         return;
       }

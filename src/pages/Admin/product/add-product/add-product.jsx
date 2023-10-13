@@ -41,6 +41,7 @@ const AddProduct = () => {
     price: "",
     category: "",
     brand: "",
+    quantity: "",
     colors: [],
     sizes: [],
     images: [],
@@ -252,6 +253,18 @@ const AddProduct = () => {
                     size="md"
                     value={product.sizes}
                     onChange={handleSizeChange}
+                  />
+                </FormControl>
+                <FormControl id="quantity" mt={2} isRequired>
+                  <FormLabel>Quantity</FormLabel>
+                  <Input
+                    type="text"
+                    placeholder="Enter quantity"
+                    size="md"
+                    value={product.quantity}
+                    onChange={(e) => {
+                      setProduct({ ...product, quantity: e.target.value });
+                    }}
                   />
                 </FormControl>
                 <FormControl id="description" isRequired mb={2}>
