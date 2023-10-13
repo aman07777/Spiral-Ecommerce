@@ -10,34 +10,25 @@ import {
   List,
   ListItem,
   useToast,
-  useDisclosure,
 } from "@chakra-ui/react";
 
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import { useUserContext } from "../../../../contexts/UserContext";
 import { handleToast } from "../../../../global/toast";
 import { postCart } from "../../../../services/CartServices";
-import BuyModal from "./buy-modal";
 import { getPurchasePrice, getTotalPrice } from "../helper";
+import { useBuyStore } from "../../order-details/components/store";
 
 const DetailsSection = ({ product }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const navigate = useNavigate();
   const { currentUser } = useUserContext();
-
+  // stores
+  const setOrderItems = useBuyStore((state) => state.setOrderItems);
   // states
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("null");
   const [selectedQuantity, setSelectedQuantity] = useState(1);
-  const [orderData, setOrderData] = useState({
-    product: "",
-    quantity: 1,
-    purchasePrice: 0,
-    totalPrice: 0,
-    size: "",
-    color: "",
-  });
   const handleQuantityChange = (e) => {
     setSelectedQuantity(+e.target.value);
   };
@@ -76,8 +67,7 @@ const DetailsSection = ({ product }) => {
 
   const handleBuyClick = (e) => {
     e.preventDefault();
-    setOrderData((prev) => ({
-      ...prev,
+    setOrderItems({
       product: product._id,
       quantity: selectedQuantity,
       purchasePrice: getPurchasePrice(
@@ -88,8 +78,8 @@ const DetailsSection = ({ product }) => {
       totalPrice: getTotalPrice(product.price, selectedQuantity),
       size: selectedSize,
       color: selectedColor,
-    }));
-    onOpen(e);
+    });
+    navigate(`place/order/${product._id}`);
   };
   useEffect(() => {
     setSelectedQuantity(+product.quantity);
@@ -248,7 +238,6 @@ const DetailsSection = ({ product }) => {
           </Flex>
         </Box>
       </Box>
-      <BuyModal data={orderData} isOpen={isOpen} onClose={onClose} />
     </>
   );
 };

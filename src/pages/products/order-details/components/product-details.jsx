@@ -2,10 +2,6 @@ import React from "react";
 import { imageUrl } from "../../../../global/config";
 
 const ProductDetails = ({ products }) => {
-  console.log(
-    "🚀 ~ file: product-details.jsx:4 ~ ProductDetails ~ product:",
-    products
-  );
   return (
     <>
       <div className="flex-1 p-2 px-3 border rounded-sm border-l-[4px] shadow text-[#585858] h-[30em] overflow-y-scroll">

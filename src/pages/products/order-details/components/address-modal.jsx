@@ -13,9 +13,10 @@ import UseGetInnerWidth from "../../../Admin/hooks/get-inner-width";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAffiliatorProfileStore } from "../../../affiliator/components/user-details/store";
 import { useState } from "react";
-import { useOrderStore } from "../store";
+import { useOrderStore } from "../../product-details/store";
 import { handleToast } from "../../../../global/toast";
-const BuyModal = ({ isOpen, onClose, data }) => {
+import { useBuyStore } from "./store";
+const AddressModal = ({ isOpen, onClose }) => {
   const toast = useToast();
   const client = useQueryClient();
   // hooks
@@ -23,8 +24,9 @@ const BuyModal = ({ isOpen, onClose, data }) => {
   // stores
   const getMyDetails = useAffiliatorProfileStore((state) => state.getMyDetails);
   const makeOrder = useOrderStore((state) => state.makeOrder);
+  const shippingInfo = useBuyStore((state) => state.data);
   // states
-  const [shippingInfo, setShippingInfo] = useState({
+  const [ok, setShippingInfo] = useState({
     fullName: "",
     email: "",
     address: "",
@@ -61,11 +63,11 @@ const BuyModal = ({ isOpen, onClose, data }) => {
   });
   isError && handleToast(toast, "Error", "Something went wrong", "error");
   const handleBuyClick = () => {
-    const orderData = {
-      orderItems: [data],
-      shippingInfo,
-    };
-    mutate(orderData);
+    // const orderData = {
+    //   orderItems: [data],
+    //   shippingInfo,
+    // };
+    // mutate(orderData);
   };
   return (
     <div>
@@ -250,4 +252,4 @@ const BuyModal = ({ isOpen, onClose, data }) => {
   );
 };
 
-export default BuyModal;
+export default AddressModal;

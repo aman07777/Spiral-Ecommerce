@@ -64,6 +64,7 @@ const AddProduct = () => {
     formData.append("price", product.price);
     formData.append("category", product.category);
     formData.append("brand", product.brand);
+    formData.append("quantity", product.quantity);
     for (let i = 0; i < product.colors?.length; i++) {
       formData.append("colors", product.colors[i]?.trim());
     }

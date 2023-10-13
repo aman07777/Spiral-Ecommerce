@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import PlaceOrder from "./pages/products/order-details/place-order";
 
 const OrderDetails = lazy(() =>
   import("./pages/Admin/order/order-details/order-details")
@@ -70,6 +71,7 @@ function App() {
               <Route path="profile/myorders" element={<MyOrder />} />
               <Route path="profile/myreview" element={<MyReview />} />
               <Route path="profile/addressbook" element={<AddressBook />} />
+              <Route path="place/order/:id" element={<PlaceOrder />} />
             </Route>
 
             <Route path="/" element={<CheckAuth />}>
