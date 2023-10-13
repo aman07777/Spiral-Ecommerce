@@ -15,7 +15,6 @@ import {
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import { useUserContext } from "../../../../contexts/UserContext";
 import { handleToast } from "../../../../global/toast";
-import BuyModal from "./buy-modal";
 import { getPurchasePrice, getTotalPrice } from "../helper";
 import { cartStore } from "../../../../services/CartStore";
 
@@ -74,22 +73,6 @@ const DetailsSection = ({ product }) => {
     }
   };
 
-  const handleBuyClick = (e) => {
-    e.preventDefault();
-    setOrderItems({
-      product: product._id,
-      quantity: selectedQuantity,
-      purchasePrice: getPurchasePrice(
-        product.price,
-        selectedQuantity,
-        product.discount
-      ),
-      totalPrice: getTotalPrice(product.price, selectedQuantity),
-      size: selectedSize,
-      color: selectedColor,
-    });
-    navigate(`place/order/${product._id}`);
-  };
 
   return (
     <>
@@ -237,9 +220,6 @@ const DetailsSection = ({ product }) => {
             <Button
               colorScheme="linkedin"
               className="w-[10em] py-4 uppercase"
-              onClick={(e) => {
-                handleBuyClick(e);
-              }}
             >
               Buy now
             </Button>

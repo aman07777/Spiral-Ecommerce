@@ -9,7 +9,6 @@ export const cartStore = create((set) => ({
     try {
       const response = await axios_auth.get("carts");
       if (response.data.status === "success") {
-        console.log(response.data.cart);
         set({ cartDetails: response.data.cart });
         const cartLength = response.data.cart.length;
         set({ cartLength });

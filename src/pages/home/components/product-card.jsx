@@ -32,22 +32,6 @@ const ProductCard = () => {
             objectFit="center"
             borderTopRadius="lg"
           />
-          <Box
-            position="absolute"
-            top={2}
-            right={2}
-            p={1}
-            borderRadius="10px"
-            color="#008080"
-            onClick={(e) => {
-              e.stopPropagation();
-              navigate("/protect/cart");
-            }}
-          >
-            <div onClick={handleAddToCart}>
-              <BsCartPlusFill title="add to cart" className="text-[1.3rem] " />
-            </div>
-          </Box>
         </Box>
         <div className="px-3">
           <div className="flex items-center justify-between">

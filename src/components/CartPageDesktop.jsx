@@ -72,10 +72,10 @@ function CartPageDesktop() {
   };
 
 
+
   const handleRemoveCartItem = async (productId) => {
     try {
       const response = await deleteCart(productId);
-
       toast({
         title: "Product removed",
         description: "Product removed from cart successfully.",
@@ -84,8 +84,9 @@ function CartPageDesktop() {
         isClosable: true,
       });
 
-      const newCartItems = cartItems.filter((item) => item.id !== productId);
-      setCartItems(newCartItems);
+      getAllCarts().then((data) => {
+        setCartItems(data)
+      })
     } catch (error) {
       const errorMessage =
         error.response?.data?.message || "An error occurred.";
@@ -190,7 +191,7 @@ function CartPageDesktop() {
                       <>
                         <Tbody>
                           {cartItems.map((product, index) => (
-                            <Tr key={product.id}>
+                            <Tr key={index}>
                               <Td>
                                 <Checkbox
                                   isChecked={product.isChecked}
@@ -215,7 +216,7 @@ function CartPageDesktop() {
                                     {/* product desc  */}
                                     <li className="flex flex-col gap-y-1">
                                       <span className="text-lg font-bold">{product.name}</span>
-                                      <span className="text-xs font-semibold">{product.description}</span>
+                                      <span className="text-xs font-semibold line-clamp-2">{product.description}</span>
                                       <span className="text-xs flex gap-x-1"> <span className="font-semibold">Size:</span> {product.size}</span>
                                       <span className="text-xs flex gap-x-1 "><span className="font-semibold">Color:</span>{product.color ? product.color : "Yellow"}</span>
                                     </li>
@@ -299,7 +300,7 @@ function CartPageDesktop() {
                       <>
                         {cartItems.map((item, index) => (
                           <Box
-                            key={item.id}
+                            key={index}
                             borderWidth="1px"
                             borderRadius="lg"
                             overflow="hidden"
@@ -319,23 +320,30 @@ function CartPageDesktop() {
                                     onChange={(event) => handleSelectItem(event, index)}
                                   />
                                 </Box>
-                                <ul className="flex gap-x-3 w-[100%] items-center space-around p-3">
-                                  {/* image  */}
-                                  <li className="w-[30%]">
-                                    <img
-                                      src={`${imageUrl}/${item.image}`}
-                                      className="object-cover w-[3.5rem] rounded-md"
-                                    />
-                                  </li>
-                                  {/* product desc  */}
-                                  <li className="flex flex-col gap-y-1">
-                                    <span className="text-lg font-bold">{item.name}</span>
-                                    <span className="text-xs font-semibold">{item.description}</span>
-                                    <span className="text-xs flex gap-x-1"> <span className="font-semibold">Size:</span> {item.size}</span>
-                                    <span className="text-xs flex gap-x-1 "><span className="font-semibold">Color:</span>{item.color ? item.color : "Yellow"}</span>
-                                  </li>
+                                <Link to={`/products/${item?.id}`} state={{
+                                  product: {
+                                    color: item.color,
+                                    size: item.size,
+                                  }
+                                }}>
+                                  <ul className="flex gap-x-3 w-[100%] items-center space-around p-3">
+                                    {/* image  */}
+                                    <li className="w-[30%]">
+                                      <img
+                                        src={`${imageUrl}/${item.image}`}
+                                        className="object-cover w-[3.5rem] rounded-md"
+                                      />
+                                    </li>
+                                    {/* product desc  */}
+                                    <li className="flex flex-col gap-y-1">
+                                      <span className="text-lg font-bold line-clamp-2">{item.name}</span>
+                                      <span className="text-xs font-semibold line-clamp-3">{item.description}</span>
+                                      <span className="text-xs flex gap-x-1"> <span className="font-semibold">Size:</span> {item.size}</span>
+                                      <span className="text-xs flex gap-x-1 "><span className="font-semibold">Color:</span>{item.color ? item.color : "Yellow"}</span>
+                                    </li>
 
-                                </ul>
+                                  </ul>
+                                </Link>
                                 <button
                                   onClick={() => handleRemoveCartItem(item.id)}
                                 >

@@ -27,7 +27,6 @@ export default function ProductDetails() {
   useEffect(() => {
     getProduct(productId)
       .then((result) => {
-        console.log(result)
         if (!result.product) {
           handleToast(
             toast,
