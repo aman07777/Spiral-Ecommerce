@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import {
@@ -16,6 +16,8 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import { useUserContext } from "../../../../contexts/UserContext";
 import { handleToast } from "../../../../global/toast";
 import { cartStore } from "../../../../services/CartStore";
+import { useBuyStore } from "../../order-details/components/store";
+import {getPurchasePrice, getTotalPrice} from "../helper"
 
 const DetailsSection = ({ product }) => {
   const toast = useToast();
@@ -32,6 +34,9 @@ const DetailsSection = ({ product }) => {
   const [selectedSize, setSelectedSize] = useState(sizeCart || (product?.sizes[0]));
   const [selectedColor, setSelectedColor] = useState(colorCart || (product?.colors[0]));
   const [selectedQuantity, setSelectedQuantity] = useState(1);
+
+  const setOrderItems = useBuyStore((state)=> state.setOrderItems)
+  
   const handleQuantityChange = (e) => {
     setSelectedQuantity(+e.target.value);
   };
@@ -55,7 +60,6 @@ const DetailsSection = ({ product }) => {
         color: selectedColor,
         size: selectedSize,
       }
-      console.log(data)
       const res = await addProductTocart(data);
       if (res.status === "success") {
         handleToast(toast, "Success", "Product added to cart.", "success");
@@ -240,6 +244,7 @@ const DetailsSection = ({ product }) => {
             <Button
               colorScheme="linkedin"
               className="w-[10em] py-4 uppercase"
+              onClick={()=>handleBuyClick()}
             >
               Buy now
             </Button>
