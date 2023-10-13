@@ -1,6 +1,8 @@
 import React from "react";
-
+import AddressModal from "./address-modal";
+import { useDisclosure } from "@chakra-ui/react";
 const UserDetails = ({ user }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
       <div className="w-full p-2 px-3 mt-5 border rounded-sm border-l-[4px] shadow @container">
@@ -19,6 +21,7 @@ const UserDetails = ({ user }) => {
           </div>
         </div>
       </div>
+      <AddressModal isOpen={isOpen} onClose={onClose} />
     </>
   );
 };

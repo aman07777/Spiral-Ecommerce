@@ -10,7 +10,6 @@ import {
   List,
   ListItem,
   useToast,
-  useDisclosure,
 } from "@chakra-ui/react";
 
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
@@ -21,7 +20,6 @@ import { getPurchasePrice, getTotalPrice } from "../helper";
 import { cartStore } from "../../../../services/CartStore";
 
 const DetailsSection = ({ product }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const navigate = useNavigate();
   const { currentUser } = useUserContext();
@@ -36,14 +34,6 @@ const DetailsSection = ({ product }) => {
   const [selectedSize, setSelectedSize] = useState(sizeCart || (product?.sizes[0]));
   const [selectedColor, setSelectedColor] = useState(colorCart || (product?.colors[0]));
   const [selectedQuantity, setSelectedQuantity] = useState(1);
-  const [orderData, setOrderData] = useState({
-    product: "",
-    quantity: 1,
-    purchasePrice: 0,
-    totalPrice: 0,
-    size: "",
-    color: "",
-  });
   const handleQuantityChange = (e) => {
     setSelectedQuantity(+e.target.value);
   };
@@ -86,8 +76,7 @@ const DetailsSection = ({ product }) => {
 
   const handleBuyClick = (e) => {
     e.preventDefault();
-    setOrderData((prev) => ({
-      ...prev,
+    setOrderItems({
       product: product._id,
       quantity: selectedQuantity,
       purchasePrice: getPurchasePrice(
@@ -98,8 +87,8 @@ const DetailsSection = ({ product }) => {
       totalPrice: getTotalPrice(product.price, selectedQuantity),
       size: selectedSize,
       color: selectedColor,
-    }));
-    onOpen(e);
+    });
+    navigate(`place/order/${product._id}`);
   };
 
   return (
@@ -257,7 +246,6 @@ const DetailsSection = ({ product }) => {
           </Flex>
         </Box>
       </Box>
-      <BuyModal data={orderData} isOpen={isOpen} onClose={onClose} />
     </>
   );
 };

@@ -5,7 +5,7 @@ import UserDetails from "./components/user-details";
 import ProductDetails from "./components/product-details";
 import OrderSummary from "./components/order-summary";
 import { useAdminOrderStore } from "../../Admin/order/store";
-const OrderDetails = () => {
+const PlaceOrder = () => {
   const { id } = useParams();
   // stores
   const getOrder = useAdminOrderStore((state) => state.getOrderById);
@@ -23,4 +23,4 @@ const OrderDetails = () => {
   );
 };
 
-export default OrderDetails;
+export default PlaceOrder;

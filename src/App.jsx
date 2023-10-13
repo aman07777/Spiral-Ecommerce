@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import PlaceOrder from "./pages/products/order-details/place-order";
 
 const OrderDetails = lazy(() =>
   import("./pages/Admin/order/order-details/order-details")
@@ -10,7 +11,7 @@ const AddressBook = lazy(() => import("./pages/Customer/Pages/AddressBook"));
 const MyWhislist = lazy(() => import("./pages/Customer/Pages/MyWhislist"));
 const MyOrder = lazy(() => import("./pages/Customer/Pages/MyOrder"));
 const MyReview = lazy(() => import("./pages/Customer/Pages/MyReview"));
-const CustomerProfile = lazy(() => import("./pages/Customer/CustomerProfile"));
+const CustomerProfile = lazy(() => import("./pages/Customer/Pages/CustomerProfile"));
 const Fallback = lazy(() => import("./components/fallback"));
 const AffliatorProfile = lazy(() =>
   import("./pages/affiliator/AffliatorProfile")
@@ -51,52 +52,53 @@ function App() {
   return (
     <Router>
       {/* <ErrorBoundary FallbackComponent={Fallback}> */}
-        <Suspense fallback={<Loader />}>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route path="" element={<Home />} />
-              <Route path="signup" element={<Signup />} />
-              <Route path="login" element={<Login />} />
-              <Route path="products" exact element={<ProductPage />} />
-              <Route path="products/:id" element={<ProductDetails />} />
-              <Route path="/" element={<CheckAuth />}>
-                <Route path="/protect/cart" element={<CartPage />} />
-                <Route path="profile/customer" element={<CustomerProfile />} />
-              </Route>
-
-              <Route path="profile/paymentoption" element={<PaymentOption />} />
-              <Route path="profile/addressbook" element={<AddressBook />} />
-              <Route path="profile/whishlist" element={<MyWhislist />} />
-              <Route path="profile/myorders" element={<MyOrder />} />
-              <Route path="profile/myreview" element={<MyReview />} />
-              <Route path="profile/addressbook" element={<AddressBook />} />
-            </Route>
-
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route path="" element={<Home />} />
+            <Route path="signup" element={<Signup />} />
+            <Route path="login" element={<Login />} />
+            <Route path="products" exact element={<ProductPage />} />
+            <Route path="products/:id" element={<ProductDetails />} />
             <Route path="/" element={<CheckAuth />}>
-              <Route path="profile/affiliator" element={<AffliatorProfile />} />
+              <Route path="/protect/cart" element={<CartPage />} />
+              <Route path="profile/customer" element={<CustomerProfile />} />
             </Route>
 
-            <Route path="/emailverification" element={<EmailVerification />} />
-            <Route path="/resetpassword" element={<ResetPassword />} />
+            <Route path="profile/paymentoption" element={<PaymentOption />} />
+            <Route path="profile/addressbook" element={<AddressBook />} />
+            <Route path="profile/whishlist" element={<MyWhislist />} />
+            <Route path="profile/myorders" element={<MyOrder />} />
+            <Route path="profile/myreview" element={<MyReview />} />
+            <Route path="profile/addressbook" element={<AddressBook />} />
+            <Route path="place/order/:id" element={<PlaceOrder />} />
+          </Route>
 
-            {/* admin routes */}
-            <Route path="/adminHome" element={<AdminHome />} />
-            <Route path="/adminProduct" element={<AdminProduct />} />
-            <Route path="/admin-add-product" element={<AddProduct />} />
-            <Route
-              path="/admin-update-product/:id"
-              element={<UpdateProduct />}
-            />
-            <Route path="/adminOrder" element={<AdminOrder />} />
-            <Route path="/admin-order-details/:id" element={<OrderDetails />} />
-            <Route path="/adminCustomer" element={<AdminCustomer />} />
-            <Route path="/adminAffliator" element={<AdminAffiliator />} />
-            <Route path="/admin-add-affliator" element={<AddAffiliator />} />
-            <Route path="/adminSetting" element={<AdminSettings />} />
-            {/* admin routes ends here */}
-            <Route path="*" element={<ErrorPage />} />
-          </Routes>
-        </Suspense>
+          <Route path="/" element={<CheckAuth />}>
+            <Route path="profile/affiliator" element={<AffliatorProfile />} />
+          </Route>
+
+          <Route path="/emailverification" element={<EmailVerification />} />
+          <Route path="/resetpassword" element={<ResetPassword />} />
+
+          {/* admin routes */}
+          <Route path="/adminHome" element={<AdminHome />} />
+          <Route path="/adminProduct" element={<AdminProduct />} />
+          <Route path="/admin-add-product" element={<AddProduct />} />
+          <Route
+            path="/admin-update-product/:id"
+            element={<UpdateProduct />}
+          />
+          <Route path="/adminOrder" element={<AdminOrder />} />
+          <Route path="/admin-order-details/:id" element={<OrderDetails />} />
+          <Route path="/adminCustomer" element={<AdminCustomer />} />
+          <Route path="/adminAffliator" element={<AdminAffiliator />} />
+          <Route path="/admin-add-affliator" element={<AddAffiliator />} />
+          <Route path="/adminSetting" element={<AdminSettings />} />
+          {/* admin routes ends here */}
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+      </Suspense>
       {/* </ErrorBoundary> */}
     </Router>
   );
