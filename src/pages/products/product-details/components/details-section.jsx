@@ -72,6 +72,27 @@ const DetailsSection = ({ product }) => {
     }
   };
 
+  const handleBuyClick = (e) => {
+    e.preventDefault();
+    setOrderItems({
+      product: product._id,
+      quantity: selectedQuantity,
+      purchasePrice: getPurchasePrice(
+        product?.price,
+        selectedQuantity,
+        product?.discount
+      ),
+      totalPrice: getTotalPrice(product.price, selectedQuantity),
+      size: selectedSize,
+      color: selectedColor,
+      image: product?.images[0],
+      name: product?.name,
+    });
+    navigate(`/place/order`);
+  };
+  useEffect(() => {
+    setSelectedQuantity(+product.quantity);
+  }, [product]);
 
   return (
     <>
