@@ -7,26 +7,20 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  useToast,
 } from "@chakra-ui/react";
 import UseGetInnerWidth from "../../../Admin/hooks/get-inner-width";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useAffiliatorProfileStore } from "../../../affiliator/components/user-details/store";
-import { useState } from "react";
-import { useOrderStore } from "../../product-details/store";
-import { handleToast } from "../../../../global/toast";
+
 import { useBuyStore } from "./store";
 const AddressModal = ({ isOpen, onClose }) => {
-  const toast = useToast();
-  const client = useQueryClient();
   // hooks
   const innerWidth = UseGetInnerWidth();
   // stores
   const getMyDetails = useAffiliatorProfileStore((state) => state.getMyDetails);
-  const makeOrder = useOrderStore((state) => state.makeOrder);
-  const shippingInfo = useBuyStore((state) => state.data);
-  // states
-  const [ok, setShippingInfo] = useState({
+  const setShippingInfo = useBuyStore((state) => state.setShippingInfo);
+
+  const [data, setData] = React.useState({
     fullName: "",
     email: "",
     address: "",
@@ -35,39 +29,15 @@ const AddressModal = ({ isOpen, onClose }) => {
     province: "",
     label: "",
   });
-
   // react query
   const { data: user, isError: isGetError } = useQuery(
     ["get", "my-details"],
     getMyDetails
   );
-  const { isLoading, isError, mutate } = useMutation({
-    mutationKey: ["make", "order"],
-    mutationFn: makeOrder,
-    onSuccess: (data) => {
-      if (data === true) {
-        client.invalidateQueries();
-        handleToast(toast, "Success", "Order placed successfully", "success");
-        setShippingInfo({
-          fullName: "",
-          email: "",
-          address: "",
-          mobileNumber: "",
-          landMark: "",
-          province: "",
-          label: "",
-        });
-      }
-    },
-    onError: (error) => handleToast(toast, "Error", error.message, "error"),
-  });
-  isError && handleToast(toast, "Error", "Something went wrong", "error");
+
   const handleBuyClick = () => {
-    // const orderData = {
-    //   orderItems: [data],
-    //   shippingInfo,
-    // };
-    // mutate(orderData);
+    setShippingInfo(data);
+    onClose();
   };
   return (
     <div>
@@ -99,10 +69,10 @@ const AddressModal = ({ isOpen, onClose }) => {
                   type="text"
                   className="w-full px-2 py-[.35rem] border border-gray-400 rounded-sm outline-none "
                   required
-                  value={shippingInfo.fullName}
+                  value={data.fullName}
                   onChange={(e) =>
-                    setShippingInfo({
-                      ...shippingInfo,
+                    setData({
+                      ...data,
                       fullName: e.target.value,
                     })
                   }
@@ -116,10 +86,10 @@ const AddressModal = ({ isOpen, onClose }) => {
                   type="email"
                   className="w-full px-2 py-[.35rem] border border-gray-400 rounded-sm outline-none "
                   required
-                  value={shippingInfo.email}
+                  value={data.email}
                   onChange={(e) =>
-                    setShippingInfo({
-                      ...shippingInfo,
+                    setData({
+                      ...data,
                       email: e.target.value,
                     })
                   }
@@ -133,10 +103,10 @@ const AddressModal = ({ isOpen, onClose }) => {
                   type="text"
                   className="w-full px-2 py-[.35rem] border border-gray-400 rounded-sm outline-none "
                   required
-                  value={shippingInfo.address}
+                  value={data.address}
                   onChange={(e) =>
-                    setShippingInfo({
-                      ...shippingInfo,
+                    setData({
+                      ...data,
                       address: e.target.value,
                     })
                   }
@@ -150,10 +120,10 @@ const AddressModal = ({ isOpen, onClose }) => {
                   type="text"
                   className="w-full px-2 py-[.35rem] border border-gray-400 rounded-sm outline-none "
                   required
-                  value={shippingInfo.mobileNumber}
+                  value={data.mobileNumber}
                   onChange={(e) =>
-                    setShippingInfo({
-                      ...shippingInfo,
+                    setData({
+                      ...data,
                       mobileNumber: e.target.value,
                     })
                   }
@@ -167,10 +137,10 @@ const AddressModal = ({ isOpen, onClose }) => {
                   type="text"
                   className="w-full px-2 py-[.35rem] border border-gray-400 rounded-sm outline-none "
                   required
-                  value={shippingInfo.landMark}
+                  value={data.landMark}
                   onChange={(e) =>
-                    setShippingInfo({
-                      ...shippingInfo,
+                    setData({
+                      ...data,
                       landMark: e.target.value,
                     })
                   }
@@ -184,10 +154,10 @@ const AddressModal = ({ isOpen, onClose }) => {
                   type="text"
                   className="w-full px-2 py-[.35rem] border border-gray-400 rounded-sm outline-none "
                   required
-                  value={shippingInfo.province}
+                  value={data.province}
                   onChange={(e) =>
-                    setShippingInfo({
-                      ...shippingInfo,
+                    setData({
+                      ...data,
                       province: e.target.value,
                     })
                   }
@@ -212,10 +182,10 @@ const AddressModal = ({ isOpen, onClose }) => {
                   type="text"
                   className="w-full px-2 py-[.35rem] border border-gray-400 rounded-sm outline-none "
                   required
-                  value={shippingInfo.label}
+                  value={data.label}
                   onChange={(e) =>
-                    setShippingInfo({
-                      ...shippingInfo,
+                    setData({
+                      ...data,
                       label: e.target.value,
                     })
                   }
@@ -241,9 +211,9 @@ const AddressModal = ({ isOpen, onClose }) => {
             <button
               variant="outline"
               className="px-4 py-2 text-white border rounded-sm border-[teal]/60 hover:text-[teal] bg-[teal] hover:bg-rose-50 w-[7em]"
-              onClick={(e) => handleBuyClick(e)}
+              onClick={() => handleBuyClick()}
             >
-              {isLoading ? "Loading..." : "Order"}
+              Update
             </button>
           </ModalFooter>
         </ModalContent>

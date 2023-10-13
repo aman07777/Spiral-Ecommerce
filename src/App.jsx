@@ -71,7 +71,7 @@ function App() {
               <Route path="profile/myorders" element={<MyOrder />} />
               <Route path="profile/myreview" element={<MyReview />} />
               <Route path="profile/addressbook" element={<AddressBook />} />
-              <Route path="place/order/:id" element={<PlaceOrder />} />
+              <Route path="place/order" element={<PlaceOrder />} />
             </Route>
 
             <Route path="/" element={<CheckAuth />}>

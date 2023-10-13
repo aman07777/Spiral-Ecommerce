@@ -1,22 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import { useParams } from "react-router-dom";
 import UserDetails from "./components/user-details";
 import ProductDetails from "./components/product-details";
 import OrderSummary from "./components/order-summary";
-import { useAdminOrderStore } from "../../Admin/order/store";
+import { useAffiliatorProfileStore } from "../../affiliator/components/user-details/store";
+
 const PlaceOrder = () => {
-  const { id } = useParams();
-  // stores
-  const getOrder = useAdminOrderStore((state) => state.getOrderById);
-  const { data: order } = useQuery(["get", "order", id], () => getOrder(id));
+  const getMyDetails = useAffiliatorProfileStore((state) => state.getMyDetails);
+  // react query
+  const { data: user } = useQuery(["get", "my-details"], getMyDetails);
   return (
     <>
       <div className="px-4 @container">
-        <UserDetails user={order?.shippingInfo} />
+        <UserDetails user={user} />
         <div className="flex flex-col mt-5 gap-y-3 gap-x-3 @[750px]:flex-row">
-          <ProductDetails products={order?.orderItems} />
-          <OrderSummary data={order?.orderItems} />
+          <ProductDetails />
+          <OrderSummary />
         </div>
       </div>
     </>

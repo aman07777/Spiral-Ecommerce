@@ -71,15 +71,17 @@ const DetailsSection = ({ product }) => {
       product: product._id,
       quantity: selectedQuantity,
       purchasePrice: getPurchasePrice(
-        product.price,
+        product?.price,
         selectedQuantity,
-        product.discount
+        product?.discount
       ),
       totalPrice: getTotalPrice(product.price, selectedQuantity),
       size: selectedSize,
       color: selectedColor,
+      image: product?.images[0],
+      name: product?.name,
     });
-    navigate(`place/order/${product._id}`);
+    navigate(`/place/order`);
   };
   useEffect(() => {
     setSelectedQuantity(+product.quantity);
