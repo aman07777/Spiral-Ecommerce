@@ -20,9 +20,9 @@ import { FaAddressBook, FaThList } from "react-icons/fa";
 import { MdOutlinePayment, MdPreview } from "react-icons/md";
 import { BiSolidCart, BiLogOut } from "react-icons/bi";
 import EditProfile from "./EditProfile";
-import ChangePasswordModal from "./ChangePasswordModal";
+import ChangePasswordModal from "./Components/ChangePasswordModal";
 import { FaUserCircle } from "react-icons/fa";
-import LeftSide from "./LeftSide";
+import LeftSide from "./Components/LeftSide";
 
 const CustomerProfile = () => {
   const navigate = useNavigate();

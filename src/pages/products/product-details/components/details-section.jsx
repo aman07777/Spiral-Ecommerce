@@ -112,8 +112,7 @@ const DetailsSection = ({ product }) => {
           <Box as={"header"}>
             <h1 className="font-semibold text-[1.75rem]">{product.name}</h1>
             <Text className="text-[.9rem] font-semibold">
-              {product.description} Lorem ipsum, dolor sit amet consectetur
-              adipisicing elit. Maiores, error!
+              {product.description}
             </Text>
             <Text className="mt-2 font-semibold text-[1.3rem]">
               {product.price - (product.discount / 100) * product.price} NPR

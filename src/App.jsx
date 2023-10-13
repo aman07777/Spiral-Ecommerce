@@ -5,11 +5,11 @@ import { ErrorBoundary } from "react-error-boundary";
 const OrderDetails = lazy(() =>
   import("./pages/Admin/order/order-details/order-details")
 );
-const PaymentOption = lazy(() => import("./pages/Customer/PaymentOption"));
-const AddressBook = lazy(() => import("./pages/Customer/AddressBook"));
-const MyWhislist = lazy(() => import("./pages/Customer/MyWhislist"));
-const MyOrder = lazy(() => import("./pages/Customer/MyOrder"));
-const MyReview = lazy(() => import("./pages/Customer/MyReview"));
+const PaymentOption = lazy(() => import("./pages/Customer/Pages/PaymentOption"));
+const AddressBook = lazy(() => import("./pages/Customer/Pages/AddressBook"));
+const MyWhislist = lazy(() => import("./pages/Customer/Pages/MyWhislist"));
+const MyOrder = lazy(() => import("./pages/Customer/Pages/MyOrder"));
+const MyReview = lazy(() => import("./pages/Customer/Pages/MyReview"));
 const CustomerProfile = lazy(() => import("./pages/Customer/CustomerProfile"));
 const Fallback = lazy(() => import("./components/fallback"));
 const AffliatorProfile = lazy(() =>
