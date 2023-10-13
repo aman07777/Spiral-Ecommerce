@@ -22,7 +22,6 @@ const Login = () => {
   const setUser = useGlobalStore((state) => state.setUser);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const getAllCarts = cartStore((state) => state.getAllCarts)
 
   const { setCurrentUser } = useUserContext();
 

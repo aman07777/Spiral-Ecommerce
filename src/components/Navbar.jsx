@@ -13,6 +13,8 @@ import {
 import { Menu as MenuIcon, ShoppingCart } from "@mui/icons-material";
 import Searchbar from "./Searchbar";
 import { useUserContext } from "../contexts/UserContext";
+import { cartStore } from "../services/CartStore";
+import { MdFavorite } from "react-icons/md";
 
 const Navbar = () => {
   const { currentUser, setCurrentUser } = useUserContext();
@@ -107,7 +109,14 @@ const Navbar = () => {
                   </span>
                 </NavLink>
                 <NavLink to="/protect/cart" mr={4}>
-                  <ShoppingCart />
+                  <div className="relative">
+                    {
+                      cartLen > 0 && (
+                        <span className="absolute bottom-4 left-2 text-xs text-white font-semibold bg-red-600 w-[1rem] h-[1rem] rounded-full flex items-center justify-center">{cartLen}</span>
+                      )
+                    }
+                    <ShoppingCart />
+                  </div>
                 </NavLink>
               </>
             )}

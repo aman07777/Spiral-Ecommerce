@@ -18,14 +18,14 @@ import {
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useMediaQuery } from '@chakra-ui/react';
-
-
-import { getCart, removeCartItem } from "../services/CartServices";
 import { useUserContext } from "../contexts/UserContext";
 import { imageUrl } from "../global/config";
 import { cartStore } from "../services/CartStore";
+import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 function CartPageDesktop() {
+  const navigate = useNavigate()
   const [cartItems, setCartItems] = useState([]);
   const [selectAll, setSelectAll] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -75,7 +75,7 @@ function CartPageDesktop() {
   const handleRemoveCartItem = async (productId) => {
     try {
       const response = await deleteCart(productId);
-      
+
       toast({
         title: "Product removed",
         description: "Product removed from cart successfully.",
@@ -198,22 +198,29 @@ function CartPageDesktop() {
                                 />
                               </Td>
                               <Td>
-                                <ul className="flex  gap-x-4 py-4 items-center">
-                                  {/* product image  */}
-                                  <li className="w-[3.5rem]">
-                                    <img
-                                      src={`${imageUrl}/${product.image}`}
-                                      className="object-cover rounded-md"
-                                    />
-                                  </li>
-                                  {/* product desc  */}
-                                  <li className="flex flex-col gap-y-1">
-                                    <span className="text-lg font-bold">{product.name}</span>
-                                    <span className="text-xs font-semibold">{product.description}</span>
-                                    <span className="text-xs flex gap-x-1"> <span className="font-semibold">Size:</span> {product.size}</span>
-                                    <span className="text-xs flex gap-x-1 "><span className="font-semibold">Color:</span>{product.color ? product.color : "Yellow"}</span>
-                                  </li>
-                                </ul>
+                                <Link to={`/products/${product?.id}`} state={{
+                                  product: {
+                                    color: product.color,
+                                    size: product.size,
+                                  }
+                                }}>
+                                  <ul className="flex  gap-x-4 py-4 items-center">
+                                    {/* product image  */}
+                                    <li className="w-[3.5rem]">
+                                      <img
+                                        src={`${imageUrl}/${product.image}`}
+                                        className="object-cover rounded-md"
+                                      />
+                                    </li>
+                                    {/* product desc  */}
+                                    <li className="flex flex-col gap-y-1">
+                                      <span className="text-lg font-bold">{product.name}</span>
+                                      <span className="text-xs font-semibold">{product.description}</span>
+                                      <span className="text-xs flex gap-x-1"> <span className="font-semibold">Size:</span> {product.size}</span>
+                                      <span className="text-xs flex gap-x-1 "><span className="font-semibold">Color:</span>{product.color ? product.color : "Yellow"}</span>
+                                    </li>
+                                  </ul>
+                                </Link>
                               </Td>
                               <Td>
                                 <Flex

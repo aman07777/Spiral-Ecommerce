@@ -65,7 +65,7 @@ function App() {
               <Route path="products/:id" element={<ProductDetails />} />
 
               <Route path="/" element={<CheckAuth />}>
-                <Route path="cart" element={<CartPage />} />
+                <Route path="/protect/cart" element={<CartPage />} />
                 <Route path="profile/customer" element={<CustomerProfile />} />
               </Route>
 

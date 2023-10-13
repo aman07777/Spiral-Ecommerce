@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Text, Image } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { ShoppingCart } from "@mui/icons-material";
 import { imageUrl } from "../../../global/config";
 import { MdFavorite } from "react-icons/md";
 const ProductCard = ({ data }) => {
@@ -30,25 +29,10 @@ const ProductCard = ({ data }) => {
             objectFit="center"
             borderTopRadius="lg"
           />
-          <Box
-            position="absolute"
-            top={2}
-            right={2}
-            bg="white"
-            p={1}
-            borderRadius="10px"
-            color="teal"
-            onClick={(e) => {
-              e.stopPropagation();
-              navigate("/protect/cart");
-            }}
-          >
-            <ShoppingCart />
-          </Box>
         </Box>
         <div className="px-3">
           <div className="flex items-center justify-between">
-            <Text className="text-[1.3rem] font-semibold">Nike Air</Text>
+            <Text className="text-[1.1rem] font-semibold line-clamp-2">{data.name}</Text>
             <MdFavorite
               className="text-[1.3rem] hover:text-rose-500"
               title="favorite"

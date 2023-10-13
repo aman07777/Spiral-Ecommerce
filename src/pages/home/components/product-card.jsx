@@ -8,6 +8,11 @@ const ProductCard = () => {
   const handleSelectedProduct = (productId) => {
     navigate(`/products/${productId}`);
   };
+
+  const handleAddToCart = ()=>{
+
+
+  }
   return (
     <>
       <Box
@@ -39,7 +44,9 @@ const ProductCard = () => {
               navigate("/protect/cart");
             }}
           >
-            <BsCartPlusFill title="add to cart" className="text-[1.3rem] " />
+            <div onClick={handleAddToCart}>
+              <BsCartPlusFill title="add to cart" className="text-[1.3rem] " />
+            </div>
           </Box>
         </Box>
         <div className="px-3">
