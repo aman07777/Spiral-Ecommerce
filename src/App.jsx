@@ -55,14 +55,28 @@ function App() {
   return (
     <Router>
       <ErrorBoundary FallbackComponent={Fallback}>
-      <Suspense fallback={<Loader />}>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route path="" element={<Home />} />
-            <Route path="signup" element={<Signup />} />
-            <Route path="login" element={<Login />} />
-            <Route path="products" exact element={<ProductPage />} />
-            <Route path="products/:id" element={<ProductDetails />} />
+        <Suspense fallback={<Loader />}>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route path="" element={<Home />} />
+              <Route path="signup" element={<Signup />} />
+              <Route path="login" element={<Login />} />
+              <Route path="products" exact element={<ProductPage />} />
+              <Route path="products/:id" element={<ProductDetails />} />
+              <Route path="/" element={<CheckAuth />}>
+                <Route path="cart" element={<CartPage />} />
+                <Route path="profile/customer" element={<CustomerProfile />} />
+              </Route>
+
+              <Route path="profile/paymentoption" element={<PaymentOption />} />
+              <Route path="profile/addressbook" element={<AddressBook />} />
+              <Route path="profile/whishlist" element={<MyWhislist />} />
+              <Route path="profile/myorders" element={<MyOrder />} />
+              <Route path="profile/myreview" element={<MyReview />} />
+              <Route path="profile/addressbook" element={<AddressBook />} />
+              <Route path="place/order" element={<PlaceOrder />} />
+            </Route>
+
             <Route path="/" element={<CheckAuth />}>
               <Route path="/cart" element={<CartPage />} />
               <Route path="profile/customer" element={<CustomerProfile />} />
@@ -74,7 +88,6 @@ function App() {
             <Route path="profile/myreview" element={<MyReview />} />
             <Route path="profile/addressbook" element={<AddressBook />} />
             <Route path="place/order/:id" element={<PlaceOrder />} />
-          </Route>
 
           <Route path="/" element={<CheckAuth />}>
             <Route path="profile/affiliator" element={<AffliatorProfile />} />

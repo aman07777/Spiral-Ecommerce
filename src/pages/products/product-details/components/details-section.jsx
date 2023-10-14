@@ -17,25 +17,26 @@ import { useUserContext } from "../../../../contexts/UserContext";
 import { handleToast } from "../../../../global/toast";
 import { cartStore } from "../../../../services/CartStore";
 import { useBuyStore } from "../../order-details/components/store";
-import {getPurchasePrice, getTotalPrice} from "../helper"
 
 const DetailsSection = ({ product }) => {
   const toast = useToast();
   const navigate = useNavigate();
   const { currentUser } = useUserContext();
-
   const { state } = useLocation();
-
   const colorCart = state?.product.color;
   const sizeCart = state?.product.size;
-
-
+  // stores
+  const setOrderItems = useBuyStore((state) => state.setOrderItems);
+  const orderItems = useBuyStore((state) => state.orderItems);
   // states
-  const [selectedSize, setSelectedSize] = useState(sizeCart || (product?.sizes[0]));
-  const [selectedColor, setSelectedColor] = useState(colorCart || (product?.colors[0]));
+  const [selectedSize, setSelectedSize] = useState(
+    sizeCart || product?.sizes[0]
+  );
+  const [selectedColor, setSelectedColor] = useState(
+    colorCart || product?.colors[0]
+  );
   const [selectedQuantity, setSelectedQuantity] = useState(1);
 
-  const setOrderItems = useBuyStore((state)=> state.setOrderItems)
   
   const handleQuantityChange = (e) => {
     setSelectedQuantity(+e.target.value);
@@ -59,12 +60,13 @@ const DetailsSection = ({ product }) => {
         quantity: selectedQuantity,
         color: selectedColor,
         size: selectedSize,
-      }
+      };
+      console.log(data);
       const res = await addProductTocart(data);
       if (res.status === "success") {
         handleToast(toast, "Success", "Product added to cart.", "success");
-      }else{
-        handleToast(toast, "Error", "product is out of stucks", "error");
+      } else {
+        handleToast(toast, "Error", "product is out of stocks", "error");
       }
     } catch (error) {
       handleToast(
@@ -78,7 +80,7 @@ const DetailsSection = ({ product }) => {
 
   const handleBuyClick = (e) => {
     e.preventDefault();
-    setOrderItems({
+    const data = {
       product: product._id,
       quantity: selectedQuantity,
       purchasePrice: getPurchasePrice(
@@ -91,7 +93,18 @@ const DetailsSection = ({ product }) => {
       color: selectedColor,
       image: product?.images[0],
       name: product?.name,
-    });
+    };
+    if (
+      Array.isArray(orderItems) &&
+      orderItems.some(
+        (item) => item.size === selectedSize && item.color === selectedColor
+      )
+    ) {
+      orderItems.find((item) => item.product === data.product).quantity +=
+        selectedQuantity;
+    } else {
+      setOrderItems(data);
+    }
     navigate(`/place/order`);
   };
   useEffect(() => {
@@ -156,9 +169,10 @@ const DetailsSection = ({ product }) => {
                     style={{
                       cursor: "pointer",
                     }}
-                    className={`${selectedColor === color &&
+                    className={`${
+                      selectedColor === color &&
                       "relative before:h-full before:w-full before:absolute before:inset-0 before:content-[''] before:scale-[1.25] before:bg-transparent before:border before:border-[#585858] before:z-[-1] isolate before:rounded-full"
-                      }`}
+                    }`}
                   ></Box>
                 ))}
               </div>
@@ -196,24 +210,22 @@ const DetailsSection = ({ product }) => {
               >
                 -
               </Button>
-              {
-                product && (
-                  <input
-                    type="number"
-                    min="1"
-                    max={product.quantity}
-                    value={selectedQuantity}
-                    onChange={handleQuantityChange}
-                    disabled
-                    style={{
-                      width: "50px",
-                      textAlign: "center",
-                      borderRadius: "0.5rem",
-                    }}
-                    className=""
-                  />
-                )
-              }
+              {product && (
+                <input
+                  type="number"
+                  min="1"
+                  max={product.quantity}
+                  value={selectedQuantity}
+                  onChange={handleQuantityChange}
+                  disabled
+                  style={{
+                    width: "50px",
+                    textAlign: "center",
+                    borderRadius: "0.5rem",
+                  }}
+                  className=""
+                />
+              )}
               <Button
                 size="sm"
                 rounded="full"
@@ -244,7 +256,7 @@ const DetailsSection = ({ product }) => {
             <Button
               colorScheme="linkedin"
               className="w-[10em] py-4 uppercase"
-              onClick={()=>handleBuyClick()}
+              onClick={(e) => handleBuyClick(e)}
             >
               Buy now
             </Button>
