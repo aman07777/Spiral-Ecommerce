@@ -102,11 +102,6 @@ const Navbar = () => {
           <Box display={{ base: "none", md: "flex" }} alignItems="center">
             {currentUser && (
               <>
-                <NavLink to="/favorites" mr={4}>
-                  <span title="your favorites">
-                    <MdFavorite className="text-[#2e2e2e] hover:text-[#585858] text-[1.4rem]" />
-                  </span>
-                </NavLink>
                 <NavLink to="/cart" mr={4}>
                   <div className="relative">
                     {cartLen > 0 && (

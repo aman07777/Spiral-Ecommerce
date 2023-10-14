@@ -70,7 +70,6 @@ function App() {
 
               <Route path="profile/paymentoption" element={<PaymentOption />} />
               <Route path="profile/addressbook" element={<AddressBook />} />
-              <Route path="profile/whishlist" element={<MyWhislist />} />
               <Route path="profile/myorders" element={<MyOrder />} />
               <Route path="profile/myreview" element={<MyReview />} />
               <Route path="profile/addressbook" element={<AddressBook />} />

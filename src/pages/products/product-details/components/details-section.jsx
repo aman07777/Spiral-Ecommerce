@@ -17,6 +17,7 @@ import { useUserContext } from "../../../../contexts/UserContext";
 import { handleToast } from "../../../../global/toast";
 import { cartStore } from "../../../../services/CartStore";
 import { useBuyStore } from "../../order-details/components/store";
+import {getPurchasePrice, getTotalPrice} from "../helper";
 
 const DetailsSection = ({ product }) => {
   const toast = useToast();
