@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import {
@@ -37,11 +37,6 @@ const DetailsSection = ({ product }) => {
     colorCart || product?.colors[0]
   );
   const [selectedQuantity, setSelectedQuantity] = useState(1);
-
-  // const handleQuantityChange = (e) => {
-  //   setSelectedQuantity(+e.target.value);
-  // };
-
   const handleQuantityChange = (event) => {
     let newQuantity = parseInt(event.target.value);
     console.log(typeof newQuantity);
@@ -59,15 +54,6 @@ const DetailsSection = ({ product }) => {
   };
 
   const addProductTocart = cartStore((state) => state.addToCart);
-
-  // const handleIncreaseQuantity = (e) => {
-  //   if (selectedQuantity < product.quantity)
-  //     setSelectedQuantity(selectedQuantity + 1);
-  // };
-
-  // const handleDecreaseQuantity = (e) => {
-  //   if (selectedQuantity > 1) setSelectedQuantity(selectedQuantity - 1);
-  // };
 
   const handleIncreaseQuantity = () => {
     const maxQuantity = sQuantity
@@ -108,9 +94,29 @@ const DetailsSection = ({ product }) => {
       );
     }
   };
-
+  // handles excess quantity -> if the user want to buy the same product with same color and size
+  // and the quantity is more than the available quantity then it will show error
+  const handleExcessBuyQuantity = () => {
+    let count = 0;
+    Array.isArray(orderItems) &&
+      orderItems.forEach((item) => {
+        if (item.product === product._id) count += item.quantity;
+      });
+    if (count >= product.quantity) {
+      handleToast(
+        toast,
+        "Error",
+        "You can't add more than available quantity",
+        "error"
+      );
+      return false;
+    }
+    return true;
+  };
+  // handles buy now click -> if the user want to buy the same product with same color and size the quantity is increased by the selected quantity else it will add the product(another variant) to the orderItems
   const handleBuyClick = (e) => {
     e.preventDefault();
+    if (!handleExcessBuyQuantity()) return;
     const data = {
       product: product._id,
       quantity: selectedQuantity,
@@ -122,6 +128,7 @@ const DetailsSection = ({ product }) => {
       name: product?.name,
       discount: product?.discount,
       price: product?.price,
+      available: product?.quantity,
     };
     if (
       Array.isArray(orderItems) &&

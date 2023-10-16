@@ -8,12 +8,16 @@ const OrderDetails = lazy(() =>
 );
 
 // profile section --> customer start
-const PaymentOption = lazy(() => import("./pages/Customer/Pages/PaymentOption"));
+const PaymentOption = lazy(() =>
+  import("./pages/Customer/Pages/PaymentOption")
+);
 const AddressBook = lazy(() => import("./pages/Customer/Pages/AddressBook"));
 const MyOrder = lazy(() => import("./pages/Customer/Pages/MyOrder"));
 const MyReview = lazy(() => import("./pages/Customer/Pages/MyReview"));
-const CustomerProfile = lazy(() => import("./pages/Customer/Pages/CustomerProfile"));
-// profile section --> customer end 
+const CustomerProfile = lazy(() =>
+  import("./pages/Customer/Pages/CustomerProfile")
+);
+// profile section --> customer end
 
 const Fallback = lazy(() => import("./components/fallback"));
 const AffliatorProfile = lazy(() =>
@@ -86,7 +90,6 @@ function App() {
             <Route path="profile/myorders" element={<MyOrder />} />
             <Route path="profile/myreview" element={<MyReview />} />
             <Route path="profile/addressbook" element={<AddressBook />} />
-            <Route path="place/order/:id" element={<PlaceOrder />} />
 
             <Route path="/" element={<CheckAuth />}>
               <Route path="profile/affiliator" element={<AffliatorProfile />} />

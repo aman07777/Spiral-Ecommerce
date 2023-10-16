@@ -7,6 +7,11 @@ export const useBuyStore = create((set, get) => ({
       orderItems: [...state.orderItems, data],
     }));
   },
+  replaceOrderItems: (data) => {
+    set(() => ({
+      orderItems: data,
+    }));
+  },
   shippingInfo: {
     fullName: "",
     email: "",

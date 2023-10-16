@@ -54,7 +54,7 @@ const OrderSummary = ({ onOpen }) => {
       });
     setTotalPrice(totalPrice);
     setPurchasePrice(purchasePrice);
-  }, [orderItems]);
+  }, [orderItems, setTotalPrice, setPurchasePrice]);
   React.useEffect(() => {
     if (selectedPromoCode) {
       const discountAmount = getDiscountAmount(
@@ -63,7 +63,12 @@ const OrderSummary = ({ onOpen }) => {
       );
       setPurchasePrice(purchasePrice - discountAmount);
     }
-  }, [selectedPromoCodeDiscount]);
+  }, [
+    selectedPromoCodeDiscount,
+    setPurchasePrice,
+    selectedPromoCode,
+    purchasePrice,
+  ]);
 
   // handlers
   const handlePlaceOrderClick = () => {
