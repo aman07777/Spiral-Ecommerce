@@ -48,7 +48,7 @@ const ProductPage = lazy(() => import("./pages/products/ProductPage"));
 const ProductDetails = lazy(() =>
   import("./pages/products/product-details/ProductDetails")
 );
-const CartPage = lazy(() => import("./pages/CartPage"));
+const CartPage = lazy(() => import("./pages/carts/pages/Carts"));
 const EmailVerification = lazy(() => import("./pages/EmailVerification"));
 
 function App() {
@@ -88,31 +88,31 @@ function App() {
             <Route path="profile/addressbook" element={<AddressBook />} />
             <Route path="place/order/:id" element={<PlaceOrder />} />
 
-          <Route path="/" element={<CheckAuth />}>
-            <Route path="profile/affiliator" element={<AffliatorProfile />} />
-          </Route>
+            <Route path="/" element={<CheckAuth />}>
+              <Route path="profile/affiliator" element={<AffliatorProfile />} />
+            </Route>
 
-          <Route path="/emailverification" element={<EmailVerification />} />
-          <Route path="/resetpassword" element={<ResetPassword />} />
+            <Route path="/emailverification" element={<EmailVerification />} />
+            <Route path="/resetpassword" element={<ResetPassword />} />
 
-          {/* admin routes */}
-          <Route path="/adminHome" element={<AdminHome />} />
-          <Route path="/adminProduct" element={<AdminProduct />} />
-          <Route path="/admin-add-product" element={<AddProduct />} />
-          <Route
-            path="/admin-update-product/:id"
-            element={<UpdateProduct />}
-          />
-          <Route path="/adminOrder" element={<AdminOrder />} />
-          <Route path="/admin-order-details/:id" element={<OrderDetails />} />
-          <Route path="/adminCustomer" element={<AdminCustomer />} />
-          <Route path="/adminAffliator" element={<AdminAffiliator />} />
-          <Route path="/admin-add-affliator" element={<AddAffiliator />} />
-          <Route path="/adminSetting" element={<AdminSettings />} />
-          {/* admin routes ends here */}
-          <Route path="*" element={<ErrorPage />} />
-        </Routes>
-      </Suspense>
+            {/* admin routes */}
+            <Route path="/adminHome" element={<AdminHome />} />
+            <Route path="/adminProduct" element={<AdminProduct />} />
+            <Route path="/admin-add-product" element={<AddProduct />} />
+            <Route
+              path="/admin-update-product/:id"
+              element={<UpdateProduct />}
+            />
+            <Route path="/adminOrder" element={<AdminOrder />} />
+            <Route path="/admin-order-details/:id" element={<OrderDetails />} />
+            <Route path="/adminCustomer" element={<AdminCustomer />} />
+            <Route path="/adminAffliator" element={<AdminAffiliator />} />
+            <Route path="/admin-add-affliator" element={<AddAffiliator />} />
+            <Route path="/adminSetting" element={<AdminSettings />} />
+            {/* admin routes ends here */}
+            <Route path="*" element={<ErrorPage />} />
+          </Routes>
+        </Suspense>
       </ErrorBoundary>
     </Router>
   );

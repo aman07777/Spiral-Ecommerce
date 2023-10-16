@@ -185,8 +185,8 @@ function CartPageDesktop() {
                   </Thead>
                   {isDesktop ? (
                     <>
-                      <Tbody>
-                        {cartItems.map((product, index) => (
+                      <Tbody className="">
+                        {cartItems?.map((product, index) => (
                           <Tr key={index}>
                             <Td>
                               <Checkbox
@@ -196,7 +196,7 @@ function CartPageDesktop() {
                                 }
                               />
                             </Td>
-                            <Td>
+                            <Td className="bg-blue-300">
                               <Link
                                 to={`/products/${product?.id}`}
                                 state={{
@@ -206,17 +206,18 @@ function CartPageDesktop() {
                                   },
                                 }}
                               >
-                                <ul className="flex items-center py-4 gap-x-4">
+                                <ul className="flex items-center w-[100%] py-4 gap-x-2">
                                   {/* product image  */}
-                                  <li className="w-[3.5rem]">
+                                  <li className="bg-blue-400 w-[40%]">
                                     <img
                                       src={`${imageUrl}/${product.image}`}
-                                      className="object-cover rounded-md"
+                                      className="rounded-md h-[3rem] w-[4rem]"
+                                      alt={product?.name}
                                     />
                                   </li>
                                   {/* product desc  */}
-                                  <li className="flex flex-col gap-y-1">
-                                    <span className="text-lg font-bold">
+                                  <li className="flex flex-col gap-y-1 w-[60%]">
+                                    <span className="text-lg font-bold line-clamp-2">
                                       {product.name}
                                     </span>
                                     <span className="text-xs font-semibold line-clamp-2">
