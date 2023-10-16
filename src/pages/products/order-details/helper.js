@@ -8,3 +8,14 @@ export const getPurchasePrice = (price, quantity, discount) => {
   const total = getTotalPrice(price, quantity);
   return total - getDiscountAmount(discount, total);
 };
+
+export const checkShippingInfo = (data) => {
+  const { fullName, email, address, mobileNumber, province } = data;
+  return (
+    fullName !== "" &&
+    email !== "" &&
+    address !== "" &&
+    mobileNumber !== "" &&
+    province !== ""
+  );
+};

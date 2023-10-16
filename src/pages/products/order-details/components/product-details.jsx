@@ -1,6 +1,7 @@
 import React from "react";
 import { imageUrl } from "../../../../global/config";
 import { useBuyStore } from "./store";
+import { getPurchasePrice } from "../helper";
 const ProductDetails = () => {
   const products = useBuyStore((state) => state.orderItems);
   return (
@@ -10,7 +11,10 @@ const ProductDetails = () => {
         <div className="flex flex-col mt-5 gap-y-2">
           {Array.isArray(products) &&
             products.map((product) => (
-              <div className="pb-2 border-b-[2px] border-gray-200 flex justify-between items-center px-2">
+              <div
+                key={`${product.product}-${product.color}-${product.size}`}
+                className="pb-2 border-b-[2px] border-gray-200 flex justify-between items-center px-2"
+              >
                 <div className="flex gap-x-2">
                   <img
                     src={`${imageUrl}/${product?.image}`}
@@ -32,16 +36,21 @@ const ProductDetails = () => {
                 <p>Qty: {product?.quantity}</p>
                 <div className="flex items-center gap-x-2">
                   <p className="flex text-[.85rem] bg-slate-200 gap-x-1 px-1 rounded">
-                    {product?.totalPrice > 0 && (
+                    {product?.quantity > 0 && (
                       <span className="line-through">
-                        Rs.{product?.totalPrice}
+                        Rs.{product?.quantity * product?.price}
                       </span>
                     )}
-                    {product?.product?.discount > 0 && (
-                      <span>{product?.product?.discount}%</span>
+                    {product?.discount > 0 && <span>{product?.discount}%</span>}
+                  </p>
+                  <p>
+                    Rs.
+                    {getPurchasePrice(
+                      product.price,
+                      product.quantity,
+                      product.discount
                     )}
                   </p>
-                  <p>Rs.{product?.purchasePrice}</p>
                 </div>
               </div>
             ))}

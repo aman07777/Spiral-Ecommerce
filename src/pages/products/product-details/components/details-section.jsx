@@ -15,7 +15,6 @@ import {
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import { useUserContext } from "../../../../contexts/UserContext";
 import { handleToast } from "../../../../global/toast";
-import { getPurchasePrice, getTotalPrice } from "../helper";
 import { cartStore } from "../../../../services/CartStore";
 import { useBuyStore } from "../../order-details/components/store";
 
@@ -60,7 +59,6 @@ const DetailsSection = ({ product }) => {
         color: selectedColor,
         size: selectedSize,
       };
-      console.log(data);
       const res = await addProductTocart(data);
       if (res.status === "success") {
         handleToast(toast, "Success", "Product added to cart.", "success");
@@ -82,28 +80,32 @@ const DetailsSection = ({ product }) => {
     const data = {
       product: product._id,
       quantity: selectedQuantity,
-      purchasePrice: getPurchasePrice(
-        product?.price,
-        selectedQuantity,
-        product?.discount
-      ),
-      totalPrice: getTotalPrice(product.price, selectedQuantity),
+      purchasePrice: 0,
+      totalPrice: 0,
       size: selectedSize,
       color: selectedColor,
       image: product?.images[0],
       name: product?.name,
+      discount: product?.discount,
+      price: product?.price,
     };
     if (
       Array.isArray(orderItems) &&
       orderItems.some(
         (item) => item.size === selectedSize && item.color === selectedColor
       )
-    ) {
-      orderItems.find((item) => item.product === data.product).quantity +=
-        selectedQuantity;
-    } else {
-      setOrderItems(data);
-    }
+    )
+      if (
+        orderItems.find((item) => item.product === data.product).quantity +
+          selectedQuantity >
+        product.quantity
+      )
+        orderItems.find((item) => item.product === data.product).quantity =
+          product.quantity;
+      else
+        orderItems.find((item) => item.product === data.product).quantity +=
+          selectedQuantity;
+    else setOrderItems(data);
     navigate(`/place/order`);
   };
   useEffect(() => {
