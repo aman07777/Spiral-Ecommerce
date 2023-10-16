@@ -17,7 +17,6 @@ import { useUserContext } from "../../../../contexts/UserContext";
 import { handleToast } from "../../../../global/toast";
 import { cartStore } from "../../../../services/CartStore";
 import { useBuyStore } from "../../order-details/components/store";
-import { getPurchasePrice, getTotalPrice } from "../helper";
 
 const DetailsSection = ({ product }) => {
   const toast = useToast();
@@ -39,15 +38,16 @@ const DetailsSection = ({ product }) => {
   );
   const [selectedQuantity, setSelectedQuantity] = useState(1);
 
-
   // const handleQuantityChange = (e) => {
   //   setSelectedQuantity(+e.target.value);
   // };
 
   const handleQuantityChange = (event) => {
     let newQuantity = parseInt(event.target.value);
-    console.log(typeof newQuantity)
-    const maxQuantity = sQuantity ? product?.quantity - sQuantity : product.quantity;
+    console.log(typeof newQuantity);
+    const maxQuantity = sQuantity
+      ? product?.quantity - sQuantity
+      : product.quantity;
 
     if (newQuantity > maxQuantity) {
       newQuantity = maxQuantity;
@@ -57,8 +57,6 @@ const DetailsSection = ({ product }) => {
 
     setSelectedQuantity(newQuantity); // Update the state with the new quantity
   };
-
-
 
   const addProductTocart = cartStore((state) => state.addToCart);
 
@@ -72,7 +70,9 @@ const DetailsSection = ({ product }) => {
   // };
 
   const handleIncreaseQuantity = () => {
-    const maxQuantity = sQuantity ? product?.quantity - sQuantity : product.quantity;
+    const maxQuantity = sQuantity
+      ? product?.quantity - sQuantity
+      : product.quantity;
     if (selectedQuantity < maxQuantity) {
       setSelectedQuantity(selectedQuantity + 1);
     }
@@ -143,7 +143,6 @@ const DetailsSection = ({ product }) => {
     navigate(`/place/order`);
   };
 
-
   return (
     <>
       <Box maxWidth="800px" className="flex-1 text-gray-600">
@@ -202,9 +201,10 @@ const DetailsSection = ({ product }) => {
                     style={{
                       cursor: "pointer",
                     }}
-                    className={`${selectedColor === color &&
+                    className={`${
+                      selectedColor === color &&
                       "relative before:h-full before:w-full before:absolute before:inset-0 before:content-[''] before:scale-[1.25] before:bg-transparent before:border before:border-[#585858] before:z-[-1] isolate before:rounded-full"
-                      }`}
+                    }`}
                   ></Box>
                 ))}
               </div>
@@ -246,7 +246,9 @@ const DetailsSection = ({ product }) => {
                 <input
                   type="number"
                   min="1"
-                  max={sQuantity ? product?.quantity - sQuantity : product.quantity}
+                  max={
+                    sQuantity ? product?.quantity - sQuantity : product.quantity
+                  }
                   value={selectedQuantity}
                   onChange={(e) => handleQuantityChange(e)}
                   disabled
@@ -257,7 +259,6 @@ const DetailsSection = ({ product }) => {
                   }}
                   className=""
                 />
-
               )}
               <Button
                 size="sm"
@@ -273,11 +274,15 @@ const DetailsSection = ({ product }) => {
             </div>
           </div>
           <span className="text-xs text-red-500">
-            {
-              (sQuantity ? product?.quantity - (sQuantity + selectedQuantity) : product?.quantity - selectedQuantity) <= 0
-                ? "No quantity left"
-                : `${sQuantity ? product?.quantity - (sQuantity + selectedQuantity) : product?.quantity - selectedQuantity} quantity left`
-            }
+            {(sQuantity
+              ? product?.quantity - (sQuantity + selectedQuantity)
+              : product?.quantity - selectedQuantity) <= 0
+              ? "No quantity left"
+              : `${
+                  sQuantity
+                    ? product?.quantity - (sQuantity + selectedQuantity)
+                    : product?.quantity - selectedQuantity
+                } quantity left`}
           </span>
 
           <Stack direction="row" mt={3} className="text-green-700">

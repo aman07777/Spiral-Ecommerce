@@ -77,17 +77,19 @@ const OrderSummary = ({ onOpen }) => {
       onOpen();
       return;
     }
+
     const orderData = {
       orderItems:
         Array.isArray(orderItems) &&
-        orderItems.map((item) => {
-          item.purchasePrice = getPurchasePrice(
+        orderItems.map((item) => ({
+          ...item,
+          purchasePrice: getPurchasePrice(
             item.price,
             item.quantity,
             item.discount
-          );
-          item.totalPrice = getTotalPrice(item.price, item.quantity);
-        }),
+          ),
+          totalPrice: getTotalPrice(item.price, item.quantity),
+        })),
       shippingInfo,
       promoCode: selectedPromoCode,
       purchasePrice,
