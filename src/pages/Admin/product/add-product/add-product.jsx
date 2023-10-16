@@ -42,6 +42,7 @@ const AddProduct = () => {
     category: "",
     brand: "",
     quantity: "",
+    discount: 0,
     colors: [],
     sizes: [],
     images: [],
@@ -65,6 +66,7 @@ const AddProduct = () => {
     formData.append("category", product.category);
     formData.append("brand", product.brand);
     formData.append("quantity", product.quantity);
+    formData.append("discount", product.discount);
     for (let i = 0; i < product.colors?.length; i++) {
       formData.append("colors", product.colors[i]?.trim());
     }
@@ -228,6 +230,18 @@ const AddProduct = () => {
                     value={product.brand}
                     onChange={(event) =>
                       setProduct({ ...product, brand: event.target.value })
+                    }
+                  />
+                </FormControl>
+                <FormControl id="discount" mt={2} isRequired>
+                  <FormLabel>Discount</FormLabel>
+                  <Input
+                    type="number"
+                    placeholder="Enter product brand"
+                    size="md"
+                    value={product.discount}
+                    onChange={(event) =>
+                      setProduct({ ...product, discount: event.target.value })
                     }
                   />
                 </FormControl>

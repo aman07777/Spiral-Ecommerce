@@ -2,7 +2,6 @@ import React from "react";
 import { Box, Text, Image } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { imageUrl } from "../../../global/config";
-import { MdFavorite } from "react-icons/md";
 const ProductCard = ({ data }) => {
   const navigate = useNavigate();
   const handleSelectedProduct = (productId) => {
@@ -32,14 +31,10 @@ const ProductCard = ({ data }) => {
         </Box>
         <div className="px-3">
           <div className="flex items-center justify-between">
-            <Text className="text-[1.1rem] font-semibold line-clamp-2">{data.name}</Text>
-            <MdFavorite
-              className="text-[1.3rem] hover:text-rose-500"
-              title="favorite"
-            />
+            <Text className="text-[1rem] font-semibold line-clamp-1">{data.name}</Text>
           </div>
           <Text className="mt-2 font-semibold text-[1.1rem] text-[#585858]/80">
-            {data.price - (data.discount / 100) * data.price} NPR
+          NPR {(data.price - (data.discount / 100) * data.price).toFixed(2)}
           </Text>
           {data.discount > 0 && (
             <div className="font-medium text-[.8rem] flex gap-x-3">

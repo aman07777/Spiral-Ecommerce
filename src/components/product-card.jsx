@@ -35,10 +35,10 @@ const ProductCard = ({ data }) => {
         </Box>
         <div className="px-3">
           <div className="flex justify-between items-center">
-            <Text className="text-[1.3rem] font-semibold">{data.name}</Text>
+            <Text className="text-[1rem] font-semibold line-clamp-1">{data.name}</Text>
           </div>
           <Text className="mt-2 font-semibold text-[1.1rem] text-[#585858]/80">
-            {data.price - (data.discount / 100) * data.price} NPR
+            NPR {(data.price - (data.discount / 100) * data.price).toFixed(2)}
           </Text>
           {data.discount > 0 && (
             <div className="font-medium text-[.8rem] flex gap-x-3">
