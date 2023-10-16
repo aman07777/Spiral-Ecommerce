@@ -17,6 +17,7 @@ import { useUserContext } from "../../../../contexts/UserContext";
 import { handleToast } from "../../../../global/toast";
 import { cartStore } from "../../../../services/CartStore";
 import { useBuyStore } from "../../order-details/components/store";
+import { getPurchasePrice, getTotalPrice } from "../helper";
 
 const DetailsSection = ({ product }) => {
   const toast = useToast();
@@ -25,6 +26,7 @@ const DetailsSection = ({ product }) => {
   const { state } = useLocation();
   const colorCart = state?.product.color;
   const sizeCart = state?.product.size;
+  const sQuantity = state?.product.sQuantity;
   // stores
   const setOrderItems = useBuyStore((state) => state.setOrderItems);
   const orderItems = useBuyStore((state) => state.orderItems);
@@ -36,18 +38,50 @@ const DetailsSection = ({ product }) => {
     colorCart || product?.colors[0]
   );
   const [selectedQuantity, setSelectedQuantity] = useState(1);
-  const handleQuantityChange = (e) => {
-    setSelectedQuantity(+e.target.value);
+
+
+  // const handleQuantityChange = (e) => {
+  //   setSelectedQuantity(+e.target.value);
+  // };
+
+  const handleQuantityChange = (event) => {
+    let newQuantity = parseInt(event.target.value);
+    console.log(typeof newQuantity)
+    const maxQuantity = sQuantity ? product?.quantity - sQuantity : product.quantity;
+
+    if (newQuantity > maxQuantity) {
+      newQuantity = maxQuantity;
+    } else if (newQuantity < 1) {
+      newQuantity = 1;
+    }
+
+    setSelectedQuantity(newQuantity); // Update the state with the new quantity
   };
+
+
+
   const addProductTocart = cartStore((state) => state.addToCart);
 
-  const handleIncreaseQuantity = (e) => {
-    if (selectedQuantity < product.quantity)
+  // const handleIncreaseQuantity = (e) => {
+  //   if (selectedQuantity < product.quantity)
+  //     setSelectedQuantity(selectedQuantity + 1);
+  // };
+
+  // const handleDecreaseQuantity = (e) => {
+  //   if (selectedQuantity > 1) setSelectedQuantity(selectedQuantity - 1);
+  // };
+
+  const handleIncreaseQuantity = () => {
+    const maxQuantity = sQuantity ? product?.quantity - sQuantity : product.quantity;
+    if (selectedQuantity < maxQuantity) {
       setSelectedQuantity(selectedQuantity + 1);
+    }
   };
 
-  const handleDecreaseQuantity = (e) => {
-    if (selectedQuantity > 1) setSelectedQuantity(selectedQuantity - 1);
+  const handleDecreaseQuantity = () => {
+    if (selectedQuantity > 1) {
+      setSelectedQuantity(selectedQuantity - 1);
+    }
   };
 
   const handleAddToCart = async () => {
@@ -108,9 +142,7 @@ const DetailsSection = ({ product }) => {
     else setOrderItems(data);
     navigate(`/place/order`);
   };
-  useEffect(() => {
-    setSelectedQuantity(+product.quantity);
-  }, [product]);
+
 
   return (
     <>
@@ -170,10 +202,9 @@ const DetailsSection = ({ product }) => {
                     style={{
                       cursor: "pointer",
                     }}
-                    className={`${
-                      selectedColor === color &&
+                    className={`${selectedColor === color &&
                       "relative before:h-full before:w-full before:absolute before:inset-0 before:content-[''] before:scale-[1.25] before:bg-transparent before:border before:border-[#585858] before:z-[-1] isolate before:rounded-full"
-                    }`}
+                      }`}
                   ></Box>
                 ))}
               </div>
@@ -215,9 +246,9 @@ const DetailsSection = ({ product }) => {
                 <input
                   type="number"
                   min="1"
-                  max={product.quantity}
+                  max={sQuantity ? product?.quantity - sQuantity : product.quantity}
                   value={selectedQuantity}
-                  onChange={handleQuantityChange}
+                  onChange={(e) => handleQuantityChange(e)}
                   disabled
                   style={{
                     width: "50px",
@@ -226,6 +257,7 @@ const DetailsSection = ({ product }) => {
                   }}
                   className=""
                 />
+
               )}
               <Button
                 size="sm"
@@ -240,6 +272,13 @@ const DetailsSection = ({ product }) => {
               </Button>
             </div>
           </div>
+          <span className="text-xs text-red-500">
+            {
+              (sQuantity ? product?.quantity - (sQuantity + selectedQuantity) : product?.quantity - selectedQuantity) <= 0
+                ? "No quantity left"
+                : `${sQuantity ? product?.quantity - (sQuantity + selectedQuantity) : product?.quantity - selectedQuantity} quantity left`
+            }
+          </span>
 
           <Stack direction="row" mt={3} className="text-green-700">
             <LocalShippingIcon />

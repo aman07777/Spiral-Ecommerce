@@ -2,7 +2,6 @@ import React from "react";
 import { Box, Text, Image } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { imageUrl } from "../global/config";
-import { MdFavorite } from "react-icons/md";
 
 
 const ProductCard = ({ data }) => {
@@ -37,10 +36,6 @@ const ProductCard = ({ data }) => {
         <div className="px-3">
           <div className="flex justify-between items-center">
             <Text className="text-[1.3rem] font-semibold">{data.name}</Text>
-            <MdFavorite
-              className="text-[1.3rem] hover:text-rose-500"
-              title="favorite"
-            />
           </div>
           <Text className="mt-2 font-semibold text-[1.1rem] text-[#585858]/80">
             {data.price - (data.discount / 100) * data.price} NPR

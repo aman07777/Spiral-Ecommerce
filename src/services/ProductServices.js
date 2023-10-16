@@ -53,6 +53,11 @@ export const getFeaturedProducts = async () => {
   return data.status === "success" ? data.products : [];
 };
 
+export const getNewArrival = async () => {
+  const { data } = await axios.get(`${baseUrl}products/new-arrival`);
+  return data.status === "success" ? data.products : [];
+};
+
 export const removeProduct = async (currentUser, productId) => {
   return axios.delete(`${baseUrl}/${productId}`, {
     headers: {

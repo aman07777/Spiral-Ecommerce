@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box } from "@chakra-ui/react";
 import ProductCard from "./product-card";
 import UseGetInnerWidth from "../../Admin/hooks/get-inner-width";
 import "./new-arrival-style.css";
+import { getNewArrival } from "../../../services/ProductServices";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/navigation";
@@ -12,6 +13,14 @@ import { Navigation } from "swiper/modules";
 const NewArrivals = () => {
   const windowWIdth = UseGetInnerWidth();
   const navigate = useNavigate();
+  const [products, setProducts] = useState([])
+
+  useEffect(() => {
+    getNewArrival().then((data) => {
+      setProducts(data)
+    })
+  }, [getNewArrival])
+
   return (
     <>
       <div className="flex justify-center w-full mb-5  text-[#585858]">
@@ -60,36 +69,23 @@ const NewArrivals = () => {
               windowWIdth < 300
                 ? 1
                 : windowWIdth > 301 && windowWIdth < 600
-                ? 2
-                : windowWIdth > 601 && windowWIdth < 900
-                ? 3
-                : 4
+                  ? 2
+                  : windowWIdth > 601 && windowWIdth < 900
+                    ? 3
+                    : 4
             }
             navigation={true}
             spaceBetween={20}
             modules={[Navigation]}
             className="h-[400px]"
           >
-
-            
-            <SwiperSlide>
-              <ProductCard />
-            </SwiperSlide>
-            <SwiperSlide>
-              <ProductCard />
-            </SwiperSlide>
-            <SwiperSlide>
-              <ProductCard />
-            </SwiperSlide>
-            <SwiperSlide>
-              <ProductCard />
-            </SwiperSlide>
-            <SwiperSlide>
-              <ProductCard />
-            </SwiperSlide>
-            <SwiperSlide>
-              <ProductCard />
-            </SwiperSlide>
+            {
+              products?.map((product, index) => (
+                <SwiperSlide key={index}>
+                  <ProductCard data={product}/>
+                </SwiperSlide>
+              ))
+            }
           </Swiper>
         </Box>
       </div>

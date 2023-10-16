@@ -71,7 +71,7 @@ const MyOrder = () => {
                 <div className="w-[100%] md:w-[80%]">
                     <Box borderWidth="1px" borderRadius="lg" overflow="hidden" className="p-5">
                         <Flex alignItems="center" bg="gray.50" p={4}>
-                            <TopSide/>
+                            <TopSide />
                             <div className="w-full items-center justify-center gap-x-2 hidden md:flex" >
                                 <span className="text-lg font-bold">My Orders</span>
                                 <i><BiSolidCart className="text-[#008080]" size={20} /></i>
@@ -131,7 +131,9 @@ const MyOrder = () => {
                                                     {
                                                         item?.map((val, index) => (
                                                             <>
-                                                                <AllOrderList val={val} key={index} />
+                                                                <div key={index}>
+                                                                    <AllOrderList val={val} />
+                                                                </div>
                                                             </>
                                                         ))
                                                     }
@@ -147,7 +149,9 @@ const MyOrder = () => {
                                                     {
                                                         item?.map((val, index) => (
                                                             <>
-                                                                <OrderHistory val={val} key={index} />
+                                                                <div key={index}>
+                                                                    <OrderHistory val={val} />
+                                                                </div>
                                                             </>
                                                         ))
                                                     }
@@ -169,7 +173,7 @@ const MyOrder = () => {
                                 <DrawerCloseButton />
                                 <DrawerHeader>
                                     <div className="">
-                                        <TopSide/>
+                                        <TopSide />
                                     </div>
                                 </DrawerHeader>
                                 <DrawerBody>

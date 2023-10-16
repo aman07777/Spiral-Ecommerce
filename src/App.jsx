@@ -6,15 +6,15 @@ import PlaceOrder from "./pages/products/order-details/place-order";
 const OrderDetails = lazy(() =>
   import("./pages/Admin/order/order-details/order-details")
 );
-const PaymentOption = lazy(() =>
-  import("./pages/Customer/Pages/PaymentOption")
-);
+
+// profile section --> customer start
+const PaymentOption = lazy(() => import("./pages/Customer/Pages/PaymentOption"));
 const AddressBook = lazy(() => import("./pages/Customer/Pages/AddressBook"));
 const MyOrder = lazy(() => import("./pages/Customer/Pages/MyOrder"));
 const MyReview = lazy(() => import("./pages/Customer/Pages/MyReview"));
-const CustomerProfile = lazy(() =>
-  import("./pages/Customer/Pages/CustomerProfile")
-);
+const CustomerProfile = lazy(() => import("./pages/Customer/Pages/CustomerProfile"));
+// profile section --> customer end 
+
 const Fallback = lazy(() => import("./components/fallback"));
 const AffliatorProfile = lazy(() =>
   import("./pages/affiliator/AffliatorProfile")
@@ -48,7 +48,7 @@ const ProductPage = lazy(() => import("./pages/products/ProductPage"));
 const ProductDetails = lazy(() =>
   import("./pages/products/product-details/ProductDetails")
 );
-const CartPage = lazy(() => import("./pages/CartPage"));
+const CartPage = lazy(() => import("./pages/carts/pages/Carts"));
 const EmailVerification = lazy(() => import("./pages/EmailVerification"));
 
 function App() {
@@ -76,12 +76,17 @@ function App() {
               <Route path="place/order" element={<PlaceOrder />} />
             </Route>
 
+            <Route path="/" element={<CheckAuth />}>
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="profile/customer" element={<CustomerProfile />} />
+            </Route>
+
             <Route path="profile/paymentoption" element={<PaymentOption />} />
             <Route path="profile/addressbook" element={<AddressBook />} />
             <Route path="profile/myorders" element={<MyOrder />} />
             <Route path="profile/myreview" element={<MyReview />} />
             <Route path="profile/addressbook" element={<AddressBook />} />
-            <Route path="place/order" element={<PlaceOrder />} />
+            <Route path="place/order/:id" element={<PlaceOrder />} />
 
             <Route path="/" element={<CheckAuth />}>
               <Route path="profile/affiliator" element={<AffliatorProfile />} />
