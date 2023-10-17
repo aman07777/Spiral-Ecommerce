@@ -152,6 +152,8 @@ const OrderSummary = ({ onOpen }) => {
         )
       );
   }, [promoCode, codes]);
+
+
   return (
     <>
       <div className="w-full @[750px]:w-[20em] @[1000px]:w-[25em] px-4 pt-2 border rounded-sm border-l-[4px] shadow pb-5 h-fit">

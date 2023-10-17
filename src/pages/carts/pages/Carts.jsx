@@ -5,10 +5,8 @@ import { cartStore } from '../../../services/CartStore';
 import { imageUrl } from '../../../global/config';
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from 'react-router-dom';
-import { useOrderStore } from '../../products/product-details/store';
 import { useBuyStore } from '../../products/order-details/components/store';
 import { useNavigate } from 'react-router-dom';
-import { getPurchasePrice, getTotalPrice } from '../../products/product-details/helper';
 
 
 const Carts = () => {
@@ -24,23 +22,11 @@ const Carts = () => {
     const [cartItems, setCartItems] = useState([]);
     const [selectAll, setSelectAll] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-    const [promo, setPromo] = useState([]);
     const deleteCart = cartStore((state) => state.removeCart);
     const getAllCarts = cartStore((state) => state.getAllCarts);
-    const getPromoCodes = useOrderStore((state) => state.getPromoCodes);
-    const [currentIndex, setCurrentIndex] = useState(0); // Add this state variable
 
     //order state
     const setOrderItems = useBuyStore((state) => state.setOrderItems);
-
-
-    // get promo codes
-    useEffect(() => {
-        getPromoCodes().then((data) => {
-            setPromo(data)
-        })
-    }, [getPromoCodes])
-
 
     //   get all carts 
     useEffect(() => {
@@ -121,13 +107,17 @@ const Carts = () => {
         const data = filteredData ? filteredData.map(item => ({
             product: item.id,
             quantity: item.selectedQuantity,
-            purchasePrice: getPurchasePrice(item.price, item.selectedQuantity, item.discount),
-            totalPrice: getTotalPrice(item.price, item.selectedQuantity),
+            available: item.availableQuantity,
+            purchasePrice: 0,
+            totalPrice: 0,
             size: item.size,
             color: item.color,
             image: item.image,
             name: item.name,
+            price: item.price,
+            discount: item.discount
         })) : [];
+
 
         // Add each item to orderItems
         data.forEach(item => {
@@ -477,24 +467,6 @@ const Carts = () => {
 
                         {/* cart summary  */}
                         <div className="w-[100%] xl:w-[30%] @[750px]:w-[20em] @[1000px]:w-[25em] px-4 pt-2 border rounded-sm border-l-[4px] shadow pb-5 h-fit">
-                            <h3 className="font-semibold text-[#585858]">Available Promo Codes</h3>
-                            <div className="my-3">
-                                <select
-                                    name=""
-                                    id=""
-                                    className="w-full py-[.4em] border outline-transparent pl-2 focus:border"
-                                >
-                                    <option value="">Select Promo Code</option>
-                                    {Array.isArray(promo) &&
-                                        promo.map(
-                                            (code, index) =>
-                                                code.status === "active" && (
-                                                    <option value={code._id} key={index}>{code.promoCode}</option>
-                                                )
-                                        )}
-                                </select>
-                            </div>
-                            <p className="h-[2px] bg-gray-300 my-3" />
                             <h3 className="font-semibold text-[#585858]">Order Summary</h3>
                             <div className="flex justify-between w-full pr-4 mt-2">
                                 <div className="flex gap-y-[.2rem] flex-col">
@@ -514,15 +486,16 @@ const Carts = () => {
                                 className="w-full py-2 mt-5 capitalize bg-[teal] border border-[teal] text-white hover:bg-[teal]/80 hover:border-[teal]/80 rounded-sm"
                                 onClick={() => handleCheckout()}
                             >
-                                Checkout Now
-                                {/* {isLoading ? "Ordering..." : "place order"} */}
+                                {isLoading ? "Loading ..." : "Check out"}
                             </button>
                         </div>
 
 
                     </div >
                 ) : (
-                    <Spinner />
+                    <div className='flex items-center justify-center'>
+                        <Spinner />
+                    </div>
                 )
             }
         </>

@@ -3,6 +3,7 @@ import { create } from "zustand";
 export const useBuyStore = create((set, get) => ({
   orderItems: [],
   setOrderItems: (data) => {
+    console.log(data)
     set((state) => ({
       orderItems: [...state.orderItems, data],
     }));
