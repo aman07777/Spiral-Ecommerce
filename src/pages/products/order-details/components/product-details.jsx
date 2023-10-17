@@ -3,6 +3,7 @@ import { imageUrl } from "../../../../global/config";
 import { useBuyStore } from "./store";
 const ProductDetails = () => {
   const products = useBuyStore((state) => state.orderItems);
+  console.log(products)
   return (
     <>
       <div className="flex-1 p-2 px-3 border rounded-sm border-l-[4px] shadow text-[#585858] h-[30em] overflow-y-scroll">

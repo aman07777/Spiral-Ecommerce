@@ -6,9 +6,15 @@ import { imageUrl } from '../../../global/config';
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from 'react-router-dom';
 import { useOrderStore } from '../../products/product-details/store';
+import { useBuyStore } from '../../products/order-details/components/store';
+import { useNavigate } from 'react-router-dom';
+import { getPurchasePrice, getTotalPrice } from '../../products/product-details/helper';
 
 
 const Carts = () => {
+    // navigate 
+    const navigate = useNavigate();
+
     //toast
     const toast = useToast();
 
@@ -22,6 +28,11 @@ const Carts = () => {
     const deleteCart = cartStore((state) => state.removeCart);
     const getAllCarts = cartStore((state) => state.getAllCarts);
     const getPromoCodes = useOrderStore((state) => state.getPromoCodes);
+    const [currentIndex, setCurrentIndex] = useState(0); // Add this state variable
+
+    //order state
+    const setOrderItems = useBuyStore((state) => state.setOrderItems);
+
 
     // get promo codes
     useEffect(() => {
@@ -93,8 +104,37 @@ const Carts = () => {
         setCartItems(newCartItems);
     };
 
+    // handle checkout function 
     const handleCheckout = () => {
-        // ...
+        const filteredData = cartItems.filter(item => item.isChecked === true);
+        if (filteredData.length === 0) {
+            toast({
+                title: "At least select one product",
+                description: "Please select one product",
+                status: "warning",
+                duration: 3000,
+                isClosable: true,
+            });
+            return;
+        }
+
+        const data = filteredData ? filteredData.map(item => ({
+            product: item.id,
+            quantity: item.selectedQuantity,
+            purchasePrice: getPurchasePrice(item.price, item.selectedQuantity, item.discount),
+            totalPrice: getTotalPrice(item.price, item.selectedQuantity),
+            size: item.size,
+            color: item.color,
+            image: item.image,
+            name: item.name,
+        })) : [];
+
+        // Add each item to orderItems
+        data.forEach(item => {
+            setOrderItems(item);
+        });
+
+        navigate(`/place/order`);
     };
 
     const handleDeleteAll = () => {
@@ -110,11 +150,11 @@ const Carts = () => {
         0
     );
     const discountAmount = cartItems?.reduce(
-        (total, item) => total + (item.isChecked ? item.discount : 0), 0
-    )
-    const discount = (subtotal / 100) * discountAmount;
-    const shippingCharge = 150
-    const grandTotal = (subtotal - discount) + shippingCharge;
+        (total, item) => total + (item.isChecked ? (item.price * item.selectedQuantity * item.discount / 100) : 0), 0
+    );
+
+    const shippingCharge = 150;
+    const grandTotal = subtotal - discountAmount + shippingCharge;
 
     const handleRemoveCartItem = async (productId) => {
         try {
@@ -447,7 +487,7 @@ const Carts = () => {
                                     <option value="">Select Promo Code</option>
                                     {Array.isArray(promo) &&
                                         promo.map(
-                                            (code,index) =>
+                                            (code, index) =>
                                                 code.status === "active" && (
                                                     <option value={code._id} key={index}>{code.promoCode}</option>
                                                 )
@@ -465,14 +505,14 @@ const Carts = () => {
                                 </div>
                                 <div className="flex gap-y-[.2rem] flex-col items-end">
                                     <p>Rs.{subtotal.toFixed(2)}</p>
-                                    <p>Rs.{discount.toFixed(2)}</p>
+                                    <p>Rs.{discountAmount.toFixed(2)}</p>
                                     <p>Rs.{shippingCharge.toFixed(2)}</p>
                                     <p>Rs.{grandTotal.toFixed(2)}</p>
                                 </div>
                             </div>
                             <button
                                 className="w-full py-2 mt-5 capitalize bg-[teal] border border-[teal] text-white hover:bg-[teal]/80 hover:border-[teal]/80 rounded-sm"
-                            // onClick={() => handlePlaceOrderClick()}
+                                onClick={() => handleCheckout()}
                             >
                                 Checkout Now
                                 {/* {isLoading ? "Ordering..." : "place order"} */}
