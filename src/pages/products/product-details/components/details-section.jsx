@@ -93,11 +93,15 @@ const DetailsSection = ({ product }) => {
         color: selectedColor,
         size: selectedSize,
       };
-      const res = await addProductTocart(data);
-      if (res.status === "success") {
-        handleToast(toast, "Success", "Product added to cart.", "success");
-      } else {
+      if (sQuantity && product?.quantity - (sQuantity + selectedQuantity) < 0) {
         handleToast(toast, "Error", "product is out of stocks", "error");
+      } else {
+        const res = await addProductTocart(data);
+        if (res.status === "success") {
+          handleToast(toast, "Success", "Product added to cart.", "success");
+        } else {
+          handleToast(toast, "Error", "product is out of stocks", "error");
+        }
       }
     } catch (error) {
       handleToast(

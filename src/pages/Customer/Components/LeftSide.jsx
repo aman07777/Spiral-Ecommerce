@@ -37,13 +37,6 @@ const LeftSide = () => {
           <i><BiSolidCart size={20} className="text-[#008080]" /></i>
           <span className="text-sm  font-semibold hover:text-[#008080]">My Orders</span>
         </div>
-        <div className="flex gap-x-2 items-center cursor-pointer " onClick={() => {
-          navigate('/profile/myreview')
-        }}>
-
-          <i><MdPreview size={20} className="text-[#008080]" /></i>
-          <span className="text-sm  font-semibold hover:text-[#008080]">My Review</span>
-        </div>
         <div className="flex gap-x-2 items-center cursor-pointer ">
           <i><BiLogOut size={20} className="text-[#008080]" /></i>
           <span className="text-sm  font-semibold hover:text-[#008080]">Log Out</span>

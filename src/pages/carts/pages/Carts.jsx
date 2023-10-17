@@ -58,7 +58,7 @@ const Carts = () => {
                     isClosable: true,
                 });
             });
-    }, [currentUser, toast]);
+    }, [currentUser, toast, getAllCarts]);
 
     //handle select item --> check box
     const handleSelectItem = (event, index) => {
@@ -447,9 +447,9 @@ const Carts = () => {
                                     <option value="">Select Promo Code</option>
                                     {Array.isArray(promo) &&
                                         promo.map(
-                                            (code) =>
+                                            (code,index) =>
                                                 code.status === "active" && (
-                                                    <option value={code._id}>{code.promoCode}</option>
+                                                    <option value={code._id} key={index}>{code.promoCode}</option>
                                                 )
                                         )}
                                 </select>

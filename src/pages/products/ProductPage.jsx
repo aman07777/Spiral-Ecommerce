@@ -39,6 +39,7 @@ function ProductPage() {
             isClosable: true,
           });
         }
+        console.log(result)
         setProducts(result.products);
         setCurrentPage(result.currentPage);
         setProductsPerPage(result.productsPerPage);

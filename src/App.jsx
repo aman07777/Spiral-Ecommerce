@@ -11,7 +11,6 @@ const OrderDetails = lazy(() =>
 const PaymentOption = lazy(() => import("./pages/Customer/Pages/PaymentOption"));
 const AddressBook = lazy(() => import("./pages/Customer/Pages/AddressBook"));
 const MyOrder = lazy(() => import("./pages/Customer/Pages/MyOrder"));
-const MyReview = lazy(() => import("./pages/Customer/Pages/MyReview"));
 const CustomerProfile = lazy(() => import("./pages/Customer/Pages/CustomerProfile"));
 // profile section --> customer end 
 
@@ -71,7 +70,6 @@ function App() {
               <Route path="profile/paymentoption" element={<PaymentOption />} />
               <Route path="profile/addressbook" element={<AddressBook />} />
               <Route path="profile/myorders" element={<MyOrder />} />
-              <Route path="profile/myreview" element={<MyReview />} />
               <Route path="profile/addressbook" element={<AddressBook />} />
               <Route path="place/order" element={<PlaceOrder />} />
             </Route>
@@ -84,7 +82,6 @@ function App() {
             <Route path="profile/paymentoption" element={<PaymentOption />} />
             <Route path="profile/addressbook" element={<AddressBook />} />
             <Route path="profile/myorders" element={<MyOrder />} />
-            <Route path="profile/myreview" element={<MyReview />} />
             <Route path="profile/addressbook" element={<AddressBook />} />
             <Route path="place/order/:id" element={<PlaceOrder />} />
 
