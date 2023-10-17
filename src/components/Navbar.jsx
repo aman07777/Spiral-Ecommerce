@@ -12,20 +12,21 @@ import {
 } from "@chakra-ui/react";
 import { Menu as MenuIcon, ShoppingCart } from "@mui/icons-material";
 import Searchbar from "./Searchbar";
-import { useUserContext } from "../contexts/UserContext";
 import { cartStore } from "../services/CartStore";
+import { useGlobalStore } from "../global/store";
+import { useQuery } from "@tanstack/react-query";
 
 const Navbar = () => {
-  const { currentUser, setCurrentUser } = useUserContext();
   const toast = useToast();
   const navigate = useNavigate();
+  // stores
   const getAllCarts = cartStore((state) => state.getAllCarts);
   const cartLen = cartStore((state) => state.cartLength);
+  const checkAuth = useGlobalStore((state) => state.checkAuth);
 
   const handleLogout = () => {
-    setCurrentUser(null);
     localStorage.removeItem("currentUser");
-    navigate("/");
+    window.location.replace("/");
     toast({
       title: "Logout Successful",
       description: "You have been logged out successfully.",
@@ -38,6 +39,9 @@ const Navbar = () => {
   useEffect(() => {
     getAllCarts();
   }, [getAllCarts]);
+
+  const { isLoading, data: isAuth } = useQuery(["check", "auth"], checkAuth);
+  console.log("🚀 ~ file: Navbar.jsx:47 ~ Navbar ~ isAuth:", isAuth);
 
   return (
     <Box
@@ -100,7 +104,7 @@ const Navbar = () => {
           <Searchbar />
           {/* user info section for lager screen */}
           <Box display={{ base: "none", md: "flex" }} alignItems="center">
-            {currentUser && (
+            {!isLoading && isAuth && (
               <>
                 <NavLink to="/cart" mr={4}>
                   <div className="relative">
@@ -121,31 +125,33 @@ const Navbar = () => {
                 variant="outline"
               />
               <MenuList className="px-2 pb-2">
-                <MenuItem className="hover:bg-white">
-                  <NavLink
-                    to="/profile/customer"
-                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1.5px] before:-bottom-1 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-300 capitalize"
-                  >
-                    My profile
-                  </NavLink>
-                </MenuItem>
-                <MenuItem className="hover:bg-white">
-                  <NavLink
-                    to="/profile/myorders"
-                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1.5px] before:-bottom-1 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-300 capitalize"
-                  >
-                    Orders
-                  </NavLink>
-                </MenuItem>
-                {currentUser ? (
-                  <MenuItem
-                    onClick={handleLogout}
-                    className="w-full hover:bg-white"
-                  >
-                    <div className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit cursor-pointer mr-3">
-                      Log Out
-                    </div>
-                  </MenuItem>
+                {!isLoading && isAuth ? (
+                  <>
+                    <MenuItem className="hover:bg-white">
+                      <NavLink
+                        to="/profile/customer"
+                        className="relative before:absolute before:content-[''] before:w-0 before:h-[1.5px] before:-bottom-1 before:bg-[#0077b5] before:transition-[1s] hover:before:w-full duration-300 capitalize"
+                      >
+                        My profile
+                      </NavLink>
+                    </MenuItem>
+                    <MenuItem className="hover:bg-white">
+                      <NavLink
+                        to="/profile/myorders"
+                        className="relative before:absolute before:content-[''] before:w-0 before:h-[1.5px] before:-bottom-1 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-300 capitalize"
+                      >
+                        Orders
+                      </NavLink>
+                    </MenuItem>{" "}
+                    <MenuItem
+                      onClick={handleLogout}
+                      className="w-full hover:bg-white"
+                    >
+                      <div className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit cursor-pointer mr-3">
+                        Log Out
+                      </div>
+                    </MenuItem>
+                  </>
                 ) : (
                   <MenuItem className="hover:bg-white">
                     <NavLink
