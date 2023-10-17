@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
 import AddressModal from "./address-modal";
-import { useDisclosure } from "@chakra-ui/react";
 import { useBuyStore } from "./store.js";
-const UserDetails = ({ user }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+const UserDetails = ({ user, isOpen, onOpen, onClose }) => {
   const shippingInfo = useBuyStore((state) => state.shippingInfo);
   const setShippingInfo = useBuyStore((state) => state.setShippingInfo);
   useEffect(() => {

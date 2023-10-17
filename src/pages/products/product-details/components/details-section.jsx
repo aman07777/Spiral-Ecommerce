@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import {
@@ -17,7 +17,6 @@ import { useUserContext } from "../../../../contexts/UserContext";
 import { handleToast } from "../../../../global/toast";
 import { cartStore } from "../../../../services/CartStore";
 import { useBuyStore } from "../../order-details/components/store";
-import { getPurchasePrice, getTotalPrice } from "../helper";
 
 const DetailsSection = ({ product }) => {
   const toast = useToast();
@@ -38,16 +37,12 @@ const DetailsSection = ({ product }) => {
     colorCart || product?.colors[0]
   );
   const [selectedQuantity, setSelectedQuantity] = useState(1);
-
-
-  // const handleQuantityChange = (e) => {
-  //   setSelectedQuantity(+e.target.value);
-  // };
-
   const handleQuantityChange = (event) => {
     let newQuantity = parseInt(event.target.value);
-    console.log(typeof newQuantity)
-    const maxQuantity = sQuantity ? product?.quantity - sQuantity : product.quantity;
+    console.log(typeof newQuantity);
+    const maxQuantity = sQuantity
+      ? product?.quantity - sQuantity
+      : product.quantity;
 
     if (newQuantity > maxQuantity) {
       newQuantity = maxQuantity;
@@ -58,21 +53,12 @@ const DetailsSection = ({ product }) => {
     setSelectedQuantity(newQuantity); // Update the state with the new quantity
   };
 
-
-
   const addProductTocart = cartStore((state) => state.addToCart);
 
-  // const handleIncreaseQuantity = (e) => {
-  //   if (selectedQuantity < product.quantity)
-  //     setSelectedQuantity(selectedQuantity + 1);
-  // };
-
-  // const handleDecreaseQuantity = (e) => {
-  //   if (selectedQuantity > 1) setSelectedQuantity(selectedQuantity - 1);
-  // };
-
   const handleIncreaseQuantity = () => {
-    const maxQuantity = sQuantity ? product?.quantity - sQuantity : product.quantity;
+    const maxQuantity = sQuantity
+      ? product?.quantity - sQuantity
+      : product.quantity;
     if (selectedQuantity < maxQuantity) {
       setSelectedQuantity(selectedQuantity + 1);
     }
@@ -112,37 +98,61 @@ const DetailsSection = ({ product }) => {
       );
     }
   };
-
+  // handles excess quantity -> if the user want to buy the same product with same color and size
+  // and the quantity is more than the available quantity then it will show error
+  const handleExcessBuyQuantity = () => {
+    let count = 0;
+    Array.isArray(orderItems) &&
+      orderItems.forEach((item) => {
+        if (item.product === product._id) count += item.quantity;
+      });
+    if (count >= product.quantity) {
+      handleToast(
+        toast,
+        "Error",
+        "You can't add more than available quantity",
+        "error"
+      );
+      return false;
+    }
+    return true;
+  };
+  // handles buy now click -> if the user want to buy the same product with same color and size the quantity is increased by the selected quantity else it will add the product(another variant) to the orderItems
   const handleBuyClick = (e) => {
     e.preventDefault();
+    if (!handleExcessBuyQuantity()) return;
     const data = {
       product: product._id,
       quantity: selectedQuantity,
-      purchasePrice: getPurchasePrice(
-        product?.price,
-        selectedQuantity,
-        product?.discount
-      ),
-      totalPrice: getTotalPrice(product.price, selectedQuantity),
+      purchasePrice: 0,
+      totalPrice: 0,
       size: selectedSize,
       color: selectedColor,
       image: product?.images[0],
       name: product?.name,
+      discount: product?.discount,
+      price: product?.price,
+      available: product?.quantity,
     };
     if (
       Array.isArray(orderItems) &&
       orderItems.some(
         (item) => item.size === selectedSize && item.color === selectedColor
       )
-    ) {
-      orderItems.find((item) => item.product === data.product).quantity +=
-        selectedQuantity;
-    } else {
-      setOrderItems(data);
-    }
+    )
+      if (
+        orderItems.find((item) => item.product === data.product).quantity +
+          selectedQuantity >
+        product.quantity
+      )
+        orderItems.find((item) => item.product === data.product).quantity =
+          product.quantity;
+      else
+        orderItems.find((item) => item.product === data.product).quantity +=
+          selectedQuantity;
+    else setOrderItems(data);
     navigate(`/place/order`);
   };
-
 
   return (
     <>
@@ -202,9 +212,10 @@ const DetailsSection = ({ product }) => {
                     style={{
                       cursor: "pointer",
                     }}
-                    className={`${selectedColor === color &&
+                    className={`${
+                      selectedColor === color &&
                       "relative before:h-full before:w-full before:absolute before:inset-0 before:content-[''] before:scale-[1.25] before:bg-transparent before:border before:border-[#585858] before:z-[-1] isolate before:rounded-full"
-                      }`}
+                    }`}
                   ></Box>
                 ))}
               </div>
@@ -246,7 +257,9 @@ const DetailsSection = ({ product }) => {
                 <input
                   type="number"
                   min="1"
-                  max={sQuantity ? product?.quantity - sQuantity : product.quantity}
+                  max={
+                    sQuantity ? product?.quantity - sQuantity : product.quantity
+                  }
                   value={selectedQuantity}
                   onChange={(e) => handleQuantityChange(e)}
                   disabled
@@ -257,7 +270,6 @@ const DetailsSection = ({ product }) => {
                   }}
                   className=""
                 />
-
               )}
               <Button
                 size="sm"
@@ -273,11 +285,15 @@ const DetailsSection = ({ product }) => {
             </div>
           </div>
           <span className="text-xs text-red-500">
-            {
-              (sQuantity ? product?.quantity - (sQuantity + selectedQuantity) : product?.quantity - selectedQuantity) <= 0
-                ? "No quantity left"
-                : `${sQuantity ? product?.quantity - (sQuantity + selectedQuantity) : product?.quantity - selectedQuantity} quantity left`
-            }
+            {(sQuantity
+              ? product?.quantity - (sQuantity + selectedQuantity)
+              : product?.quantity - selectedQuantity) <= 0
+              ? "No quantity left"
+              : `${
+                  sQuantity
+                    ? product?.quantity - (sQuantity + selectedQuantity)
+                    : product?.quantity - selectedQuantity
+                } quantity left`}
           </span>
 
           <Stack direction="row" mt={3} className="text-green-700">

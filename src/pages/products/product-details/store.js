@@ -7,7 +7,7 @@ export const useOrderStore = create((set, get) => ({
       const res = await axios_auth.post("orders", data);
       return res.data.status === "success" ? true : false;
     } catch (error) {
-      return error;
+      return false;
     }
   },
   getPromoCodes: async () => {

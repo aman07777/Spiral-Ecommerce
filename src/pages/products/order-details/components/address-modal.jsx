@@ -79,13 +79,10 @@ const AddressModal = ({ isOpen, onClose }) => {
                 />
               </div>
               <div className="flex flex-col gap-y-1">
-                <label htmlFor="email">
-                  Email<span className="text-red-500">*</span>
-                </label>
+                <label htmlFor="email">Email</label>
                 <input
                   type="email"
                   className="w-full px-2 py-[.35rem] border border-gray-400 rounded-sm outline-none "
-                  required
                   value={data.email}
                   onChange={(e) =>
                     setData({
@@ -130,13 +127,10 @@ const AddressModal = ({ isOpen, onClose }) => {
                 />
               </div>
               <div className="flex flex-col gap-y-1">
-                <label htmlFor="land-mark">
-                  Land Mark<span className="text-red-500">*</span>
-                </label>
+                <label htmlFor="land-mark">Land Mark</label>
                 <input
                   type="text"
                   className="w-full px-2 py-[.35rem] border border-gray-400 rounded-sm outline-none "
-                  required
                   value={data.landMark}
                   onChange={(e) =>
                     setData({
@@ -148,7 +142,7 @@ const AddressModal = ({ isOpen, onClose }) => {
               </div>
               <div className="flex flex-col gap-y-1">
                 <label htmlFor="land-mark">
-                  Land Mark<span className="text-red-500">*</span>
+                  Province<span className="text-red-500">*</span>
                 </label>
                 <select
                   type="text"

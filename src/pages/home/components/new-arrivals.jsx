@@ -13,13 +13,13 @@ import { Navigation } from "swiper/modules";
 const NewArrivals = () => {
   const windowWIdth = UseGetInnerWidth();
   const navigate = useNavigate();
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     getNewArrival().then((data) => {
-      setProducts(data)
-    })
-  }, [getNewArrival])
+      setProducts(data);
+    });
+  }, []);
 
   return (
     <>
@@ -69,23 +69,21 @@ const NewArrivals = () => {
               windowWIdth < 300
                 ? 1
                 : windowWIdth > 301 && windowWIdth < 600
-                  ? 2
-                  : windowWIdth > 601 && windowWIdth < 900
-                    ? 3
-                    : 4
+                ? 2
+                : windowWIdth > 601 && windowWIdth < 900
+                ? 3
+                : 4
             }
             navigation={true}
             spaceBetween={20}
             modules={[Navigation]}
             className="h-[400px]"
           >
-            {
-              products?.map((product, index) => (
-                <SwiperSlide key={index}>
-                  <ProductCard data={product}/>
-                </SwiperSlide>
-              ))
-            }
+            {products?.map((product, index) => (
+              <SwiperSlide key={index}>
+                <ProductCard data={product} />
+              </SwiperSlide>
+            ))}
           </Swiper>
         </Box>
       </div>
