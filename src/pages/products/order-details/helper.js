@@ -10,12 +10,8 @@ export const getPurchasePrice = (price, quantity, discount) => {
 };
 
 export const checkShippingInfo = (data) => {
-  const { fullName, email, address, mobileNumber, province } = data;
+  const { fullName, address, mobileNumber, province } = data;
   return (
-    fullName !== "" &&
-    email !== "" &&
-    address !== "" &&
-    mobileNumber !== "" &&
-    province !== ""
+    fullName !== "" && address !== "" && mobileNumber !== "" && province !== ""
   );
 };

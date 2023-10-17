@@ -20,9 +20,9 @@ const OrderSummary = ({ onOpen }) => {
   const orderItems = useBuyStore((state) => state.orderItems);
   // states
   const [totalPrice, setTotalPrice] = React.useState(0);
-  const [selectedPromoCode, setSelectedPromoCode] = React.useState(null);
-  const [selectedPromoCodeDiscount, setSelectedPromoCodeDiscount] =
-    React.useState(0);
+  const [discount, setDiscount] = React.useState(0);
+  const [promoCode, setPromoCode] = React.useState("");
+  const [promoCodeDetails, setPromoCodeDetails] = React.useState({});
   const [purchasePrice, setPurchasePrice] = React.useState(0);
   // react query
   const { data: codes } = useQuery(["get", "order"], getPromoCodes);
@@ -32,6 +32,7 @@ const OrderSummary = ({ onOpen }) => {
     onSuccess: (data) => {
       if (data === true) {
         client.invalidateQueries();
+        setDiscount(0);
         handleToast(toast, "Success", "Order placed successfully", "success");
       }
     },
@@ -39,36 +40,6 @@ const OrderSummary = ({ onOpen }) => {
       handleToast(toast, "Error", "Unable to place order", "error"),
   });
   isError && handleToast(toast, "Error", "Something went wrong", "error");
-  // use effects
-  React.useEffect(() => {
-    let purchasePrice = 0;
-    let totalPrice = 0;
-    Array.isArray(orderItems) &&
-      orderItems?.forEach((item) => {
-        purchasePrice += getPurchasePrice(
-          item.price,
-          item.quantity,
-          item.discount
-        );
-        totalPrice += getTotalPrice(item.price, item.quantity);
-      });
-    setTotalPrice(totalPrice);
-    setPurchasePrice(purchasePrice);
-  }, [orderItems, setTotalPrice, setPurchasePrice]);
-  React.useEffect(() => {
-    if (selectedPromoCode) {
-      const discountAmount = getDiscountAmount(
-        selectedPromoCodeDiscount,
-        purchasePrice
-      );
-      setPurchasePrice(purchasePrice - discountAmount);
-    }
-  }, [
-    selectedPromoCodeDiscount,
-    setPurchasePrice,
-    selectedPromoCode,
-    purchasePrice,
-  ]);
 
   // handlers
   const handlePlaceOrderClick = () => {
@@ -82,7 +53,6 @@ const OrderSummary = ({ onOpen }) => {
       onOpen();
       return;
     }
-
     const orderData = {
       orderItems:
         Array.isArray(orderItems) &&
@@ -96,45 +66,106 @@ const OrderSummary = ({ onOpen }) => {
           totalPrice: getTotalPrice(item.price, item.quantity),
         })),
       shippingInfo,
-      promoCode: selectedPromoCode,
-      purchasePrice,
+      promoCode:
+        Object.keys(promoCodeDetails || {}).length > 0 && promoCodeDetails?._id,
+      totalBillAmount: purchasePrice,
     };
     mutate(orderData);
   };
-  const handleSelectChange = (e) => {
-    const selectedOption = e.target.options[e.target.selectedIndex];
-    const id = selectedOption.dataset.id;
-    const discount = selectedOption.dataset.discount;
-    setSelectedPromoCode(id);
-    setSelectedPromoCodeDiscount(discount);
-  };
-
+  // use effects
+  // calculate total price, purchase price and discount of the items to be purchased
+  React.useEffect(() => {
+    let purchasePrice = 0;
+    let totalPrice = 0;
+    let discount = 0;
+    Array.isArray(orderItems) &&
+      orderItems?.forEach((item) => {
+        purchasePrice += getPurchasePrice(
+          item.price,
+          item.quantity,
+          item.discount
+        );
+        totalPrice += getTotalPrice(item.price, item.quantity);
+        discount += getDiscountAmount(
+          item.discount,
+          getTotalPrice(item.price, item.quantity)
+        );
+        console.log(
+          getDiscountAmount(
+            item.discount,
+            getTotalPrice(item.price, item.quantity)
+          )
+        );
+      });
+    setTotalPrice(totalPrice);
+    setPurchasePrice(purchasePrice);
+    setDiscount(discount);
+  }, [orderItems, setTotalPrice, setPurchasePrice, setDiscount]);
+  // calculate purchase price after applying promo code
+  React.useEffect(() => {
+    if (Object.keys(promoCodeDetails || {}).length > 0) {
+      setPurchasePrice(
+        (prev) =>
+          prev - getDiscountAmount(promoCodeDetails?.discountPercentage, prev)
+      );
+    } else {
+      let purchasePrice = 0;
+      Array.isArray(orderItems) &&
+        orderItems?.forEach((item) => {
+          purchasePrice += getPurchasePrice(
+            item.price,
+            item.quantity,
+            item.discount
+          );
+        });
+      setPurchasePrice(purchasePrice);
+    }
+  }, [setPurchasePrice, promoCodeDetails, orderItems]);
+  // calculate discount after applying promo code
+  React.useEffect(() => {
+    if (Object.keys(promoCodeDetails || {}).length > 0) {
+      setDiscount(
+        (prev) =>
+          prev +
+          getDiscountAmount(promoCodeDetails?.discountPercentage, purchasePrice)
+      );
+    } else {
+      let discount = 0;
+      Array.isArray(orderItems) &&
+        orderItems?.forEach((item) => {
+          discount += getDiscountAmount(
+            item.discount,
+            getTotalPrice(item.price, item.quantity)
+          );
+        });
+      setDiscount(discount);
+    }
+  }, [setDiscount, promoCodeDetails, purchasePrice, orderItems]);
+  // o7jjhn dbkt2u uv67og
+  // finds the promo code details from the promo codes array that matches the promo code entered by the user
+  React.useEffect(() => {
+    Array.isArray(codes) &&
+      codes.length > 0 &&
+      setPromoCodeDetails(
+        codes.find(
+          (code) => code.promoCode?.toLowerCase() === promoCode.toLowerCase()
+        )
+      );
+  }, [promoCode, codes]);
   return (
     <>
       <div className="w-full @[750px]:w-[20em] @[1000px]:w-[25em] px-4 pt-2 border rounded-sm border-l-[4px] shadow pb-5 h-fit">
         <h3 className="font-semibold text-[#585858]">Available Promo Codes</h3>
         <div className="my-3">
-          <select
-            className="w-full py-[.4em] border outline-transparent pl-2 focus:border"
-            onChange={handleSelectChange}
-          >
-            <option value={0} data-id={null} data-discount={0}>
-              Select Promo Code
-            </option>
-            {Array.isArray(codes) &&
-              codes.map(
-                (code) =>
-                  code.status === "active" && (
-                    <option
-                      key={code._id}
-                      data-id={code._id}
-                      data-discount={code.discountPercentage}
-                    >
-                      {code.promoCode}
-                    </option>
-                  )
-              )}
-          </select>
+          <input
+            type="text"
+            name="promo-code"
+            className="w-full py-2 pl-2 border focus:outline-none focus:border-[#585858]/50 rounded-sm"
+            placeholder="Enter Promo Code"
+            value={promoCode}
+            onChange={(e) => setPromoCode(e.target.value)}
+            disabled={Array.isArray(orderItems) && orderItems.length <= 0}
+          />
         </div>
         <p className="h-[2px] bg-gray-300 my-3" />
         <h3 className="font-semibold text-[#585858]">Order Summary</h3>
@@ -142,12 +173,24 @@ const OrderSummary = ({ onOpen }) => {
           <div className="flex gap-y-[.2rem] flex-col">
             <p>Items Total:</p>
             <p>Delivery Fee:</p>
+            <p>Discount:</p>
             <p>Total Payment:</p>
           </div>
           <div className="flex gap-y-[.2rem] flex-col items-end">
             <p>Rs. {Number(totalPrice).toFixed(2)}</p>
             <p>Rs. {Number(150).toFixed(2)}</p>
-            <p>Rs. {Number(purchasePrice + 150).toFixed(2)}</p>
+            <p>
+              Rs.{" "}
+              {Array.isArray(orderItems) && orderItems.length > 0
+                ? Number(discount).toFixed(2)
+                : "00.00"}
+            </p>
+            <p>
+              Rs.{" "}
+              {Array.isArray(orderItems) && orderItems.length > 0
+                ? Number(purchasePrice + 150).toFixed(2)
+                : "00.00"}
+            </p>
           </div>
         </div>
         <button
