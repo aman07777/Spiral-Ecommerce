@@ -12,7 +12,7 @@ const BestExperiencePage = () => {
   return (
     <div className="flex justify-center text-[#585858] mb-5">
       <Box p={4} width={{ base: "100%", md: "95%", lg: "75%" }}>
-        <h1 className="text-[1.5rem] mb-5 font-semibold md:text-[2rem]">
+        <h1 className="text-[1.3rem] mb-5 font-semibold md:text-[1.7rem] text-[#008080]">
           We Provide the Best Experience
         </h1>
         <Marquee gradient speed={25}>
