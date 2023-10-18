@@ -90,12 +90,6 @@ const OrderSummary = ({ onOpen }) => {
           item.discount,
           getTotalPrice(item.price, item.quantity)
         );
-        console.log(
-          getDiscountAmount(
-            item.discount,
-            getTotalPrice(item.price, item.quantity)
-          )
-        );
       });
     setTotalPrice(totalPrice);
     setPurchasePrice(purchasePrice);
@@ -152,7 +146,6 @@ const OrderSummary = ({ onOpen }) => {
         )
       );
   }, [promoCode, codes]);
-
 
   return (
     <>

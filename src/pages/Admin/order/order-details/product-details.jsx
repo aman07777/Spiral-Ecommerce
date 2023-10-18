@@ -9,8 +9,11 @@ const ProductDetails = ({ products }) => {
         <div className="mt-5">
           {Array.isArray(products) &&
             products.map((product) => (
-              <div className="pb-2 border-b-[2px] border-gray-200 flex justify-between items-center px-2">
-                <div className="flex gap-x-2">
+              <div
+                className="pb-2 border-b-[2px] border-gray-200 flex justify-between items-center px-2"
+                key={product._id}
+              >
+                <div className="flex gap-x-2 w-[15em]">
                   <img
                     src={`${imageUrl}/${product?.product?.images?.[0]}`}
                     alt={product?.product?.name}
@@ -18,11 +21,8 @@ const ProductDetails = ({ products }) => {
                   />
                   <div className="">
                     <div className="">
-                      <p className="flex justify-start gap-x-1">
-                        <span>{product?.product?.name}</span>
-                        <span className="text-[.7rem] border bg-gray-400 h-fit px-[.3rem] pb-[.15rem] text-white rounded-full">
-                          {product?.status}
-                        </span>
+                      <p className="relative flex justify-start gap-x-1">
+                        <span className="">{product?.product?.name}</span>
                       </p>
                     </div>
                     <div className="flex gap-x-1 text-[.75rem]">
@@ -33,17 +33,7 @@ const ProductDetails = ({ products }) => {
                 </div>
                 <p>Qty: {product?.quantity}</p>
                 <div className="flex items-center gap-x-2">
-                  <p className="flex text-[.85rem] bg-slate-200 gap-x-1 px-1 rounded">
-                    {product?.totalPrice > 0 && (
-                      <span className="line-through">
-                        Rs.{product?.totalPrice}
-                      </span>
-                    )}
-                    {product?.product?.discount > 0 && (
-                      <span>{product?.product?.discount}%</span>
-                    )}
-                  </p>
-                  <p>Rs.{product?.purchasePrice}</p>
+                  <p>Rs. {Number(product?.purchasePrice).toFixed(2)}</p>
                 </div>
               </div>
             ))}

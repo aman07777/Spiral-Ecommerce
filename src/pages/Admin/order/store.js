@@ -35,4 +35,39 @@ export const useAdminOrderStore = create((set) => ({
       return error;
     }
   },
+  recentOrders: [],
+  getRecentOrders: async () => {
+    try {
+      const res = await axios_auth.get("orders/recent");
+      if (res.data.status === "success") {
+        set({ recentOrders: res.data.orders });
+        return res.data.orders;
+      }
+      return [];
+    } catch (error) {
+      return error;
+    }
+  },
+  getRecentMonthOrders: async () => {
+    try {
+      const res = await axios_auth.get("orders/recent-30");
+      if (res.data.status === "success") {
+        return res.data.orders;
+      }
+      return 0;
+    } catch (error) {
+      return error;
+    }
+  },
+  getRevenue: async () => {
+    try {
+      const res = await axios_auth.get("orders/revenue");
+      if (res.data.status === "success") {
+        return res.data.total;
+      }
+      return 0;
+    } catch (error) {
+      return error;
+    }
+  },
 }));

@@ -17,7 +17,7 @@ const OrderSummary = ({ data }) => {
   }, [data]);
   return (
     <>
-      <div className="w-full @[750px]:w-[20em] @[1000px]:w-[25em] px-4 pt-2 border rounded-sm border-l-[4px] shadow pb-5 h-[8.5em] ">
+      <div className="w-full @[750px]:w-[20em] @[1000px]:w-[25em] px-4 pt-2 border rounded-sm border-l-[4px] shadow pb-5 h-[9.5em] ">
         <h3 className="font-semibold text-[#585858]">Order Summary</h3>
         <div className="flex justify-between w-full pr-4 mt-2">
           <div className="flex gap-y-[.2rem] flex-col">
@@ -26,9 +26,9 @@ const OrderSummary = ({ data }) => {
             <p>Total Payment:</p>
           </div>
           <div className="flex gap-y-[.2rem] flex-col items-end">
-            <p>Rs. {totalPrice}</p>
-            <p>Rs. 115</p>
-            <p>Rs. {purchasePrice}</p>
+            <p>Rs. {Number(totalPrice).toFixed(2)}</p>
+            <p>Rs. {Number(115).toFixed(2)}</p>
+            <p>Rs. {Number(purchasePrice).toFixed(2)}</p>
           </div>
         </div>
       </div>

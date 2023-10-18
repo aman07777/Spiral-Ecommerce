@@ -3,13 +3,11 @@ import { Box, Text, Image } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { imageUrl } from "../global/config";
 
-
 const ProductCard = ({ data }) => {
   const navigate = useNavigate();
   const handleSelectedProduct = (productId) => {
     navigate(`/products/${productId}`);
   };
-
 
   return (
     <>
@@ -18,11 +16,8 @@ const ProductCard = ({ data }) => {
         borderRadius="lg"
         bg="white"
         cursor="pointer"
-        boxShadow="2xl"
         position="relative"
-        transition="transform 0.2s ease-in-out"
-        _hover={{ transform: "scale(1.05)" }}
-        className="pb-3"
+        className="pb-3 transition duration-300 ease-in-out border shadow-sm hover:shadow-lg hover:translate-y-1"
       >
         <Box height="250px" overflow="hidden" position="relative" mb={3}>
           <Image
@@ -34,8 +29,10 @@ const ProductCard = ({ data }) => {
           />
         </Box>
         <div className="px-3">
-          <div className="flex justify-between items-center">
-            <Text className="text-[1rem] font-semibold line-clamp-1">{data.name}</Text>
+          <div className="flex items-center justify-between">
+            <Text className="text-[1rem] font-semibold line-clamp-1">
+              {data.name}
+            </Text>
           </div>
           <Text className="mt-2 font-semibold text-[1.1rem] text-[#585858]/80">
             NPR {(data.price - (data.discount / 100) * data.price).toFixed(2)}

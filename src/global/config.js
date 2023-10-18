@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // export const baseUrl = "http://localhost:8080/; // for local host
-export const url = "http://localhost:3001";
+export const url = "http://localhost:5000";
 // front end url
 export const frontend_url = "http://localhost:3000";
 // export const url = "http://192.168.1.67:5000";

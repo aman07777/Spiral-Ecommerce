@@ -49,10 +49,11 @@ const Login = () => {
           "success"
         );
         localStorage.setItem("currentUser", response.data.token);
-        response.data.user?.role === "user" && navigate("/");
-        response.data.user?.role === "admin" && navigate("/adminHome");
+        response.data.user?.role === "user" && window.location.replace("/");
+        response.data.user?.role === "admin" &&
+          window.location.replace("/adminHome");
         response.data.user?.role === "affiliator" &&
-          navigate("/profile/affiliator");
+          window.location.replace("/profile/affiliator");
       }
     } catch (error) {
       const errorMessage =
