@@ -17,6 +17,7 @@ import { useUserContext } from "../../../../contexts/UserContext";
 import { handleToast } from "../../../../global/toast";
 import { cartStore } from "../../../../services/CartStore";
 import { useBuyStore } from "../../order-details/components/store";
+import { useGlobalStore } from "../../../../global/store";
 
 const DetailsSection = ({ product }) => {
   const toast = useToast();
@@ -29,6 +30,7 @@ const DetailsSection = ({ product }) => {
   // stores
   const setOrderItems = useBuyStore((state) => state.setOrderItems);
   const orderItems = useBuyStore((state) => state.orderItems);
+  const user = useGlobalStore((state) => state.user);
   // states
   const [selectedSize, setSelectedSize] = useState(
     sizeCart || product?.sizes[0]
@@ -302,13 +304,16 @@ const DetailsSection = ({ product }) => {
           </Stack>
 
           <Flex gap={5} mt={5}>
-            <Button
-              colorScheme="linkedin"
-              onClick={handleAddToCart}
-              className="w-[10em] h-[1.5em] uppercase"
-            >
-              Add to cart
-            </Button>
+            {user && (
+              <Button
+                colorScheme="linkedin"
+                onClick={handleAddToCart}
+                className="w-[10em] h-[1.5em] uppercase"
+              >
+                Add to cart
+              </Button>
+            )}
+
             <Button
               colorScheme="linkedin"
               className="w-[10em] py-4 uppercase"
