@@ -10,6 +10,7 @@ import ProductCard from "./components/product-card";
 import PriceRange from "./components/price-range";
 import Brands from "./components/brands";
 import Category from "./components/categories";
+import { useProductPageStore } from "./store";
 const categories = [
   {
     id: "bf3d6387-0925-5f1a-8cb5-e92b88470b96",
@@ -58,16 +59,18 @@ function ProductPage() {
   const toast = useToast();
   const { state } = useLocation();
   const keyWord = state?.keyWord;
-
+  // stores
+  const category = useProductPageStore((status) => status.category);
   // states
   const [products, setProducts] = useState([]);
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([
+    categories.find((c) => c.title === category),
+  ]);
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [sortByPrice, setsortByPrice] = useState("best");
   const [currentPage, setCurrentPage] = useState(1);
   const [minPrice, setMinPrice] = useState(10);
   const maxPrice = 10000;
-
   const [productsPerPage, setProductsPerPage] = useState(16);
   const [totalProducts, setTotalProducts] = useState(0);
   const [isLoading, setIsLoading] = useState(false);

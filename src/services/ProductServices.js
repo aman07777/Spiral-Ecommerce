@@ -36,11 +36,11 @@ export const getProducts = async (
   }
   Array.isArray(brands) &&
     brands.length > 0 &&
-    (params.brands = brands.map((brand) => brand.title).join(","));
+    (params.brands = brands.map((brand) => brand?.title).join(","));
   Array.isArray(categories) &&
     categories.length > 0 &&
     (params.categories = categories
-      .map((category) => category.title)
+      .map((category) => category?.title)
       .join(","));
 
   const apiUrl = buildApiUrl(currentPage, params);
