@@ -11,13 +11,12 @@ export const cartStore = create((set) => ({
       if (response.data.status === "success") {
         set({ cartDetails: response.data.cart });
         const cartLength = response.data.cart.length;
-        set({ cartLength});
+        set({ cartLength });
         return response.data.cart;
       }
       return [];
     } catch (error) {
-      console.log(error)
-      return error;
+      return [];
     }
   },
 
