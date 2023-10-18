@@ -41,7 +41,6 @@ const Navbar = () => {
   }, [getAllCarts]);
 
   const { isLoading, data: isAuth } = useQuery(["check", "auth"], checkAuth);
-  console.log("🚀 ~ file: Navbar.jsx:47 ~ Navbar ~ isAuth:", isAuth);
 
   return (
     <Box

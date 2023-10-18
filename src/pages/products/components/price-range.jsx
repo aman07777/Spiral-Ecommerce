@@ -9,19 +9,18 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 
-const PriceRange = () => {
+const PriceRange = ({ setMinPrice, minPrice }) => {
   const [showTooltip, setShowTooltip] = React.useState(false);
-  const [priceRange, setPriceRange] = React.useState(5);
   return (
     <>
       <Box mb={4}>
         <h2 className="text-[1.2rem] font-semibold">Price Range</h2>
         <Slider
           aria-label="slider-ex-4"
-          defaultValue={30}
+          defaultValue={minPrice}
           onMouseEnter={() => setShowTooltip(true)}
           onMouseLeave={() => setShowTooltip(false)}
-          onChange={(e) => setPriceRange(e)}
+          onChange={(e) => setMinPrice(e)}
           min={500}
           max={50000}
           className="px-2"
@@ -70,7 +69,7 @@ const PriceRange = () => {
             bg="#008080"
             placement="top"
             isOpen={showTooltip}
-            label={`${priceRange}`}
+            label={`${minPrice}`}
           >
             <SliderThumb boxSize={5}>
               <Box color="#008080" />

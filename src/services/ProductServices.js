@@ -13,7 +13,9 @@ export const getProducts = async (
   keyWord,
   minPrice,
   maxPrice,
-  sort
+  sort,
+  brands,
+  categories
 ) => {
   const params = {};
 
@@ -32,6 +34,14 @@ export const getProducts = async (
   if (maxPrice) {
     params.maxPrice = maxPrice;
   }
+  Array.isArray(brands) &&
+    brands.length > 0 &&
+    (params.brands = brands.map((brand) => brand.title).join(","));
+  Array.isArray(categories) &&
+    categories.length > 0 &&
+    (params.categories = categories
+      .map((category) => category.title)
+      .join(","));
 
   const apiUrl = buildApiUrl(currentPage, params);
 
