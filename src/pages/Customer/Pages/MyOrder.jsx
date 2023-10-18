@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     Box,
     Flex,
@@ -18,12 +18,22 @@ import AllOrderList from "./AllOrderList";
 import OrderHistory from "./OrderHistory";
 import OptionsMobile from "../Components/OptionsMobile";
 import TopSide from "../Components/TopSide";
+import { orderStore } from "../helper/orderStore";
 
 
 const MyOrder = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [what, setWhat] = useState("orders");
+    const [myorders, setMyOrders] = useState([]);
 
+    //for getting orders
+    const getMyOrders = orderStore((state => state.getMyOrders))
+
+    useEffect(() => {
+        getMyOrders().then((data) => {
+            setMyOrders(data)
+        }).catch((error) => alert("something went wrong"))
+    }, [getMyOrders])
 
     const item = [
         {

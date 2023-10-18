@@ -9,6 +9,7 @@ import { useBuyStore } from '../../products/order-details/components/store';
 import { useNavigate } from 'react-router-dom';
 
 
+
 const Carts = () => {
     // navigate 
     const navigate = useNavigate();
@@ -24,6 +25,7 @@ const Carts = () => {
     const [isLoading, setIsLoading] = useState(true);
     const deleteCart = cartStore((state) => state.removeCart);
     const getAllCarts = cartStore((state) => state.getAllCarts);
+    const deleteAllCarts = cartStore((state) => state.deleteAllCart);
 
     //order state
     const setOrderItems = useBuyStore((state) => state.setOrderItems);
@@ -43,8 +45,7 @@ const Carts = () => {
                 }
                 setCartItems(data);
                 setIsLoading(false);
-            })
-            .catch((error) => {
+            }).catch((error) => {
                 const errorMessage =
                     error.response?.data?.message || "An error occurred.";
                 toast({
@@ -127,19 +128,41 @@ const Carts = () => {
         navigate(`/place/order`);
     };
 
-    const handleDeleteAll = () => {
-        const newCartItems = cartItems.filter((item) => !item.isChecked);
-        setCartItems(newCartItems);
-        setSelectAll(false);
+
+    // delete all 
+    const handleDeleteAll = async () => {
+        try {
+            await deleteAllCarts();
+            toast({
+                title: "Product removed",
+                description: "Products removed from cart successfully.",
+                status: "success",
+                duration: 3000,
+                isClosable: true,
+            });
+            getAllCarts().then((data) => {
+                setCartItems(data);
+                setSelectAll(false);
+            });
+        } catch (error) {
+            const errorMessage =
+                error.response?.data?.message || "An error occurred.";
+            toast({
+                title: "Error",
+                description: errorMessage,
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+            });
+        }
     };
 
-
-    const subtotal = cartItems?.reduce(
+    const subtotal = Array.isArray(cartItems) && cartItems?.reduce(
         (total, item) =>
             total + (item.isChecked ? item.price * item.selectedQuantity : 0),
         0
     );
-    const discountAmount = cartItems?.reduce(
+    const discountAmount = Array.isArray(cartItems) && cartItems?.reduce(
         (total, item) => total + (item.isChecked ? (item.price * item.selectedQuantity * item.discount / 100) : 0), 0
     );
 
@@ -160,6 +183,7 @@ const Carts = () => {
             getAllCarts().then((data) => {
                 setCartItems(data);
             });
+
         } catch (error) {
             const errorMessage =
                 error.response?.data?.message || "An error occurred.";
@@ -172,6 +196,11 @@ const Carts = () => {
             });
         }
     };
+
+    // if (Array.isArray(cartItems) && cartItems.length <= 0) {
+    //     return <div>No items available in the cart. Please add some.</div>;
+    // }
+
 
     return (
         <>
@@ -476,10 +505,10 @@ const Carts = () => {
                                     <p>Total:</p>
                                 </div>
                                 <div className="flex gap-y-[.2rem] flex-col items-end">
-                                    <p>Rs.{subtotal.toFixed(2)}</p>
-                                    <p>Rs.{discountAmount.toFixed(2)}</p>
-                                    <p>Rs.{shippingCharge.toFixed(2)}</p>
-                                    <p>Rs.{grandTotal.toFixed(2)}</p>
+                                    <p>Rs.{subtotal ? subtotal.toFixed(2) : 0}</p>
+                                    <p>Rs.{discountAmount ? discountAmount.toFixed(2) : 0}</p>
+                                    <p>Rs.{shippingCharge ? shippingCharge.toFixed(2) : 0}</p>
+                                    <p>Rs.{grandTotal ? grandTotal.toFixed(2) : 0}</p>
                                 </div>
                             </div>
                             <button
