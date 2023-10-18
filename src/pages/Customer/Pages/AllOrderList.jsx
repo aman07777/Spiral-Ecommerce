@@ -3,7 +3,7 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 import { imageUrl } from '../../../global/config';
 
 const AllOrderList = ({ val }) => {
-
+    //all order list
     return (
         <>
             <div className="p-5 bg-gray-100 cursor-pointer rounded-md">

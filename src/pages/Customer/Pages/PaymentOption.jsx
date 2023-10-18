@@ -48,12 +48,11 @@ const PaymentOption = () => {
                                 </Heading>
                                 <LeftSide />
                             </Box>
-
                             <div className="flex flex-col gap-y-8 w-[100%] ">
-                                <div className="grid xl:grid-cols-3 md:grid-cols-2 @[922px]:grid-cols-2 sm:grid-cols-2 gap-y-6  select-none w-[75%] items-center ">
+                                <div className="flex items-center justify-center">
+                                    <span className="animate-pulse">No Payment Option Available</span>
                                 </div>
                             </div>
-
                         </Flex>
                         <Drawer
                             placement="left"
@@ -65,7 +64,7 @@ const PaymentOption = () => {
                                 <DrawerCloseButton />
                                 <DrawerHeader>
                                     <div className="">
-                                        <TopSide/>
+                                        <TopSide />
                                     </div>
                                 </DrawerHeader>
                                 <DrawerBody>
