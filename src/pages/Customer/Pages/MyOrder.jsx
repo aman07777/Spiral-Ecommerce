@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
     Box,
     Flex,
@@ -10,6 +10,7 @@ import {
     DrawerCloseButton,
     DrawerHeader,
     DrawerBody,
+    useToast,
 } from "@chakra-ui/react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { BiSolidCart } from "react-icons/bi";
@@ -22,57 +23,71 @@ import { orderStore } from "../helper/orderStore";
 
 
 const MyOrder = () => {
+    const toast = useToast();
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [what, setWhat] = useState("orders");
     const [myorders, setMyOrders] = useState([]);
+    const [filteredOrders, setFilteredOrders] = useState([]); // New state variable for filtered orders
+    const [myDeliveredOrders, setMyDeliveredOrders] = useState([]);
+    const [selectOption, setSelectOption] = useState("all");
 
     //for getting orders
     const getMyOrders = orderStore((state => state.getMyOrders))
 
     useEffect(() => {
-        getMyOrders().then((data) => {
-            setMyOrders(data)
-        }).catch((error) => alert("something went wrong"))
-    }, [getMyOrders])
+        getMyOrders()
+            .then((data) => {
+                const deliveredOrders = data.filter(order => order?.orderItems[0].status === 'Delivered');
+                setMyOrders(data);
+                setFilteredOrders(data); // Set filteredOrders to all orders initially
+                setMyDeliveredOrders(deliveredOrders)
+            })
+            .catch((error) => {
+                const errorMessage = error.response?.data?.message || "An error occurred.";
+                toast({
+                    title: "Error",
+                    description: errorMessage,
+                    status: "error",
+                    duration: 3000,
+                    isClosable: true,
+                });
+            });
+    }, [getMyOrders, toast]);
 
-    const item = [
-        {
-            name: "Oil Proof Self Adhesive Kitchen Marble Sticker - 3M x 61cm",
-            color: "Black",
-            price: 120,
-            status: "pending",
-            image: "https://static-01.daraz.com.np/p/e6ca1cabe9129183c8c8aecb34c97f90.jpg"
-        },
-        {
-            name: "Oil Proof Self Adhesive Kitchen Marble Sticker - 3M x 61cm",
-            color: "Black",
-            price: 100,
-            status: "sold",
-            image: "https://static-01.daraz.com.np/p/262c1880732779acba145d0cc0eca092.jpg_400x400q75.jpg_.webp"
-        },
-        {
-            name: "Oil Proof Self Adhesive Kitchen Marble Sticker - 3M x 61cm",
-            color: "Black",
-            price: 110,
-            status: "canceled",
-            image: "https://static-01.daraz.com.np/p/e6ca1cabe9129183c8c8aecb34c97f90.jpg"
-        },
-        {
-            name: "Classic Blue Ray Cut Silver/Black Frame Computer Glass With Cover For Unisex",
-            color: "Black",
-            price: 120,
-            status: "pending",
-            image: "https://static-01.daraz.com.np/p/f8e7d0f1a4e525540390c4b4979e73ab.jpg_400x400q75.jpg_.webp"
-        },
-        {
-            name: "Oil Proof Self Adhesive Kitchen Marble Sticker - 3M x 61cm",
-            color: "Black",
-            price: 90,
-            status: "pending",
-            image: "https://static-01.daraz.com.np/p/e6ca1cabe9129183c8c8aecb34c97f90.jpg"
-        },
 
-    ]
+    const filterOrdersData = useCallback((orders) => {
+        let filteredOrder;
+        const now = new Date();
+
+        switch (selectOption) {
+            case 'last_five':
+                filteredOrder = orders?.slice(-5);
+                break;
+            case 'last_ten':
+                filteredOrder = orders?.slice(-10);
+                break;
+            case 'last_30_days':
+                filteredOrder = orders?.filter(order => (now - new Date(order?.createdAt)) / (1000 * 60 * 60 * 24) <= 30);
+                break;
+            case 'last_6_months':
+                filteredOrder = orders?.filter(order => (now - new Date(order?.createdAt)) / (1000 * 60 * 60 * 24) <= 180);
+                break;
+            case 'all':
+            default:
+                filteredOrder = orders;
+                break;
+        }
+
+        if (filteredOrder && filteredOrder.length > 0) {
+            setFilteredOrders(filteredOrder);
+        } else {
+            setFilteredOrders([])
+        }
+    }, [selectOption]);
+
+    useEffect(() => {
+        filterOrdersData(myorders)
+    }, [myorders, selectOption, filterOrdersData])
 
 
     return (
@@ -114,7 +129,7 @@ const MyOrder = () => {
                                 <LeftSide />
                             </Box>
 
-                            <div className="flex flex-col items-center justifty-center gap-y-8 w-[100%] md:h-96 overflow-y-scroll ">
+                            <div className="flex flex-col items-center justifty-center gap-y-8 w-[100%] h-96 overflow-y-scroll ">
                                 <div className="w-[90%] bg-white">
                                     <div className="mb-4">
                                         <hr></hr>
@@ -123,14 +138,14 @@ const MyOrder = () => {
                                             <span className={`text-sm cursor-pointer ${what === "history" && "border-t-2 border-[#008080]"}`} onClick={(e) => { setWhat("history") }}>History</span>
                                         </div>
                                     </div>
-                                    <div className="flex gap-x-3 mb-3">
+                                    <div className={`flex gap-x-3 mb-3 ${what === "history" && "hidden"}`}>
                                         <span>Show:</span>
-                                        <select variant="static" label="select Version">
-                                            <option>Last 5 orders</option>
-                                            <option>Last 10 orders</option>
-                                            <option>Last 30 days</option>
-                                            <option>Last 6 months</option>
-                                            <option>All</option>
+                                        <select variant="static" label="select Version" onChange={(e) => setSelectOption(e.target.value)}>
+                                            <option value="all">All</option>
+                                            <option value="last_five">Last 5 orders</option>
+                                            <option value="last_ten">Last 10 orders</option>
+                                            <option value="last_30_days">Last 30 days</option>
+                                            <option value="last_6_months">Last 6 months</option>
                                         </select>
                                     </div>
 
@@ -139,12 +154,10 @@ const MyOrder = () => {
                                             <>
                                                 <div className="flex flex-col gap-y-3">
                                                     {
-                                                        item?.map((val, index) => (
-                                                            <>
-                                                                <div key={index}>
-                                                                    <AllOrderList val={val} />
-                                                                </div>
-                                                            </>
+                                                        filteredOrders?.map((val) => (
+                                                            <React.Fragment key={val._id}>
+                                                                <AllOrderList val={val} />
+                                                            </React.Fragment>
                                                         ))
                                                     }
                                                 </div>
@@ -157,13 +170,15 @@ const MyOrder = () => {
                                             <>
                                                 <div className="flex flex-col gap-y-3">
                                                     {
-                                                        item?.map((val, index) => (
-                                                            <>
-                                                                <div key={index}>
+                                                        myDeliveredOrders?.length > 0 ? (
+                                                            myDeliveredOrders?.map((val) => (
+                                                                <div key={val._id}>
                                                                     <OrderHistory val={val} />
                                                                 </div>
-                                                            </>
-                                                        ))
+                                                            ))
+                                                        ) : (
+                                                            <span>No item found</span>
+                                                        )
                                                     }
                                                 </div>
                                             </>
