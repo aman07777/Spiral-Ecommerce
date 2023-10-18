@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FaUserCircle } from "react-icons/fa";
 import { FaAddressBook} from "react-icons/fa";
-import { MdOutlinePayment, MdPreview } from "react-icons/md";
+import { MdOutlinePayment } from "react-icons/md";
 import { BiSolidCart, BiLogOut } from "react-icons/bi";
 
 const LeftSide = () => {

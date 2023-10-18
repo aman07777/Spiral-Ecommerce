@@ -1,7 +1,7 @@
 import React from 'react'
 import { BiLogOut, BiSolidCart } from 'react-icons/bi'
 import { FaAddressBook, FaUserCircle } from 'react-icons/fa'
-import { MdOutlinePayment, MdPreview } from 'react-icons/md'
+import { MdOutlinePayment } from 'react-icons/md'
 import { useNavigate } from 'react-router-dom'
 import { frontend_url } from '../../../global/config'
 

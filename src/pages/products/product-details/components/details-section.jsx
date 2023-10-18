@@ -39,7 +39,7 @@ const DetailsSection = ({ product }) => {
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   const handleQuantityChange = (event) => {
     let newQuantity = parseInt(event.target.value);
-    console.log(typeof newQuantity);
+
     const maxQuantity = sQuantity
       ? product?.quantity - sQuantity
       : product.quantity;

@@ -11,11 +11,12 @@ export const cartStore = create((set) => ({
       if (response.data.status === "success") {
         set({ cartDetails: response.data.cart });
         const cartLength = response.data.cart.length;
-        set({ cartLength });
+        set({ cartLength});
         return response.data.cart;
       }
       return [];
     } catch (error) {
+      console.log(error)
       return error;
     }
   },
@@ -40,6 +41,18 @@ export const cartStore = create((set) => ({
       if (response.data.status === "success") {
         const cartLength = response.data.cart.products.length;
         set({ cartLength });
+        return response.data;
+      }
+      return [];
+    } catch (error) {
+      return error;
+    }
+  },
+  deleteAllCart: async () => {
+    try {
+      const response = await axios_auth.get(`/carts/delete-my`);
+      if (response.data.status === "success") {
+        set({ cartLength: 0 });
         return response.data;
       }
       return [];
