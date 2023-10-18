@@ -1,10 +1,9 @@
 import axios from "axios";
-
-const API_URL = "http://localhost:8080/api/v1/products/";
+import { baseUrl } from "../global/config";
 
 const buildApiUrl = (currentPage, params) => {
   const queryParams = new URLSearchParams(params).toString();
-  return `${API_URL}/?page=${currentPage}${
+  return `${baseUrl}products/?page=${currentPage}${
     queryParams ? `&${queryParams}` : ""
   }`;
 };
@@ -14,7 +13,9 @@ export const getProducts = async (
   keyWord,
   minPrice,
   maxPrice,
-  sort
+  sort,
+  brands,
+  categories
 ) => {
   const params = {};
 
@@ -33,6 +34,14 @@ export const getProducts = async (
   if (maxPrice) {
     params.maxPrice = maxPrice;
   }
+  Array.isArray(brands) &&
+    brands.length > 0 &&
+    (params.brands = brands.map((brand) => brand?.title).join(","));
+  Array.isArray(categories) &&
+    categories.length > 0 &&
+    (params.categories = categories
+      .map((category) => category?.title)
+      .join(","));
 
   const apiUrl = buildApiUrl(currentPage, params);
 
@@ -45,17 +54,22 @@ export const getProducts = async (
 };
 
 export const getProduct = async (productId) => {
-  const { data } = await axios.get(`${API_URL}/${productId}`);
+  const { data } = await axios.get(`${baseUrl}products/${productId}`);
   return data;
 };
 
 export const getFeaturedProducts = async () => {
-  const { data } = await axios.get(`${API_URL}/featured`);
-  return data;
+  const { data } = await axios.get(`${baseUrl}products/featured`);
+  return data.status === "success" ? data.products : [];
+};
+
+export const getNewArrival = async () => {
+  const { data } = await axios.get(`${baseUrl}products/new-arrival`);
+  return data.status === "success" ? data.products : [];
 };
 
 export const removeProduct = async (currentUser, productId) => {
-  return axios.delete(`${API_URL}/${productId}`, {
+  return axios.delete(`${baseUrl}/${productId}`, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${currentUser}`,
@@ -65,7 +79,7 @@ export const removeProduct = async (currentUser, productId) => {
 
 export const createProduct = async (currentUser, product) => {
   return axios.post(
-    API_URL,
+    baseUrl,
     {
       product,
     },
@@ -80,7 +94,7 @@ export const createProduct = async (currentUser, product) => {
 
 export const updateProduct = async (currentUser, product) => {
   return axios.put(
-    `${API_URL}/${product.id}`,
+    `${baseUrl}/${product.id}`,
     {
       product,
     },
