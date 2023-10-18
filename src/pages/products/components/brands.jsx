@@ -6,7 +6,6 @@ export default function Brands({ brands, handleBrandChange }) {
       <Box>
         <h2 className="text-[1.2rem] font-semibold mb-2">Brands</h2>
         <div className="flex flex-col">
-          <Checkbox colorScheme="teal">All</Checkbox>
           {Array.isArray(brands) &&
             brands.map((brand) => (
               <Checkbox
