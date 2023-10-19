@@ -78,7 +78,7 @@ const ProductDetails = () => {
 
   return (
     <>
-      <div className="flex-1 p-2 px-3 border rounded-sm border-l-[4px] shadow text-[#585858] h-[30em] overflow-y-scroll @container">
+      <div className="flex-1 p-2 px-3 border rounded-sm border-l-[4px] shadow text-[#585858] h-[30em] overflow-y-scroll @container mb-5">
         <h3 className="font-semibold">Product Details</h3>
         <div className="flex flex-col mt-5 gap-y-2">
           {Array.isArray(products) &&

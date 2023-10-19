@@ -3,7 +3,6 @@ import { create } from "zustand";
 export const useBuyStore = create((set, get) => ({
   orderItems: [],
   setOrderItems: (data) => {
-    console.log(data)
     set((state) => ({
       orderItems: [...state.orderItems, data],
     }));
@@ -25,6 +24,18 @@ export const useBuyStore = create((set, get) => ({
   setShippingInfo: (data) => {
     set((state) => ({
       shippingInfo: { ...state.shippingInfo, ...data },
+    }));
+  },
+  paymentDetails: {
+    method: "",
+    image: "",
+    accountNumber: "",
+    accountName: "Aijo",
+    description: "",
+  },
+  setPaymentDetails: (data) => {
+    set((state) => ({
+      paymentDetails: { ...state.paymentDetails, ...data },
     }));
   },
 }));
