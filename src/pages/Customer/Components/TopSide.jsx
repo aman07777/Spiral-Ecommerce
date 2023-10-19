@@ -26,7 +26,6 @@ const TopSide = () => {
                         <Box ml={4}>
                             <Text fontWeight="bold">{`${profileDetails?.firstName} ${profileDetails?.lastName}`}</Text>
                             <Text fontSize="sm" className="font-roboto">{profileDetails?.email}</Text>
-                            <Text fontSize="sm">Bonus: <span className="font-roboto">100</span></Text>
                         </Box>
 
                     </>
