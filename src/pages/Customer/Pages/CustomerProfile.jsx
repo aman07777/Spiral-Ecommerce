@@ -70,7 +70,10 @@ const CustomerProfile = () => {
     <>
       {
         isLoading ? (
-          <Spinner color="blue.300" />
+         
+            <div className="flex items-center justify-center h-screen">
+              <div className="loader"></div>
+            </div>
         ) : (
           <div className="w-[100%] flex items-center justify-center my-8">
             <div className="w-[100%] md:w-[80%]">
@@ -85,7 +88,6 @@ const CustomerProfile = () => {
                         <Box ml={4}>
                           <Text fontWeight="bold">{`${userDetails?.firstName} ${userDetails?.lastName}`}</Text>
                           <Text fontSize="sm" className="font-roboto">{userDetails?.email}</Text>
-                          <Text fontSize="sm">Bonus: <span className="font-roboto">100</span></Text>
                         </Box>
 
                       </>

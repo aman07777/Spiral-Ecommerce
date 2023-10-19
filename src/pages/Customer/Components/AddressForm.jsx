@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { AiOutlineClose } from "react-icons/ai";
 import axios from 'axios';
 import { city } from './CityData';
 
 import { BiChevronDown } from "react-icons/bi";
-import { AiOutlineSearch } from "react-icons/ai";
-
 
 
 const AddressForm = ({ props }) => {
@@ -23,8 +21,7 @@ const AddressForm = ({ props }) => {
         'Content-Type': 'application/json',
     };
 
-
-    async function fetchLocationData() {
+    const fetchLocationData = useCallback(async () => {
         try {
             const response = await axios.get(`${API_BASE_URL}/province/list`, {
                 headers: API_HEADERS,
@@ -34,9 +31,9 @@ const AddressForm = ({ props }) => {
             console.error('Error fetching location data:', error);
             throw error;
         }
-    }
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    async function fetchCitiesData() {
+    const fetchCitiesData = useCallback(async () => {
         if (!selectedProvience.id) return [];
 
         try {
@@ -51,7 +48,7 @@ const AddressForm = ({ props }) => {
             console.error('Error fetching cities data:', error);
             throw error;
         }
-    }
+    }, [selectedProvience]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         fetchLocationData()
@@ -61,7 +58,7 @@ const AddressForm = ({ props }) => {
             .catch((error) => {
                 throw error;
             });
-    }, []);
+    }, [fetchLocationData]);
 
 
     useEffect(() => {
@@ -81,7 +78,7 @@ const AddressForm = ({ props }) => {
             .catch((error) => {
                 throw error;
             });
-    }, [selectedProvience, selectedCity]);
+    }, [selectedProvience, selectedCity, fetchCitiesData]);
 
     const toggleOpen = (divName) => {
         setOpenStates((prevState) => ({
@@ -251,7 +248,7 @@ const AddressForm = ({ props }) => {
                 </div>
             </div>
 
-        </> 
+        </>
     )
 }
 

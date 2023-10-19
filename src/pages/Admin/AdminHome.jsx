@@ -117,7 +117,7 @@ function AdminHome() {
                 ) : (
                   <>
                     <p className="text-[1.4rem] text-[#008080]">
-                      <strong>${Number(revenue / order).toFixed(2)}</strong>
+                      <strong>Rs. {Number(revenue / order).toFixed(2)}</strong>
                     </p>
                     <p className="text-[.9rem]">From the last 30 days</p>
                   </>

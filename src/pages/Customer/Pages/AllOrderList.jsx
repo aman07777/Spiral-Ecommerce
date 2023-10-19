@@ -1,14 +1,21 @@
-import React from 'react'
-import { AiOutlineCloseCircle } from "react-icons/ai";
+import React, { useState } from 'react'
 import { imageUrl } from '../../../global/config';
+import { BsFillInfoSquareFill } from 'react-icons/bs';
+import OrderDetailsCustomer from './OrderDetailsCustomer';
 
 const AllOrderList = ({ val }) => {
-    //all order list
+    const [isOpenDetails, setIsOpenDetails] = useState(false)
+
+    function handleOpenDetials(newValue) {
+        setIsOpenDetails(newValue)
+    }
+
     return (
         <>
             <div className="p-5 bg-gray-100 cursor-pointer rounded-md">
                 <div className="w-[100%] flex items-end justify-end">
-                    <span><AiOutlineCloseCircle size={20} className="cursor-pointer text-orange-700" /></span>
+                    <span><BsFillInfoSquareFill size={20} className="text-[#585858] cursor-pointer"
+                        title="More Info" onClick={() => handleOpenDetials(true)} /></span>
                 </div>
                 {/* one item  */}
                 <div className="flex max-[1099px]:flex-col">
@@ -28,11 +35,24 @@ const AllOrderList = ({ val }) => {
                         </div>
                     </div>
                     <div className="w-full min-[1099px]:w-[20%] flex flex-col items-end min-[1099px]:items-center justify-center gap-y-3">
-                        <span className="cursor-pointer text-[#008080]">Rs.{(val.orderItems[0].purchasePrice).toFixed(2)}</span>
+                        <span className="cursor-pointer text-[#008080]">Rs.{(val.orderItems[0].purchasePrice + Number(150)).toFixed(2)}</span>
                     </div>
                 </div>
                 {/* one item end  */}
             </div>
+            {
+                isOpenDetails && (
+                    <>
+                        <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none shadow-2xl">
+                            <div className="relative w-auto my-6 mx-auto max-w-3xl">
+                                <OrderDetailsCustomer props={handleOpenDetials} details={val} />
+                            </div>
+                        </div>
+                        <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+
+                    </>
+                )
+            }
         </>
     )
 }
