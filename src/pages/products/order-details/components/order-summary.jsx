@@ -10,6 +10,7 @@ import {
   getPurchasePrice,
   getTotalPrice,
 } from "../helper";
+import PaymentMethod from "./payment-methods";
 const OrderSummary = ({ onOpen }) => {
   const toast = useToast();
   const client = useQueryClient();
@@ -18,6 +19,7 @@ const OrderSummary = ({ onOpen }) => {
   const makeOrder = useOrderStore((state) => state.makeOrder);
   const shippingInfo = useBuyStore((state) => state.shippingInfo);
   const orderItems = useBuyStore((state) => state.orderItems);
+  const paymentDetails = useBuyStore((state) => state.paymentDetails);
   // states
   const [totalPrice, setTotalPrice] = React.useState(0);
   const [discount, setDiscount] = React.useState(0);
@@ -69,6 +71,7 @@ const OrderSummary = ({ onOpen }) => {
       promoCode:
         Object.keys(promoCodeDetails || {}).length > 0 && promoCodeDetails?._id,
       totalBillAmount: purchasePrice,
+      paymentDetails,
     };
     mutate(orderData);
   };
@@ -149,7 +152,7 @@ const OrderSummary = ({ onOpen }) => {
 
   return (
     <>
-      <div className="w-full @[750px]:w-[20em] @[1000px]:w-[25em] px-4 pt-2 border rounded-sm border-l-[4px] shadow pb-5 h-fit">
+      <div className="w-full @[750px]:w-[20em] @[1000px]:w-[25em] px-4 pt-2 border rounded-sm border-l-[4px] shadow pb-5 h-[30em] ">
         <h3 className="font-semibold text-[#585858]">Available Promo Codes</h3>
         <div className="my-3">
           <input
@@ -162,8 +165,9 @@ const OrderSummary = ({ onOpen }) => {
             disabled={Array.isArray(orderItems) && orderItems.length <= 0}
           />
         </div>
+
         <p className="h-[2px] bg-gray-300 my-3" />
-        <h3 className="font-semibold text-[#585858]">Order Summary</h3>
+        <h3 className="font-semibold text-[#585858] pt-2">Order Summary</h3>
         <div className="flex justify-between w-full pr-4 mt-2">
           <div className="flex gap-y-[.2rem] flex-col">
             <p>Items Total:</p>
@@ -188,12 +192,20 @@ const OrderSummary = ({ onOpen }) => {
             </p>
           </div>
         </div>
-        <button
-          className="w-full py-2 mt-5 capitalize bg-[teal] border border-[teal] text-white hover:bg-[teal]/80 hover:border-[teal]/80 rounded-sm"
-          onClick={() => handlePlaceOrderClick()}
-        >
-          {isLoading ? "Ordering..." : "place order"}
-        </button>
+        <p className="h-[2px] bg-gray-300 my-3" />
+        <PaymentMethod
+          openAddressModal={onOpen}
+          promoCodeDetails={promoCodeDetails}
+          purchasePrice={purchasePrice}
+        />
+        {paymentDetails?.method === "COD" && (
+          <button
+            className="w-full py-2 mt-8 capitalize bg-[teal] border border-[teal] text-white hover:bg-[teal]/80 hover:border-[teal]/80 rounded-sm"
+            onClick={() => handlePlaceOrderClick()}
+          >
+            {isLoading ? "Ordering..." : "place order"}
+          </button>
+        )}
       </div>
     </>
   );
