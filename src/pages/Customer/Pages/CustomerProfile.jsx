@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
-  Box,
+  Box, 
   Flex,
   Heading,
   Text,
@@ -70,10 +70,10 @@ const CustomerProfile = () => {
     <>
       {
         isLoading ? (
-         
-            <div className="flex items-center justify-center h-screen">
-              <div className="loader"></div>
-            </div>
+
+          <div className="flex items-center justify-center h-screen">
+            <div className="loader"></div>
+          </div>
         ) : (
           <div className="w-[100%] flex items-center justify-center my-8">
             <div className="w-[100%] md:w-[80%]">

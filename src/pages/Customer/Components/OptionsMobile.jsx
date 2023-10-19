@@ -34,7 +34,6 @@ const OptionsMobile = ({ props }) => {
         <div className="flex gap-x-2 items-center cursor-pointer " onClick={() => {
           navigate("/profile/myorders")
         }}>
-
           <i><BiSolidCart size={20} className="text-[#008080]" /></i>
           <span className="text-sm  font-semibold hover:text-[#008080]">My Orders</span>
         </div>
