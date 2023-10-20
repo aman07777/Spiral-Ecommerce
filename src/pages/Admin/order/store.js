@@ -73,7 +73,6 @@ export const useAdminOrderStore = create((set) => ({
   getSales: async () => {
     try {
       const res = await axios_auth.get("orders/sales");
-      console.log("🚀 ~ file: store.js:76 ~ getSales: ~ res:", res);
       if (res.data.status === "success") {
         return res.data.sales;
       }
