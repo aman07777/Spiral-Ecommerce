@@ -35,6 +35,16 @@ const Navbar = () => {
       isClosable: true,
     });
   };
+  const NavLink = ({ to, children, ...rest }) => (
+    <RouterNavLink
+      to={to}
+      style={{ marginRight: "12px" }}
+      fontWeight="medium"
+      {...rest}
+    >
+      {children}
+    </RouterNavLink>
+  );
 
   useEffect(() => {
     getAllCarts();
@@ -175,87 +185,60 @@ const Navbar = () => {
                 variant="outline"
               />
               <MenuList display="flex" flexDirection="column">
-                {/* added flexDirection property */}
-                <MenuItem className="">
-                  <div
-                    onClick={() => navigate("/")}
-                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
-                  >
-                    Home
-                  </div>
-                </MenuItem>
-                <MenuItem className="">
-                  <div
-                    onClick={() => null}
-                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
-                  >
-                    Shop
-                  </div>
-                </MenuItem>
-                <MenuItem>
-                  <div
-                    onClick={() => null}
-                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
-                  >
-                    Brand
-                  </div>
-                </MenuItem>
-                <MenuItem>
-                  <div
-                    onClick={() => navigate("/products")}
-                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
-                  >
-                    Shoes
-                  </div>
-                </MenuItem>
-                <MenuItem>
-                  <div
-                    onClick={() => navigate("/products")}
-                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
-                  >
-                    New Arrival
-                  </div>
-                </MenuItem>
-                <MenuItem>
-                  <div
-                    onClick={() => navigate("/products")}
-                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
-                  >
-                    Most Wanted
-                  </div>
-                </MenuItem>
-                <MenuItem>
-                  <div
-                    onClick={() => navigate("/cart")}
-                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
-                  >
-                    Cart
-                  </div>
-                </MenuItem>
-                <MenuItem>
-                  <div
-                    onClick={() => navigate("/profile/customer")}
-                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
-                  >
-                    My Information
-                  </div>
-                </MenuItem>
-                <MenuItem>
-                  <div
-                    onClick={() => navigate("/profile/myorders")}
-                    className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
-                  >
-                    Orders
-                  </div>
-                </MenuItem>
-                <MenuItem>
-                  <div
-                    onClick={handleLogout}
-                    className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit cursor-pointer mr-3"
-                  >
-                    Log out
-                  </div>
-                </MenuItem>
+                {isAuth ? (
+                  <>
+                    {/* added flexDirection property */}
+                    <MenuItem>
+                      <div
+                        onClick={() => navigate("/profile/customer")}
+                        className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
+                      >
+                        My Information
+                      </div>
+                    </MenuItem>
+                    <MenuItem className="">
+                      <div
+                        onClick={() => navigate("/")}
+                        className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
+                      >
+                        Home
+                      </div>
+                    </MenuItem>
+                    <MenuItem>
+                      <div
+                        onClick={() => navigate("/cart")}
+                        className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
+                      >
+                        Cart
+                      </div>
+                    </MenuItem>
+
+                    <MenuItem>
+                      <div
+                        onClick={() => navigate("/profile/myorders")}
+                        className="relative before:absolute before:content-[''] before:w-0 before:h-[1px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit text-[#585858]"
+                      >
+                        Orders
+                      </div>
+                    </MenuItem>
+                    <MenuItem>
+                      <div
+                        onClick={handleLogout}
+                        className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit cursor-pointer mr-3"
+                      >
+                        Log out
+                      </div>
+                    </MenuItem>
+                  </>) : (
+                  <MenuItem>
+                    <NavLink
+                      to="/login"
+                      className="relative before:absolute before:content-[''] before:w-0 before:h-[2px] before:bottom-0 before:bg-[#008080] before:transition-[1s] hover:before:w-full duration-200 w-fit cursor-pointer mr-3"
+                    >
+                      Log In
+                    </NavLink>
+                  </MenuItem>
+                )}
               </MenuList>
             </Menu>
           </Box>
@@ -265,14 +248,5 @@ const Navbar = () => {
   );
 };
 
-const NavLink = ({ to, children, ...rest }) => (
-  <RouterNavLink
-    to={to}
-    style={{ marginRight: "12px" }}
-    fontWeight="medium"
-    {...rest}
-  >
-    {children}
-  </RouterNavLink>
-);
+
 export default Navbar;

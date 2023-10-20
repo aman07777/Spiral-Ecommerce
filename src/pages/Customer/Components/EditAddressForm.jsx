@@ -50,6 +50,7 @@ const EditAddressForm = ({ props, id, fetchAddressDetails }) => {
           headers: API_HEADERS,
         }
       );
+      console.log(response)
       return response.data.data;
     } catch (error) {
       console.error('Error fetching cities data:', error);
