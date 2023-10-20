@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import {
-  Box,
-  Container,
-  useToast,
-  Spinner,
-  // useMediaQuery,
-} from "@chakra-ui/react";
+import { Box, Container, useToast } from "@chakra-ui/react";
 
 import { getProduct } from "../../../services/ProductServices";
 
@@ -52,7 +46,7 @@ export default function ProductDetails() {
   return (
     <>
       {!isLoading ? (
-        <div className="flex justify-center w-full">
+        <div className="flex justify-center w-full ">
           <Box width={{ base: "100%", md: "95%", lg: "75%" }}>
             <BreadCrumb />
             <Container
@@ -69,8 +63,8 @@ export default function ProductDetails() {
           </Box>
         </div>
       ) : (
-        <div className="flex justify-center w-full">
-          <Spinner />
+        <div className="flex justify-center w-full min-h-[80dvh]">
+          <div className="loader" />
         </div>
       )}
     </>
