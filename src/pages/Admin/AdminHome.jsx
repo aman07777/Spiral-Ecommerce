@@ -42,11 +42,6 @@ function AdminHome() {
     { name: "Jun", uv: 2390, pv: 3800 },
     { name: "Jul", uv: 3490, pv: 4300 },
   ];
-  // const { data: allOrders, isFetching: allOrderFetching } = useQuery(
-  //   ["get", "all", "orders"],
-  //   getAllOrders
-  // );
-
   const {
     data: recentOrders,
     isFetching: recentOrderFetching,
@@ -81,7 +76,7 @@ function AdminHome() {
                 {!isOrderFetching ? (
                   <>
                     <p className="text-[1.4rem] text-[#008080]">
-                      <strong>{order}</strong>
+                      <strong>{Number(order) || 0}</strong>
                     </p>
                     <p className="text-[.9rem]">From the last 30 days</p>
                   </>
@@ -98,12 +93,12 @@ function AdminHome() {
                     <Spinner size="sm" />
                   </div>
                 ) : (
-                  <>
+                  <div>
                     <p className="text-[1.4rem] text-[#008080]">
                       <strong>Rs. {Number(revenue).toFixed(2)} </strong>
                     </p>
                     <p className="text-[.9rem]">From the last 30 days</p>
-                  </>
+                  </div>
                 )}
               </div>
               <div className="border w-[15em] @[600px]:w-auto px-6 py-5 rounded-sm flex flex-col bg-slate-100 h-[8em]">
@@ -117,7 +112,12 @@ function AdminHome() {
                 ) : (
                   <>
                     <p className="text-[1.4rem] text-[#008080]">
-                      <strong>Rs. {Number(revenue / order).toFixed(2)}</strong>
+                      <strong>
+                        Rs.{" "}
+                        {Number(
+                          revenue !== 0 && order !== 0 && revenue / order
+                        ).toFixed(2)}
+                      </strong>
                     </p>
                     <p className="text-[.9rem]">From the last 30 days</p>
                   </>

@@ -49,6 +49,7 @@ const Login = () => {
           "success"
         );
         localStorage.setItem("currentUser", response.data.token);
+        localStorage.setItem("role", response.data.user?.role);
         response.data.user?.role === "user" && window.location.replace("/");
         response.data.user?.role === "admin" &&
           window.location.replace("/adminHome");

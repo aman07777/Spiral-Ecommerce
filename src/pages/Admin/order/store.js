@@ -56,7 +56,7 @@ export const useAdminOrderStore = create((set) => ({
       }
       return 0;
     } catch (error) {
-      return error;
+      return 0;
     }
   },
   getRevenue: async () => {
@@ -67,7 +67,7 @@ export const useAdminOrderStore = create((set) => ({
       }
       return 0;
     } catch (error) {
-      return error;
+      return 0;
     }
   },
 }));

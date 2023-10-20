@@ -1,8 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import PlaceOrder from "./pages/products/order-details/place-order";
+import { useGlobalStore } from "./global/store";
+import { useQuery } from "@tanstack/react-query";
 
+const PlaceOrder = lazy(() =>
+  import("./pages/products/order-details/place-order")
+);
 const OrderDetails = lazy(() =>
   import("./pages/Admin/order/order-details/order-details")
 );
@@ -55,7 +59,10 @@ const CartPage = lazy(() => import("./pages/carts/pages/Carts"));
 const EmailVerification = lazy(() => import("./pages/EmailVerification"));
 
 function App() {
-  return (
+  const user = useGlobalStore((state) => state.user);
+  const checkAuth = useGlobalStore((state) => state.checkAuth);
+  const { isFetched } = useQuery(["check", "auth"], checkAuth);
+  return isFetched ? (
     <Router>
       <ErrorBoundary FallbackComponent={Fallback}>
         <Suspense fallback={<Loader />}>
@@ -89,27 +96,38 @@ function App() {
 
             <Route path="/emailverification" element={<EmailVerification />} />
             <Route path="/resetpassword" element={<ResetPassword />} />
-
-            {/* admin routes */}
-            <Route path="/adminHome" element={<AdminHome />} />
-            <Route path="/adminProduct" element={<AdminProduct />} />
-            <Route path="/admin-add-product" element={<AddProduct />} />
-            <Route
-              path="/admin-update-product/:id"
-              element={<UpdateProduct />}
-            />
-            <Route path="/adminOrder" element={<AdminOrder />} />
-            <Route path="/admin-order-details/:id" element={<OrderDetails />} />
-            <Route path="/adminCustomer" element={<AdminCustomer />} />
-            <Route path="/adminAffliator" element={<AdminAffiliator />} />
-            <Route path="/admin-add-affliator" element={<AddAffiliator />} />
-            <Route path="/adminSetting" element={<AdminSettings />} />
-            {/* admin routes ends here */}
+            {user?.role === "admin" && (
+              <>
+                {/* admin routes */}
+                <Route path="/adminHome" element={<AdminHome />} />
+                <Route path="/adminProduct" element={<AdminProduct />} />
+                <Route path="/admin-add-product" element={<AddProduct />} />
+                <Route
+                  path="/admin-update-product/:id"
+                  element={<UpdateProduct />}
+                />
+                <Route path="/adminOrder" element={<AdminOrder />} />
+                <Route
+                  path="/admin-order-details/:id"
+                  element={<OrderDetails />}
+                />
+                <Route path="/adminCustomer" element={<AdminCustomer />} />
+                <Route path="/adminAffliator" element={<AdminAffiliator />} />
+                <Route
+                  path="/admin-add-affliator"
+                  element={<AddAffiliator />}
+                />
+                <Route path="/adminSetting" element={<AdminSettings />} />
+                {/* admin routes ends here */}
+              </>
+            )}
             <Route path="*" element={<ErrorPage />} />
           </Routes>
         </Suspense>
       </ErrorBoundary>
     </Router>
+  ) : (
+    <Loader />
   );
 }
 
