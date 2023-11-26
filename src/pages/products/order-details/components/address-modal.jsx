@@ -66,6 +66,7 @@ const AddressModal = ({ isOpen, onClose }) => {
                   Full name<span className="text-red-500">*</span>
                 </label>
                 <input
+                  id="full-name"
                   type="text"
                   className="w-full px-2 py-[.35rem] border border-gray-400 rounded-sm outline-none "
                   required
@@ -81,6 +82,7 @@ const AddressModal = ({ isOpen, onClose }) => {
               <div className="flex flex-col gap-y-1">
                 <label htmlFor="email">Email</label>
                 <input
+                  id="email"
                   type="email"
                   className="w-full px-2 py-[.35rem] border border-gray-400 rounded-sm outline-none "
                   value={data.email}
@@ -97,6 +99,7 @@ const AddressModal = ({ isOpen, onClose }) => {
                   Full address<span className="text-red-500">*</span>
                 </label>
                 <input
+                  id="address"
                   type="text"
                   className="w-full px-2 py-[.35rem] border border-gray-400 rounded-sm outline-none "
                   required
@@ -114,8 +117,10 @@ const AddressModal = ({ isOpen, onClose }) => {
                   Mobile number<span className="text-red-500">*</span>
                 </label>
                 <input
-                  type="text"
+                  id="mobile-number"
+                  type="number"
                   className="w-full px-2 py-[.35rem] border border-gray-400 rounded-sm outline-none "
+                  max={10}
                   required
                   value={data.mobileNumber}
                   onChange={(e) =>
@@ -129,6 +134,7 @@ const AddressModal = ({ isOpen, onClose }) => {
               <div className="flex flex-col gap-y-1">
                 <label htmlFor="land-mark">Land Mark</label>
                 <input
+                  id="land-mark"
                   type="text"
                   className="w-full px-2 py-[.35rem] border border-gray-400 rounded-sm outline-none "
                   value={data.landMark}
@@ -145,6 +151,7 @@ const AddressModal = ({ isOpen, onClose }) => {
                   Province<span className="text-red-500">*</span>
                 </label>
                 <select
+                  id="land-mark"
                   type="text"
                   className="w-full px-2 py-[.35rem] border border-gray-400 rounded-sm outline-none "
                   required
@@ -173,6 +180,7 @@ const AddressModal = ({ isOpen, onClose }) => {
                   Label<span className="text-red-500">*</span>
                 </label>
                 <select
+                  id="label"
                   type="text"
                   className="w-full px-2 py-[.35rem] border border-gray-400 rounded-sm outline-none "
                   required

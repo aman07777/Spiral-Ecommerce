@@ -4,11 +4,13 @@ import { useBuyStore } from "./store.js";
 const UserDetails = ({ user, isOpen, onOpen, onClose }) => {
   const shippingInfo = useBuyStore((state) => state.shippingInfo);
   const setShippingInfo = useBuyStore((state) => state.setShippingInfo);
+
   useEffect(() => {
-    setShippingInfo({
-      fullName: `${user?.firstName} ${user?.lastName}`,
-      email: user?.email,
-    });
+    if (!!user?.firstName && !!user?.lastName && !!user?.email)
+      setShippingInfo({
+        fullName: `${user?.firstName} ${user?.lastName}`,
+        email: user?.email,
+      });
   }, [user, setShippingInfo]);
 
   return (
