@@ -15,6 +15,7 @@ import { useOrderStore } from "../../product-details/store";
 import { checkShippingInfo, getPurchasePrice, getTotalPrice } from "../helper";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { handleToast } from "../../../../global/toast";
+import { useNavigate } from "react-router-dom";
 const PaymentMethodModal = ({
   isOpen,
   onClose,
@@ -24,6 +25,7 @@ const PaymentMethodModal = ({
 }) => {
   const client = useQueryClient();
   const toast = useToast();
+  const navigate = useNavigate();
   // hooks
   const innerWidth = UseGetInnerWidth();
 
@@ -41,9 +43,10 @@ const PaymentMethodModal = ({
       if (data === true) {
         client.invalidateQueries(["get", "orders"], { exact: true });
         replaceOrderItems([]);
-        setPaymentDetails({description: ""});
+        setPaymentDetails({ description: "" });
         onClose();
         handleToast(toast, "Success", "Order placed successfully", "success");
+        navigate("/profile/myorders");
       }
     },
     onError: () =>
