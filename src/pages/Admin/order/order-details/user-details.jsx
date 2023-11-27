@@ -3,7 +3,7 @@ import React from "react";
 const UserDetails = ({ user }) => {
   return (
     <>
-      <div className="w-full p-2 px-3 mt-5 border rounded-sm border-l-[4px] shadow @container">
+      <div className="@container flex-1">
         <h3 className="font-semibold text-[1.05rem] text-[#585858]">
           Customer Details
         </h3>
