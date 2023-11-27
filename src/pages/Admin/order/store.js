@@ -84,13 +84,11 @@ export const useAdminOrderStore = create((set) => ({
   deleteOrder: async (id) => {
     try {
       const res = await axios_auth.delete(`orders/${id}`);
-      console.log("🚀 ~ file: store.js:88 ~ deleteOrder: ~ res:", res);
       if (res.data.status === "success") {
         return true;
       }
       return false;
-    } catch (error) {
-      console.log("🚀 ~ file: store.js:93 ~ deleteOrder: ~ error:", error);
+    } catch (_) {
       return false;
     }
   },

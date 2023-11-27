@@ -38,7 +38,6 @@ function AdminOrder() {
     error,
   } = useQuery(["get", "orders"], getAllOrders);
   isError && handleToast(toast, "Error", error.message, "error");
-
   return (
     <>
       <Dashboard />
@@ -56,7 +55,7 @@ function AdminOrder() {
               <Th>Action</Th>
             </Tr>
           </Thead>
-          <Tbody>
+          <Tbody className="text-[.9rem]">
             {isLoading ? (
               <Tr className="text-red-500 text-[.8rem] font-semibold">
                 <Td colSpan={6} textAlign={"center"}>
@@ -69,13 +68,13 @@ function AdminOrder() {
                   <Td className="capitalize">
                     {order?.shippingInfo?.fullName}
                   </Td>
-                  <Td className="capitalize">
+                  <Td className="capitalize max-w-[20em]">
                     {Array.isArray(order?.orderItems) &&
                       order?.orderItems
                         ?.map((item) => item?.product?.name)
-                        .join(",")}
+                        .join(", ")}
                   </Td>
-                  <Td>{order?.shippingInfo?.address}</Td>
+                  <Td className="capitalize">{order?.shippingInfo?.address}</Td>
                   <Td>{order?.shippingInfo?.email || "NA"}</Td>
                   <Td>{order?.shippingInfo?.mobileNumber}</Td>
                   <Td>
