@@ -30,7 +30,7 @@ const OrderDetails = () => {
             <CancellationButtons id={id} />
           </div>
           <div className="flex flex-col mt-5 gap-y-3 gap-x-3 @[750px]:flex-row">
-            <ProductDetails products={order?.orderItems} />
+            <ProductDetails products={order?.orderItems} id={id} />
             <div className="flex flex-col gap-y-3">
               <OrderSummary data={order?.orderItems} />
               <div className="">
