@@ -11,7 +11,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import Dashboard from "./Dashboard";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { handleToast } from "../../global/toast";
 function AdminSettings() {
   const [settings, setSettings] = useState({
@@ -20,11 +20,10 @@ function AdminSettings() {
   });
 
   const handleSave = () => {};
-  const navigate = useNavigate();
   const toast = useToast();
   const handleLogout = () => {
     localStorage.removeItem("currentUser");
-    navigate("/");
+    window.location.replace("/");
     handleToast(
       toast,
       "Logout Successful",
