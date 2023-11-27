@@ -3,7 +3,7 @@ import React from "react";
 const UserDetails = ({ user }) => {
   return (
     <>
-      <div className="@container flex-1">
+      <div className="@container flex-1 mt-3">
         <h3 className="font-semibold text-[1.05rem] text-[#585858]">
           Customer Details
         </h3>
