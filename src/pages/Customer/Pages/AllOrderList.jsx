@@ -14,7 +14,7 @@ const AllOrderList = ({ val }) => {
       {Array.isArray(val?.orderItems) &&
         val?.orderItems.length > 0 &&
         val?.orderItems.map((item) => (
-          <div className="p-5 bg-gray-100 rounded-md cursor-pointer">
+          <div className="p-5 bg-gray-100 rounded-md cursor-pointer" key={item._id} >
             <div className="w-[100%] flex items-end justify-end">
               <span>
                 <BsFillInfoSquareFill

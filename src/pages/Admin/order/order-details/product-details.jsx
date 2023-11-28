@@ -119,7 +119,7 @@ const ProductDetails = ({ products, id: orderId }) => {
                           Delivered
                         </p>
                       )}
-                      {product?.status !== "Cancelled" && (
+                      {/* {product?.status !== "Cancelled" && (
                         <p
                           className="cursor-pointer hover:scale-[1.03] transition-[scale] duration-300"
                           onClick={(e) =>
@@ -128,7 +128,7 @@ const ProductDetails = ({ products, id: orderId }) => {
                         >
                           Cancelled
                         </p>
-                      )}
+                      )} */}
                     </div>
                   </div>
                 </div>
