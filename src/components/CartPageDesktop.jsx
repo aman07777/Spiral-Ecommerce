@@ -361,6 +361,7 @@ function CartPageDesktop() {
                                     <img
                                       src={`${imageUrl}/${item.image}`}
                                       className="object-cover w-[3.5rem] rounded-md"
+                                      alt=""
                                     />
                                   </li>
                                   {/* product desc  */}

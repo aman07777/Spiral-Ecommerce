@@ -23,7 +23,6 @@ function AdminOrder() {
   const navigate = useNavigate();
   // stores
   const getAllOrders = useAdminOrderStore((state) => state.getOrders);
-
   // pagination states
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;

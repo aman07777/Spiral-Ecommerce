@@ -41,6 +41,7 @@ const ProductDetails = ({ products, id: orderId }) => {
     // const status = e.target.textContent.toLowerCase();
     mutate({ orderId, orderedProductId, status });
   };
+
   return (
     <>
       <div className="flex-1 p-2 px-3 border rounded-sm border-l-[4px] shadow text-[#585858] h-[30em] overflow-y-scroll">
