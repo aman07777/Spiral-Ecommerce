@@ -2,36 +2,21 @@ import React from "react";
 import { MdDeleteForever } from "react-icons/md";
 import { MdCancel } from "react-icons/md";
 import { useAdminOrderStore } from "../store";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useToast } from "@chakra-ui/react";
-import { handleToast } from "../../../../global/toast";
-import { useNavigate } from "react-router-dom";
+import useMutate from "../../hooks/useMutate";
 const CancellationButtons = ({ id }) => {
-  const navigate = useNavigate();
-  const toast = useToast();
-  const client = useQueryClient();
   // stores
   const deleteOrder = useAdminOrderStore((state) => state.deleteOrder);
   // react query
-  const { isLoading: deleteIsLoading, mutate: deleteMutate } = useMutation({
-    mutationFn: deleteOrder,
-    mutationKey: ["delete", "order", id],
-    onSuccess: (data) => {
-      if (data) {
-        handleToast(
-          toast,
-          "Delete Success",
-          "Order deleted successfully",
-          "success"
-        );
-        client.invalidateQueries(["get", "orders"]);
-        navigate("/adminOrder");
-      }
-    },
-    onError: (_) => {
-      handleToast(toast, "Delete Failed", "Order deletion failed", "error");
-    },
-  });
+  const { isLoading: deleteIsLoading, mutate: deleteMutate } = useMutate(
+    ["delete", "order", id],
+    deleteOrder,
+    ["get", "orders"],
+    "Delete Success",
+    "Order deleted successfully",
+    "Delete Failed",
+    "Order deletion failed",
+    "/adminOrder"
+  );
 
   return (
     <>

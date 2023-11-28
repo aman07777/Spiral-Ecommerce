@@ -152,7 +152,7 @@ const UpdateProductForm = ({ setIsPreviewModalOpen, product, setProduct }) => {
                   </FormControl>
                 </Flex>
                 <FormControl id="brand" mt={2} isRequired>
-                  <FormLabel>Product Brand</FormLabel>
+                  <FormLabel>Brand</FormLabel>
                   <Input
                     type="text"
                     placeholder="Enter product brand"
@@ -164,7 +164,7 @@ const UpdateProductForm = ({ setIsPreviewModalOpen, product, setProduct }) => {
                   />
                 </FormControl>
                 <FormControl id="brand" mt={2} isRequired>
-                  <FormLabel>Product Color</FormLabel>
+                  <FormLabel>Color</FormLabel>
                   <Input
                     type="text"
                     placeholder="Enter product color (comma-separated)"
@@ -179,7 +179,7 @@ const UpdateProductForm = ({ setIsPreviewModalOpen, product, setProduct }) => {
                   />
                 </FormControl>
                 <FormControl id="sizes" mt={2} isRequired>
-                  <FormLabel>Product Sizes</FormLabel>
+                  <FormLabel>Sizes</FormLabel>
                   <Input
                     type="text"
                     placeholder="Enter product sizes (comma-separated)"
@@ -187,6 +187,23 @@ const UpdateProductForm = ({ setIsPreviewModalOpen, product, setProduct }) => {
                     value={product.sizes || ""}
                     onChange={handleSizeChange}
                   />
+                </FormControl>
+                <FormControl id="quantity" mt={2} isRequired>
+                  <FormLabel>Quantity</FormLabel>
+                  <Input
+                    type="number"
+                    placeholder="Enter quantity"
+                    size="md"
+                    value={product.quantity || ""}
+                    onChange={(event) =>
+                      setProduct({ ...product, quantity: event.target.value })
+                    }
+                  />
+                  {!product.quantity && (
+                    <p className="text-[.8rem] text-red-500 font-semibold">
+                      Out of stock
+                    </p>
+                  )}
                 </FormControl>
                 <FormControl id="description" isRequired mb={2}>
                   <FormLabel>Product Description</FormLabel>

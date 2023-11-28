@@ -103,6 +103,7 @@ function AdminProduct() {
             <Th>Brand</Th>
             <Th>Color</Th>
             <Th>Sizes</Th>
+            <Th>Quantity</Th>
             <Th>Description</Th>
             <Th>Images</Th>
             <Th>Actions</Th>
@@ -116,15 +117,22 @@ function AdminProduct() {
               </Td>
             </Tr>
           ) : Array.isArray(products) && products?.length > 0 ? (
-            products?.slice(startIndex, endIndex)?.map((product, index) => (
+            products?.slice(startIndex, endIndex)?.map((product) => (
               <Tr key={product._id}>
-                <Td>{product.name}</Td>
+                <Td>
+                  {`${product.name}`.substring(0, 30)}
+                  {`${product.name}`.length > 30 && "..."}
+                </Td>
                 <Td>{product.price}</Td>
                 <Td>{product.category}</Td>
                 <Td>{product.brand}</Td>
-                <Td>{product.colors?.join(",")}</Td>
-                <Td>{product.sizes?.join(",")}</Td>
-                <Td>{product.description}</Td>
+                <Td>{product.colors?.join(", ")}</Td>
+                <Td>{product.sizes?.join(", ")}</Td>
+                <Td>{product.quantity}</Td>
+                <Td>
+                  {`${product.description}`.substring(0, 30)}
+                  {`${product.description}`.length > 30 && "..."}
+                </Td>
                 <Td>
                   <Image
                     src={`${imageUrl}/${product.image}`}
@@ -134,7 +142,7 @@ function AdminProduct() {
                     mr={2}
                   />
                 </Td>
-                <Td gap="2px" className="flex items-center">
+                <Td gap="2px" className="flex">
                   <span
                     title={`Update details of ${product?.name}`}
                     onClick={() => handleEdit(product)}
