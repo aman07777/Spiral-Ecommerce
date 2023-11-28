@@ -3,7 +3,6 @@ import { imageUrl } from "../../../global/config";
 
 
 const ProductDetails = ({ products }) => {
-    console.log(products)
 
     return (
         <>

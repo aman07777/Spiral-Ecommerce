@@ -50,20 +50,24 @@ const ProductDetails = ({ products, id: orderId }) => {
           {Array.isArray(products) &&
             products.map((product) => (
               <div
-                className="pb-2 border-b-[2px] border-gray-200 flex justify-between items-center px-2"
+                className="flex items-center justify-between px-2 py-1 mb-2 rounded-sm shadow shadow-gray-200 bg-slate-100"
                 key={product._id}
               >
-                <div className="flex gap-x-2 w-[15em]">
+                <div className="flex gap-x-2 w-[15em] items-center">
                   <img
                     src={`${imageUrl}/${product?.product?.images?.[0]}`}
                     alt={product?.product?.name}
-                    className="h-[3em] w-[4em] "
+                    className="h-[3em] w-[4em]"
                   />
                   <div className="">
                     <div className="">
-                      <p className="relative flex justify-start">
-                        <span className="mr-1">{product?.product?.name}</span>(
-                        <span>{product?.quantity}</span>)
+                      <p className="relative flex items-end justify-start ">
+                        <span className="text-[.85rem] min-[600px]:text-[.9rem] ">
+                          {product?.product?.name}
+                        </span>
+                        <span className="text-[.85rem]">
+                          ({product?.quantity})
+                        </span>
                       </p>
                     </div>
                     <div className="flex gap-x-1 text-[.75rem]">
@@ -132,7 +136,7 @@ const ProductDetails = ({ products, id: orderId }) => {
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-x-2 text-[.8rem]">
+                <div className="flex items-center gap-x-2 text-[.8rem] min-[1300px]:text-[.95rem]">
                   <p className="flex items-center gap-x-1">
                     <span>Rs.</span>
                     <span>{Number(product?.purchasePrice).toFixed(2)}</span>
