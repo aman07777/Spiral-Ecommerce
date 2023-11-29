@@ -77,20 +77,6 @@ const PaymentMethodModal = ({
       totalBillAmount: purchasePrice,
       paymentDetails,
     };
-    // const formData = new FormData();
-    // formData.append("orderItems", JSON.stringify(orderData.orderItems));
-    // formData.append("shippingInfo", JSON.stringify(orderData.shippingInfo));
-    // formData.append("promoCode", orderData.promoCode);
-    // formData.append("totalBillAmount", orderData.totalBillAmount);
-    // // formData.append("paymentDetails", orderData.paymentDetails);
-    // formData.append("paymentDetails[image]", paymentDetails?.image);
-    // formData.append("paymentDetails[method]", paymentDetails?.method);
-    // formData.append(
-    //   "paymentDetails[accountNumber]",
-    //   paymentDetails?.accountNumber
-    // );
-    // formData.append("paymentDetails[accountName]", paymentDetails?.accountName);
-    // formData.append("paymentDetails[description]", paymentDetails?.description);
     mutate(orderData);
   };
   return (

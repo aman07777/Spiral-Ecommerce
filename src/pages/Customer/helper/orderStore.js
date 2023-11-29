@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { axios_auth } from "../../../global/config";
 
-export const orderStore = create((set) => ({
+export const orderStore = create(() => ({
   getMyOrders: async () => {
     try {
       const response = await axios_auth.get("/orders/my-orders");

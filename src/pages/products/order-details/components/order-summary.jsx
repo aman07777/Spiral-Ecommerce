@@ -140,7 +140,8 @@ const OrderSummary = ({ onOpen }) => {
       setDiscount(discount);
     }
   }, [setDiscount, promoCodeDetails, purchasePrice, orderItems]);
-  // finds the promo code details from the promo codes array that matches the promo code entered by the user
+  // finds the promo code details from the promo codes array that
+  // matches the promo code entered by the user
   React.useEffect(() => {
     Array.isArray(codes) &&
       codes.length > 0 &&

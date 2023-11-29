@@ -9,6 +9,7 @@ import UserDetails from "./user-details";
 import ProductDetails from "./product-details";
 import OrderSummary from "./order-summary";
 import CancellationButtons from "./cancellation-buttons";
+import { imageUrl } from "../../../../global/config";
 
 const OrderDetails = () => {
   const { id } = useParams();
@@ -17,7 +18,7 @@ const OrderDetails = () => {
   const { data: order } = useQuery(["get", "order", id], () => getOrder(id));
 
   const [isOpen, setIsOpen] = useState(false);
-  const imgSrc = "https://blog.esewa.com.np/assets/upload/images/Final.png";
+  // const imgSrc = "https://blog.esewa.com.np/assets/upload/images/Final.png";
 
   return (
     <>
@@ -36,8 +37,8 @@ const OrderDetails = () => {
               <div className="">
                 <div className="flex justify-center">
                   <img
-                    src={imgSrc}
-                    alt="Esewa transaction"
+                    src={`${imageUrl}/${order?.paymentMethod?.image}`}
+                    alt={`${order?.paymentMethod?.method} method`}
                     className="h-[20em] rounded cursor-pointer"
                     onClick={() => setIsOpen(true)}
                   />
@@ -55,7 +56,11 @@ const OrderDetails = () => {
               >
                 <IoIosCloseCircle size={25} />
               </button>
-              <img className="mt-2 " src={imgSrc} alt="Esewa transaction" />
+              <img
+                className="mt-2 "
+                src={`${imageUrl}/${order?.paymentMethod?.image}`}
+                alt={`${order?.paymentMethod?.method} method`}
+              />
             </div>
           </div>
         )}
