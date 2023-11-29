@@ -38,7 +38,7 @@ const OrderDetails = () => {
                 <div className="flex justify-center">
                   <img
                     src={`${imageUrl}/${order?.paymentMethod?.image}`}
-                    alt={`${order?.paymentMethod?.method} method`}
+                    alt={`${order?.paymentMethod?.method} payment method`}
                     className="h-[20em] rounded cursor-pointer"
                     onClick={() => setIsOpen(true)}
                   />
@@ -59,7 +59,7 @@ const OrderDetails = () => {
               <img
                 className="mt-2 "
                 src={`${imageUrl}/${order?.paymentMethod?.image}`}
-                alt={`${order?.paymentMethod?.method} method`}
+                alt={`${order?.paymentMethod?.method} payment method`}
               />
             </div>
           </div>
