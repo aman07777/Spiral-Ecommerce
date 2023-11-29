@@ -103,4 +103,15 @@ export const useAdminOrderStore = create((set) => ({
       return false;
     }
   },
+  cancelOrderProduct: async (data) => {
+    try {
+      const res = await axios_auth.patch(`orders/cancel-product`, data);
+      if (res.data.status === "success") {
+        return true;
+      }
+      return false;
+    } catch (_) {
+      return false;
+    }
+  },
 }));

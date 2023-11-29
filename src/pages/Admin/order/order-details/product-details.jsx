@@ -1,13 +1,16 @@
 import React from "react";
 import { imageUrl } from "../../../../global/config";
 import { useAdminOrderStore } from "../store";
-import { MdDeleteForever } from "react-icons/md";
-import useMutate from "../../hooks/useMutate";
-
+import { Spinner } from "@chakra-ui/react";
+import { MdCancel } from "react-icons/md";
+import useMutate from "../../../../hooks/useMutate";
 const ProductDetails = ({ products, id: orderId }) => {
   //stores
   const updateProductStatus = useAdminOrderStore(
     (state) => state.updateProductStatus
+  );
+  const cancelOrderProduct = useAdminOrderStore(
+    (state) => state.cancelOrderProduct
   );
   const { mutate: changeStatusMutate, isLoading: changeStatusIsLoading } =
     useMutate(
@@ -17,9 +20,17 @@ const ProductDetails = ({ products, id: orderId }) => {
       "Status changed",
       "Status updated successfully",
       "Error",
-      "Something went wrong while cancelling the order"
+      "Error while cancelling the order"
     );
-  const {} = useMutate(["cancel", "order", "product", orderId]);
+  const { mutate: cancelMutate, isLoading: cancelIsLoading } = useMutate(
+    ["cancel", "order", "product", orderId],
+    cancelOrderProduct,
+    ["get", "order", orderId],
+    "Order cancelled",
+    "Order cancelled successfully",
+    "Error",
+    "Error while cancelling the order"
+  );
   // handles the status change of the ordered product
   const handleStatusChange = (e, orderedProductId, status) => {
     e.preventDefault();
@@ -27,6 +38,11 @@ const ProductDetails = ({ products, id: orderId }) => {
     changeStatusMutate({ orderId, orderedProductId, status });
   };
 
+  // handles the cancel of the ordered product
+  const handleCancel = (e, orderedProductId, quantity) => {
+    e.preventDefault();
+    cancelMutate({ orderId, orderedProductId, quantity });
+  };
   return (
     <>
       <div className="flex-1 p-2 px-3 border rounded-sm border-l-[4px] shadow text-[#585858] h-[30em] overflow-y-scroll">
@@ -39,10 +55,17 @@ const ProductDetails = ({ products, id: orderId }) => {
                 key={product._id}
               >
                 <button
-                  title={`Delete ${product?.product?.name}`}
-                  className="absolute text-red-500 border border-red-500 rounded-sm right-1 top-1 @[30em]:hidden"
+                  title={`Cancel ${product?.product?.name}`}
+                  className="absolute text-red-500 border border-red-500 rounded-sm right-1 top-1 @[30em]:hidden w-[1.5em] h-[1.5em] flex justify-center items-center"
+                  onClick={(e) =>
+                    handleCancel(e, product._id, product?.quantity)
+                  }
                 >
-                  <MdDeleteForever className="text-[1em]" />
+                  {cancelIsLoading ? (
+                    <Spinner size={"xs"} />
+                  ) : (
+                    <MdCancel className="text-[1.1em]" />
+                  )}
                 </button>
                 <div className="flex gap-x-2 w-[15em] items-center">
                   <img
@@ -123,10 +146,18 @@ const ProductDetails = ({ products, id: orderId }) => {
                     <span>{Number(product?.purchasePrice).toFixed(2)}</span>
                   </p>
                   <button
-                    title={`Delete ${product?.product?.name}`}
-                    className="@[30em]:block hidden text-red-500 border border-red-500 rounded-sm  "
+                    title={`Cancel ${product?.product?.name}`}
+                    className="@[30em]:flex hidden text-red-500 border border-red-500 rounded-sm  
+                     w-[2em] h-[2em] justify-center items-center"
+                    onClick={(e) =>
+                      handleCancel(e, product._id, product?.quantity)
+                    }
                   >
-                    <MdDeleteForever className="text-[1.5em]" />
+                    {cancelIsLoading ? (
+                      <Spinner size={"sm"} />
+                    ) : (
+                      <MdCancel className="text-[1.5em]" />
+                    )}
                   </button>
                 </div>
               </div>

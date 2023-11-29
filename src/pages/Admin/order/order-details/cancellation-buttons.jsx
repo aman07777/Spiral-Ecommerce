@@ -2,7 +2,7 @@ import React from "react";
 import { MdDeleteForever } from "react-icons/md";
 import { MdCancel } from "react-icons/md";
 import { useAdminOrderStore } from "../store";
-import useMutate from "../../hooks/useMutate";
+import useMutate from "../../../../hooks/useMutate";
 const CancellationButtons = ({ id }) => {
   // stores
   const deleteOrder = useAdminOrderStore((state) => state.deleteOrder);

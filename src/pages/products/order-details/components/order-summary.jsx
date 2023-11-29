@@ -28,7 +28,7 @@ const OrderSummary = ({ onOpen }) => {
   const [purchasePrice, setPurchasePrice] = React.useState(0);
   // react query
   const { data: codes } = useQuery(["get", "order"], getPromoCodes);
-  const { isLoading, isError, mutate } = useMutation({
+  const { isLoading, mutate } = useMutation({
     mutationKey: ["make", "order"],
     mutationFn: makeOrder,
     onSuccess: (data) => {
@@ -41,7 +41,6 @@ const OrderSummary = ({ onOpen }) => {
     onError: () =>
       handleToast(toast, "Error", "Unable to place order", "error"),
   });
-  isError && handleToast(toast, "Error", "Something went wrong", "error");
 
   // handlers
   const handlePlaceOrderClick = () => {
@@ -138,7 +137,6 @@ const OrderSummary = ({ onOpen }) => {
       setDiscount(discount);
     }
   }, [setDiscount, promoCodeDetails, purchasePrice, orderItems]);
-  // o7jjhn dbkt2u uv67og
   // finds the promo code details from the promo codes array that matches the promo code entered by the user
   React.useEffect(() => {
     Array.isArray(codes) &&

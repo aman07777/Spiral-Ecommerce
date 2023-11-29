@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { handleToast } from "../../../global/toast";
+import { handleToast } from "../global/toast";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
@@ -11,7 +11,8 @@ const useMutate = (
   successMessage,
   errorTitle,
   errorMessage,
-  navigateTo
+  navigateTo,
+  ...successFns
 ) => {
   const toast = useToast();
   const client = useQueryClient();
@@ -20,9 +21,10 @@ const useMutate = (
     mutationKey,
     mutationFn,
     onSuccess: () => {
-      client.invalidateQueries([...validateKey]);
+      client.invalidateQueries([...validateKey], { exact: true });
       handleToast(toast, successTitle, successMessage, "success");
       if (navigateTo) navigate(navigateTo);
+      successFns?.forEach(({ fn, args }) => fn(...args));
     },
     onError: () => {
       handleToast(toast, errorTitle, errorMessage, "error");
