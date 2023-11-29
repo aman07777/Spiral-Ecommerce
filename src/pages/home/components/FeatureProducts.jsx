@@ -11,9 +11,7 @@ import "./new-arrival-style.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
-import UseGetInnerWidth from "../../Admin/hooks/get-inner-width";
-
-
+import UseGetInnerWidth from "../../../hooks/get-inner-width";
 
 const FeatureProducts = () => {
   const windowWIdth = UseGetInnerWidth();
@@ -88,23 +86,21 @@ const FeatureProducts = () => {
               windowWIdth < 300
                 ? 1
                 : windowWIdth > 301 && windowWIdth < 600
-                  ? 2
-                  : windowWIdth > 601 && windowWIdth < 900
-                    ? 3
-                    : 4
+                ? 2
+                : windowWIdth > 601 && windowWIdth < 900
+                ? 3
+                : 4
             }
             navigation={true}
             spaceBetween={20}
             modules={[Navigation]}
             className="h-[400px]"
           >
-            {
-              products?.map((product, index) => (
-                <SwiperSlide key={index}>
-                  <ProductCard data={product} key={product?.id} />
-                </SwiperSlide>
-              ))
-            }
+            {products?.map((product, index) => (
+              <SwiperSlide key={index}>
+                <ProductCard data={product} key={product?.id} />
+              </SwiperSlide>
+            ))}
           </Swiper>
           {/* more items section for small screen */}
           <div className="flex justify-center w-full mt-1 md:hidden">

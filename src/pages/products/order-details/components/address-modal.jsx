@@ -8,11 +8,11 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import UseGetInnerWidth from "../../../Admin/hooks/get-inner-width";
 import { useQuery } from "@tanstack/react-query";
 import { useAffiliatorProfileStore } from "../../../affiliator/components/user-details/store";
 
 import { useBuyStore } from "./store";
+import UseGetInnerWidth from "../../../../hooks/get-inner-width";
 const AddressModal = ({ isOpen, onClose }) => {
   // hooks
   const innerWidth = UseGetInnerWidth();

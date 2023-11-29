@@ -169,13 +169,23 @@ const DetailsSection = ({ product }) => {
               {product.description}
             </Text>
             <Text className="mt-2 font-semibold text-[1.3rem]">
-              {product.price - (product.discount / 100) * product.price} NPR
+              {!isNaN(
+                Number(product.price - (product.discount / 100) * product.price)
+              ) &&
+                Number(
+                  product.price - (product.discount / 100) * product.price
+                ).toFixed(2)}{" "}
+              NPR
             </Text>
             <div className="mt-1 font-medium text-[.9rem] flex gap-x-3">
               <span className="text-red-500 line-through">
                 {product.price} NPR
               </span>
-              <span className="text-green-500">{product.discount}% off</span>
+              <span className="text-green-500">
+                {!isNaN(product.discount) &&
+                  Number(product.discount).toFixed(2)}
+                % off
+              </span>
             </div>
           </Box>
 

@@ -18,10 +18,10 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
-import UseGetInnerWidth from "./hooks/get-inner-width.jsx";
 import { useAdminOrderStore } from "./order/store.js";
 import { useQuery } from "@tanstack/react-query";
 import { handleToast } from "../../global/toast.js";
+import UseGetInnerWidth from "../../hooks/get-inner-width.jsx";
 function AdminHome() {
   const toast = useToast();
   const innerWidth = UseGetInnerWidth();

@@ -9,7 +9,6 @@ import {
   ModalCloseButton,
   useToast,
 } from "@chakra-ui/react";
-import UseGetInnerWidth from "../../../../hooks/get-inner-width";
 import { useBuyStore } from "./store";
 import { useOrderStore } from "../../product-details/store";
 import { checkShippingInfo, getPurchasePrice, getTotalPrice } from "../helper";
@@ -18,6 +17,7 @@ import { handleToast } from "../../../../global/toast";
 import { useNavigate } from "react-router-dom";
 import { useGlobalStore } from "../../../../global/store";
 import useMutate from "../../../../hooks/useMutate";
+import UseGetInnerWidth from "../../../../hooks/get-inner-width";
 const PaymentMethodModal = ({
   isOpen,
   onClose,
@@ -62,10 +62,10 @@ const PaymentMethodModal = ({
     "Success",
     "Order placed successfully",
     "Error",
-    "Unable to place order"
-    // !user && "/profile/myorders",
-    // { fn: setPaymentDetails, args: [{ description: "" }] },
-    // { fn: replaceOrderItems, args: [[]] }
+    "Unable to place order",
+    !user && "/profile/myorders",
+    { fn: setPaymentDetails, args: [{ description: "" }] },
+    { fn: replaceOrderItems, args: [[]] }
   );
   // handlers
   const handlePlaceOrderClick = () => {

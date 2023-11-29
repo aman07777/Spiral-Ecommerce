@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box } from "@chakra-ui/react";
 import ProductCard from "./product-card";
-import UseGetInnerWidth from "../../Admin/hooks/get-inner-width";
 import "./new-arrival-style.css";
 import { getNewArrival } from "../../../services/ProductServices";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
+import UseGetInnerWidth from "../../../hooks/get-inner-width";
 
 const NewArrivals = () => {
   const windowWIdth = UseGetInnerWidth();
