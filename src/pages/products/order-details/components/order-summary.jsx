@@ -1,6 +1,6 @@
 import React from "react";
 import { useOrderStore } from "../../product-details/store";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useToast } from "@chakra-ui/react";
 import { handleToast } from "../../../../global/toast";
 import { useBuyStore } from "./store";
@@ -11,15 +11,19 @@ import {
   getTotalPrice,
 } from "../helper";
 import PaymentMethod from "./payment-methods";
+import useMutate from "../../../../hooks/useMutate";
+import { useGlobalStore } from "../../../../global/store";
 const OrderSummary = ({ onOpen }) => {
   const toast = useToast();
-  const client = useQueryClient();
   // stores
   const getPromoCodes = useOrderStore((state) => state.getPromoCodes);
   const makeOrder = useOrderStore((state) => state.makeOrder);
   const shippingInfo = useBuyStore((state) => state.shippingInfo);
   const orderItems = useBuyStore((state) => state.orderItems);
   const paymentDetails = useBuyStore((state) => state.paymentDetails);
+  const user = useGlobalStore((state) => state.user);
+  const setPaymentDetails = useBuyStore((state) => state.setPaymentDetails);
+  const replaceOrderItems = useBuyStore((state) => state.replaceOrderItems);
   // states
   const [totalPrice, setTotalPrice] = React.useState(0);
   const [discount, setDiscount] = React.useState(0);
@@ -28,20 +32,19 @@ const OrderSummary = ({ onOpen }) => {
   const [purchasePrice, setPurchasePrice] = React.useState(0);
   // react query
   const { data: codes } = useQuery(["get", "order"], getPromoCodes);
-  const { isLoading, mutate } = useMutation({
-    mutationKey: ["make", "order"],
-    mutationFn: makeOrder,
-    onSuccess: (data) => {
-      if (data === true) {
-        client.invalidateQueries();
-        setDiscount(0);
-        handleToast(toast, "Success", "Order placed successfully", "success");
-      }
-    },
-    onError: () =>
-      handleToast(toast, "Error", "Unable to place order", "error"),
-  });
 
+  const { isLoading, mutate } = useMutate(
+    ["make", "order"],
+    makeOrder,
+    ["get", "orders"],
+    "Success",
+    "Order placed successfully",
+    "Error",
+    "Unable to place order",
+    !!user && "/profile/myorders",
+    { fn: setPaymentDetails, args: [{ description: "" }] },
+    { fn: replaceOrderItems, args: [[]] }
+  );
   // handlers
   const handlePlaceOrderClick = () => {
     if (!checkShippingInfo(shippingInfo)) {

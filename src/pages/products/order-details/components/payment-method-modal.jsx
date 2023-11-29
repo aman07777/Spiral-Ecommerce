@@ -12,9 +12,7 @@ import {
 import { useBuyStore } from "./store";
 import { useOrderStore } from "../../product-details/store";
 import { checkShippingInfo, getPurchasePrice, getTotalPrice } from "../helper";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { handleToast } from "../../../../global/toast";
-import { useNavigate } from "react-router-dom";
 import { useGlobalStore } from "../../../../global/store";
 import useMutate from "../../../../hooks/useMutate";
 import UseGetInnerWidth from "../../../../hooks/get-inner-width";
@@ -25,12 +23,9 @@ const PaymentMethodModal = ({
   promoCodeDetails,
   purchasePrice,
 }) => {
-  const client = useQueryClient();
   const toast = useToast();
-  const navigate = useNavigate();
   // hooks
   const innerWidth = UseGetInnerWidth();
-
   // stores
   const user = useGlobalStore((state) => state.user);
   const makeOrder = useOrderStore((state) => state.makeOrder);
@@ -39,22 +34,6 @@ const PaymentMethodModal = ({
   const orderItems = useBuyStore((state) => state.orderItems);
   const paymentDetails = useBuyStore((state) => state.paymentDetails);
   const replaceOrderItems = useBuyStore((state) => state.replaceOrderItems);
-  // const { isLoading, mutate } = useMutation({
-  //   mutationKey: ["make", "order"],
-  //   mutationFn: makeOrder,
-  //   onSuccess: (data) => {
-  //     if (data === true) {
-  //       client.invalidateQueries(["get", "orders"], { exact: true });
-  //       replaceOrderItems([]);
-  //       setPaymentDetails({ description: "" });
-  //       onClose();
-  //       handleToast(toast, "Success", "Order placed successfully", "success");
-  //       // if (!!user) navigate("/profile/myorders");
-  //     }
-  //   },
-  //   onError: () =>
-  //     handleToast(toast, "Error", "Unable to place order", "error"),
-  // });
   const { isLoading, mutate } = useMutate(
     ["make", "order"],
     makeOrder,
@@ -63,9 +42,10 @@ const PaymentMethodModal = ({
     "Order placed successfully",
     "Error",
     "Unable to place order",
-    !user && "/profile/myorders",
+    !!user && "/profile/myorders",
     { fn: setPaymentDetails, args: [{ description: "" }] },
-    { fn: replaceOrderItems, args: [[]] }
+    { fn: replaceOrderItems, args: [[]] },
+    { fn: onClose, args: [] }
   );
   // handlers
   const handlePlaceOrderClick = () => {
