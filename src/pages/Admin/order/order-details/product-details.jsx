@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { imageUrl } from "../../../../global/config";
 import { useAdminOrderStore } from "../store";
 import { Spinner } from "@chakra-ui/react";
@@ -12,6 +12,10 @@ const ProductDetails = ({ products, id: orderId }) => {
   const cancelOrderProduct = useAdminOrderStore(
     (state) => state.cancelOrderProduct
   );
+
+  // states
+  const [loading, setLoading] = useState("");
+  // react queries
   const { mutate: changeStatusMutate, isLoading: changeStatusIsLoading } =
     useMutate(
       ["update", "order", "product", "status", orderId],
@@ -39,9 +43,10 @@ const ProductDetails = ({ products, id: orderId }) => {
   };
 
   // handles the cancel of the ordered product
-  const handleCancel = (e, orderedProductId, quantity) => {
+  const handleCancel = (e, orderedProduct, quantity) => {
     e.preventDefault();
-    cancelMutate({ orderId, orderedProductId, quantity });
+    setLoading(orderedProduct._id);
+    cancelMutate({ orderId, orderedProduct, quantity });
   };
   return (
     <>
@@ -54,19 +59,22 @@ const ProductDetails = ({ products, id: orderId }) => {
                 className="flex items-center justify-between px-2 mb-2 rounded-sm shadow shadow-gray-200 bg-slate-100 @container relative py-[.75em]"
                 key={product._id}
               >
-                <button
-                  title={`Cancel ${product?.product?.name}`}
-                  className="absolute text-red-500 border border-red-500 rounded-sm right-1 top-1 @[30em]:hidden w-[1.5em] h-[1.5em] flex justify-center items-center"
-                  onClick={(e) =>
-                    handleCancel(e, product._id, product?.quantity)
-                  }
-                >
-                  {cancelIsLoading ? (
-                    <Spinner size={"xs"} />
-                  ) : (
-                    <MdCancel className="text-[1.1em]" />
+                {product?.status !== "Cancelled" &&
+                  product?.status !== "Delivered" && (
+                    <button
+                      title={`Cancel ${product?.product?.name}`}
+                      className="absolute text-red-500 border border-red-500 rounded-sm right-1 top-1 @[30em]:hidden w-[1.5em] h-[1.5em] flex justify-center items-center"
+                      onClick={(e) =>
+                        handleCancel(e, product, product?.quantity)
+                      }
+                    >
+                      {cancelIsLoading && loading === product._id ? (
+                        <Spinner size={"xs"} />
+                      ) : (
+                        <MdCancel className="text-[1.1em]" />
+                      )}
+                    </button>
                   )}
-                </button>
                 <div className="flex gap-x-2 w-[15em] items-center">
                   <img
                     src={`${imageUrl}/${product?.product?.images?.[0]}`}
@@ -79,7 +87,7 @@ const ProductDetails = ({ products, id: orderId }) => {
                         <span className="text-[.85rem] min-[600px]:text-[.9rem] ">
                           {product?.product?.name}
                         </span>
-                        <span className="text-[.85rem]">
+                        <span className="text-[.85rem] ml-1">
                           ({product?.quantity})
                         </span>
                       </p>
@@ -91,10 +99,34 @@ const ProductDetails = ({ products, id: orderId }) => {
                   </div>
                 </div>
                 <div className="text-[.6rem] border rounded-full px-2 pb-[.1rem] relative">
-                  <span className="cursor-pointer peer w-[8em]">
+                  <span
+                    className={`peer text-xs px-2  text-[#008080] rounded-l-full rounded-r-full tracking-wide ${
+                      product.status === "Not_processed" &&
+                      "text-blue-700 bg-blue-200 border-2 border-blue-500"
+                    }
+                            ${
+                              product.status === "Processing" &&
+                              "text-yellow-700 bg-yellow-200 border-2 border-yellow-500"
+                            }
+                            ${
+                              product.status === "Shipped" &&
+                              "text-gray-700 bg-gray-200 border-2 border-gray-500"
+                            }
+                            ${
+                              product.status === "Cancelled" &&
+                              "text-red-700 bg-red-200 border-2 border-red-500"
+                            } ${
+                      product.status === "Delivered" &&
+                      "text-green-700 bg-green-300 border-2 border-green-500"
+                    }`}
+                  >
                     {changeStatusIsLoading ? "Loading..." : product?.status}
                   </span>
-                  <div className="absolute top-3 left-0 text-[.7rem] text-[#585858] border-x peer-hover:block hover:block hidden z-10">
+                  <div
+                    className={`absolute top-3 left-0 text-[.7rem] text-[#585858] border-x  hover:block ${
+                      product?.status !== "Cancelled" && "peer-hover:block"
+                    } hidden z-10`}
+                  >
                     <div className="flex flex-col gap-y-[.1rem] backdrop-blur px-2 mt-2 w-[8em]">
                       {product?.status !== "Not_processed" && (
                         <p
@@ -143,22 +175,29 @@ const ProductDetails = ({ products, id: orderId }) => {
                 <div className="flex items-center gap-x-2 text-[.8rem] min-[1300px]:text-[.95rem]">
                   <p className="flex items-center gap-x-1">
                     <span>Rs.</span>
-                    <span>{Number(product?.purchasePrice).toFixed(2)}</span>
+                    <span>
+                      {!isNaN(Number(product?.purchasePrice))
+                        ? Number(product?.purchasePrice).toFixed(2)
+                        : 0}
+                    </span>
                   </p>
-                  <button
-                    title={`Cancel ${product?.product?.name}`}
-                    className="@[30em]:flex hidden text-red-500 border border-red-500 rounded-sm  
+                  {product?.status !== "Cancelled" &&
+                    product?.status !== "Delivered" && (
+                      <button
+                        title={`Cancel ${product?.product?.name}`}
+                        className="@[30em]:flex hidden text-red-500 border border-red-500 rounded-sm  
                      w-[2em] h-[2em] justify-center items-center"
-                    onClick={(e) =>
-                      handleCancel(e, product._id, product?.quantity)
-                    }
-                  >
-                    {cancelIsLoading ? (
-                      <Spinner size={"sm"} />
-                    ) : (
-                      <MdCancel className="text-[1.5em]" />
+                        onClick={(e) =>
+                          handleCancel(e, product, product?.quantity)
+                        }
+                      >
+                        {cancelIsLoading && loading === product._id ? (
+                          <Spinner size={"sm"} />
+                        ) : (
+                          <MdCancel className="text-[1.5em]" />
+                        )}
+                      </button>
                     )}
-                  </button>
                 </div>
               </div>
             ))}

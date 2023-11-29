@@ -109,22 +109,23 @@ const ProductDetails = () => {
                       </div>
                     </div>
                   </div>
-                  <p className="@[750px]:items-center hidden gap-x-1 @[650px]:flex">
-                    <span
-                      className="w-[1.75em] pb-1 border cursor-pointer select-none text-center"
-                      onClick={(e) => handleQuantityDecrease(e, product)}
-                    >
-                      -
-                    </span>
-                    {product?.quantity}
-                    <span
-                      className="w-[1.75em] pb-1 border cursor-pointer select-none text-center"
-                      onClick={(e) => handleQuantityIncrease(e, product)}
-                    >
-                      +
-                    </span>
-                  </p>
+
                   <div className="relative flex items-center gap-x-2">
+                    <p className="@[750px]:items-center hidden gap-x-1 @[650px]:flex pr-2">
+                      <span
+                        className="w-[1.75em] pb-1 border cursor-pointer select-none text-center rounded"
+                        onClick={(e) => handleQuantityDecrease(e, product)}
+                      >
+                        -
+                      </span>
+                      {product?.quantity}
+                      <span
+                        className="w-[1.75em] pb-1 border cursor-pointer select-none text-center rounded"
+                        onClick={(e) => handleQuantityIncrease(e, product)}
+                      >
+                        +
+                      </span>
+                    </p>
                     <p className="flex text-[.85rem] bg-slate-200 gap-x-1 px-1 rounded">
                       {product?.quantity > 0 && (
                         <span className="line-through">

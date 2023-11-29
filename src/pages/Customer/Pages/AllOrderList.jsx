@@ -14,7 +14,10 @@ const AllOrderList = ({ val }) => {
       {Array.isArray(val?.orderItems) &&
         val?.orderItems.length > 0 &&
         val?.orderItems.map((item) => (
-          <div className="p-5 bg-gray-100 rounded-md cursor-pointer" key={item._id} >
+          <div
+            className="p-5 bg-gray-100 rounded-md cursor-pointer"
+            key={item._id}
+          >
             <div className="w-[100%] flex items-end justify-end">
               <span>
                 <BsFillInfoSquareFill
@@ -69,7 +72,9 @@ const AllOrderList = ({ val }) => {
               <div className="w-full min-[1099px]:w-[20%] flex flex-col items-end min-[1099px]:items-center justify-center gap-y-3">
                 <span className="cursor-pointer text-[#008080]">
                   Rs.
-                  {(item.purchasePrice + Number(150)).toFixed(2)}
+                  {isNaN(item.purchasePrice + Number(150))
+                    ? 0
+                    : (item.purchasePrice + Number(150)).toFixed(2)}
                 </span>
               </div>
             </div>

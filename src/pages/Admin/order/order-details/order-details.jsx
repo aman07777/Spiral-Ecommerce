@@ -34,12 +34,12 @@ const OrderDetails = () => {
             <ProductDetails products={order?.orderItems} id={id} />
             <div className="flex flex-col gap-y-3">
               <OrderSummary data={order?.orderItems} />
-              <div className="">
+              <div className=" @[750px]:w-[20em] @[1000px]:w-[25em]">
                 <div className="flex justify-center">
                   <img
                     src={`${imageUrl}/${order?.paymentMethod?.image}`}
                     alt={`${order?.paymentMethod?.method} payment method`}
-                    className="h-[20em] rounded cursor-pointer"
+                    className="max-h-[20em] rounded cursor-pointer w-full"
                     onClick={() => setIsOpen(true)}
                   />
                 </div>
